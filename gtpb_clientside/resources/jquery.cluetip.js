@@ -19,7 +19,7 @@
  *
  * @credit Inspired by Cody Lindley's jTip (http://www.codylindley.com)
  * @credit Thanks to the following people for their many and varied contributions:
-      Shelane Enos, Glen Lipka, Hector Santos, Torben Schreiter, Dan G. Switzer, Jšrn Zaefferer 
+      Shelane Enos, Glen Lipka, Hector Santos, Torben Schreiter, Dan G. Switzer, Jï¿½rn Zaefferer 
  * @credit Thanks to Jonathan Chaffer, as always, for help with the hard parts. :-)
  */
 
@@ -227,7 +227,7 @@
           };
           ajaxSettings.complete = function() {
           	imgCount = $('#cluetip-inner img').length;
-        		if (imgCount && !$.browser.opera) {
+        		if (imgCount) {
         		  $('#cluetip-inner img').load(function() {
           			imgCount--;
           			if (imgCount<1) {

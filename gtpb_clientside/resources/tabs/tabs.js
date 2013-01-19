@@ -451,16 +451,16 @@ function fRelationPickers() {
 		// just before
 		// this
 		// TODO: test newer IE, the code may work now
-		if ($.browser.msie) {
+		//if ($.browser.msie) {
 			// $('<span
 			// style="padding-right:10px">'+this.value+'</span>').insertBefore($(this));
 			// $(this).remove();
-			return;
-		} else {
+			//return;
+		//} else {
 			var internalTableName = jqThis.attr('internalTableName');
 			var internalFieldName = jqThis.attr('internalFieldName');
 			bindAutoComplete(jqThis, internalTableName, internalFieldName);
-		}
+		//}
 	});
 
 	function relationNewRecord(oHidden) {
@@ -1395,6 +1395,8 @@ function fSetupCharts() {
  * reset the oViewPane height property to get it back
  */
 function fWebkitGlitch() {
+	return;
+	/*
 	if ($.browser.webkit) {
 		setTimeout(
 				"$(top.document.getElementById('oViewPane')).css('height', '0')", 1000);
@@ -1402,6 +1404,7 @@ function fWebkitGlitch() {
 				"$(top.document.getElementById('oViewPane')).css('height', '100%')",
 				1500);
 	}
+	*/
 }
 
 function fShowAddGroup() {

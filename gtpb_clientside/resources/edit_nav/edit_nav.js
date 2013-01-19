@@ -617,7 +617,4 @@ function dependentSnippets() {
  */
 function firefoxBugWorkaround() {
 	return; /* actually, the bug isn't that bad in our context */
-	if ($.browser.mozilla) {
-		$(".centrebox").css("float", "none");
-	}
 }
