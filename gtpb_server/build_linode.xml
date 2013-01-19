@@ -83,7 +83,7 @@
 				<!-- <pathelement location="WEB-INF/lib/treemap.jar"/> -->
 				<!-- number utilities -->
 				<pathelement location="WEB-INF/lib/icu4j-3_6.jar"/>
-				<pathelement location="WEB-INF/lib/commons-math-1.2.jar"/>
+				<pathelement location="WEB-INF/lib/commons-math3-3.1.1.jar"/>
 				<!-- Logging -->
 				<pathelement location="WEB-INF/lib/simple-log.jar"/>
 				<pathelement location="WEB-INF/lib/simple-log-rollover.jar"/>

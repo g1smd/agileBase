@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
-import org.apache.commons.math.util.MathUtils;
+import org.apache.commons.math3.util.Precision;
 import com.gtwm.pb.auth.Authenticator;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -2817,7 +2817,7 @@ public final class DataManagement implements DataManagementInfo {
 						}
 						double currentGrandTotalDbl = currentGrandTotal.doubleValue() + value;
 						grandTotals.put(aggregateFunction, Double.valueOf(currentGrandTotalDbl));
-						value = MathUtils.round(value, precision);
+						value = Precision.round(value, precision);
 						resultRow.addAggregateValue(aggregateFunction, value);
 						Number currentMin = minAggValues.get(aggregateFunction);
 						Number currentMax = maxAggValues.get(aggregateFunction);

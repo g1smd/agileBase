@@ -20,8 +20,8 @@ package com.gtwm.pb.model.manageData;
 import com.gtwm.pb.model.interfaces.WordCloudInfo;
 import com.gtwm.pb.model.interfaces.WordInfo;
 import com.gtwm.pb.util.LancasterStemmer;
-import org.apache.commons.math.stat.Frequency;
-import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
+import org.apache.commons.math3.stat.Frequency;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.grlea.log.SimpleLogger;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class WordCloud implements WordCloudInfo {
 		Iterator freqIt = frequencies.valuesIterator();
 		long stemFreq;
 		while (freqIt.hasNext()) {
-			stemFreq = frequencies.getCount(freqIt.next());
+			stemFreq = frequencies.getCount((int) freqIt.next());
 			stats.addValue(stemFreq);
 		}
 		double mean = stats.getMean();
@@ -116,7 +116,7 @@ public class WordCloud implements WordCloudInfo {
 			while (numWords > maxTags) {
 				freqIt = frequencies.valuesIterator();
 				SMALLREMOVAL: while (freqIt.hasNext()) {
-					stemFreq = frequencies.getCount(freqIt.next());
+					stemFreq = frequencies.getCount((int) freqIt.next());
 					if (stemFreq < lowerLimit) {
 						freqIt.remove();
 						numWords--;
@@ -135,7 +135,7 @@ public class WordCloud implements WordCloudInfo {
 			minFreq = Long.MAX_VALUE;
 			freqIt = frequencies.valuesIterator();
 			while (freqIt.hasNext()) {
-				stemFreq = frequencies.getCount(freqIt.next());
+				stemFreq = frequencies.getCount((int) freqIt.next());
 				if (stemFreq < minFreq) {
 					minFreq = stemFreq;
 				}
