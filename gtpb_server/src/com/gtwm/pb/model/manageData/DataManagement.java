@@ -1597,43 +1597,46 @@ public final class DataManagement implements DataManagementInfo {
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
-				if (extension.equals("pdf") || (new FileValueDefn(filePath)).isImage()) {
-					// image.png -> image.png.40.png
-					String thumb40Path = filePath + "." + 40 + "." + extension;
-					String thumb500Path = filePath + "." + 500 + "." + extension;
-					File thumb40File = new File(thumb40Path);
-					File thumb500File = new File(thumb500Path);
+				if (extension.equals("pdf") || fileValue.isImage()) {
 					int midSize = 500;
 					if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
 						midSize = 250;
 					}
 					boolean needResize = false;
-					try {
-						BufferedImage originalImage = ImageIO.read(selectedFile);
-						int height = originalImage.getHeight();
-						int width = originalImage.getWidth();
-						if ((height > midSize) || (width > midSize)) {
-							needResize = true;
-						}
-					} catch (IOException | NullPointerException ex) {
-						// Certain images can sometimes fail to be read
-						// e.g. CMYK JPGs fail with IOex, TIFFs fail with NullPointerException
-						// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
-						// http://code.google.com/p/thumbnailator/issues/detail?id=40
-						logger.error("Error reading image dimensions: " + ex);
-						if (selectedFile.length() > 1000000) {
-							needResize = true;
+					if (!fileValue.getExtension().equals(fileValue.getPreviewExtension())) {
+						needResize = true;
+					} else {
+						try {
+							BufferedImage originalImage = ImageIO.read(selectedFile);
+							int height = originalImage.getHeight();
+							int width = originalImage.getWidth();
+							if ((height > midSize) || (width > midSize)) {
+								needResize = true;
+							}
+						} catch (IOException ex) {
+							// Certain images can sometimes fail to be read
+							// e.g. CMYK JPGs fail with IOex
+							// NullPointerException
+							// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
+							// http://code.google.com/p/thumbnailator/issues/detail?id=40
+							logger.error("Error reading image dimensions: " + ex);
+							if (selectedFile.length() > 1000000) {
+								needResize = true;
+							}
 						}
 					}
 					// Conditional resize
 					if (needResize) {
 						this.createThumbnail(midSize, midSize, filePath);
 					} else {
+						String thumb500Path = filePath + "." + 500 + "." + extension;
+					  File thumb500File = new File(thumb500Path);
 						try {
-							Files.copy(selectedFile.toPath(), thumb500File.toPath(), StandardCopyOption.REPLACE_EXISTING);
+							Files.copy(selectedFile.toPath(), thumb500File.toPath(),
+									StandardCopyOption.REPLACE_EXISTING);
 						} catch (IOException ioex) {
-							throw new FileUploadException("Error copying " + selectedFile + " to " + thumb500File,
-									ioex);
+							throw new FileUploadException(
+									"Error copying " + selectedFile + " to " + thumb500File, ioex);
 						}
 					}
 					// Allow files that are up to 60 px tall as long as the
