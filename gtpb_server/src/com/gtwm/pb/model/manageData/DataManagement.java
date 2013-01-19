@@ -1614,11 +1614,12 @@ public final class DataManagement implements DataManagementInfo {
 						if ((height > midSize) || (width > midSize)) {
 							needResize = true;
 						}
-					} catch (IOException ioex) {
-						// Certain images can sometimes fail to be read e.g. CMYK JPGs
+					} catch (IOException | NullPointerException ex) {
+						// Certain images can sometimes fail to be read
+						// e.g. CMYK JPGs fail with IOex, TIFFs fail with NullPointerException
 						// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
 						// http://code.google.com/p/thumbnailator/issues/detail?id=40
-						logger.error("Error reading image dimensions: " + ioex);
+						logger.error("Error reading image dimensions: " + ex);
 						if (selectedFile.length() > 1000000) {
 							needResize = true;
 						}
