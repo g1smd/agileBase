@@ -68,7 +68,7 @@
           #if($fieldCategory == "FILE")
             #set($fileValue = $viewTools.getFileValueTool($cell))
             #if($fileValue.isImage())
-              #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getExtension()")
+              #set($srcUrl = "/agileBase/uploads/$internalTableName/$field.getInternalFieldName()/$thisUniqueId/$fileValue.40.$fileValue.getPreviewExtension()")
               <img src="$srcUrl" style="float:left"/>
               #set($image = true)
             #end

@@ -7,6 +7,6 @@
       #set($fieldId = $row.getValue($field.getTableContainingField().getPrimaryKey()).getKeyValue())
     #end
     #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
-    #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getExtension()")
+    #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getPreviewExtension()")
     <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
   #end

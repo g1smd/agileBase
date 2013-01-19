@@ -110,7 +110,7 @@
 		      #set($downloadBase = "uploads/$reportBaseField.getTableContainingField().getInternalTableName()/$reportBaseField.getInternalFieldName()/$rrd_reportDataRow.getRowId()/")
 		      #set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fileValue"))
 		      #if(!$edit_nav)<a href="$downloadUrl" target="_blank">#end
-			    <span><img border="0" src="$downloadUrl.40.$fileValue.getExtension()" class="cross_reference_image" /></span>
+			    <span><img border="0" src="$downloadUrl.40.$fileValue.getPreviewExtension()" class="cross_reference_image" /></span>
 		      #if(!$edit_nav)</a>#end
 			  #end
 		  #end

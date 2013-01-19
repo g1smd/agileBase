@@ -75,10 +75,7 @@
     #if($fieldValueObject.isImage())
     ## #if($userCanEdit)<br />#end
       <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
-      #set($extension = $fieldValueObject.getExtension())
-      #if($extension.startsWith("tif"))
-        #set($extension = "jpg")
-      #end
+      #set($extension = $fieldValueObject.getPreviewExtension())
       <img border="0" src="$downloadUrl.500.$extension" class="$field.getAttachmentType().name().toLowerCase() edit_image" />
       </a>
       #set($sectionHasImage = true)

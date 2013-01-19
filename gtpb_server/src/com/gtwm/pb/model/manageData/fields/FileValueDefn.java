@@ -87,6 +87,14 @@ public class FileValueDefn implements FileValue {
 			return "";
 		}
 	}
+	
+	public String getPreviewExtension() {
+		String previewExtension = this.getExtension();
+		if (previewExtension.startsWith("tif")) {
+			previewExtension = "jpg";
+		}
+		return previewExtension;
+	}
 
 	public boolean isNull() {
 		return (this.filename == null);

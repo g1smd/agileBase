@@ -137,7 +137,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #else
             #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
           #end
-          #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getExtension()")
+          #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getPreviewExtension()")
           #set($cell = "<img src='$srcUrl' />")
           #set($cellContentLength=40)
         #else ## not image

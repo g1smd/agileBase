@@ -10,7 +10,7 @@
 #if($fieldValueObject.isImage())
   <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
     <a class="download" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
-      <img src="$downloadUrl.500.$fieldValueObject.getExtension()" />
+      <img src="$downloadUrl.500.$fieldValueObject.getPreviewExtension()" />
     </a>
   </div>
 #elseif($field.getAttachmentType() == "PROFILE_PHOTO")

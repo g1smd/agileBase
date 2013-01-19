@@ -31,6 +31,11 @@ public interface FileValue extends BaseValue {
 	 * Return file extension in lowercase
 	 */
 	public String getExtension();
+	
+	/**
+	 * For some images (TIFs), the preview will be a different type, e.g. JPG
+	 */
+	public String getPreviewExtension();
 
 	/**
 	 * Returns the name of an icon, based on the file extension, for known file
