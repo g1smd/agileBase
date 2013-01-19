@@ -50,6 +50,7 @@ import java.io.Reader;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1619,7 +1620,8 @@ public final class DataManagement implements DataManagementInfo {
 						if (needResize) {
 							Thumbnails.of(selectedFile).size(midSize, midSize).toFile(thumb500File);
 						} else {
-							FileUtils.copyFile(selectedFile, thumb500File);
+							Files.copy(selectedFile.toPath(), thumb500File.toPath());
+							//FileUtils.copyFile(selectedFile, thumb500File);
 						}
 						// Allow files that are up to 60 px tall as long as the
 						// width is no > 40 px
