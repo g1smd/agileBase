@@ -99,6 +99,7 @@
 				<pathelement location="WEB-INF/lib/thumbnailator-0.4.2.jar"/>
         <!-- Plural to singular -->
         <pathelement location="WEB-INF/lib/javatools.jar"/>
+        <pathelement location="WEB-INF/lib/jai_imageio-1.2.jar"/>
 				<!-- Testing -->
         <pathelement location="WEB-INF/lib/JWalk11.jar"/>
 				<!-- closed source dashboard -->
