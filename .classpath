@@ -56,7 +56,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/commons-io-2.0.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-1.7.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/velocity-tools-view-2.0.jar"/>
-	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/ical4j-1.0-rc3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/javatools.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/JWalk11.jar"/>
@@ -77,5 +76,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/commons-math3-3.1.1.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/hibernate-core-4.1.9.Final.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/ical4j-1.0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
