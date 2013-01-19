@@ -1591,7 +1591,7 @@ public final class DataManagement implements DataManagementInfo {
 					float uploadSpeed = ((float) fileSize) / secondsToUpload;
 					this.updateUploadSpeed(uploadSpeed);
 				}
-				if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png")) {
+				if (extension.equals("jpg") || extension.equals("jpeg") || extension.equals("png") || extension.equals("tif") || extension.equals("tiff") ) {
 					// image.png -> image.png.40.png
 					String thumb40Path = filePath + "." + 40 + "." + extension;
 					String thumb500Path = filePath + "." + 500 + "." + extension;
@@ -1612,8 +1612,9 @@ public final class DataManagement implements DataManagementInfo {
 					} catch (IOException ioex) {
 						// Certain images can sometimes fail to be read e.g. CMYK JPGs
 						logger.error("Error reading image dimensions: " + ioex);
-						needResize = true; // Unable to read image size, assume resize
-																// needed
+						if (selectedFile.length() > 10000000) {
+							needResize = true;
+						}
 					}
 					try {
 						// Conditional resize

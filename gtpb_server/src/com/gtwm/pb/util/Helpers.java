@@ -143,7 +143,7 @@ public final class Helpers {
 		}
 		String extension = fileName.replaceAll("^.*\\.", "").toLowerCase().trim();
 		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
-				|| extension.equals("jpeg")) {
+				|| extension.equals("jpeg")	|| extension.equals("tif")	|| extension.equals("tiff")) {
 			return true;
 		}
 		return false;
