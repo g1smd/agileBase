@@ -21,7 +21,7 @@
 	    </div>
 	  </div> ## end row
 	  <h1 class="spaced">What's in use?</h1>
-	  <p class="big">Large areas have high use. Dark areas have increasing use, light decreasing
+	  <p class="big">Large areas have high use. Blue areas have increasing use, grey decreasing
 	  <div id="infovis">
 	  </div>
 	  <h1 class="spaced">Long term trends</h1>
@@ -48,7 +48,7 @@
 			<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">report views</a>
 			<br>
 			<span class="sparkline_data_edits">...</span> 
-			<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">rata changes</a>
+			<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">data changes</a>
 	    </div>
         <div class="span4">
 			<span class="sparkline_report_additions">...</span> 
