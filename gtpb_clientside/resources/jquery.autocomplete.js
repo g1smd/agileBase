@@ -756,13 +756,11 @@ $.Autocompleter.Select = function (options, input, select, config) {
 					overflow: 'auto'
 				});
 				
-/*
-                if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+        if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
 					var listHeight = 0;
 					listItems.each(function() {
 						listHeight += this.offsetHeight;
 					});
-					*/
 					var scrollbarsVisible = listHeight > options.scrollHeight;
                     list.css('height', scrollbarsVisible ? options.scrollHeight : listHeight );
 					if (!scrollbarsVisible) {

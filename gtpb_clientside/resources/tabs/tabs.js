@@ -1396,7 +1396,7 @@ function fSetupCharts() {
  */
 function fWebkitGlitch() {
 	return;
-	/*
+	
 	if ($.browser.webkit) {
 		setTimeout(
 				"$(top.document.getElementById('oViewPane')).css('height', '0')", 1000);
@@ -1404,7 +1404,7 @@ function fWebkitGlitch() {
 				"$(top.document.getElementById('oViewPane')).css('height', '100%')",
 				1500);
 	}
-	*/
+	
 }
 
 function fShowAddGroup() {
