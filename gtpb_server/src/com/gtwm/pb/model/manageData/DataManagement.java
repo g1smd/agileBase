@@ -51,6 +51,7 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1629,9 +1630,9 @@ public final class DataManagement implements DataManagementInfo {
 						this.createThumbnail(midSize, midSize, filePath);
 					} else {
 						try {
-							Files.copy(selectedFile.toPath(), thumb500File.toPath());
+							Files.copy(selectedFile.toPath(), thumb500File.toPath(), StandardCopyOption.REPLACE_EXISTING);
 						} catch (IOException ioex) {
-							throw new FileUploadException("Error copying " + selectedFile + " to .500 version",
+							throw new FileUploadException("Error copying " + selectedFile + " to " + thumb500File,
 									ioex);
 						}
 					}
