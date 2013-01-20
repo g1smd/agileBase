@@ -108,9 +108,16 @@ $.Autocompleter = function(input, options) {
 	var valueAtStart;
 	var valueSelected = false;
 	
+	// prevent form submit in opera when selecting with return key
+	$.browser.opera && $(input.form).bind("submit.autocomplete", function() {
+		if (blockSubmit) {
+			blockSubmit = false;
+			return false;
+		}
+	});
+	
 	// only opera doesn't trigger keydown multiple times while pressed, others don't work with keypress at all
-	//$input.bind(($.browser.opera ? "keypress" : "keydown") + ".autocomplete", function(event) {
-	$input.bind("keydown.autocomplete", function(event) {
+	$input.bind(($.browser.opera ? "keypress" : "keydown") + ".autocomplete", function(event) {
 		// track last key pressed
 		lastKeyPressCode = event.keyCode;
 		switch(event.keyCode) {
@@ -756,7 +763,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 					overflow: 'auto'
 				});
 				
-        if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+                if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
 					var listHeight = 0;
 					listItems.each(function() {
 						listHeight += this.offsetHeight;
