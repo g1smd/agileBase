@@ -64,7 +64,6 @@
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/httpclient-4.2.1.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/httpcore-4.2.1.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/fluent-hc-4.2.1.jar"/>
-	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/thumbnailator-0.4.2.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/hibernate-commons-annotations-4.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
 	<classpathentry kind="lib" path="gtpb_server/WEB-INF/lib/joda-time-2.1.jar"/>
