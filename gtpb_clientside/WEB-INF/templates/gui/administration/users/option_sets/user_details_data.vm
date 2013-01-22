@@ -58,7 +58,7 @@
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         <input type="hidden" name="upload_profile_picture" />
         <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> 
-        <input type="file" name="profilephoto" />
+        <input type="file" name="profilephoto" class="submit-trigger" />
         <div class="upload_progress_container">
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
