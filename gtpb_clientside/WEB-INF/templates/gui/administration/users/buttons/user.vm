@@ -17,7 +17,7 @@
 ##
 ##set($button_img='resources/user/user.png')
 #set($button_img="icon-user")
-#set($click="fShowOption('options_wrapper_$options_wrapper_no','user_details')")
+#set($click="fShowOption('options_wrapper_$options_wrapper_no','user_details'); fSexyUpload();")
 #set($caption='Details')
 #set($id='button_user_details')
 #parse('gui/resources/button.vm')
