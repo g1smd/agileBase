@@ -59,7 +59,7 @@
         <input type="hidden" name="upload_profile_picture" />
         <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> 
         #if($sessionUser.getHasProfilePhoto())
-          <img src="profiles/$internalUserName.jpg.40.jpg" class="profile_photo" />
+          <img src="profiles/${internalUserName}.jpg.40.jpg" class="profile_photo" />
         #else
           <img src="resources/icons/file_placeholders/profile_photo.png" class="profile_photo" />
         #end
