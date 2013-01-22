@@ -77,7 +77,8 @@ a.dp-choose-date {
 }
 
 .two_cols.non_section a.dp-choose-date {
-  float: left;
+  display: inline-block;
+  float: none;
 }
 /* end of insertion by Oliver */
 
