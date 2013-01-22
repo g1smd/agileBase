@@ -178,6 +178,15 @@ public interface AppUserInfo {
 			MessagingException;
 
 	/**
+	 * Returns true if the user has a profile photo, false if not and null if
+	 * unknown. This is used as a caching mechanism to negate the need for a file
+	 * lookup to check each time a profile photo is requested
+	 */
+	public Boolean getHasProfilePhoto();
+	
+	public void setHasProfilePhoto(boolean hasProfilePhoto) throws CantDoThatException;
+
+	/**
 	 * A custom data field that can be used by applications
 	 * */
 	public String getCustom1();

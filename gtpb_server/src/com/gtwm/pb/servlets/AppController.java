@@ -565,6 +565,9 @@ public final class AppController extends VelocityViewServlet {
 				case REMOVE_REPORT_DISTINCT:
 					ServletSchemaMethods.removeDistinctFromReport(sessionData, request, databaseDefn);
 					break;
+				case UPLOAD_PROFILE_PICTURE:
+					ServletAuthMethods.uploadProfilePicture(sessionData, databaseDefn, request, multipartItems);
+					break;
 				}
 			}
 		}

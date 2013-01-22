@@ -17,12 +17,19 @@
  */
 package com.gtwm.pb.servlets;
 
+import java.io.File;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.AppRole;
@@ -38,6 +45,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
+import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
@@ -226,6 +234,49 @@ public final class ServletAuthMethods {
 		sessionData.setUser(null);
 	}
 
+	public static void uploadProfilePicture(SessionDataInfo sessionData, DatabaseInfo databaseDefn, HttpServletRequest request, List<FileItem> multipartItems) throws ObjectNotFoundException, DisallowedException, CantDoThatException, FileUploadException {
+		if (!FileUpload.isMultipartContent(new ServletRequestContext(request))) {
+			throw new CantDoThatException(
+					"To upload a profile picture, the form must be posted as multi-part form data");
+		}
+		String internalUserName = ServletUtilMethods.getParameter(request, "internalusername",
+				multipartItems);
+		AppUserInfo user;
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
+		if (internalUserName != null) {
+			user = authManager.getUserByInternalName(request, internalUserName);
+		} else {
+			user = authManager.getLoggedInUser(request);
+		}
+		String uploadFolderName = databaseDefn.getDataManagement().getWebAppRoot() + "profiles";
+		File uploadFolder = new File(uploadFolderName);
+		if (!uploadFolder.exists()) {
+			if (!uploadFolder.mkdirs()) {
+				throw new CantDoThatException("Error creating upload folder " + uploadFolderName);
+			}
+		}
+		for (FileItem item : multipartItems) {
+			// if item is a file
+			if (!item.isFormField()) {
+				long fileSize = item.getSize();
+				if (fileSize == 0) {
+					throw new CantDoThatException("An empty file was submitted, no upload done");
+				}
+				String filePath = uploadFolder + "/" + user.getInternalUserName() + ".jpg";
+				File profilePicture = new File(filePath);
+				try {
+					item.write(profilePicture);
+					user.setHasProfilePhoto(true);
+				} catch (Exception ex) {
+					// Catching a general exception?! This is because the
+					// library throws a raw exception. Not very good
+					throw new FileUploadException("Error writing file: " + ex.getMessage());
+				}
+				DataManagement.createThumbnail(40, 60, filePath);
+			}
+		}
+	}
+	
 	public synchronized static void updateUser(SessionDataInfo sessionData,
 			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException,

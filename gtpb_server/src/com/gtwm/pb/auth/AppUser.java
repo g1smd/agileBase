@@ -17,6 +17,7 @@
  */
 package com.gtwm.pb.auth;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -364,12 +365,34 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.passwordResetSent = System.currentTimeMillis();
 	}
 	
+	@Transient
+	public Boolean getHasProfilePhoto() {
+		if (this.hasProfilePhoto != null) {
+			return this.hasProfilePhoto;
+		}
+		File profilePhoto = new File(this.webAppRoot + "profiles/" + this.getInternalUserName() + ".jpg");
+		if (profilePhoto.exists()) {
+			this.hasProfilePhoto = true;
+		} else {
+			this.hasProfilePhoto = false;
+		}
+		return this.hasProfilePhoto;
+	}
+	
+	public void setHasProfilePhoto(boolean hasProfilePhoto) {
+		this.hasProfilePhoto = hasProfilePhoto;
+	}
+	
 	public String getCustom1() {
 		return this.custom1;
 	}
 	
 	public void setCustom1(String custom1) {
 		this.custom1 = custom1;
+	}
+	
+	protected void setWebAppRoot(String webAppRoot) {
+		this.webAppRoot = webAppRoot;
 	}
 
 	public String toString() {
@@ -443,6 +466,10 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private long passwordResetSent = 0;
 	
 	private String custom1 = "";
+	
+	private Boolean hasProfilePhoto = null;
+	
+	private String webAppRoot = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(AppUser.class);
 }

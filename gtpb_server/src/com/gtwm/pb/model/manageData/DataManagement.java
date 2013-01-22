@@ -1627,7 +1627,7 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					// Conditional resize
 					if (needResize) {
-						this.createThumbnail(midSize, midSize, filePath);
+						createThumbnail(midSize, midSize, filePath);
 					} else {
 						String thumb500Path = filePath + "." + 500 + "." + extension;
 					  File thumb500File = new File(thumb500Path);
@@ -1641,13 +1641,14 @@ public final class DataManagement implements DataManagementInfo {
 					}
 					// Allow files that are up to 60 px tall as long as the
 					// width less than 40 px
-					this.createThumbnail(40, 60, filePath);
+					createThumbnail(40, 60, filePath);
 				}
 			}
 		}
 	}
 
-	public void createThumbnail(int width, int height, String inputFilePath)
+	// TODO: move out of DataManagement to perhaps ServletDataMethods, ServletUtilMethods or Helper
+	public static void createThumbnail(int width, int height, String inputFilePath)
 			throws FileUploadException {
 		ConvertCmd convert = new ConvertCmd();
 		IMOperation op = new IMOperation();

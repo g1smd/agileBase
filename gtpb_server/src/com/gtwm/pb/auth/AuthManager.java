@@ -84,7 +84,7 @@ public final class AuthManager implements AuthManagerInfo {
 	 *           Note: No exception handling (finally block) is done here, that's
 	 *           in the DatabaseDefn constructor that calls this
 	 */
-	public AuthManager(DataSource relationalDataSource) throws ObjectNotFoundException,
+	public AuthManager(DataSource relationalDataSource, String webAppRoot) throws ObjectNotFoundException,
 			CantDoThatException, MissingParametersException, CodingErrorException {
 		logger.info("Loading schema and authentication objects into memory...");
 		// Don't pollute javamelody log with startup SQL
@@ -120,6 +120,7 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("User " + user + " operational dashboard reports: "
 							+ user.getOperationalDashboardReports());
 					logger.info("User " + user + " form tables: " + user.getFormTables());
+					((AppUser) user).setWebAppRoot(webAppRoot);
 				}
 				for (AppRoleInfo role : auth.getRoles()) {
 					logger.info("Role " + role + " users: " + role.getUsers());

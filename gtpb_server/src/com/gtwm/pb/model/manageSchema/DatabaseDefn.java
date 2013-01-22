@@ -167,7 +167,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		// Load table schema objects
 		Session hibernateSession = HibernateUtil.currentSession();
 		try {
-			this.authManager = new AuthManager(relationalDataSource);
+			this.authManager = new AuthManager(relationalDataSource, webAppRoot);
 		} finally {
 			HibernateUtil.closeSession();
 		}

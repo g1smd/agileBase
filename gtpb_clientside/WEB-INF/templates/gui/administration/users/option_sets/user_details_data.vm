@@ -53,6 +53,20 @@
     </td>
   </tr>
   <tr style="vertical-align: top">
+    <td>Profile picture</td>
+    <td colspan="2">
+      <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
+        <input type="hidden" name="upload_profile_picture" />
+        <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> 
+        <input type="file" name="profilephoto" />
+        <div class="upload_progress_container">
+          <div class="upload_progress_bar"></div>
+          <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>
+        </div>
+      </form>
+    </td>
+  </tr>
+  <tr style="vertical-align: top">
 	<td>Initial view:<br>What the user will see on logging in</td>
 	<td colspan="2">
 	  #set($sessionUserType = $sessionUser.getUserType())

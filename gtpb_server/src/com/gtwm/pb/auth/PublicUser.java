@@ -250,6 +250,14 @@ public class PublicUser implements AppUserInfo {
 		throw new CantDoThatException("This public user can't have a custom ui");
 	}
 	
+	public Boolean getHasProfilePhoto() {
+		return false;
+	}
+	
+	public void setHasProfilePhoto(boolean hasProfilePhoto) throws CantDoThatException {
+		throw new CantDoThatException("This public user can't have a profile photo");
+	}
+	
 	public String getCustom1() {
 		return "";
 	}
