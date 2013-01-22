@@ -59,9 +59,9 @@
         <input type="hidden" name="upload_profile_picture" />
         <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> 
         #if($sessionUser.getHasProfilePhoto())
-          <img src="profiles/${internalUserName}.jpg.40.jpg" class="profile_photo" />
+          <img src="profiles/${internalUserName}.jpg.40.jpg" class="edit_image" />
         #else
-          <img src="resources/icons/file_placeholders/profile_photo.png" class="profile_photo" />
+          <img src="resources/icons/file_placeholders/profile_photo.png" class="edit_image" />
         #end
         <input type="file" name="profilephoto" class="submit-trigger" />
         <div class="upload_progress_container">
