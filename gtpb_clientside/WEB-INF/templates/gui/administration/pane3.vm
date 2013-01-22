@@ -121,13 +121,14 @@
   <script src="resources/jquery.sparkline.js" language="Javascript"> </script>
   <SCRIPT language=Javascript src="resources/wait/request_setFilter.js"></SCRIPT> 
   <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>  
-  <script type="text/javascript" src="resources/button/button.js"></script>  
+  <script type="text/javascript" src="resources/pane3_amalgam.js"></script>  
   <SCRIPT language="JavaScript">
     jQuery(document).ready(function(){
       #if($pane2_id)
         parent.pane_2.fSetRowSelection('$pane2_id');
       #end
       fInit(); // in editData.js
+      fSexyUpload();
      });
 
 //Sparklines - see gui/administration/information/option_sets/information_export_data.vm
