@@ -225,11 +225,11 @@ public final class AuthManager implements AuthManagerInfo {
 					sqlCode += " SELECT created, '" + name + "'::text, author, internalfieldname, rowid, text";
 					sqlCode += " FROM dbint_comments";
 					sqlCode += " WHERE author=? AND internalcompanyname=?";
-					preparedStatement = conn.prepareStatement(sqlCode);
-					preparedStatement.setString(1, name);
-					preparedStatement.setString(2, company.getInternalCompanyName());
-					int rows = preparedStatement.executeUpdate();
-					preparedStatement.close();
+					PreparedStatement insertStatement = conn.prepareStatement(sqlCode);
+					insertStatement.setString(1, name);
+					insertStatement.setString(2, company.getInternalCompanyName());
+					int rows = insertStatement.executeUpdate();
+					insertStatement.close();
 				}
 			}
 			updateStatement.close();
