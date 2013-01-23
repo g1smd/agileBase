@@ -208,17 +208,16 @@ public final class AuthManager implements AuthManagerInfo {
 			statement.execute(sqlCode);
 			statement.close();
 			sqlCode = "UPDATE dbint_comments SET internalcompanyname=? WHERE internalfieldname=?";
-			PreparedStatement preparedStatement = conn.prepareStatement(sqlCode);
+			PreparedStatement updateStatement = conn.prepareStatement(sqlCode);
 			for (CompanyInfo company : auth.getCompanies()) {
 				ServletSchemaMethods.addCommentsTableForCompany(conn, company);
 				for (TableInfo table : company.getTables()) {
 					for (BaseField field : table.getFields()) {
-						preparedStatement.setString(1, company.getInternalCompanyName());
-						preparedStatement.setString(2, field.getInternalFieldName());
-						preparedStatement.executeUpdate();
+						updateStatement.setString(1, company.getInternalCompanyName());
+						updateStatement.setString(2, field.getInternalFieldName());
+						updateStatement.executeUpdate();
 					}
 				}
-				preparedStatement.close();
 				for (AppUserInfo appUser : company.getUsers()) {
 					String name = appUser.getForename() + " " + appUser.getSurname();
 					sqlCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName();
@@ -233,6 +232,7 @@ public final class AuthManager implements AuthManagerInfo {
 					preparedStatement.close();
 				}
 			}
+			updateStatement.close();
 			conn.commit();
 		} finally {
 			if (conn != null) {
