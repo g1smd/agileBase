@@ -190,7 +190,7 @@ public final class AuthManager implements AuthManagerInfo {
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
-		//createCommentsTables(relationalDataSource);
+		createCommentsTables(relationalDataSource);
 		// Re-enable JavaMelody
 		System.setProperty("javamelody.disabled", "false");
 	}
@@ -204,9 +204,9 @@ public final class AuthManager implements AuthManagerInfo {
 			// Copy from original comments table to per-company tables
 			// First record the company for each comment
 			String sqlCode = "ALTER TABLE dbint_comments add column internalcompanyname varchar(1000)";
-			Statement statement = conn.createStatement();
-			statement.execute(sqlCode);
-			statement.close();
+			Statement alterStatement = conn.createStatement();
+			alterStatement.execute(sqlCode);
+			alterStatement.close();
 			sqlCode = "UPDATE dbint_comments SET internalcompanyname=? WHERE internalfieldname=?";
 			PreparedStatement updateStatement = conn.prepareStatement(sqlCode);
 			for (CompanyInfo company : auth.getCompanies()) {
@@ -220,13 +220,14 @@ public final class AuthManager implements AuthManagerInfo {
 				}
 				for (AppUserInfo appUser : company.getUsers()) {
 					String name = appUser.getForename() + " " + appUser.getSurname();
+					String internalUserName = appUser.getInternalUserName();
 					sqlCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName();
 					sqlCode += "(created, author_internalusername, author, internalfieldname, rowid, text)";
-					sqlCode += " SELECT created, '" + name + "'::text, author, internalfieldname, rowid, text";
+					sqlCode += " SELECT created, '" + internalUserName + "'::text, author, internalfieldname, rowid, text";
 					sqlCode += " FROM dbint_comments";
 					sqlCode += " WHERE author=? AND internalcompanyname=?";
 					PreparedStatement insertStatement = conn.prepareStatement(sqlCode);
-					insertStatement.setString(1, appUser.getInternalUserName());
+					insertStatement.setString(1, name);
 					insertStatement.setString(2, company.getInternalCompanyName());
 					int rows = insertStatement.executeUpdate();
 					insertStatement.close();
