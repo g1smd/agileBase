@@ -2195,8 +2195,9 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.close();
 		}
 		// Also delete any comments linked to the field
+		String internalCompanyName = this.getAuthManager().getCompanyForLoggedInUser(request).getInternalCompanyName();
 		PreparedStatement statement = conn
-				.prepareStatement("DELETE FROM dbint_comments WHERE internalfieldname=?");
+				.prepareStatement("DELETE FROM dbint_comments_" + internalCompanyName + " WHERE internalfieldname=?");
 		statement.setString(1, field.getInternalFieldName());
 		statement.execute();
 		statement.close();

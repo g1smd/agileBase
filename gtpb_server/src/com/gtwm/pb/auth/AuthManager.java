@@ -40,6 +40,7 @@ import com.gtwm.pb.model.manageSchema.fields.DecimalFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
+import com.gtwm.pb.servlets.ServletSchemaMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
@@ -57,6 +58,11 @@ import org.grlea.log.SimpleLogger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.HashSet;
@@ -84,8 +90,9 @@ public final class AuthManager implements AuthManagerInfo {
 	 *           Note: No exception handling (finally block) is done here, that's
 	 *           in the DatabaseDefn constructor that calls this
 	 */
-	public AuthManager(DataSource relationalDataSource, String webAppRoot) throws ObjectNotFoundException,
-			CantDoThatException, MissingParametersException, CodingErrorException {
+	public AuthManager(DataSource relationalDataSource, String webAppRoot)
+			throws ObjectNotFoundException, CantDoThatException, MissingParametersException,
+			CodingErrorException, SQLException {
 		logger.info("Loading schema and authentication objects into memory...");
 		// Don't pollute javamelody log with startup SQL
 		System.setProperty("javamelody.disabled", "true");
@@ -183,8 +190,39 @@ public final class AuthManager implements AuthManagerInfo {
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
+		createCommentsTables(relationalDataSource);
 		// Re-enable JavaMelody
 		System.setProperty("javamelody.disabled", "false");
+	}
+
+	private void createCommentsTables(DataSource relationalDataSource) throws SQLException {
+		Authenticator auth = (Authenticator) this.authenticator;
+		Connection conn = null;
+		try {
+			conn = relationalDataSource.getConnection();
+			conn.setAutoCommit(false);
+			// Copy from original comments table to per-company tables
+			for (CompanyInfo company : auth.getCompanies()) {
+				ServletSchemaMethods.addCommentsTableForCompany(conn, company);
+				for (AppUserInfo appUser : company.getUsers()) {
+					String name = appUser.getForename() + " " + appUser.getSurname();
+					String sqlCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName();
+					sqlCode += "(created, author_internalusername, author, internalfieldname, rowid, text)";
+					sqlCode += " SELECT created, '" + name + "'::text, author, internalfieldname, rowid, text";
+					sqlCode += " FROM dbint_comments";
+					sqlCode += " WHERE author=?";
+					PreparedStatement preparedStatement = conn.prepareStatement(sqlCode);
+					preparedStatement.setString(1, name);
+					int rows = preparedStatement.executeUpdate();
+					preparedStatement.close();
+				}
+			}
+			conn.commit();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
 	}
 
 	/**

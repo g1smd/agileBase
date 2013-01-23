@@ -504,7 +504,7 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.addCompany(request, databaseDefn);
 					break;
 				case REMOVE_COMPANY:
-					ServletSchemaMethods.removeCompany(request, databaseDefn.getAuthManager());
+					ServletSchemaMethods.removeCompany(request, databaseDefn);
 					break;
 				case ANONYMISE:
 					ServletDataMethods.anonymiseTableData(sessionData, request, databaseDefn, multipartItems);

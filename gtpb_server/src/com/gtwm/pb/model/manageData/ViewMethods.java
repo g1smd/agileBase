@@ -454,7 +454,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			throw new DisallowedException(this.getLoggedInUser(), PrivilegeType.VIEW_TABLE_DATA,
 					table);
 		}
-		return this.databaseDefn.getDataManagement().getComments(field, rowId);
+		CompanyInfo company = this.getLoggedInUser().getCompany();
+		return this.databaseDefn.getDataManagement().getComments(company, field, rowId);
 	}
 
 	public Map<BaseField, BaseValue> getTableDataRow() throws DisallowedException,

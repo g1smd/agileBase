@@ -193,7 +193,8 @@ public final class DataManagement implements DataManagementInfo {
 	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
 			String rawComment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException {
-		String SQLCode = "INSERT INTO dbint_comments(created, author, internalfieldname, rowid, text) VALUES (?,?,?,?,?)";
+		CompanyInfo company = user.getCompany();
+		String SQLCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName() + "(created, author, author_internalusername, internalfieldname, rowid, text) VALUES (?,?,?,?,?,?)";
 		// Protect against cross-site scripting
 		String comment = Naming.makeValidXML(Helpers.smartCharsReplace(rawComment));
 		TableInfo table = field.getTableContainingField();
@@ -205,9 +206,10 @@ public final class DataManagement implements DataManagementInfo {
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
 			statement.setTimestamp(1, timestamp);
 			statement.setString(2, user.getForename() + " " + user.getSurname());
-			statement.setString(3, field.getInternalFieldName());
-			statement.setInt(4, rowId);
-			statement.setString(5, comment);
+			statement.setString(3, user.getInternalUserName());
+			statement.setString(4, field.getInternalFieldName());
+			statement.setInt(5, rowId);
+			statement.setString(6, comment);
 			int rowsAffected = statement.executeUpdate();
 			statement.close();
 			if (rowsAffected != 1) {
@@ -246,7 +248,6 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		// Email notification
 		Authenticator authenticator = (Authenticator) this.authManager.getAuthenticator();
-		CompanyInfo company = user.getCompany();
 		Set<String> recipients = new HashSet<String>();
 		if (table.getAllowNotifications()) {
 			for (AppUserInfo companyUser : company.getUsers()) {
@@ -315,7 +316,7 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
+	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId) throws SQLException,
 			CantDoThatException {
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
 		// If no record for this field contains comments, return empty set
@@ -333,7 +334,9 @@ public final class DataManagement implements DataManagementInfo {
 				return comments;
 			}
 		}
-		String sqlCode = "SELECT created, author, text FROM dbint_comments WHERE internalfieldname=? AND rowid=? ORDER BY created DESC LIMIT 10";
+		String internalCompanyName = company.getInternalCompanyName();
+		String sqlCode = "SELECT created, author, author_internalusername, text FROM dbint_comments_" + internalCompanyName;
+		sqlCode += " WHERE internalfieldname=? AND rowid=? ORDER BY created DESC LIMIT 10";
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -348,8 +351,9 @@ public final class DataManagement implements DataManagementInfo {
 				Calendar created = Calendar.getInstance();
 				created.setTimeInMillis(createdTimestamp.getTime());
 				String author = results.getString(2);
-				String comment = results.getString(3);
-				comments.add(new Comment(internalFieldName, rowId, author, created, comment));
+				String authorInternalName = results.getString(3);
+				String comment = results.getString(4);
+				comments.add(new Comment(internalFieldName, rowId, author, authorInternalName, created, comment));
 			}
 			results.close();
 			statement.close();
@@ -370,7 +374,7 @@ public final class DataManagement implements DataManagementInfo {
 					// record
 					// but we don't know if there are any for the field in other
 					// records. Check.
-					sqlCode = "SELECT count(*) from dbint_comments WHERE internalfieldname=?";
+					sqlCode = "SELECT count(*) from dbint_comments_" + internalCompanyName + " WHERE internalfieldname=?";
 					statement = conn.prepareStatement(sqlCode);
 					statement.setString(1, internalFieldName);
 					results = statement.executeQuery();
@@ -1887,7 +1891,8 @@ public final class DataManagement implements DataManagementInfo {
 					}
 				}
 				String internalFieldNamesCsv = StringUtils.join(internalFieldNamesSet, ",");
-				SQLCode = "DELETE FROM dbint_comments WHERE rowid=? AND internalfieldname IN ("
+				String internalCompanyName = this.authManager.getCompanyForLoggedInUser(request).getInternalCompanyName();
+				SQLCode = "DELETE FROM dbint_comments_" + internalCompanyName + " WHERE rowid=? AND internalfieldname IN ("
 						+ internalFieldNamesCsv + ")";
 				statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);

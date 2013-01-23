@@ -6,11 +6,12 @@ import com.gtwm.pb.model.interfaces.CommentInfo;
 
 public class Comment implements CommentInfo {
 
-	public Comment(String internalFieldName, int rowId, String author, Calendar timestamp,
+	public Comment(String internalFieldName, int rowId, String author, String authorInternalName, Calendar timestamp,
 			String text) {
 		this.internalFieldName = internalFieldName;
 		this.rowId = rowId;
 		this.author = author;
+		this.authorInternalName = authorInternalName;
 		this.timestamp = timestamp;
 		this.text = text;
 	}
@@ -36,6 +37,10 @@ public class Comment implements CommentInfo {
 
 	public String getAuthor() {
 		return this.author;
+	}
+	
+	public String getAuthorInternalName() {
+		return this.authorInternalName;
 	}
 
 	public String getInternalFieldName() {
@@ -96,6 +101,8 @@ public class Comment implements CommentInfo {
 	}
 
 	private final String author;
+	
+	private final String authorInternalName;
 
 	private final String text;
 

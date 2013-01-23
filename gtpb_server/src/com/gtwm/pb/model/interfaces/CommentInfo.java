@@ -16,7 +16,15 @@ public interface CommentInfo extends Comparable<CommentInfo> {
 	 */
 	public String getTimestampString();
 	
+	/**
+	 * Get comment author's forename and surname
+	 */
 	public String getAuthor();
+	
+	/**
+	 * Get the author's internal user name
+	 */
+	public String getAuthorInternalName();
 	
 	/**
 	 * Return the identifier for the field this comment is about

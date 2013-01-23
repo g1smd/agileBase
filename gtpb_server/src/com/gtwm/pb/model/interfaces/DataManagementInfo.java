@@ -163,7 +163,7 @@ public interface DataManagementInfo {
 	/**
 	 * Get all comments attached to a particular field for a particular record
 	 */
-	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
+	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId) throws SQLException,
 			CantDoThatException;
 
 	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId,

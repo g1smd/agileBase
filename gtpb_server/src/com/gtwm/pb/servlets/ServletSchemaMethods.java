@@ -18,6 +18,7 @@
 package com.gtwm.pb.servlets;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -119,6 +120,7 @@ public final class ServletSchemaMethods {
 		if (companyName == null) {
 			throw new MissingParametersException("'companyname' is required to add a company");
 		}
+		Connection conn = null;
 		try {
 			HibernateUtil.startHibernateTransaction();
 			CompanyInfo company = new Company(companyName);
@@ -127,39 +129,70 @@ public final class ServletSchemaMethods {
 			authManager.addCompany(request, company);
 			// Create an initial module
 			ModuleInfo module = databaseDefn.addModule(request, company);
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			addCommentsTableForCompany(conn, company);
+			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (Exception ex) {
-			HibernateUtil.rollbackHibernateTransaction();
+			// TODO: catching a generic exception? Do we really need to do that?
+			rollbackConnections(conn);
 			throw new CantDoThatException("Company addition failed", ex);
 		} finally {
 			HibernateUtil.closeSession();
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
+	public static void addCommentsTableForCompany(Connection conn, CompanyInfo company)
+			throws SQLException {
+		String sqlCode = "CREATE TABLE dbint_comments_" + company.getInternalCompanyName();
+		sqlCode += "(created timestamp, author_internalusername varchar(1000), author varchar(1000), internalfieldname varchar(1000), rowid integer, text varchar(100000))";
+		PreparedStatement statement = conn.prepareStatement(sqlCode);
+		statement.execute();
+		statement.close();
+	}
+
+	private static void removeCommentsTable(Connection conn, CompanyInfo company) throws SQLException {
+		String sqlCode = "DROP TABLE dbint_comments_" + company.getInternalCompanyName();
+		PreparedStatement statement = conn.prepareStatement(sqlCode);
+		statement.execute();
+		statement.close();
+	}
+
 	public synchronized static void removeCompany(HttpServletRequest request,
-			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
+			DatabaseInfo databaseDefn) throws DisallowedException, MissingParametersException,
 			SQLException, ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		String internalCompanyName = request.getParameter("internalcompanyname");
 		if (internalCompanyName == null) {
 			throw new MissingParametersException("'internalcompanyname' is required to remove a company");
 		}
+		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		CompanyInfo company = authManager.getCompanyByInternalName(request, internalCompanyName);
-		HibernateUtil.startHibernateTransaction();
+		Connection conn = null;
 		try {
+			HibernateUtil.startHibernateTransaction();
 			authManager.removeCompany(request, company);
+			conn = databaseDefn.getDataSource().getConnection();
+			conn.setAutoCommit(false);
+			removeCommentsTable(conn, company);
+			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
-			HibernateUtil.rollbackHibernateTransaction();
+			rollbackConnections(conn);
 			// TODO? rollback memory
-
 			throw new CantDoThatException("Company removal failed", hex);
 		} catch (AgileBaseException pbex) {
-			HibernateUtil.rollbackHibernateTransaction();
+			rollbackConnections(conn);
 			// TODO? rollback memory
-
 			throw new CantDoThatException("Company removal failed", pbex);
 		} finally {
 			HibernateUtil.closeSession();
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 
