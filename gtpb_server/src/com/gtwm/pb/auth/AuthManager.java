@@ -226,7 +226,7 @@ public final class AuthManager implements AuthManagerInfo {
 					sqlCode += " FROM dbint_comments";
 					sqlCode += " WHERE author=? AND internalcompanyname=?";
 					PreparedStatement insertStatement = conn.prepareStatement(sqlCode);
-					insertStatement.setString(1, name);
+					insertStatement.setString(1, appUser.getInternalUserName());
 					insertStatement.setString(2, company.getInternalCompanyName());
 					int rows = insertStatement.executeUpdate();
 					insertStatement.close();
