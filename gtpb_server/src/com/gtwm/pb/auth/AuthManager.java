@@ -202,17 +202,33 @@ public final class AuthManager implements AuthManagerInfo {
 			conn = relationalDataSource.getConnection();
 			conn.setAutoCommit(false);
 			// Copy from original comments table to per-company tables
+			// First record the company for each comment
+			String sqlCode = "ALTER TABLE dbint_comments add column internalcompanyname varchar(1000)";
+			Statement statement = conn.createStatement();
+			statement.execute(sqlCode);
+			statement.close();
+			sqlCode = "UPDATE dbint_comments SET internalcompanyname=? WHERE internalfieldname=?";
+			PreparedStatement preparedStatement = conn.prepareStatement(sqlCode);
 			for (CompanyInfo company : auth.getCompanies()) {
 				ServletSchemaMethods.addCommentsTableForCompany(conn, company);
+				for (TableInfo table : company.getTables()) {
+					for (BaseField field : table.getFields()) {
+						preparedStatement.setString(1, company.getInternalCompanyName());
+						preparedStatement.setString(2, field.getInternalFieldName());
+						preparedStatement.executeUpdate();
+					}
+				}
+				preparedStatement.close();
 				for (AppUserInfo appUser : company.getUsers()) {
 					String name = appUser.getForename() + " " + appUser.getSurname();
-					String sqlCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName();
+					sqlCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName();
 					sqlCode += "(created, author_internalusername, author, internalfieldname, rowid, text)";
 					sqlCode += " SELECT created, '" + name + "'::text, author, internalfieldname, rowid, text";
 					sqlCode += " FROM dbint_comments";
-					sqlCode += " WHERE author=?";
-					PreparedStatement preparedStatement = conn.prepareStatement(sqlCode);
+					sqlCode += " WHERE author=? AND internalcompanyname=?";
+					preparedStatement = conn.prepareStatement(sqlCode);
 					preparedStatement.setString(1, name);
+					preparedStatement.setString(2, company.getInternalCompanyName());
 					int rows = preparedStatement.executeUpdate();
 					preparedStatement.close();
 				}
