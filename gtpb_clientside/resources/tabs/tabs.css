@@ -469,13 +469,22 @@ img.file_preview {
   max-width: 100%;
 }
 
-.twitter.tweet, twitter.query {
+.twitter.tweet, .twitter.query {
   background-color: transparent;
   display: inline-block;
+  color: #656766;
+}
+
+.twitter.tweet .tweet_list li a, .twitter.query .tweet_list li a {
+  color: #656766;
 }
 
 .twitter.tweet .tweet_list, .twitter.query .tweet_list {
   background-color: transparent;
+}
+
+.twitter .tweet_avatar {
+  border-radius: 0.5em;
 }
 
 .upload_progress_container {
