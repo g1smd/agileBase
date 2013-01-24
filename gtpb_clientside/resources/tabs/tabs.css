@@ -649,7 +649,7 @@ span.comment_attribution {
 img.comment_author_picture {
   float: left;
   border-radius: 0.5em;
-  margin-right: 1em;
+  margin-bottom: 0.5em;
 }
 	
 /* Note: this is an example of how to make a character hang */
