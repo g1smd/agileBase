@@ -627,6 +627,7 @@ span.comment_text {
   display: inline-block;
   border-radius: 0.5em;
   float: left;
+  max-width: 85%; /* a bit bodgy to stop comment text going underneath profile photo */
 }
 
 span.comment_attribution {
