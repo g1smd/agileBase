@@ -29,6 +29,7 @@
 #foreach($comment in $comments)
   <div class="comment">
     #set($profileImage = false)
+    Author internal name $comment.getAuthorInternalName()<br>
     #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
     #if($profileImage)
       <img src="$profileImage" class="comment_author_picture" />
