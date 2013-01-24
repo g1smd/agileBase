@@ -635,6 +635,12 @@ span.comment_attribution {
   margin-top: 0.2em;
   margin-left: 0.2em;
 }
+
+img.comment_author_picture {
+  float: left;
+  border-radius: 0.5em;
+  margin-right: 1em;
+}
 	
 /* Note: this is an example of how to make a character hang */
 .currency_symbol {
