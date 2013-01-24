@@ -231,6 +231,11 @@ public interface ViewMethodsInfo {
 			throws DisallowedException, SQLException, ObjectNotFoundException, CodingErrorException;
 
 	/**
+	 * Return the location of the user's profile image, or null if they have none
+	 */
+	public String getUserProfileImage(String internalUserName) throws ObjectNotFoundException;
+	
+	/**
 	 * Calls DatabaseInfo#getDependentTables to retrieve a Set tables dependent
 	 * upon the Session Table
 	 * 
@@ -619,24 +624,6 @@ public interface ViewMethodsInfo {
 	 */
 	public AppUserInfo getLoggedInUser() throws DisallowedException, ObjectNotFoundException;
 
-	/**
-	 * Generated the code necessary to display a graph of report interrelations
-	 * for all reports in a module, by looking at joins. If a report joins to
-	 * any other reports/tables outside of this module, those are included as
-	 * well.
-	 * 
-	 * Generated graphviz code.
-	 * 
-	 * Writes the generated code to a file in the 'module_graphs' folder, with
-	 * the filename taken from the internal module name.
-	 * 
-	 * Also returns the code as a string
-	 * 
-	 * @see http://www.graphviz.org/
-	 */
-	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException,
-			ObjectNotFoundException;
-	
 	/**
 	 * Return whether a join is actively used in the report or is unecessary and can be removed
 	 */

@@ -1020,7 +1020,7 @@ public final class ServletSessionMethods {
 			String internalUserName, DatabaseInfo databaseDefn) throws ObjectNotFoundException,
 			DisallowedException {
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
-				internalUserName);
+				internalUserName, true);
 		sessionData.setUser(appUser);
 	}
 

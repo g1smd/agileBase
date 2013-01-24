@@ -366,17 +366,25 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 	
 	@Transient
-	public Boolean getHasProfilePhoto() {
+	private boolean getHasProfilePhoto() {
 		if (this.hasProfilePhoto != null) {
 			return this.hasProfilePhoto;
 		}
-		File profilePhoto = new File(this.webAppRoot + "profiles/" + this.getInternalUserName() + ".jpg");
+		File profilePhoto = new File(this.webAppRoot + "profiles/" + this.getInternalUserName() + ".jpg.40.jpg");
 		if (profilePhoto.exists()) {
 			this.hasProfilePhoto = true;
 		} else {
 			this.hasProfilePhoto = false;
 		}
 		return this.hasProfilePhoto;
+	}
+	
+	@Transient
+	public String getProfilePhoto() {
+		if (this.getHasProfilePhoto()) {
+			return this.webAppRoot + "profiles/" + this.getInternalUserName() + ".jpg.40.jpg";
+		}
+		return null;
 	}
 	
 	public void setHasProfilePhoto(boolean hasProfilePhoto) {

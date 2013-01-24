@@ -127,70 +127,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 		this.databaseDefn = databaseDefn;
 	}
 
-	public String getModuleGraphCode(ModuleInfo module) throws CodingErrorException, IOException,
-			ObjectNotFoundException {
-		Set<String> graphCodeLines = new LinkedHashSet<String>();
-		SortedSet<BaseReportInfo> reportsInModule = this.getReportsInModule(module);
-		for (BaseReportInfo report : reportsInModule) {
-			SimpleReportInfo simpleReport = (SimpleReportInfo) report;
-			Set<SimpleReportInfo> alreadyProcessedReports = new HashSet<SimpleReportInfo>();
-			alreadyProcessedReports.add(simpleReport);
-			graphCodeLines.addAll(this.getReportGraphCode(simpleReport, alreadyProcessedReports));
+	public String getUserProfileImage(String internalUserName) throws ObjectNotFoundException {
+		// Don't throw an ObjectNotFoundException if the user's not found, we don't want the template to stop rendering
+		AppUserInfo user = this.getAuthManager().getUserByInternalName(this.request, internalUserName, false);
+		if (user == null) {
+			return null;
 		}
-		String graphCode = "";
-		for (String graphCodeLine : graphCodeLines) {
-			graphCode += graphCodeLine + "\n";
-		}
-		graphCode = "digraph module_code {\n" + graphCode + "}\n";
-		String internalModuleName = module.getInternalModuleName();
-		String webAppRoot = this.databaseDefn.getDataManagement().getWebAppRoot();
-		String graphCodeFilename = webAppRoot + "module_graphs/" + internalModuleName + ".txt";
-		String graphFilename = webAppRoot + "module_graphs/" + internalModuleName + ".png";
-		String graphCodeFileContents = "";
-		// If newly generated code different from old, overwrite old
-		if ((new File(graphCodeFilename)).exists()) {
-			graphCodeFileContents = Helpers.readFile(graphCodeFilename);
-		}
-		if (!graphCode.equals(graphCodeFileContents)) {
-			Helpers.writeFile(graphCodeFilename, graphCode);
-			Runtime runtime = Runtime.getRuntime();
-			try {
-				Process dotProcess = runtime.exec("dot -Tpng -o " + graphFilename + " "
-						+ graphCodeFilename);
-				dotProcess.waitFor();
-			} catch (InterruptedException iex) {
-				logger.warn("Error creating graph for module " + module + ": " + iex);
-			} catch (IOException ioex) {
-				logger.warn("Unable to create graph for module " + module + ": " + ioex);
-			}
-		}
-		return graphCode;
-	}
-
-	private Set<String> getReportGraphCode(SimpleReportInfo report,
-			Set<SimpleReportInfo> alreadyProcessedReports) throws CodingErrorException {
-		Set<String> reportGraphCode = new LinkedHashSet<String>();
-		for (BaseReportInfo joinedReport : report.getJoinedReports()) {
-			SimpleReportInfo simpleJoinedReport = (SimpleReportInfo) joinedReport;
-			if (!simpleJoinedReport.equals(report)) {
-				String reportGraphCodeLine = "\"" + report.getModule() + " : " + report + "\" ->"
-						+ "\"" + simpleJoinedReport.getModule() + " : " + simpleJoinedReport
-						+ "\" [shape=box];";
-				reportGraphCode.add(reportGraphCodeLine);
-				if (!alreadyProcessedReports.contains(simpleJoinedReport)) {
-					alreadyProcessedReports.add(simpleJoinedReport);
-					Set<String> reportGraphCodeLines = this.getReportGraphCode(simpleJoinedReport,
-							alreadyProcessedReports);
-					reportGraphCode.addAll(reportGraphCodeLines);
-				}
-			}
-		}
-		for (TableInfo joinedTable : report.getJoinedTables()) {
-			String reportGraphCodeLine = "\"" + report.getModule() + " : " + report
-					+ "\" -> \"[table] " + joinedTable + "\" [shape=box];";
-			reportGraphCode.add(reportGraphCodeLine);
-		}
-		return reportGraphCode;
+		return user.getProfilePhoto();
 	}
 
 	/**

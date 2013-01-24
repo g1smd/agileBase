@@ -2806,7 +2806,7 @@ public final class ServletSchemaMethods {
 					"internalusername is necessary to specify the user when hiding a report from them");
 		}
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
-				internalUserName);
+				internalUserName, true);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -2837,7 +2837,7 @@ public final class ServletSchemaMethods {
 					"internalusername is necessary to specify the user when hiding a report from them");
 		}
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
-				internalUserName);
+				internalUserName, true);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);
@@ -3047,7 +3047,7 @@ public final class ServletSchemaMethods {
 					ServletUtilMethods.DO_NOT_USE_SESSION);
 		}
 		AppUserInfo appUser = databaseDefn.getAuthManager().getUserByInternalName(request,
-				internalUserName);
+				internalUserName, true);
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(appUser);

@@ -176,13 +176,11 @@ public interface AppUserInfo {
 	 */
 	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException,
 			MessagingException;
-
+	
 	/**
-	 * Returns true if the user has a profile photo, false if not and null if
-	 * unknown. This is used as a caching mechanism to negate the need for a file
-	 * lookup to check each time a profile photo is requested
+	 * Returns the location of the profile image if any, or null otherwise
 	 */
-	public Boolean getHasProfilePhoto();
+	public String getProfilePhoto();
 	
 	public void setHasProfilePhoto(boolean hasProfilePhoto) throws CantDoThatException;
 

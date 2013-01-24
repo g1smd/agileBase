@@ -199,7 +199,7 @@ public final class ServletAuthMethods {
 		if (internalUserName == null) {
 			appUser = sessionData.getUser();
 		} else {
-			appUser = authManager.getUserByInternalName(request, internalUserName);
+			appUser = authManager.getUserByInternalName(request, internalUserName, true);
 		}
 		if (appUser == null) {
 			throw new ObjectNotFoundException(
@@ -244,7 +244,7 @@ public final class ServletAuthMethods {
 		AppUserInfo user;
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
 		if (internalUserName != null) {
-			user = authManager.getUserByInternalName(request, internalUserName);
+			user = authManager.getUserByInternalName(request, internalUserName, true);
 		} else {
 			user = authManager.getLoggedInUser(request);
 		}
@@ -286,7 +286,7 @@ public final class ServletAuthMethods {
 		if (internalUserName == null) {
 			appUser = sessionData.getUser();
 		} else {
-			appUser = authManager.getUserByInternalName(request, internalUserName);
+			appUser = authManager.getUserByInternalName(request, internalUserName, true);
 		}
 		if (appUser == null) {
 			throw new ObjectNotFoundException(
@@ -493,7 +493,7 @@ public final class ServletAuthMethods {
 					authManager.addRolePrivilege(request, role, privilegeType, table);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName, true);
 					authManager.addUserPrivilege(request, appUser, privilegeType, table);
 				}
 			} else {
@@ -503,7 +503,7 @@ public final class ServletAuthMethods {
 					authManager.addRolePrivilege(request, role, privilegeType);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName, true);
 					authManager.addUserPrivilege(request, appUser, privilegeType);
 				}
 			}
@@ -551,7 +551,7 @@ public final class ServletAuthMethods {
 					authManager.removeRolePrivilege(request, role, privilegeType, table);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName, true);
 					authManager.removeUserPrivilege(request, appUser, privilegeType, table);
 				}
 			} else {
@@ -561,7 +561,7 @@ public final class ServletAuthMethods {
 					authManager.removeRolePrivilege(request, role, privilegeType);
 				}
 				if (internalUserName != null) {
-					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName);
+					AppUserInfo appUser = authManager.getUserByInternalName(request, internalUserName, true);
 					authManager.removeUserPrivilege(request, appUser, privilegeType);
 				}
 			}
@@ -617,7 +617,7 @@ public final class ServletAuthMethods {
 				// user-specific privileges
 				AppUserInfo user = null;
 				if (internalUserName != null) {
-					user = authManager.getUserByInternalName(request, internalUserName);
+					user = authManager.getUserByInternalName(request, internalUserName, true);
 				} else {
 					// lookup user from session
 					user = sessionData.getUser();
@@ -713,7 +713,7 @@ public final class ServletAuthMethods {
 			HibernateUtil.startHibernateTransaction();
 			// if removing from individual user
 			if (internalUserName != null) {
-				AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
+				AppUserInfo user = authManager.getUserByInternalName(request, internalUserName, true);
 				for (PrivilegeType testPrivilegeType : PrivilegeType.values()) {
 					if (testPrivilegeType.isObjectSpecificPrivilege()) {
 						if (authManager.specifiedUserHasPrivilege(request, testPrivilegeType, user, table)) {
@@ -787,7 +787,7 @@ public final class ServletAuthMethods {
 			throw new MissingParametersException("'internalrolename' and 'internalusername' are required");
 		}
 		if (user == null) {
-			user = authManager.getUserByInternalName(request, internalUserName);
+			user = authManager.getUserByInternalName(request, internalUserName, true);
 		}
 		AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 		// begin updating model and persisting changes
@@ -821,7 +821,7 @@ public final class ServletAuthMethods {
 					"'internalrolename' and 'internalusername' parameters are required");
 		}
 		AuthManagerInfo authManager = databaseDefn.getAuthManager();
-		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName);
+		AppUserInfo user = authManager.getUserByInternalName(request, internalUserName, true);
 		AppRoleInfo role = authManager.getRoleByInternalName(internalRoleName);
 		// begin updating model and persisting changes
 		HibernateUtil.startHibernateTransaction();

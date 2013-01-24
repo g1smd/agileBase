@@ -130,8 +130,11 @@ public interface AuthManagerInfo {
 			throws DisallowedException, ObjectNotFoundException, CodingErrorException,
 			CantDoThatException;
 
-	public AppUserInfo getUserByInternalName(HttpServletRequest request, String internalUserName)
-			throws ObjectNotFoundException, DisallowedException;
+	/**
+	 * @param throwNotFoundException	If true, throw an exception when the user's not found, if false return null
+	 */
+	public AppUserInfo getUserByInternalName(HttpServletRequest request, String internalUserName, boolean throwNotFoundException)
+			throws ObjectNotFoundException;
 
 	/**
 	 * @throws DisallowedException

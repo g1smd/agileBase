@@ -190,7 +190,7 @@ public final class AuthManager implements AuthManagerInfo {
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
-		//createCommentsTables(relationalDataSource);
+		// createCommentsTables(relationalDataSource);
 		// Re-enable JavaMelody
 		System.setProperty("javamelody.disabled", "false");
 	}
@@ -223,7 +223,8 @@ public final class AuthManager implements AuthManagerInfo {
 					String internalUserName = appUser.getInternalUserName();
 					sqlCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName();
 					sqlCode += "(created, author_internalusername, author, internalfieldname, rowid, text)";
-					sqlCode += " SELECT created, '" + internalUserName + "'::text, author, internalfieldname, rowid, text";
+					sqlCode += " SELECT created, '" + internalUserName
+							+ "'::text, author, internalfieldname, rowid, text";
 					sqlCode += " FROM dbint_comments";
 					sqlCode += " WHERE author=? AND internalcompanyname=?";
 					PreparedStatement insertStatement = conn.prepareStatement(sqlCode);
@@ -490,7 +491,7 @@ public final class AuthManager implements AuthManagerInfo {
 	}
 
 	public synchronized AppUserInfo getUserByInternalName(HttpServletRequest request,
-			String internalUserName) throws ObjectNotFoundException, DisallowedException {
+			String internalUserName, boolean throwNotFoundException) throws ObjectNotFoundException {
 		AppUserInfo foundUser = null;
 		for (AppUserInfo user : ((Authenticator) this.authenticator).getUsers()) {
 			if (user.getInternalUserName().equals(internalUserName)) {
@@ -498,17 +499,13 @@ public final class AuthManager implements AuthManagerInfo {
 				break; // user found so no need to continue iterating
 			}
 		}
-		if (!(this.authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE))) {
-			if (foundUser == null) {
-				throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
-			}
-			if (!foundUser.getUserName().equals(request.getRemoteUser())) {
-				throw new DisallowedException(this.getLoggedInUser(request), PrivilegeType.ADMINISTRATE);
-			}
-		}
 		if (foundUser == null) {
-			throw new ObjectNotFoundException("User with internal name " + internalUserName
-					+ " not found");
+			if (throwNotFoundException) {
+				throw new ObjectNotFoundException("User with internal name " + internalUserName
+						+ " not found");
+			} else {
+				return null;
+			}
 		} else {
 			return foundUser;
 		}
@@ -960,7 +957,7 @@ public final class AuthManager implements AuthManagerInfo {
 		AppUserInfo user = null;
 		String internalUserName = request.getParameter("internalusername");
 		if (internalUserName != null) {
-			user = this.getUserByInternalName(request, internalUserName);
+			user = this.getUserByInternalName(request, internalUserName, true);
 		} else {
 			String userName = request.getParameter("username");
 			if (userName != null) {
