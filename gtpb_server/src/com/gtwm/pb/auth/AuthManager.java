@@ -190,7 +190,7 @@ public final class AuthManager implements AuthManagerInfo {
 		} catch (RuntimeException rtex) {
 			throw rtex;
 		}
-		createCommentsTables(relationalDataSource);
+		//createCommentsTables(relationalDataSource);
 		// Re-enable JavaMelody
 		System.setProperty("javamelody.disabled", "false");
 	}
