@@ -382,7 +382,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	@Transient
 	public String getProfilePhoto() {
 		if (this.getHasProfilePhoto()) {
-			return this.webAppRoot + "profiles/" + this.getInternalUserName() + ".jpg.40.jpg";
+			return "profiles/" + this.getInternalUserName() + ".jpg.40.jpg";
 		}
 		return null;
 	}
