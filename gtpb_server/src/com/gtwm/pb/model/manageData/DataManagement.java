@@ -1660,6 +1660,11 @@ public final class DataManagement implements DataManagementInfo {
 		op.resize(width, height);
 		op.addImage(); // Placeholder for output PNG
 		String newExtension = (new FileValueDefn(inputFilePath)).getPreviewExtension();
+		int filenameSize = width;
+		if (filenameSize == 250) {
+			// Profile photos are saves as 250x250 but for backwards compatibility should still be named 500
+			filenameSize = 500;
+		}
 		try {
 			String convertPath = inputFilePath;
 			if (inputFilePath.endsWith("pdf")) {
@@ -1668,7 +1673,7 @@ public final class DataManagement implements DataManagementInfo {
 				newExtension = "png";
 			}
 			convert.run(op,
-					new Object[] { convertPath, inputFilePath + "." + width + "." + newExtension });
+					new Object[] { convertPath, inputFilePath + "." + filenameSize + "." + newExtension });
 		} catch (IOException ioex) {
 			throw new FileUploadException("IO error while converting " + inputFilePath + " to "
 					+ newExtension + ": " + ioex);
