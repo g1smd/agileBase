@@ -58,6 +58,7 @@
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         <input type="hidden" name="upload_profile_picture" />
         <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> 
+        <input type="hidden" name="internalusername" value="$internalUserName" />
         #if($sessionUser.getProfilePhoto())
           <img src="$sessionUser.getProfilePhoto()" class="edit_image" />
         #else
