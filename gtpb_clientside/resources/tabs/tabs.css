@@ -703,6 +703,12 @@ img.comment_author_picture {
   line-height: 1em;
 }
 
+#reportData .block.two_cols.non_section h1 {
+  column-span: all;
+  -webkit-column-span: all;
+  -moz-column-span: all;
+}
+
 #reportData .block.two_cols.non_section input, #reportData .block.two_cols.non_section select {
   float: none;
   top: 0;
