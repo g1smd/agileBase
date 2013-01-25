@@ -53,7 +53,7 @@
   </div>
   -->
   <div class="container style="height:200px;">
-    <div class="app" style="height: 100px; width: 80px; background-color: red;"></div>
+    <div class="app"></div>
     <div class="app"></div>
     <div class="app"></div>
     <div class="app"></div>

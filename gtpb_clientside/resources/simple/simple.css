@@ -30,26 +30,18 @@
   background-color: green;
   float: left;
   transition-duration: 1s;
-  transition-property: opacity, width, height;
-  -moz-transition-duration: 1s;
-  -moz-transition-property: opacity, width, height;
-  -webkit-transition-duration: 1s;
-  -webkit-transition-property: opacity, width, height;
+  transition-property: opacity, width, height, margin-right;
 }
 
 .app.expanded {
   width: 100%;
   height: 100px;
-  transition-duration: 1s;
-  transition-property: opacity, width, height;
-  opacity: 0.8;
 }
 
 .app.notfocus {
   background-color: blue;
   opacity: 0;
   width: 0; 
+  margin-right: 0;
   /* height: 10px; */
-  transition-duration: 1s;
-  transition-property: opacity, width, height;
 }
