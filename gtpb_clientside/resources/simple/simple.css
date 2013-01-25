@@ -14,7 +14,7 @@
 
 .app {
   transition-duration: 1s;
-  transition-property: width, height, opacity;
+  transition-property: opacity, width, height;
 }
 
 .app.expanded {
