@@ -36,6 +36,9 @@
 .app.expanded {
   width: 100%;
   height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .app.notfocus {
