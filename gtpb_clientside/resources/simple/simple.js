@@ -5,6 +5,7 @@ $(document).ready(function() {
   if($("#infovis").size() > 0) {
   	loadTreemap();
   }
+  appEvents();
 }); // end of document.ready
 
 function appEvents() {
