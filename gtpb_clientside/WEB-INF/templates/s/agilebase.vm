@@ -8,16 +8,6 @@
     <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
-    <style>
-      .app {
-        height: 45px;
-        width: 45px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-        background-color: green;
-        float: left;
-      }
-    </style>
     <title>Agilebase</title>
     <script src="resources/jquery.js" language="JavaScript"></script>
     <script language="JavaScript" src="resources/simple/simple.js"></script>

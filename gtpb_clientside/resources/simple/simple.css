@@ -13,6 +13,13 @@
 }
 
 .app {
+  opacity: 1;
+  height: 45px;
+  width: 45px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  background-color: green;
+  float: left;
   transition-duration: 1s;
   transition-property: opacity, width, height;
 }
