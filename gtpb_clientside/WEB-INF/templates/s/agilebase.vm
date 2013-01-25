@@ -20,30 +20,30 @@
       <div class="span8">
         <div class="row">
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  margin-bottom: 5px; width: 100%; background-color: green;"></div>
           </div>
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
         </div>
         <div class="row">
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
           <div class="span2">
-            <div style="height: 50px; width: 100%; background-color: green;"></div>
+            <div style="height: 40px; margin-bottom: 5px;  width: 100%; background-color: green;"></div>
           </div>
         </div>
       </div>
