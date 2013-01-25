@@ -30,7 +30,7 @@
   background-color: green;
   float: left;
   transition-duration: 1s;
-  transition-property: opacity, width, height, margin-right;
+  transition-property: opacity, width, height, margin-right, top, left;
 }
 
 .app.expanded {
