@@ -1,7 +1,7 @@
 <html>
 <head>
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
     <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
