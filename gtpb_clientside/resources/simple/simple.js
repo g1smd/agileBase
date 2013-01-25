@@ -13,10 +13,10 @@ function appEvents() {
 	$('.app').click(function() {
 		var app = $(this);
 		if (app.hasClass("expanded")) {
-			$(".app").not(app).removeClass("hidden");
+			$(".app").not(app).removeClass("notfocus");
 			app.removeClass("expanded");
 		} else {
-			$(".app").not(app).addClass("hidden");
+			$(".app").not(app).addClass("notfocus");
 			app.addClass("expanded");
 		}
 	})
