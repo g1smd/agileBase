@@ -15,6 +15,10 @@
 .container {
   transition-duration: 1s;
   transition-property: opacity, width, height;
+  -moz-transition-duration: 1s;
+  -moz-transition-property: opacity, width, height;
+  -webkit-transition-duration: 1s;
+  -webkit-transition-property: opacity, width, height;
 }
 
 .app {
