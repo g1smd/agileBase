@@ -12,6 +12,11 @@
     overflow:hidden;  
 }
 
+.app {
+  transition-duration: 1s;
+  transition-property: width, height, opacity;
+}
+
 .app.expanded {
   width: 100%;
   height: 100px;

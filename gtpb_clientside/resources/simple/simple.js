@@ -4,8 +4,9 @@
 $(document).ready(function() {
   if($("#infovis").size() > 0) {
   	loadTreemap();
+  } else {
+    appEvents();
   }
-  appEvents();
 }); // end of document.ready
 
 function appEvents() {
