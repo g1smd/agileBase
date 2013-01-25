@@ -47,8 +47,8 @@
 
 .app.notfocus {
   background-color: blue;
-  opacity: 0.5;
-  width: 10px; 
+  opacity: 0;
+  width: 0; 
   /* height: 10px; */
   transition-duration: 1s;
   transition-property: opacity, width, height;
