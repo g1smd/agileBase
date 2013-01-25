@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
     <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
