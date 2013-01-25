@@ -43,5 +43,6 @@
   opacity: 0;
   width: 0; 
   margin-right: 0;
+  transition-duration: 0.9s; /* stop placement 'jump' at end of transition - hide faster than expand */
   /* height: 10px; */
 }
