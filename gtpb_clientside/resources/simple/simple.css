@@ -42,9 +42,11 @@
   height: 100px;
   transition-duration: 1s;
   transition-property: opacity, width, height;
+  opacity: 0.8;
 }
 
 .app.hidden {
+  background-color: blue;
   opacity: 0.5;
   width: 10px;
   height: 10px;
