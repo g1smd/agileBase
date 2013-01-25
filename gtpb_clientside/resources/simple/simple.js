@@ -2,6 +2,25 @@
  * JS used for the simple interface
  */
 $(document).ready(function() {
+  if($("#infovis").size() > 0) {
+  	loadTreemap();
+  }
+}); // end of document.ready
+
+function appEvents() {
+	$('.app').click(function() {
+		var app = $(this);
+		if (app.hasClass("expanded")) {
+			$(".app").not(app).removeClass("hidden");
+			app.removeClass("expanded");
+		} else {
+			$(".app").not(app).addClass("hidden");
+			app.addClass("expanded");
+		}
+	})
+}
+
+function loadTreemap() {
 	$.getJSON("AppController.servlet?return=s/treemap_json&returntype=json", function(treemapJson) {
 		var tm = new $jit.TM.Squarified({  
 		  //where to inject the visualization  
@@ -57,4 +76,4 @@ $(document).ready(function() {
 		tm.refresh();		
 	}); // end of treemap getJSON
 	fSparkLines();
-}); // end of document.ready
+}
