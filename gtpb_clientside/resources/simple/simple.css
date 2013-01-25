@@ -12,6 +12,11 @@
     overflow:hidden;  
 }
 
+.container {
+  transition-duration: 1s;
+  transition-property: opacity, width, height;
+}
+
 .app {
   opacity: 1;
   height: 45px;
