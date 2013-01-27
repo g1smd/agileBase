@@ -65,17 +65,13 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	 * @param availableDataStores
 	 *            A list of tables & reports that the calculation can reference
 	 */
-	public ReportCalcFieldDefn(SimpleReportInfo parentReport, String internalFieldName,
+	public ReportCalcFieldDefn(SimpleReportInfo parentReport,
 			String fieldName, String calculationDefn, DatabaseFieldType dbFieldType,
 			Map<TableInfo, Set<BaseReportInfo>> availableDataStores) throws CantDoThatException,
 			CodingErrorException {
 		super.setParentReport(parentReport);
 		super.setReportFieldIsFromDirect(parentReport);
-		if (internalFieldName == null) {
-			this.setBaseFieldInternalFieldNameDirect(RandomString.generate());
-		} else {
-			this.setBaseFieldInternalFieldNameDirect(internalFieldName);
-		}
+		this.setBaseFieldInternalFieldNameDirect(RandomString.generate());
 		this.setBaseFieldNameDirect(fieldName.trim());
 		this.setCalculationDefinitionDirect(calculationDefn);
 		this.setDbTypeDirect(dbFieldType);

@@ -21,14 +21,10 @@ public class CommentFeedFieldDefn extends AbstractField implements CommentFeedFi
 	private CommentFeedFieldDefn() {
 	}
 	
-	public CommentFeedFieldDefn(TableInfo tableContainingField, String internalFieldName, String fieldName,
+	public CommentFeedFieldDefn(TableInfo tableContainingField, String fieldName,
 			String fieldDesc) throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);

@@ -58,14 +58,9 @@ public class TableDefn implements TableInfo {
 	protected TableDefn() {
 	}
 
-	public TableDefn(String internalTableName, String tableName, String tableDesc) {
+	public TableDefn(String tableName, String tableDesc) {
 		this.setTableName(tableName);
-		// store db friendly version of the table name
-		if (internalTableName == null) {
-			this.setInternalTableName(RandomString.generate());
-		} else {
-			this.setInternalTableName(internalTableName);
-		}
+		this.setInternalTableName(RandomString.generate());
 		// don't store a null description, the Velocity templating language
 		// doesn't like nulls
 		if (tableDesc == null) {

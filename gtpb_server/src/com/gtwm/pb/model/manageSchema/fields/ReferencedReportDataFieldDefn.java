@@ -41,15 +41,11 @@ public class ReferencedReportDataFieldDefn extends AbstractField implements
 	private ReferencedReportDataFieldDefn() {
 	}
 
-	public ReferencedReportDataFieldDefn(TableInfo tableContainingField, String internalFieldName,
+	public ReferencedReportDataFieldDefn(TableInfo tableContainingField,
 			String fieldName, String fieldDesc, BaseReportInfo referencedReport, FieldPrintoutSetting printoutSetting)
 			throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		try {

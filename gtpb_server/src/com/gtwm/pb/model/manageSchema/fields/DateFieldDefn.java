@@ -50,14 +50,10 @@ public class DateFieldDefn extends AbstractField implements DateField {
 
 	// boolean unique, boolean notNull,
 	//boolean defaultToNow, int dateResolution, Integer maxAgeYears, Integer minAgeYears, FieldPrintoutSetting printoutSetting
-	public DateFieldDefn(TableInfo tableContainingField, String internalFieldName,
+	public DateFieldDefn(TableInfo tableContainingField,
 			String fieldName, String fieldDesc, DateFieldOptions fieldOptions) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(fieldOptions.getUnique());

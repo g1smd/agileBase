@@ -66,14 +66,10 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	 * Constructs an object which is related to another particular field
 	 */
 	public RelationFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, TableInfo relatedTable, BaseField relatedField, RelationFieldOptions fieldOptions)
+			TableInfo relatedTable, BaseField relatedField, RelationFieldOptions fieldOptions)
 			throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		this.setDataSource(dataSource);
 		this.setRelatedTable(relatedTable);
 		this.setRelatedField(relatedField);

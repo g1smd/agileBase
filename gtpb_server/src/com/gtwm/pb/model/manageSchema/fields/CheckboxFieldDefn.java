@@ -37,14 +37,10 @@ public class CheckboxFieldDefn extends AbstractField implements CheckboxField {
 	protected CheckboxFieldDefn() {
 	}
 
-	public CheckboxFieldDefn(TableInfo tableContainingField, String internalFieldName,
+	public CheckboxFieldDefn(TableInfo tableContainingField,
 			String fieldName, String fieldDesc, Boolean defaultValue, boolean hidden, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		this.setDefault(defaultValue);

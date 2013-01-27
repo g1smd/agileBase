@@ -39,14 +39,10 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 	protected SequenceFieldDefn() {
 	}
 
-	public SequenceFieldDefn(TableInfo tableContainingField, String internalFieldName,
+	public SequenceFieldDefn(TableInfo tableContainingField,
 			String fieldName, String fieldDesc, FieldPrintoutSetting printoutSetting) throws CantDoThatException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(true);

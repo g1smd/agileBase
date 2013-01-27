@@ -39,14 +39,10 @@ public class DurationFieldDefn extends AbstractField implements DurationField {
     protected DurationFieldDefn() {
     }
 
-    public DurationFieldDefn(TableInfo tableContainingField, String internalFieldName, String fieldName, String fieldDesc, boolean notNull,
+    public DurationFieldDefn(TableInfo tableContainingField, String fieldName, String fieldDesc, boolean notNull,
             int durationResolution, DurationValue defaultValue, int durationScale) throws CantDoThatException {
         super.setTableContainingField(tableContainingField);
-        if (internalFieldName == null) {
-            super.setInternalFieldName(RandomString.generate());
-        } else {
-            super.setInternalFieldName(internalFieldName);
-        }
+        super.setInternalFieldName(RandomString.generate());
         super.setFieldName(fieldName);
         super.setFieldDescription(fieldDesc);
         this.setDefault(defaultValue);

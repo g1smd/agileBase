@@ -38,14 +38,10 @@ public class SeparatorFieldDefn extends AbstractField implements SeparatorField 
 	private SeparatorFieldDefn() {
 	}
 	
-	public SeparatorFieldDefn(TableInfo tableContainingField, String internalFieldName,
+	public SeparatorFieldDefn(TableInfo tableContainingField, 
 			String fieldName, String fieldDesc) throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);

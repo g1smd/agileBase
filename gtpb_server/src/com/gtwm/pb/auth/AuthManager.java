@@ -176,7 +176,7 @@ public final class AuthManager implements AuthManagerInfo {
 					String masterUsername = "master";
 					CompanyInfo masterCompany = new Company("Master Company");
 					((Authenticator) this.authenticator).addCompany(masterCompany);
-					AppUserInfo masterUser = new AppUser(masterCompany, null, masterUsername, "Master",
+					AppUserInfo masterUser = new AppUser(masterCompany, masterUsername, "Master",
 							"User", masterPassword, "", "", false);
 					((Authenticator) this.authenticator).addUser(masterUser);
 					((Authenticator) this.authenticator).addUserPrivilege(masterUser, PrivilegeType.MASTER);
@@ -340,10 +340,10 @@ public final class AuthManager implements AuthManagerInfo {
 		String adminUsername = "admin" + company.getCompanyName().toLowerCase();
 		adminUsername = adminUsername.replaceAll("\\W", "");
 		String adminPassword = RandomString.generate();
-		AppUserInfo adminUser = new AppUser(company, null, adminUsername, "User", "Admin",
+		AppUserInfo adminUser = new AppUser(company, adminUsername, "User", "Admin",
 				adminPassword, "", "", false);
 		String adminRolename = adminUsername;
-		AppRoleInfo adminRole = new AppRole(company, null, adminRolename);
+		AppRoleInfo adminRole = new AppRole(company, adminRolename);
 		// no mapping from role to authenticator so we have to explicitly save it
 		HibernateUtil.currentSession().save(adminRole);
 		try {

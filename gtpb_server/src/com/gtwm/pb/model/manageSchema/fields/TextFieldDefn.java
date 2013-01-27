@@ -72,16 +72,12 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	}
 
 	public TextFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, String fieldName, String fieldDesc, 
+		  String fieldName, String fieldDesc, 
 			boolean hidden, TextFieldOptions fieldOptions) throws CantDoThatException {
 		checkOptionsConsistency(fieldOptions.getTextContentSize(), fieldOptions.isUsesLookup(), fieldOptions.getUnique());
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(fieldOptions.getUnique());

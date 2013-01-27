@@ -61,15 +61,11 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 	}
 
 	public IntegerFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, String fieldName, String fieldDesc, IntegerFieldOptions fieldOptions)
+			String fieldName, String fieldDesc, IntegerFieldOptions fieldOptions)
 			throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(fieldOptions.getUnique());

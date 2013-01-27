@@ -112,7 +112,6 @@ public final class ServletAuthMethods {
 	public synchronized static void addUser(SessionDataInfo sessionData, HttpServletRequest request,
 			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
-		String internalUserName = request.getParameter("internalusername");
 		String baseUsername = request.getParameter(AppUserInfo.USERNAME.toLowerCase(Locale.UK));
 		String username = baseUsername;
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
@@ -159,7 +158,7 @@ public final class ServletAuthMethods {
 			useCustomUI = Helpers.valueRepresentsBooleanTrue(useCustomUIString);
 		}
 		// begin updating model and persisting changes
-		AppUserInfo newUser = new AppUser(company, internalUserName, username, surname, forename,
+		AppUserInfo newUser = new AppUser(company, username, surname, forename,
 				password, email, custom1, useCustomUI);
 		HibernateUtil.startHibernateTransaction();
 		try {
@@ -353,7 +352,6 @@ public final class ServletAuthMethods {
 			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
-		String internalRoleName = request.getParameter("internalrolename");
 		String baseRoleName = request.getParameter("rolename");
 		String roleName = baseRoleName;
 		if (baseRoleName == null) {
@@ -373,7 +371,7 @@ public final class ServletAuthMethods {
 			}
 		}
 		// begin updating model and persisting changes
-		AppRole role = new AppRole(company, internalRoleName, roleName);
+		AppRole role = new AppRole(company, roleName);
 		HibernateUtil.startHibernateTransaction();
 		try {
 			HibernateUtil.currentSession().save(role);

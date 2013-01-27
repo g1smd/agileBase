@@ -60,16 +60,11 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 	protected DecimalFieldDefn() {
 	}
 
-	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-			String internalFieldName, String fieldName, String fieldDesc, DecimalFieldOptions fieldOptions)
+	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField, String fieldName, String fieldDesc, DecimalFieldOptions fieldOptions)
 			throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
-		if (internalFieldName == null) {
-			super.setInternalFieldName(RandomString.generate());
-		} else {
-			super.setInternalFieldName(internalFieldName);
-		}
+		super.setInternalFieldName(RandomString.generate());
 		super.setFieldName(fieldName);
 		super.setFieldDescription(fieldDesc);
 		super.setUnique(fieldOptions.getUnique());

@@ -56,7 +56,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private AppUser() {
 	}
 
-	public AppUser(CompanyInfo company, String internalUserName, String userName, String surname,
+	public AppUser(CompanyInfo company, String userName, String surname,
 			String forename, String password, String email, String custom1, boolean useCustomUI) throws MissingParametersException,
 			CantDoThatException, CodingErrorException {
 		if (userName == null || password == null) {
@@ -66,11 +66,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			throw new MissingParametersException("User name or password blank");
 		}
 		this.setCompany(company);
-		if (internalUserName == null) {
-			this.setInternalUserName(RandomString.generate());
-		} else {
-			this.setInternalUserName(internalUserName);
-		}
+		this.setInternalUserName(RandomString.generate());
 		this.setUserName(userName);
 		if (surname == null) {
 			this.setSurname("");

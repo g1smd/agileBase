@@ -76,13 +76,9 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 	 * @param parentTable
 	 *            The table holding the report
 	 */
-	public SimpleReportDefn(TableInfo parentTable, String internalReportName, String reportName,
+	public SimpleReportDefn(TableInfo parentTable, String reportName,
 			String reportDesc, ModuleInfo module) {
-		if (internalReportName == null) {
-			super.setInternalReportName(RandomString.generate());
-		} else {
-			super.setInternalReportName(internalReportName);
-		}
+		super.setInternalReportName(RandomString.generate());
 		super.setReportName(reportName);
 		super.setReportDescription(reportDesc);
 		super.setParentTable(parentTable);

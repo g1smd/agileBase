@@ -288,7 +288,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setTextCase(TextCase.ANY);
 		fieldOptions.setTextContentSize(TextContentSizes.FEW_PARAS.getNumChars());
 		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NAME_AND_VALUE);
-		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table, null,
+		TextField commentFeedField = new TextFieldDefn(this.relationalDataSource, table,
 				HiddenFields.COMMENTS_FEED.getFieldName(),
 				HiddenFields.COMMENTS_FEED.getFieldDescription(), TextField.HIDDEN, fieldOptions);
 		HibernateUtil.currentSession().save(commentFeedField);
@@ -306,7 +306,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setNotNull(true);
 		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NO_PRINTOUT);
 		fieldOptions.setUnique(false);
-		DateField dateCreatedField = new DateFieldDefn(table, null,
+		DateField dateCreatedField = new DateFieldDefn(table,
 				HiddenFields.DATE_CREATED.getFieldName(), HiddenFields.DATE_CREATED.getFieldDescription(),
 				fieldOptions);
 		dateCreatedField.setHidden(DateFieldDefn.HIDDEN);
@@ -326,7 +326,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setTieDownLookup(false);
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
-		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table, null,
+		TextField createdByField = new TextFieldDefn(this.relationalDataSource, table,
 				HiddenFields.CREATED_BY.getFieldName(), HiddenFields.CREATED_BY.getFieldDescription(),
 				TextField.HIDDEN, fieldOptions);
 		HibernateUtil.currentSession().save(createdByField);
@@ -343,7 +343,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setNotNull(false);
 		fieldOptions.setPrintoutSetting(FieldPrintoutSetting.NO_PRINTOUT);
 		fieldOptions.setUnique(false);
-		DateField lastModifiedField = new DateFieldDefn(table, null,
+		DateField lastModifiedField = new DateFieldDefn(table,
 				HiddenFields.LAST_MODIFIED.getFieldName(),
 				HiddenFields.LAST_MODIFIED.getFieldDescription(), fieldOptions);
 		lastModifiedField.setHidden(DateFieldDefn.HIDDEN);
@@ -364,7 +364,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setTieDownLookup(false);
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
-		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table, null,
+		TextField modifiedByField = new TextFieldDefn(this.relationalDataSource, table,
 				HiddenFields.MODIFIED_BY.getFieldName(), HiddenFields.MODIFIED_BY.getFieldDescription(),
 				TextField.HIDDEN, fieldOptions);
 		HibernateUtil.currentSession().save(modifiedByField);
@@ -374,7 +374,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	private void addRecordLockedFieldToTable(Connection conn, TableInfo table)
 			throws CantDoThatException, SQLException, ObjectNotFoundException, CodingErrorException {
-		CheckboxField recordLockedField = new CheckboxFieldDefn(table, null,
+		CheckboxField recordLockedField = new CheckboxFieldDefn(table,
 				HiddenFields.LOCKED.getFieldName(), HiddenFields.LOCKED.getFieldDescription(), false, true,
 				FieldPrintoutSetting.NO_PRINTOUT);
 		HibernateUtil.currentSession().save(recordLockedField);
@@ -392,7 +392,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldOptions.setStoresCurrency(false);
 		fieldOptions.setUnique(false);
 		fieldOptions.setUsesLookup(false);
-		IntegerField viewCountField = new IntegerFieldDefn(this.relationalDataSource, table, null,
+		IntegerField viewCountField = new IntegerFieldDefn(this.relationalDataSource, table,
 				HiddenFields.VIEW_COUNT.getFieldName(), HiddenFields.VIEW_COUNT.getFieldDescription(),
 				fieldOptions);
 		viewCountField.setHidden(true);
@@ -402,15 +402,15 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public TableInfo addTable(SessionDataInfo sessionData, HttpServletRequest request,
-			Connection conn, String internalTableName, String internalDefaultReportName,
-			String tableName, String internalPrimaryKeyName, String tableDesc) throws SQLException,
+			Connection conn,
+			String tableName, String tableDesc) throws SQLException,
 			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
 				PrivilegeType.ADMINISTRATE))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
 					PrivilegeType.ADMINISTRATE);
 		}
-		TableInfo newTable = new TableDefn(internalTableName, tableName, tableDesc);
+		TableInfo newTable = new TableDefn(tableName, tableDesc);
 		HibernateUtil.currentSession().save(newTable);
 		try {
 			String SQLCode = "CREATE TABLE " + newTable.getInternalTableName() + " ()";
@@ -418,13 +418,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 			statement.execute();
 			statement.close();
 			// Create an initial report for the table
-			SimpleReportInfo defaultReport = new SimpleReportDefn(newTable, internalDefaultReportName,
+			SimpleReportInfo defaultReport = new SimpleReportDefn(newTable,
 					"Default report", "A simple report of all items in the '" + tableName + "' data store",
 					null);
 			// The true passed means it is the default report
 			newTable.addReport(defaultReport, true);
 			// Add an auto-generated primary key to act as a row identifier
-			SequenceField primaryKeyField = new SequenceFieldDefn(newTable, internalPrimaryKeyName, "ID:"
+			SequenceField primaryKeyField = new SequenceFieldDefn(newTable, "ID:"
 					+ tableName, PRIMARY_KEY_DESCRIPTION, FieldPrintoutSetting.NO_PRINTOUT);
 			HibernateUtil.currentSession().save(primaryKeyField);
 			newTable.addField(primaryKeyField);
@@ -709,7 +709,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	public BaseReportInfo addReport(SessionDataInfo sessionData, HttpServletRequest request,
-			Connection conn, TableInfo table, String internalReportName, String reportName,
+			Connection conn, TableInfo table, String reportName,
 			String reportDesc, boolean populateReport) throws SQLException, DisallowedException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException, ObjectNotFoundException,
 			ObjectNotFoundException, MissingParametersException {
@@ -721,7 +721,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		SimpleReportInfo report = null;
 		// Put the new report in the current session module
 		ModuleInfo module = sessionData.getModule();
-		report = new SimpleReportDefn(table, internalReportName, reportName, reportDesc, module);
+		report = new SimpleReportDefn(table, reportName, reportDesc, module);
 		if (populateReport) {
 			// Populate the report initially with all fields in the table it's
 			// based on
@@ -1221,7 +1221,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private BaseField generateFieldObject(HttpServletRequest request, TableInfo table,
-			String fieldType, String internalFieldName, String fieldName, String fieldDesc)
+			String fieldType, String fieldName, String fieldDesc)
 			throws CodingErrorException, CantDoThatException, ObjectNotFoundException,
 			DisallowedException {
 		BaseField field = null;
@@ -1248,36 +1248,36 @@ public final class DatabaseDefn implements DatabaseInfo {
 		fieldName = fieldName.trim();
 		switch (fieldCategoryRequested) {
 		case DATE:
-			field = this.generateDateField(request, table, internalFieldName, fieldName, fieldDesc,
+			field = this.generateDateField(request, table, fieldName, fieldDesc,
 					basicOptions);
 			break;
 		case TEXT:
-			field = generateTextField(request, table, internalFieldName, fieldName, fieldDesc,
+			field = this.generateTextField(request, table, fieldName, fieldDesc,
 					basicOptions);
 			break;
 		case NUMBER:
-			field = generateNumberField(request, table, internalFieldName, fieldName, fieldDesc,
+			field = this.generateNumberField(request, table, fieldName, fieldDesc,
 					basicOptions);
 			break;
 		case SEQUENCE:
-			field = new SequenceFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+			field = new SequenceFieldDefn(table, fieldName, fieldDesc,
 					basicOptions.getPrintoutSetting());
 			break;
 		case CHECKBOX:
 			Boolean checkboxDefaultValue = HttpRequestUtil.getBooleanValue(request,
 					PossibleListOptions.CHECKBOXDEFAULT.getFormInputName());
-			field = new CheckboxFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+			field = new CheckboxFieldDefn(table, fieldName, fieldDesc,
 					checkboxDefaultValue, false, basicOptions.getPrintoutSetting());
 			break;
 		case FILE:
-			field = new FileFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+			field = new FileFieldDefn(table, fieldName, fieldDesc,
 					basicOptions.getPrintoutSetting());
 			break;
 		case SEPARATOR:
-			field = new SeparatorFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			field = new SeparatorFieldDefn(table, fieldName, fieldDesc);
 			break;
 		case COMMENT_FEED:
-			field = new CommentFeedFieldDefn(table, internalFieldName, fieldName, fieldDesc);
+			field = new CommentFeedFieldDefn(table, fieldName, fieldDesc);
 			break;
 		case REFERENCED_REPORT_DATA:
 			String internalTableName = HttpRequestUtil.getStringValue(request,
@@ -1286,7 +1286,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PossibleListOptions.LISTREPORT.getFormInputName());
 			TableInfo referencedReportTable = this.getTable(request, internalTableName);
 			BaseReportInfo referencedReport = referencedReportTable.getReport(internalReportName);
-			field = new ReferencedReportDataFieldDefn(table, internalFieldName, fieldName, fieldDesc,
+			field = new ReferencedReportDataFieldDefn(table, fieldName, fieldDesc,
 					referencedReport, basicOptions.getPrintoutSetting());
 			break;
 		default:
@@ -1296,7 +1296,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	}
 
 	private BaseField generateNumberField(HttpServletRequest request, TableInfo table,
-			String internalFieldName, String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
+			String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
 			throws CantDoThatException {
 		BaseField field;
 		int precision = HttpRequestUtil.getIntegerValue(request,
@@ -1319,7 +1319,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			fieldOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
 			fieldOptions.setStoresCurrency(storesCurrency);
 			fieldOptions.setUsesLookup(usesLookup);
-			field = new DecimalFieldDefn(this.relationalDataSource, table, internalFieldName, fieldName,
+			field = new DecimalFieldDefn(this.relationalDataSource, table, fieldName,
 					fieldDesc, fieldOptions);
 		} else {
 			Integer defaultNumber = HttpRequestUtil.getIntegerValueStrict(request,
@@ -1334,14 +1334,14 @@ public final class DatabaseDefn implements DatabaseInfo {
 			fieldOptions.setNotApplicableValue(-1);
 			fieldOptions.setStoresCurrency(storesCurrency);
 			fieldOptions.setUsesLookup(usesLookup);
-			field = new IntegerFieldDefn(this.relationalDataSource, table, internalFieldName, fieldName,
+			field = new IntegerFieldDefn(this.relationalDataSource, table, fieldName,
 					fieldDesc, fieldOptions);
 		}
 		return field;
 	}
 
 	private BaseField generateTextField(HttpServletRequest request, TableInfo table,
-			String internalFieldName, String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
+			String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
 			throws CantDoThatException {
 		BaseField field;
 		String defaultValue = HttpRequestUtil.getStringValue(request,
@@ -1366,13 +1366,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 		textOptions.setTieDownLookup(tieDownLookup);
 		textOptions.setUnique(basicOptions.getUnique());
 		textOptions.setUsesLookup(usesLookup);
-		field = new TextFieldDefn(this.relationalDataSource, table, internalFieldName, fieldName,
+		field = new TextFieldDefn(this.relationalDataSource, table, fieldName,
 				fieldDesc, !TextField.HIDDEN, textOptions);
 		return field;
 	}
 
 	private BaseField generateDateField(HttpServletRequest request, TableInfo table,
-			String internalFieldName, String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
+			String fieldName, String fieldDesc, BasicFieldOptions basicOptions)
 			throws CantDoThatException {
 		BaseField field;
 		int dateResolution = Integer.valueOf(request.getParameter(PossibleListOptions.DATERESOLUTION
@@ -1399,7 +1399,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		dateOptions.setPrintoutSetting(basicOptions.getPrintoutSetting());
 		dateOptions.setUnique(basicOptions.getUnique());
 		dateOptions.setNotNull(basicOptions.getNotNull());
-		field = new DateFieldDefn(table, internalFieldName, fieldName, fieldDesc, dateOptions);
+		field = new DateFieldDefn(table, fieldName, fieldDesc, dateOptions);
 		return field;
 	}
 
@@ -1423,7 +1423,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 					PrivilegeType.MANAGE_TABLE, table);
 		}
 		BaseField field = null;
-		field = this.generateFieldObject(request, table, fieldType, internalFieldName, fieldName,
+		field = this.generateFieldObject(request, table, fieldType, fieldName,
 				fieldDesc);
 		this.addField(conn, table, field, request);
 		// schema change time not recorded in memory because it doesn't affect
@@ -2010,8 +2010,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		} else {
 			fieldOptions.setUnique(true);
 		}
-		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource, tableToAddTo,
-				internalFieldName, relatedTable, relatedField, fieldOptions);
+		RelationField relationToAdd = new RelationFieldDefn(this.relationalDataSource, tableToAddTo, relatedTable, relatedField, fieldOptions);
 		relationToAdd.setFieldDescription(fieldDesc);
 		relationToAdd.setFieldName(fieldName);
 		if (listValueFieldInternalName == null) {
@@ -3244,9 +3243,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		Set<TableInfo> companyTables = company.getTables();
 		// Not in cache, look through one by one
-		TableInfo comparisonTable = new TableDefn(internalTableName, "", "");
 		for (TableInfo companyTable : companyTables) {
-			if (companyTable.equals(comparisonTable)) {
+			if (companyTable.getInternalTableName().equals(internalTableName)) {
 				this.tableCache.put(internalTableName, companyTable);
 				// to retrieve a table, user either has to have view
 				// privileges on that table,

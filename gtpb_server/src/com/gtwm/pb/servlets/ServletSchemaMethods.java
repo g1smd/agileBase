@@ -363,9 +363,6 @@ public final class ServletSchemaMethods {
 	public synchronized static void addTable(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn) throws DisallowedException, SQLException, CantDoThatException,
 			ObjectNotFoundException, CodingErrorException {
-		String internalTableName = request.getParameter("internaltablename");
-		String internalDefaultReportName = request.getParameter("internaldefaultreportname");
-		String internalPrimaryKeyName = request.getParameter("internalprimarykeyname");
 		String baseTableName = request.getParameter("tablename");
 		String tableName = baseTableName;
 		if (baseTableName == null) {
@@ -397,8 +394,7 @@ public final class ServletSchemaMethods {
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
 			// create the new table
-			newTable = databaseDefn.addTable(sessionData, request, conn, internalTableName,
-					internalDefaultReportName, tableName, internalPrimaryKeyName, tableDesc);
+			newTable = databaseDefn.addTable(sessionData, request, conn, tableName, tableDesc);
 			// add permissions on the new table
 			databaseDefn.setDefaultTablePrivileges(request, newTable);
 			conn.commit();
@@ -796,7 +792,6 @@ public final class ServletSchemaMethods {
 			MissingParametersException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				ServletUtilMethods.USE_SESSION);
-		String baseInternalReportName = request.getParameter("internalreportname");
 		String reportName = request.getParameter("reportname");
 		if (reportName == null) {
 			reportName = generateNewReportName(table);
@@ -814,7 +809,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
-			newReport = databaseDefn.addReport(sessionData, request, conn, table, baseInternalReportName,
+			newReport = databaseDefn.addReport(sessionData, request, conn, table,
 					reportName, reportDesc, populateReport);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
@@ -1902,7 +1897,6 @@ public final class ServletSchemaMethods {
 					"You can only add calculations to normal reports, not union reports");
 		}
 		SimpleReportInfo report = (SimpleReportInfo) baseReport;
-		String internalCalculationName = request.getParameter("internalcalculationname");
 		String calculationName = request.getParameter("calculationname");
 		String calculationDefn = request.getParameter("calculationdefn");
 		String dbType = request.getParameter("databasetype");
@@ -1921,7 +1915,7 @@ public final class ServletSchemaMethods {
 			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType.toUpperCase(Locale.UK));
 			Map<TableInfo, Set<BaseReportInfo>> availableDataStores = databaseDefn
 					.getViewableDataStores(request);
-			newCalculationField = new ReportCalcFieldDefn(report, internalCalculationName,
+			newCalculationField = new ReportCalcFieldDefn(report,
 					calculationName, calculationDefn, databaseType, availableDataStores);
 			databaseDefn.addCalculationToReport(request, conn, report, newCalculationField);
 			conn.commit();

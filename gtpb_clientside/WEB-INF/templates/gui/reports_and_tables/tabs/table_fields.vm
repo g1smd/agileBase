@@ -83,17 +83,17 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 				## can't move the position of the primary key
 				#set($class="$class nodrag nodrop")
 			#end
-	        <tr class="$class" id="$field.getInternalFieldName()" currentFieldIndex="$field.getFieldIndex()">
+	        <tr class="$class" id="$internalFieldName" currentFieldIndex="$field.getFieldIndex()">
     	      <td class=leading>&nbsp;</td>
     	      <td class="capitalised">
 				#if($field.isPrimaryKey()) $field #else
-    	        <div class="fieldinfo #if($category == 'Separator') separator #end" id="fieldname_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field</div>
-				<input class="input_fieldinfo" id="input_fieldname_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
+    	        <div class="fieldinfo #if($category == 'Separator') separator #end" id="fieldname_$internalFieldName" onClick="makeFieldEditable(this)">$field</div>
+				<input class="input_fieldinfo" id="input_fieldname_$internalFieldName" type="text" gtpb_internalfieldname="$internalFieldName" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
     	        #end
 			  </td>
     	      <td>
-				<div class="fieldinfo #if($category == 'Separator') separator #end" id="fielddescription_$field.getInternalFieldName()" onClick="makeFieldEditable(this)">$field.getFieldDescription()</div>
-				<input class="input_fieldinfo" id="input_fielddescription_$field.getInternalFieldName()" type="text" gtpb_internalfieldname="$field.getInternalFieldName()" gtpb_update_field="true" name="fielddesc" value="$field.getFieldDescription()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
+				<div class="fieldinfo #if($category == 'Separator') separator #end" id="fielddescription_$internalFieldName" onClick="makeFieldEditable(this)">$field.getFieldDescription()</div>
+				<input class="input_fieldinfo" id="input_fielddescription_$internalFieldName" type="text" gtpb_internalfieldname="$internalFieldName" gtpb_update_field="true" name="fielddesc" value="$field.getFieldDescription()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
 			  </td>
     	      <td>
 				#if(($category == "Number") && ($field.getDbType() == "INTEGER"))
@@ -136,7 +136,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 				<div class="editoptions" id="editoptions_$internalFieldName" style="display:none">
 		         #foreach($option in $options)
 			        #set($formInputName = $option.getFormInputName())
-			        #set($formName = "updateoption${field.getInternalFieldName()}${formInputName}")
+			        #set($formName = "updateoption${internalFieldName}${formInputName}")
 			        #if ($option.getClass().getSimpleName().equals("BooleanFieldDescriptorOption"))			        
                   <input class="small" type="checkbox" name="$formName" value="1" id="${formName}" #if($option.getOptionState()) checked #end onclick="new fChange(this);" 
                     gtpb_internalfieldname="$internalFieldName"

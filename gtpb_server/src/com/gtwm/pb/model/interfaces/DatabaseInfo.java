@@ -70,8 +70,8 @@ public interface DatabaseInfo {
 	 *           the logged in user can't be found in the app's list of users
 	 */
 	public TableInfo addTable(SessionDataInfo sessionData, HttpServletRequest request,
-			Connection conn, String internalTableName, String internalDefaultReportName,
-			String tableName, String internalPrimaryKeyName, String tableDesc) throws SQLException,
+			Connection conn,
+			String tableName, String tableDesc) throws SQLException,
 			DisallowedException, CantDoThatException, ObjectNotFoundException, CodingErrorException;
 
 	public void setDefaultTablePrivileges(HttpServletRequest request, TableInfo newTable)
@@ -158,7 +158,7 @@ public interface DatabaseInfo {
 	 *           report's parent table
 	 */
 	public BaseReportInfo addReport(SessionDataInfo sessionData, HttpServletRequest request,
-			Connection conn, TableInfo table, String internalReportName, String reportName,
+			Connection conn, TableInfo table, String reportName,
 			String reportDesc, boolean populateReport) throws SQLException, DisallowedException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException,
 			MissingParametersException;
