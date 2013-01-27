@@ -28,18 +28,28 @@ import org.apache.commons.lang.WordUtils;
 public class Enumerations {
 
 	public enum AppType {
-		COMMENT_STREAM("Comment stream", true), DATA_STREAM("Data stream", true), DATA_LINK("Data link", false), VISUALISATION("Visualisation", false), FOCUS("Item focus", false), CHAT("Chat", false);
-		
+		COMMENT_STREAM("Comment stream", true), DATA_STREAM("Data stream", true), DATA_LINK(
+				"Data link", false), VISUALISATION("Visualisation", false), FOCUS("Item focus", false), CHAT(
+				"Chat", false);
+
 		private String appName;
-		
+
 		private boolean large;
-		
+
 		AppType(String appName, boolean large) {
 			this.appName = appName;
 			this.large = large;
 		}
+
+		public String getAppName() {
+			return this.appName;
+		}
+
+		public boolean isLarge() {
+			return this.large;
+		}
 	}
-	
+
 	/**
 	 * Contains list of all actions that the user interface can call via a HTTP
 	 * request to set session variables.
@@ -47,13 +57,13 @@ public class Enumerations {
 	 * The POSTSET_... methods act the same as the SET_... methods except the
 	 * action is delayed until others have completed
 	 * 
-	 * There is one PRESET_... method, PRESET_ROW_ID. Use this if you want to
-	 * set the row ID of a table then change to a different table with
-	 * SET_TABLE. Using SET_ROW_ID and POSTSET_TABLE would have the same effect
-	 * but in some situations POSTSET_TABLE isn't desirable
+	 * There is one PRESET_... method, PRESET_ROW_ID. Use this if you want to set
+	 * the row ID of a table then change to a different table with SET_TABLE.
+	 * Using SET_ROW_ID and POSTSET_TABLE would have the same effect but in some
+	 * situations POSTSET_TABLE isn't desirable
 	 * 
-	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo See the documentation
-	 *      in SessionDataInfo for how to call these in a HTTP request
+	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo See the documentation in
+	 *      SessionDataInfo for how to call these in a HTTP request
 	 */
 	public enum SessionAction {
 		SET_MODULE, PRESET_ROW_ID, SET_TABLE, SET_REPORT, SET_ROW_ID, NEXT_ROW_ID, PREVIOUS_ROW_ID, SET_REPORT_ROW_LIMIT, SET_REPORT_FILTER_VALUE, CLEAR_REPORT_FILTER_VALUE, CLEAR_ALL_REPORT_FILTER_VALUES, SET_GLOBAL_REPORT_FILTER_STRING, CLEAR_ALL_REPORT_SORTS, CLEAR_REPORT_SORT, SET_REPORT_SORT, SET_USER, SET_ROLE, SET_CONTEXT, SET_CUSTOM_VARIABLE, SET_CUSTOM_STRING, SET_CUSTOM_INTEGER, SET_CUSTOM_LONG, SET_CUSTOM_BOOLEAN, SET_CUSTOM_TABLE, SET_CUSTOM_REPORT, SET_CUSTOM_FIELD, CLEAR_CUSTOM_VARIABLE, POSTSET_TABLE, POSTSET_REPORT, POSTSET_CUSTOM_TABLE, POSTSET_CUSTOM_REPORT, SET_LOCK_OVERRIDE, SET_APP_ID, CLEAR_APP_ID, LOGOUT
@@ -70,8 +80,8 @@ public class Enumerations {
 	}
 
 	/**
-	 * All application actions that the user interface can call via a HTTP
-	 * request to other than session actions
+	 * All application actions that the user interface can call via a HTTP request
+	 * to other than session actions
 	 */
 	public enum AppAction {
 		ADD_USER, REMOVE_USER, UPDATE_USER, ADD_ROLE, UPDATE_ROLE, REMOVE_ROLE, ASSIGN_USER_TO_ROLE, REMOVE_USER_FROM_ROLE, ADD_PRIVILEGE, REMOVE_PRIVILEGE, SET_MAX_TABLE_PRIVILEGE, CLEAR_ALL_TABLE_PRIVILEGES, ADD_TABLE, UPDATE_TABLE, REMOVE_TABLE, ADD_FIELD, REMOVE_FIELD, UPDATE_FIELD, UPDATE_FIELD_OPTION, SET_FIELD_INDEX, ADD_REPORT, UPDATE_REPORT, REMOVE_REPORT, ADD_FIELD_TO_REPORT, REMOVE_FIELD_FROM_REPORT, SET_REPORT_FIELD_INDEX, SET_REPORT_FIELD_SORTING, ADD_CALCULATION_TO_REPORT, UPDATE_CALCULATION_IN_REPORT, ADD_FILTER_TO_REPORT, REMOVE_FILTER_FROM_REPORT, ADD_JOIN_TO_REPORT, REMOVE_JOIN_FROM_REPORT, SAVE_NEW_RECORD, UPDATE_RECORD, REMOVE_RECORD, CSV_IMPORT, CSV_UPLOAD, ADD_GROUPING_TO_CHART, REMOVE_GROUPING_FROM_CHART, ADD_FUNCTION_TO_CHART, REMOVE_FUNCTION_FROM_CHART, SET_CHART_FILTER_FIELD, SET_CHART_FILTER, SET_CHART_RANGE, SAVE_CHART, REMOVE_CHART, GLOBAL_EDIT, ADD_COMPANY, REMOVE_COMPANY, CLONE_RECORD, ANONYMISE, ADD_MODULE, UPDATE_MODULE, REMOVE_MODULE, LOCK_RECORDS, LOCK_RECORD, SET_DASHBOARD_CHART_STATE, HIDE_REPORT, UNHIDE_REPORT, SET_USER_DEFAULT_REPORT, SET_CALENDAR_SYNCABLE, ADD_OPERATIONAL_DASHBOARD_REPORT, REMOVE_OPERATIONAL_DASHBOARD_REPORT, ADD_FORM_TABLE, REMOVE_FORM_TABLE, SET_TABLE_FORM, SET_WORD_CLOUD_FIELD, CONTRACT_SECTION, EXPAND_SECTION, ENABLE_DISABLE_APP, UPLOAD_CUSTOM_TEMPLATE, REMOVE_CUSTOM_TEMPLATE, ADD_COMMENT, UPDATE_MAP, ADD_FORM_TAB, REMOVE_FORM_TAB, UPDATE_FORM_TAB, ADD_REPORT_DISTINCT, REMOVE_REPORT_DISTINCT, SEND_PASSWORD_RESET, UPLOAD_PROFILE_PICTURE;
@@ -140,10 +150,10 @@ public class Enumerations {
 	/**
 	 * OBSOLETE?
 	 * 
-	 * A list of any reserved words used by the application in a HTTP request,
-	 * in addition to those in AppAction and SessionAction. We don't want to
-	 * name our fields etc. the same as one of these otherwise the application
-	 * could get confused
+	 * A list of any reserved words used by the application in a HTTP request, in
+	 * addition to those in AppAction and SessionAction. We don't want to name our
+	 * fields etc. the same as one of these otherwise the application could get
+	 * confused
 	 */
 	public enum RequestReservedNames {
 		INTERNALTABLENAME, INTERNALREPORTNAME, INTERNALFIELDNAME, FIELDVALUE, RETURNTYPE, RETURN
@@ -154,10 +164,9 @@ public class Enumerations {
 	 */
 	public enum FilterType {
 		EQUAL(false), NOT_EQUAL_TO(false), GREATER_THAN_OR_EQUAL_TO(false), LESS_THAN(false), STARTS_WITH(
-				false), DOES_NOT_START_WITH(false), NEWER_THAN_IN_DAYS(true), NEWER_THAN_IN_WEEKS(
-				true), NEWER_THAN_IN_MONTHS(true), NEWER_THAN_IN_YEARS(true), OLDER_THAN_IN_DAYS(
-				true), OLDER_THAN_IN_WEEKS(true), OLDER_THAN_IN_MONTHS(true), OLDER_THAN_IN_YEARS(
-				true), IS_NULL(false), IS_NOT_NULL(false), IS_ONE_OF(false); // ,
+				false), DOES_NOT_START_WITH(false), NEWER_THAN_IN_DAYS(true), NEWER_THAN_IN_WEEKS(true), NEWER_THAN_IN_MONTHS(
+				true), NEWER_THAN_IN_YEARS(true), OLDER_THAN_IN_DAYS(true), OLDER_THAN_IN_WEEKS(true), OLDER_THAN_IN_MONTHS(
+				true), OLDER_THAN_IN_YEARS(true), IS_NULL(false), IS_NOT_NULL(false), IS_ONE_OF(false); // ,
 		// IS_IN_SUBSELECT(false),
 		// IS_NOT_IN_SUBSELECT(false);
 
@@ -176,16 +185,16 @@ public class Enumerations {
 		}
 
 		/**
-		 * Returns a plain English description of the filter type for display to
-		 * the user
+		 * Returns a plain English description of the filter type for display to the
+		 * user
 		 */
 		public String getDescription() {
 			return this.toString().replace("_", " ").toLowerCase(Locale.UK);
 		}
 
 		/**
-		 * Returns the value of the 'filtertype' parameter that must be
-		 * submitted to the server to create a filter of this type
+		 * Returns the value of the 'filtertype' parameter that must be submitted to
+		 * the server to create a filter of this type
 		 */
 		public String getFilterTypeParameter() {
 			return this.toString().toLowerCase(Locale.UK);
@@ -193,9 +202,9 @@ public class Enumerations {
 	}
 
 	public enum QuickFilterType {
-		LIKE("LIKE", ""), NOT_LIKE("NOT LIKE", "!"), EQUAL("=","="), GREATER_THAN(">=", ">"), LESS_THAN("<", "<"), EMPTY(
-				"IS NULL OR gtpb_field_placeholder = ", "?"), OR(" OR ", " OR "), AND(" AND ",
-				" AND ");
+		LIKE("LIKE", ""), NOT_LIKE("NOT LIKE", "!"), EQUAL("=", "="), GREATER_THAN(">=", ">"), LESS_THAN(
+				"<", "<"), EMPTY("IS NULL OR gtpb_field_placeholder = ", "?"), OR(" OR ", " OR "), AND(
+				" AND ", " AND ");
 
 		private String sqlRepresentation;
 
@@ -217,14 +226,12 @@ public class Enumerations {
 
 	/**
 	 * A list of aggregate functions that can be used in a chart. Not all
-	 * database-provided functions are listed, only those we'll use. Each
-	 * function has an associated plain English description for use e.g when
-	 * charting
+	 * database-provided functions are listed, only those we'll use. Each function
+	 * has an associated plain English description for use e.g when charting
 	 */
 	public enum AggregateFunction {
 		COUNT("count"), SUM("sum"), MIN("minimum"), MAX("maximum"), AVG("average"), WTDAVG(
-				"weighted avg."), CUMULATIVE_COUNT("cumulative count"), CUMULATIVE_SUM(
-				"cumulative sum");
+				"weighted avg."), CUMULATIVE_COUNT("cumulative count"), CUMULATIVE_SUM("cumulative sum");
 
 		private String label;
 
@@ -242,7 +249,8 @@ public class Enumerations {
 	 * server response as a web page, XML file or download for example
 	 */
 	public enum ResponseReturnType {
-		HTML("text/html"), JSON("application/javascript"), XML("application/xml"), DOWNLOAD("application/octet-stream");
+		HTML("text/html"), JSON("application/javascript"), XML("application/xml"), DOWNLOAD(
+				"application/octet-stream");
 
 		private String responseType;
 
@@ -251,8 +259,8 @@ public class Enumerations {
 		}
 
 		/**
-		 * Return the actual response type that needs to be set in the header
-		 * with HttpServletResponse.setContentType(...)
+		 * Return the actual response type that needs to be set in the header with
+		 * HttpServletResponse.setContentType(...)
 		 * 
 		 * @see HttpServletResponse#setContentType(String)
 		 */
@@ -262,8 +270,8 @@ public class Enumerations {
 	}
 
 	/**
-	 * For used when randomising data in a table, to tell which type of content
-	 * is in each field
+	 * For used when randomising data in a table, to tell which type of content is
+	 * in each field
 	 */
 	public enum FieldContentType {
 		COMPANY_NAME, FULL_NAME, PHONE_NUMBER, EMAIL_ADDRESS, NI_NUMBER, CODE, NOTES, OTHER
@@ -275,9 +283,9 @@ public class Enumerations {
 				"User who created the record"), LAST_MODIFIED("Last modified [Auto]",
 				"Date & time of last change to record"), MODIFIED_BY("Modified by [Auto]",
 				"User who made the last change"), LOCKED("Locked [Auto]",
-				"Whether record is locked for editing"),
-				VIEW_COUNT("View count [Auto]", "Number of times the record has been viewed"),
-				COMMENTS_FEED("Comments feed [Auto]","Conglomoration of all comments on the record");
+				"Whether record is locked for editing"), VIEW_COUNT("View count [Auto]",
+				"Number of times the record has been viewed"), COMMENTS_FEED("Comments feed [Auto]",
+				"Conglomoration of all comments on the record");
 
 		private String fieldName;
 
@@ -299,11 +307,11 @@ public class Enumerations {
 
 	public enum Browsers {
 		MSIE("Internet Explorer", "msie", false), FIREFOX("Firefox", "firefox", false), MINEFIELD(
-				"Firefox development version", "minefield", false), CAMINO("Camino", "camino",false), SYMBIAN_MOBILE(
-				"Safari on Symbian mobile", "symbian", true), CHROME("Google Chrome","chrome", false), SAFARI("Safari", "applewebkit", false), OPERA(
-				"Opera", "opera", false), IPOD("iPod", "ipod", true), IPHONE("iPhone", "iphone", true), IPAD("iPad",
-				"ipad", true), KONQUEROR("Konqueror", "konqueror", false), UNKNOWN("unknown",
-				"gtpb_unknown_browser", false);
+				"Firefox development version", "minefield", false), CAMINO("Camino", "camino", false), SYMBIAN_MOBILE(
+				"Safari on Symbian mobile", "symbian", true), CHROME("Google Chrome", "chrome", false), SAFARI(
+				"Safari", "applewebkit", false), OPERA("Opera", "opera", false), IPOD("iPod", "ipod", true), IPHONE(
+				"iPhone", "iphone", true), IPAD("iPad", "ipad", true), KONQUEROR("Konqueror", "konqueror",
+				false), UNKNOWN("unknown", "gtpb_unknown_browser", false);
 
 		/**
 		 * Return the human digestible form of the browser name
@@ -319,7 +327,7 @@ public class Enumerations {
 		public String getUserAgentString() {
 			return this.userAgentString;
 		}
-		
+
 		public boolean isMobile() {
 			return this.mobile;
 		}
@@ -331,15 +339,15 @@ public class Enumerations {
 		private String browserName = "";
 
 		private String userAgentString = "";
-		
+
 		private boolean mobile = false;
 
 		/**
 		 * @param browserName
-		 *            User friendly browser name
+		 *          User friendly browser name
 		 * @param userAgentString
-		 *            Lowercase version of user agent component that identifies
-		 *            the browser
+		 *          Lowercase version of user agent component that identifies the
+		 *          browser
 		 */
 		Browsers(String browserName, String userAgentString, boolean mobile) {
 			this.browserName = browserName;
@@ -347,7 +355,7 @@ public class Enumerations {
 			this.mobile = mobile;
 		}
 	}
-	
+
 	/**
 	 * In a chart you can group by any field in the report, but the addition of
 	 * field modifiers allows you to do things like group by year, quarter or
@@ -375,7 +383,8 @@ public class Enumerations {
 	 * Initial display a user sees
 	 */
 	public enum InitialView {
-		LIMITED("for external users outside the company"), REPORT("full height report view"), FULL("full three pane interface"), EXECUTIVE_DASHBOARD("executive dashboard");
+		LIMITED("for external users outside the company"), REPORT("full height report view"), FULL(
+				"full three pane interface"), EXECUTIVE_DASHBOARD("executive dashboard");
 
 		public String getDescription() {
 			return this.description;
@@ -394,8 +403,7 @@ public class Enumerations {
 				"{fieldvalue} >= (date_trunc('year',now()) - '@0 months'::interval) AND {fieldvalue} < (date_trunc('year',now()) - '@0 months'::interval)"), YEAR_ON_YEAR(
 				"Last month year on year",
 				"date_part('month', {fieldvalue}) = date_part('month', now() - '1 month'::interval)"), LAST_90_DAYS(
-				"Last 90 days",
-				"{fieldvalue} >= (now() - '90 days'::interval) AND {fieldvalue} < now()");
+				"Last 90 days", "{fieldvalue} >= (now() - '90 days'::interval) AND {fieldvalue} < now()");
 
 		public String getDescription() {
 			return this.description;
@@ -446,49 +454,51 @@ public class Enumerations {
 
 		private String sqlRepresentation = "";
 	}
-	
+
 	/**
-	 * Used to flag whether we've tried overriding the default plan for a database query
+	 * Used to flag whether we've tried overriding the default plan for a database
+	 * query
 	 */
 	public enum QueryPlanSelection {
 		DEFAULT, TRY_NO_NESTED_LOOPS, NO_NESTED_LOOPS, ALTERNATIVE_NOT_FASTER;
 	}
-	
+
 	/**
 	 * Formats for exporting public data
 	 */
 	public enum DataFormat {
 		RSS, JSON, JSON_FULLCALENDAR, JSON_TIMELINE;
 	}
-	
+
 	public enum AttachmentType {
 		DOCUMENT("Document"), IMAGE("Image/photo"), PROFILE_PHOTO("Photo of a person");
-		
+
 		public String getDescription() {
 			return this.description;
 		}
-		
+
 		AttachmentType(String description) {
 			this.description = description;
 		}
-		
+
 		private String description = "";
 	}
-	
+
 	public enum ReportStyle {
-		SPREADSHEET("Standard spreadsheet-like rows"), SECTIONED("Data broken up into sections with headings"), ONE_SECTION("One heading then detail");
-		
+		SPREADSHEET("Standard spreadsheet-like rows"), SECTIONED(
+				"Data broken up into sections with headings"), ONE_SECTION("One heading then detail");
+
 		public String getDescription() {
 			return this.description;
 		}
-		
+
 		ReportStyle(String description) {
 			this.description = description;
 		}
-		
+
 		private String description = "";
 	}
-	
+
 	public enum FormStyle {
 		SINGLE_COLUMN, TWO_COLUMNS, TWO_COLUMNS_WITHIN_SECTION;
 	}
