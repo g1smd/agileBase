@@ -32,88 +32,95 @@ import com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo;
 import com.gtwm.pb.model.interfaces.AppRoleInfo;
 
 @Entity
-//Specify inheritance because RoleObjectPrivilege extends this type
-@Inheritance(strategy = InheritanceType.JOINED) 
+// Specify inheritance because RoleObjectPrivilege extends this type
+@Inheritance(strategy = InheritanceType.JOINED)
 @Immutable
 public class RoleGeneralPrivilege implements RoleGeneralPrivilegeInfo {
 
-    /**
-     * Protected for the same reason that setRole() is
-     */
-    protected RoleGeneralPrivilege() {
-    }
-    
-    public RoleGeneralPrivilege(AppRoleInfo role, PrivilegeType privilegeType) {
-        this.setRole(role);
-        this.setPrivilegeType(privilegeType);
-    }
+	/**
+	 * Protected for the same reason that setRole() is
+	 */
+	protected RoleGeneralPrivilege() {
+	}
 
-    @Id
-    @GeneratedValue
-    /**
-     * Hibernate needs an ID for a persistent class - this isn't actually used by the app otherwise
-     */
-    private long getId() {
-        return this.id;
-    }
-    
-    private void setId(long id) {
-        this.id = id;
-    }
-    
-    /**
-     * This method is protected because we don't want it publicly usable, in general the role should be passed
-     * to the constructor. However, we want classes that extend this one to be able to set the role by calling
-     * super.setRole()
-     */
-    protected void setRole(AppRoleInfo role) {
-        this.role = role;
-    }
+	public RoleGeneralPrivilege(AppRoleInfo role, PrivilegeType privilegeType) {
+		this.setRole(role);
+		this.setPrivilegeType(privilegeType);
+	}
 
-    /**
-     * Protected for the same reason that setRole() is
-     */
-    protected void setPrivilegeType(PrivilegeType privilegeType) {
-        this.privilegeType = privilegeType;
-    }
+	@Id
+	@GeneratedValue
+	/**
+	 * Hibernate needs an ID for a persistent class - this isn't actually used by the app otherwise
+	 */
+	private long getId() {
+		return this.id;
+	}
 
-    @ManyToOne(targetEntity=AppRole.class)
-    public AppRoleInfo getRole() {
-        return this.role;
-    }
+	private void setId(long id) {
+		this.id = id;
+	}
 
-    @Enumerated(EnumType.STRING)
-    public PrivilegeType getPrivilegeType() {
-        return this.privilegeType;
-    }
+	/**
+	 * This method is protected because we don't want it publicly usable, in
+	 * general the role should be passed to the constructor. However, we want
+	 * classes that extend this one to be able to set the role by calling
+	 * super.setRole()
+	 */
+	protected void setRole(AppRoleInfo role) {
+		this.role = role;
+	}
 
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if ((obj == null) || (obj.getClass() != this.getClass())) {
-            return false;
-        }
-        if (this.getRole().equals(((RoleGeneralPrivilege) obj).getRole()) && this.getPrivilegeType().equals(((RoleGeneralPrivilege) obj).getPrivilegeType())) {
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * Protected for the same reason that setRole() is
+	 */
+	protected void setPrivilegeType(PrivilegeType privilegeType) {
+		this.privilegeType = privilegeType;
+	}
 
-    public int hashCode() {
-    	int hashCode = 17;
-    	hashCode = 37 * hashCode + this.getRole().hashCode();
-    	hashCode = 37 * hashCode + this.getPrivilegeType().hashCode();
-        return hashCode;
-    }
-    
-    public String toString() {
-        return ("" + this.getRole() + ", " + this.getPrivilegeType());
-    }
+	@ManyToOne(targetEntity = AppRole.class)
+	public AppRoleInfo getRole() {
+		return this.role;
+	}
 
-    private AppRoleInfo role;
+	@Enumerated(EnumType.STRING)
+	public PrivilegeType getPrivilegeType() {
+		return this.privilegeType;
+	}
 
-    private PrivilegeType privilegeType;
-    
-    private long id;
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		if (this.getRole().equals(((RoleGeneralPrivilege) obj).getRole())
+				&& this.getPrivilegeType().equals(((RoleGeneralPrivilege) obj).getPrivilegeType())) {
+			return true;
+		}
+		return false;
+	}
+
+	public int hashCode() {
+		if (this.hashCode == 0) {
+			int hashCode = 17;
+			hashCode = 37 * hashCode + this.getRole().hashCode();
+			hashCode = 37 * hashCode + this.getPrivilegeType().hashCode();
+			this.hashCode = hashCode;
+		}
+		return this.hashCode;
+	}
+
+	public String toString() {
+		return ("" + this.getRole() + ", " + this.getPrivilegeType());
+	}
+
+	private volatile int hashCode = 0;
+
+	private AppRoleInfo role;
+
+	private PrivilegeType privilegeType;
+
+	private long id;
 }

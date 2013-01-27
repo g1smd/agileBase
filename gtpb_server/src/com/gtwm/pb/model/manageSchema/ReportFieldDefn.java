@@ -99,7 +99,13 @@ public class ReportFieldDefn extends AbstractReportField implements ReportFieldI
 	 * hashCode() consistent with equals() above
 	 */
 	public int hashCode() {
-		return this.getBaseField().hashCode() + this.getParentReport().hashCode();
+		if (this.hashCode == 0) {
+			int hashCode = 17;
+			hashCode = 37 * hashCode + this.getBaseField().hashCode();
+			hashCode = 37 * hashCode + this.getParentReport().hashCode();
+			this.hashCode = hashCode;
+		}
+		return this.hashCode;
 	}
 
 	/**
@@ -136,6 +142,8 @@ public class ReportFieldDefn extends AbstractReportField implements ReportFieldI
 	}
 
 	private BaseField baseField = null;
+	
+	private volatile int hashCode = 0;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportFieldDefn.class);
 }

@@ -31,60 +31,69 @@ import com.gtwm.pb.model.manageSchema.TableDefn;
 @Immutable
 public class RoleTablePrivilege extends RoleGeneralPrivilege implements RoleTablePrivilegeInfo {
 
-    protected RoleTablePrivilege() {    
-    }
+	protected RoleTablePrivilege() {
+	}
 
-    /**
-     * Construct a table privilege
-     * 
-     * @param role
-     *            The role to assign the privilege type to
-     * @param privilegeType
-     *            The privilege type to assign, which must be appropriate for a table
-     * @param table
-     */
-    public RoleTablePrivilege(AppRoleInfo role, PrivilegeType privilegeType, TableInfo table) throws IllegalArgumentException {
-        // Only allow the privilege to be constructed if the privilege type is compatible with a table
-        // For example you couldn't have an 'access report' privilege acting on a table, only a report
-        if (privilegeType.getObjectClass().equals(TableInfo.class)) {
-            super.setRole(role);
-            super.setPrivilegeType(privilegeType);
-            this.setTable(table);
-        } else {
-            throw new IllegalArgumentException("Can't make an " + privilegeType.toString() + " privilege for a table");
-        }
-    }
-    
-    @ManyToOne(targetEntity=TableDefn.class)
-    public TableInfo getTable() {
-        return this.table;
-    }
-    
-    /**
-     * Hibernate use only
-     */
-    private void setTable(TableInfo table) {
-        this.table = table;
-    }
-    
-    public boolean equals(Object obj) {
-        if (super.equals(obj) == false) {
-            return false;
-        }
-        return this.getTable().equals(((RoleTablePrivilege) obj).getTable());
-    }
-    
-    public int hashCode() {
-    	int hashCode = super.hashCode();
-    	hashCode = 37 * hashCode + this.getTable().hashCode();
-    	return hashCode;
-    }
-    
-    public String toString() {
-        return "" + this.getRole() + ", " + this.getPrivilegeType() + " " + this.getTable();
-    }
-    
-    private TableInfo table;
-    
-    private long id;
+	/**
+	 * Construct a table privilege
+	 * 
+	 * @param role
+	 *          The role to assign the privilege type to
+	 * @param privilegeType
+	 *          The privilege type to assign, which must be appropriate for a
+	 *          table
+	 * @param table
+	 */
+	public RoleTablePrivilege(AppRoleInfo role, PrivilegeType privilegeType, TableInfo table)
+			throws IllegalArgumentException {
+		// Only allow the privilege to be constructed if the privilege type is
+		// compatible with a table
+		// For example you couldn't have an 'access report' privilege acting on a
+		// table, only a report
+		if (privilegeType.getObjectClass().equals(TableInfo.class)) {
+			super.setRole(role);
+			super.setPrivilegeType(privilegeType);
+			this.setTable(table);
+		} else {
+			throw new IllegalArgumentException("Can't make an " + privilegeType.toString()
+					+ " privilege for a table");
+		}
+	}
+
+	@ManyToOne(targetEntity = TableDefn.class)
+	public TableInfo getTable() {
+		return this.table;
+	}
+
+	/**
+	 * Hibernate use only
+	 */
+	private void setTable(TableInfo table) {
+		this.table = table;
+	}
+
+	public boolean equals(Object obj) {
+		if (super.equals(obj) == false) {
+			return false;
+		}
+		return this.getTable().equals(((RoleTablePrivilege) obj).getTable());
+	}
+
+	public int hashCode() {
+		if (this.hashCode == 0) {
+			int hashCode = super.hashCode();
+			this.hashCode = 37 * hashCode + this.getTable().hashCode();
+		}
+		return this.hashCode;
+	}
+
+	public String toString() {
+		return "" + this.getRole() + ", " + this.getPrivilegeType() + " " + this.getTable();
+	}
+
+	private TableInfo table;
+
+	private volatile int hashCode = 0;
+
+	private long id;
 }

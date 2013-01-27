@@ -127,13 +127,8 @@ public class AppRole implements AppRoleInfo, Comparable<AppRoleInfo> {
 	}
 
 	public int hashCode() {
-		if (this.hashCode == 0) {
-			this.hashCode = this.getInternalRoleName().hashCode();
-		}
-		return this.hashCode;
+			return this.getInternalRoleName().hashCode();
 	}
-
-	private volatile int hashCode = 0;
 
 	private CompanyInfo company = null;
 

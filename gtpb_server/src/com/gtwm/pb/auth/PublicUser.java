@@ -204,13 +204,8 @@ public class PublicUser implements AppUserInfo {
 	}
 
 	public int hashCode() {
-		if (this.hashCode == 0) {
-			this.hashCode = this.getInternalUserName().hashCode();
-		}
-		return this.hashCode;
+			return this.getInternalUserName().hashCode();
 	}
-
-	private volatile int hashCode = 0;
 
 	private final CompanyInfo company;
 

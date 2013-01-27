@@ -11,6 +11,8 @@ public interface AppInfo {
 
 	public AppType getAppType();
 	
+	public String getAppName();
+	
 	/**
 	 * Get the name of the CSS colour class
 	 */
