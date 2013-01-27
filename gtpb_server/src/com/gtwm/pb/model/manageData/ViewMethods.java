@@ -30,8 +30,6 @@ import java.util.SortedMap;
 import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -82,7 +80,6 @@ import com.gtwm.pb.util.Enumerations.QuickFilterType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
 import java.util.TreeSet;
@@ -351,14 +348,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 	public Set<TableInfo> getDirectlyDependentTables(TableInfo baseTable)
 			throws ObjectNotFoundException {
 		return this.databaseDefn.getDirectlyDependentTables(baseTable, this.request);
-	}
-
-	public String getApplicationName() {
-		return AppProperties.applicationName;
-	}
-
-	public String getApplicationVersion() {
-		return AppProperties.applicationVersion;
 	}
 
 	public List<RelationField> getUnchosenRelationFields() throws DisallowedException,

@@ -3,15 +3,18 @@
 #set($commitMessage = $viewTools.getCommitMessage())
 <html>
 <head>
-  <title>agileBase release version</title>
+  <title>Agilebase release version</title>
+  <link href="resources/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />      
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
 </head>
 <body style="padding: 1em">
-<h1>agileBase build reference</h1>
-The last code commit that was used to build this version of agileBase is <p>
-<a href="$commitUrl">$commitUrl</a><p>
-Tip: use the 'parent' link to browse through past commits<p>
-Details of the commit:
-<div class="infomessage">$commitMessage</div>
+	<div class="container">
+		<h1>agileBase build reference</h1>
+		The last code commit that was used to build this version of agileBase is <p>
+		<a href="$commitUrl">$commitUrl</a><p>
+		Tip: use the 'parent' link to browse through past commits<p>
+		Details of the commit:
+		<div class="infomessage">$commitMessage</div>
+	</div>
 </body>
 </html>

@@ -46,7 +46,7 @@
 	  #end
     #end
   #end
-  <title>$view.getApplicationName() - $company - $module - $moduleAction</title>
+  <title>Agilebase - $company - $module - $moduleAction</title>
   <link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
   <link href="resources/mobile/wizard_override.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="resources/jquery.js"></script>

@@ -102,7 +102,7 @@ public final class AppController extends VelocityViewServlet {
 	 */
 	public void init() throws ServletException {
 
-		logger.info("Initialising " + AppProperties.applicationName);
+		logger.info("Initialising Agilebase");
 		ServletContext servletContext = getServletContext();
 		this.webAppRoot = servletContext.getRealPath("/");
 

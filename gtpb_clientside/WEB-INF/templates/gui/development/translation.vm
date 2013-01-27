@@ -23,7 +23,7 @@
 <html>
   <head>
     <title>
-      $view.getApplicationName() version $view.getApplicationVersion() translation
+      Agilebase translation
     </title>
     <style>
       * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }

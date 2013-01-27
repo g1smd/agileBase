@@ -27,6 +27,19 @@ import org.apache.commons.lang.WordUtils;
  */
 public class Enumerations {
 
+	public enum AppType {
+		COMMENT_STREAM("Comment stream", true), DATA_STREAM("Data stream", true), DATA_LINK("Data link", false), VISUALISATION("Visualisation", false), FOCUS("Item focus", false), CHAT("Chat", false);
+		
+		private String appName;
+		
+		private boolean large;
+		
+		AppType(String appName, boolean large) {
+			this.appName = appName;
+			this.large = large;
+		}
+	}
+	
 	/**
 	 * Contains list of all actions that the user interface can call via a HTTP
 	 * request to set session variables.

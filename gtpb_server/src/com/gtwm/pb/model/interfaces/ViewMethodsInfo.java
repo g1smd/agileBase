@@ -32,11 +32,8 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
-import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.xml.stream.XMLStreamException;
-
 import org.codehaus.jackson.JsonGenerationException;
 
 /**
@@ -185,18 +182,6 @@ public interface ViewMethodsInfo {
 
 	public SortedSet<AppUserInfo> getAdministrators() throws ObjectNotFoundException, CodingErrorException;
 	
-	/**
-	 * @return Application name as set statically in AppProperties
-	 * @see com.gtwm.pb.util.AppProperties
-	 */
-	public String getApplicationName();
-
-	/**
-	 * @return Application version as set statically in AppProperties
-	 * @see com.gtwm.pb.util.AppProperties
-	 */
-	public String getApplicationVersion();
-
 	/**
 	 * return any possible joins to tables from this report, not including any
 	 * that are already joined
@@ -762,7 +747,6 @@ public interface ViewMethodsInfo {
 			throws CodingErrorException;
 
 	/**
-	 * 
 	 * @param sourceText
 	 * @return sourceText after agileBase object names (enclosed within curly
 	 *         braces) have been replaced by internal object identifiers
