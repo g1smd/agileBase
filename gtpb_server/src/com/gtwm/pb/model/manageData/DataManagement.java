@@ -194,7 +194,9 @@ public final class DataManagement implements DataManagementInfo {
 			String rawComment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException {
 		CompanyInfo company = user.getCompany();
-		String SQLCode = "INSERT INTO dbint_comments_" + company.getInternalCompanyName() + "(created, author, author_internalusername, internalfieldname, rowid, text) VALUES (?,?,?,?,?,?)";
+		String SQLCode = "INSERT INTO dbint_comments_"
+				+ company.getInternalCompanyName()
+				+ "(created, author, author_internalusername, internalfieldname, rowid, text) VALUES (?,?,?,?,?,?)";
 		// Protect against cross-site scripting
 		String comment = Naming.makeValidXML(Helpers.smartCharsReplace(rawComment));
 		TableInfo table = field.getTableContainingField();
@@ -316,8 +318,8 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId) throws SQLException,
-			CantDoThatException {
+	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId)
+			throws SQLException, CantDoThatException {
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
 		// If no record for this field contains comments, return empty set
 		Boolean hasComments = field.hasComments();
@@ -335,7 +337,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		String internalCompanyName = company.getInternalCompanyName();
-		String sqlCode = "SELECT created, author, author_internalusername, text FROM dbint_comments_" + internalCompanyName;
+		String sqlCode = "SELECT created, author, author_internalusername, text FROM dbint_comments_"
+				+ internalCompanyName;
 		sqlCode += " WHERE internalfieldname=? AND rowid=? ORDER BY created DESC LIMIT 10";
 		Connection conn = null;
 		try {
@@ -353,7 +356,8 @@ public final class DataManagement implements DataManagementInfo {
 				String author = results.getString(2);
 				String authorInternalName = results.getString(3);
 				String comment = results.getString(4);
-				comments.add(new Comment(internalFieldName, rowId, author, authorInternalName, created, comment));
+				comments.add(new Comment(internalFieldName, rowId, author, authorInternalName, created,
+						comment));
 			}
 			results.close();
 			statement.close();
@@ -374,7 +378,8 @@ public final class DataManagement implements DataManagementInfo {
 					// record
 					// but we don't know if there are any for the field in other
 					// records. Check.
-					sqlCode = "SELECT count(*) from dbint_comments_" + internalCompanyName + " WHERE internalfieldname=?";
+					sqlCode = "SELECT count(*) from dbint_comments_" + internalCompanyName
+							+ " WHERE internalfieldname=?";
 					statement = conn.prepareStatement(sqlCode);
 					statement.setString(1, internalFieldName);
 					results = statement.executeQuery();
@@ -629,8 +634,8 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	private void setHiddenFieldValues(HttpServletRequest request, TableInfo table,
-			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord)
+	private void setHiddenFieldValues(HttpServletRequest request, SessionDataInfo sessionData,
+			TableInfo table, LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord)
 			throws CantDoThatException, ObjectNotFoundException, DisallowedException,
 			MissingParametersException {
 		BaseValue fieldValue;
@@ -648,7 +653,25 @@ public final class DataManagement implements DataManagementInfo {
 					// supplying a 'username' parameter
 					String createdByOverrideUsername = request.getParameter("username");
 					if (createdByOverrideUsername == null) {
-						fieldValue = this.getUserValue(request, request.getRemoteUser());
+						// If user is an admin and an app user, use the session user
+						// instead, as a 'delegate' user
+						AppUserInfo loggedInUser = this.authManager.getLoggedInUser(request);
+						if (loggedInUser.getUsesCustomUI()
+								&& this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+										PrivilegeType.ADMINISTRATE)) {
+							AppUserInfo delegateUser = sessionData.getUser();
+							if (delegateUser == null) {
+								throw new ObjectNotFoundException(
+										"No user found in the session to use as a delegate");
+							}
+							if (!delegateUser.getUsesCustomUI()) {
+								throw new CantDoThatException("Session user " + delegateUser + " must be a custom "
+										+ delegateUser.getCompany() + " app interface user");
+							}
+							fieldValue = this.getUserValue(request, delegateUser.getUserName());
+						} else {
+							fieldValue = this.getUserValue(request, request.getRemoteUser());
+						}
 					} else {
 						fieldValue = this.getUserValue(request, createdByOverrideUsername);
 					}
@@ -711,7 +734,7 @@ public final class DataManagement implements DataManagementInfo {
 			// + rowIds);
 			return;
 		}
-		this.setHiddenFieldValues(request, table, dataToSave, newRecord);
+		this.setHiddenFieldValues(request, sessionData, table, dataToSave, newRecord);
 		boolean globalEdit = false;
 		int rowId = -1;
 		if (rowIds.size() > 1) {
@@ -1607,7 +1630,8 @@ public final class DataManagement implements DataManagementInfo {
 						midSize = 250;
 					}
 					boolean needResize = false;
-					if ((extension.equals("pdf")) || (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
+					if ((extension.equals("pdf"))
+							|| (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
 						needResize = true;
 					} else {
 						try {
@@ -1634,7 +1658,7 @@ public final class DataManagement implements DataManagementInfo {
 						createThumbnail(midSize, midSize, filePath);
 					} else {
 						String thumb500Path = filePath + "." + 500 + "." + extension;
-					  File thumb500File = new File(thumb500Path);
+						File thumb500File = new File(thumb500Path);
 						try {
 							Files.copy(selectedFile.toPath(), thumb500File.toPath(),
 									StandardCopyOption.REPLACE_EXISTING);
@@ -1651,7 +1675,8 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
-	// TODO: move out of DataManagement to perhaps ServletDataMethods, ServletUtilMethods or Helper
+	// TODO: move out of DataManagement to perhaps ServletDataMethods,
+	// ServletUtilMethods or Helper
 	public static void createThumbnail(int width, int height, String inputFilePath)
 			throws FileUploadException {
 		ConvertCmd convert = new ConvertCmd();
@@ -1662,7 +1687,8 @@ public final class DataManagement implements DataManagementInfo {
 		String newExtension = (new FileValueDefn(inputFilePath)).getPreviewExtension();
 		int filenameSize = width;
 		if (filenameSize == 250) {
-			// Profile photos are saves as 250x250 but for backwards compatibility should still be named 500
+			// Profile photos are saves as 250x250 but for backwards compatibility
+			// should still be named 500
 			filenameSize = 500;
 		}
 		try {
@@ -1672,8 +1698,8 @@ public final class DataManagement implements DataManagementInfo {
 				convertPath += "[0]";
 				newExtension = "png";
 			}
-			convert.run(op,
-					new Object[] { convertPath, inputFilePath + "." + filenameSize + "." + newExtension });
+			convert.run(op, new Object[] { convertPath,
+					inputFilePath + "." + filenameSize + "." + newExtension });
 		} catch (IOException ioex) {
 			throw new FileUploadException("IO error while converting " + inputFilePath + " to "
 					+ newExtension + ": " + ioex);
@@ -1896,9 +1922,10 @@ public final class DataManagement implements DataManagementInfo {
 					}
 				}
 				String internalFieldNamesCsv = StringUtils.join(internalFieldNamesSet, ",");
-				String internalCompanyName = this.authManager.getCompanyForLoggedInUser(request).getInternalCompanyName();
-				SQLCode = "DELETE FROM dbint_comments_" + internalCompanyName + " WHERE rowid=? AND internalfieldname IN ("
-						+ internalFieldNamesCsv + ")";
+				String internalCompanyName = this.authManager.getCompanyForLoggedInUser(request)
+						.getInternalCompanyName();
+				SQLCode = "DELETE FROM dbint_comments_" + internalCompanyName
+						+ " WHERE rowid=? AND internalfieldname IN (" + internalFieldNamesCsv + ")";
 				statement = conn.prepareStatement(SQLCode);
 				statement.setInt(1, rowId);
 				int numCommentsDeleted = statement.executeUpdate();

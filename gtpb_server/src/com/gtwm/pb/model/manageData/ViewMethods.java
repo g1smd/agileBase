@@ -527,7 +527,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			// rather than the administrator themselves
 			delegateUser = this.sessionData.getUser();
 			if (delegateUser == null) {
-				throw new CantDoThatException("There is no user in the session");
+				throw new ObjectNotFoundException("There is no user in the session");
 			}
 			if (!delegateUser.getUsesCustomUI()) {
 				throw new CantDoThatException("The user " + delegateUser + " must be set to use the custom " + delegateUser.getCompany() + " user interface");
