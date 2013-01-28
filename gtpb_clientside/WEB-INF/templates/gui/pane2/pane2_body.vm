@@ -135,8 +135,10 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           $viewTools.log("$fileValue is an image")
           #set($image = true)
           #if($field.getTableContainingField().equals($sessionTable))
+            $viewTools.log("$field is part of table $sessionTable")
             #set($fieldId = $thisUniqueId)
           #else
+            $viewTools.log("$field is from another table")
             #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
           #end
           #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getPreviewExtension()")
