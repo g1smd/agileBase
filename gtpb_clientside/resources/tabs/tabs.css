@@ -547,6 +547,7 @@ div.relation_field {
       top:0;
       left:0;
       padding-top:30px;
+      box-shadow: 0.5em 0.5em 2em #656766;
     }
     
     div.relation_picker div#toolbar {
