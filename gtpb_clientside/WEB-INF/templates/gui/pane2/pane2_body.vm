@@ -86,6 +86,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		#end
       ##If colour information present
       #if($row.size() > 3)
+        $viewTools.log("Colour information present")
         #set($rowColours = $row.get(3))
         #set($numRowColours = $rowColours.size())
         #foreach($cell in $thisValues)
@@ -128,9 +129,11 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 	      #end ## end not hidden
 	    #end ## end not 00:00:00
       #elseif($fieldCategory == "FILE")
+        $viewTools.log("$field is a file")
         #set($fileValue = $viewTools.getFileValueTool($cell))
         #set($attachmentType = $field.getAttachmentType().name())
         #if($fileValue.isImage())
+          $viewTools.log("$fileValue is an image")
           #set($image = true)
           #if($field.getTableContainingField().equals($sessionTable))
             #set($fieldId = $thisUniqueId)
