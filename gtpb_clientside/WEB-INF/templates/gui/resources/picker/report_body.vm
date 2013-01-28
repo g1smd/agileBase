@@ -23,6 +23,7 @@
 #set($pickerField=$sessionData.getCustomField('picker_field'))
 #set($keyField=$pickerField.getRelatedField())
 #set($displayField=$pickerField.getDisplayField())
+#set($sessionTable = $pickerReport.getParentTable())
 
 #set($data=[])
 #set($pickerFilters = $sessionData.getCustomReportFilterValues("picker"))
