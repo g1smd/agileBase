@@ -110,7 +110,12 @@
 	  class="autocomplete" ##
 	  value="$wholeDisplayValue">
 	#if($userCanEdit && (!$ab_calendar_display))
-	  <a href="#" class="clicker">change...</a>
+	  #if($fieldValue && ($fieldValue != ""))
+	    #set($text = "change...")
+	  #else
+	    #set($text = "choose...")
+	  #end
+	  <a href="#" class="clicker">$text</a>
 	  #if($globalEdit)
 	    <button class="globalEdit globalEditRelation">update globally</button>
 	  #end
