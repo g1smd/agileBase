@@ -19,10 +19,6 @@
 	  #set($pickerReport=$sessionData.getCustomReport('picker_report'))
 	  #set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#end
-	#set($fields = [])
-    #foreach($field in $reportBaseFields)##
-      #set($success=$fields.add($field))##
-    #end    
 	
 	#set($pickerField=$sessionData.getCustomField('picker_field'))
 	#set($keyField=$pickerField.getRelatedField())
@@ -33,6 +29,7 @@
 	#if(!$pickerReportRowLimit)
 		#set($pickerReportRowLimit = 50)
 	#end
+    #set($fields = [])
 	#foreach($datarow in $view.getReportDataRows($pickerReport,$pickerReportRowLimit,$pickerFilters,false))
 		  #set($row=[])
 		  #set($colours=[])
@@ -57,7 +54,10 @@
 			      #set($dataRowField = $dataRowFields.get($field))
 			      #set($success=$row.add($dataRowField.getDisplayValue()))
 			      #set($success=$colours.add($dataRowField.getStandardDevHexColour()))
-			    #end ## uncomment to remove to show primary key field
+                  #set($success=$fields.add($field))##
+			#else
+			  $viewTools.log("$field is a primary key")
+			#end ## uncomment to remove to show primary key field
 		  #end
 		  #set($success=$colours.add("")) ## needs an extra one for some reason
 		  #set($click="fPickItem(this)")
