@@ -19,6 +19,7 @@
 	  #set($pickerReport=$sessionData.getCustomReport('picker_report'))
 	  #set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#end
+	#set($fields = [])
     #foreach($field in $reportBaseFields)##
       #set($success=$fields.add($field))##
     #end    
