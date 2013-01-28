@@ -19,6 +19,9 @@
 	  #set($pickerReport=$sessionData.getCustomReport('picker_report'))
 	  #set($reportBaseFields = $pickerReport.getReportBaseFields())
 	#end
+    #foreach($field in $reportBaseFields)##
+      #set($success=$fields.add($field))##
+    #end    
 	
 	#set($pickerField=$sessionData.getCustomField('picker_field'))
 	#set($keyField=$pickerField.getRelatedField())
@@ -61,8 +64,4 @@
 		  #set($success=$data.add([$row,$click,$uniqueid,$colours,'',$expando]))
 	#end
 	
-	#set($reportBaseFields = $pickerReport.getReportBaseFields())##
-    #foreach($field in $reportBaseFields)##
-      #set($success=$fields.add($field))##
-    #end	
 	#parse("gui/pane2/pane2_body.vm")
