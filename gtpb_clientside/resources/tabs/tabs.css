@@ -828,6 +828,11 @@ div#reportData {
   top: 0.4em;
 }
 
+.two_cols .block div.relation_field a {
+  position: relative;
+  top: 0.4em;
+}
+
 .date select, .date input {
   width: auto!important;
   float: none!important;
