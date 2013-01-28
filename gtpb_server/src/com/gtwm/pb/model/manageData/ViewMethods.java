@@ -518,10 +518,23 @@ public final class ViewMethods implements ViewMethodsInfo {
 		// throw DisallowedException if privileges not sufficient
 		this.checkReportViewPrivileges(report);
 		Map<BaseField, Boolean> sessionReportSorts = this.sessionData.getReportSorts();
-		AppUserInfo user = this.databaseDefn.getAuthManager().getUserByUserName(this.request,
-				this.request.getRemoteUser());
+		// Pass user in so that if user is an app user, the report can be filtered by Created By = that user
+		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
+		AppUserInfo user = authManager.getLoggedInUser(this.request);
+		AppUserInfo delegateUser = user;
+		if (authManager.getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE) && user.getUsesCustomUI()) {
+			// If the user is an administrator and a custom app user, use a delegate user = the session user
+			// rather than the administrator themselves
+			delegateUser = this.sessionData.getUser();
+			if (delegateUser == null) {
+				throw new CantDoThatException("There is no user in the session");
+			}
+			if (!delegateUser.getUsesCustomUI()) {
+				throw new CantDoThatException("The user " + delegateUser + " must be set to use the custom " + delegateUser.getCompany() + " user interface");
+			}
+		}
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
-				user, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
+				delegateUser, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.AND, false);
 		if (!exactFilters) {
 			// Also only log user requested (pane 2) reports
