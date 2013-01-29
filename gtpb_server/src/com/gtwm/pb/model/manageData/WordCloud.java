@@ -75,7 +75,8 @@ public class WordCloud implements WordCloudInfo {
 		Iterator freqIt = frequencies.valuesIterator();
 		long stemFreq;
 		while (freqIt.hasNext()) {
-			stemFreq = frequencies.getCount((int) freqIt.next());
+			wordStem = (String) freqIt.next();
+			stemFreq = frequencies.getCount(wordStem);
 			stats.addValue(stemFreq);
 		}
 		double mean = stats.getMean();
