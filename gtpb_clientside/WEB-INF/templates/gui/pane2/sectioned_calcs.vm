@@ -38,11 +38,12 @@
           #set($detailStarted = true)
         #else
           #set($success = $headingMap.put($table, $headingLevel))
+          $viewTools.log("Adding $table to heading map")
           #set($headingLevel = $headingLevel + 1)
           #set($previousTable = $table)
-					#if($reportStyle == "ONE_SECTION")
-						#set($detailStartsNext = true)
-					#end
+	      #if($reportStyle == "ONE_SECTION")
+			#set($detailStartsNext = true)
+		  #end
         #end
       #end
       #if($table.equals($sessionTable))
