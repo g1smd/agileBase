@@ -50,7 +50,7 @@
     #end
     ## NOTE: awful hack on this line to check for a particular field for CH recipe printout
     ## TODO: something more generic, e.g. a calc. unique property
-    #if( ($headingTables.contains($table) && $field.isPrimaryKey()) || (($field.getInternalFieldName() == "sfmak3xhc4p2mczux") && ($rowCount > 2)))
+    #if( ($headingTables.contains($table) && $field.isPrimaryKey()) || (($field.getInternalFieldName() == "Sfmak3xhc4p2mczux") && ($rowCount > 2)))
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
         <tr name="$thisUniqueId" 

@@ -38,7 +38,6 @@
           #set($detailStarted = true)
         #else
           #set($success = $headingMap.put($table, $headingLevel))
-          $viewTools.log("Adding $table to heading map")
           #set($headingLevel = $headingLevel + 1)
           #set($previousTable = $table)
 	      #if($reportStyle == "ONE_SECTION")
