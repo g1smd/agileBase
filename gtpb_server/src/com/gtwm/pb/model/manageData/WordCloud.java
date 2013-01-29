@@ -117,7 +117,8 @@ public class WordCloud implements WordCloudInfo {
 			while (numWords > maxTags) {
 				freqIt = frequencies.valuesIterator();
 				SMALLREMOVAL: while (freqIt.hasNext()) {
-					stemFreq = frequencies.getCount((int) freqIt.next());
+					wordStem = (String) freqIt.next();
+					stemFreq = frequencies.getCount(wordStem);
 					if (stemFreq < lowerLimit) {
 						freqIt.remove();
 						numWords--;
@@ -136,7 +137,8 @@ public class WordCloud implements WordCloudInfo {
 			minFreq = Long.MAX_VALUE;
 			freqIt = frequencies.valuesIterator();
 			while (freqIt.hasNext()) {
-				stemFreq = frequencies.getCount((int) freqIt.next());
+				wordStem = (String) freqIt.next();
+				stemFreq = frequencies.getCount(wordStem);
 				if (stemFreq < minFreq) {
 					minFreq = stemFreq;
 				}
