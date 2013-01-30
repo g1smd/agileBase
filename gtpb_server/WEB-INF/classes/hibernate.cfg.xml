@@ -2,10 +2,7 @@
 <!DOCTYPE hibernate-configuration PUBLIC
       "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
       "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd" >
-<hibernate-configuration
-        xmlns="http://www.hibernate.org/xsd/hibernate-configuration"
-        xsi:schemaLocation="http://www.hibernate.org/xsd/hibernate-configuration hibernate-configuration-4.0.xsd"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<hibernate-configuration>
   <session-factory>
     <!-- Database connection settings -->
     <property name="connection.datasource">java:comp/env/jdbc/agileBaseSchema</property>
