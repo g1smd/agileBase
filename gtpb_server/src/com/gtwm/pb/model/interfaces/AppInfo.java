@@ -14,6 +14,13 @@ public interface AppInfo {
 	public String getAppName();
 	
 	/**
+	 * Get the icon name
+	 */
+	public String getIcon();
+	
+	public void setIcon(String icon);
+	
+	/**
 	 * Get the name of the CSS colour class
 	 */
 	public String getColour();

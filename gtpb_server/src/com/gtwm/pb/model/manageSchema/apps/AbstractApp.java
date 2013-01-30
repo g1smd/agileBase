@@ -1,9 +1,7 @@
 package com.gtwm.pb.model.manageSchema.apps;
 
 import javax.persistence.Id;
-
 import com.gtwm.pb.model.interfaces.AppInfo;
-import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.util.Enumerations.AppType;
 
 public abstract class AbstractApp {
@@ -29,6 +27,14 @@ public abstract class AbstractApp {
 		this.colour = colour;
 	}
 	
+	public String getIcon() {
+		return this.icon;
+	}
+	
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -48,5 +54,7 @@ public abstract class AbstractApp {
 	private AppType appType = null;
 	
 	private String colour = null;
+	
+	private String icon = null;
 
 }
