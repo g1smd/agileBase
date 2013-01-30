@@ -1,10 +1,12 @@
 package com.gtwm.pb.model.manageSchema.apps;
 
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 import com.gtwm.pb.model.interfaces.AppDataLinkInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.util.RandomString;
 
+@Entity
 public class DataLinkApp extends AbstractApp implements AppDataLinkInfo {
 
 	public DataLinkApp(String colour, BaseReportInfo report) {

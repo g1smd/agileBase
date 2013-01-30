@@ -1,9 +1,13 @@
 package com.gtwm.pb.model.manageSchema.apps;
 
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
 import com.gtwm.pb.model.interfaces.AppVisualisationInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.util.RandomString;
 
+@Entity
 public class VisualisationApp extends AbstractApp implements AppVisualisationInfo {
 
 	public VisualisationApp(String colour, ChartInfo chart) {
@@ -12,6 +16,7 @@ public class VisualisationApp extends AbstractApp implements AppVisualisationInf
 		this.setChart(chart);
 	}
 	
+	@Transient
 	public String getAppName() {
 		return this.chart.getTitle();
 	}

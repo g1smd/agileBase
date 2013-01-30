@@ -20,6 +20,8 @@ package com.gtwm.pb.util;
 import org.grlea.log.SimpleLogger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -60,56 +62,53 @@ import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
 
+
 public final class HibernateUtil {
-
-	private static final SessionFactory sessionFactory;
-
-	private static final SimpleLogger logger = new SimpleLogger(HibernateUtil.class);
 
 	static {
 		try {
 			// Create the SessionFactory
 			// specifying which classes should be persisted
-			Configuration cfg = new Configuration();
-			cfg.addPackage("com.gtwm.pb.auth");
-			cfg.addAnnotatedClass(Authenticator.class);
-			cfg.addAnnotatedClass(Company.class);
-			cfg.addAnnotatedClass(AppRole.class);
-			cfg.addAnnotatedClass(AppUser.class);
-			cfg.addAnnotatedClass(UserGeneralPrivilege.class);
-			cfg.addAnnotatedClass(RoleGeneralPrivilege.class);
-			cfg.addAnnotatedClass(RoleTablePrivilege.class);
-			cfg.addAnnotatedClass(UserTablePrivilege.class);
-			cfg.addPackage("com.gtwm.pb.model.manageSchema");
-			cfg.addAnnotatedClass(Module.class);
-			cfg.addAnnotatedClass(TableDefn.class);
-			cfg.addAnnotatedClass(BaseReportDefn.class);
-			cfg.addAnnotatedClass(AbstractReportField.class);
-			cfg.addAnnotatedClass(ReportFieldDefn.class);
-			cfg.addAnnotatedClass(ReportCalcFieldDefn.class);
-			cfg.addAnnotatedClass(ReportFilterDefn.class);
-			cfg.addAnnotatedClass(ChartAggregateDefn.class);
-			cfg.addAnnotatedClass(ChartDefn.class);
-			cfg.addAnnotatedClass(ReportMap.class);
-			cfg.addAnnotatedClass(SimpleReportDefn.class);
-			cfg.addAnnotatedClass(ReportSort.class);
-			cfg.addAnnotatedClass(ChartGrouping.class);
-			cfg.addAnnotatedClass(JoinClause.class);
-			cfg.addAnnotatedClass(FormTab.class);
-			cfg.addPackage("com.gtwm.pb.model.manageSchema.fields");
-			cfg.addAnnotatedClass(AbstractField.class);
-			cfg.addAnnotatedClass(BigTextFieldDefn.class);
-			cfg.addAnnotatedClass(CheckboxFieldDefn.class);
-			cfg.addAnnotatedClass(DateFieldDefn.class);
-			cfg.addAnnotatedClass(DecimalFieldDefn.class);
-			cfg.addAnnotatedClass(FileFieldDefn.class);
-			cfg.addAnnotatedClass(IntegerFieldDefn.class);
-			cfg.addAnnotatedClass(RelationFieldDefn.class);
-			cfg.addAnnotatedClass(SequenceFieldDefn.class);
-			cfg.addAnnotatedClass(TextFieldDefn.class);
-			cfg.addAnnotatedClass(SeparatorFieldDefn.class);
-			cfg.addAnnotatedClass(ReferencedReportDataFieldDefn.class);
-			cfg.addAnnotatedClass(CommentFeedFieldDefn.class);
+			Configuration configuration = new Configuration();
+			configuration.addPackage("com.gtwm.pb.auth");
+			configuration.addAnnotatedClass(Authenticator.class);
+			configuration.addAnnotatedClass(Company.class);
+			configuration.addAnnotatedClass(AppRole.class);
+			configuration.addAnnotatedClass(AppUser.class);
+			configuration.addAnnotatedClass(UserGeneralPrivilege.class);
+			configuration.addAnnotatedClass(RoleGeneralPrivilege.class);
+			configuration.addAnnotatedClass(RoleTablePrivilege.class);
+			configuration.addAnnotatedClass(UserTablePrivilege.class);
+			configuration.addPackage("com.gtwm.pb.model.manageSchema");
+			configuration.addAnnotatedClass(Module.class);
+			configuration.addAnnotatedClass(TableDefn.class);
+			configuration.addAnnotatedClass(BaseReportDefn.class);
+			configuration.addAnnotatedClass(AbstractReportField.class);
+			configuration.addAnnotatedClass(ReportFieldDefn.class);
+			configuration.addAnnotatedClass(ReportCalcFieldDefn.class);
+			configuration.addAnnotatedClass(ReportFilterDefn.class);
+			configuration.addAnnotatedClass(ChartAggregateDefn.class);
+			configuration.addAnnotatedClass(ChartDefn.class);
+			configuration.addAnnotatedClass(ReportMap.class);
+			configuration.addAnnotatedClass(SimpleReportDefn.class);
+			configuration.addAnnotatedClass(ReportSort.class);
+			configuration.addAnnotatedClass(ChartGrouping.class);
+			configuration.addAnnotatedClass(JoinClause.class);
+			configuration.addAnnotatedClass(FormTab.class);
+			configuration.addPackage("com.gtwm.pb.model.manageSchema.fields");
+			configuration.addAnnotatedClass(AbstractField.class);
+			configuration.addAnnotatedClass(BigTextFieldDefn.class);
+			configuration.addAnnotatedClass(CheckboxFieldDefn.class);
+			configuration.addAnnotatedClass(DateFieldDefn.class);
+			configuration.addAnnotatedClass(DecimalFieldDefn.class);
+			configuration.addAnnotatedClass(FileFieldDefn.class);
+			configuration.addAnnotatedClass(IntegerFieldDefn.class);
+			configuration.addAnnotatedClass(RelationFieldDefn.class);
+			configuration.addAnnotatedClass(SequenceFieldDefn.class);
+			configuration.addAnnotatedClass(TextFieldDefn.class);
+			configuration.addAnnotatedClass(SeparatorFieldDefn.class);
+			configuration.addAnnotatedClass(ReferencedReportDataFieldDefn.class);
+			configuration.addAnnotatedClass(CommentFeedFieldDefn.class);
 			// TODO: not sure if this is necessary or not, check next time we
 			// have a schema update
 			// NB automatic schema updates don't work for adding non null (e.g.
@@ -117,9 +116,12 @@ public final class HibernateUtil {
 			// be added manually. Error messages will show the expected names of
 			// the fields
 			// new SchemaUpdate(cfg).execute(true, true);
-			sessionFactory = cfg.buildSessionFactory();
+			configuration.configure();
+			ServiceRegistry serviceRegistry = (new ServiceRegistryBuilder()).applySettings(configuration.getProperties()).buildServiceRegistry();
+			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (Throwable ex) {
-			logger.error("Initial SessionFactory creation failed: " + ex);
+			// TODO: logger doesn't seem to work in this static block
+			//logger.error("Initial SessionFactory creation failed: " + ex);
 			ex.printStackTrace();
 			throw new ExceptionInInitializerError(ex);
 		}
@@ -200,4 +202,9 @@ public final class HibernateUtil {
 			}
 		}
 	}
+	
+	private static final SessionFactory sessionFactory;
+	
+	private static final SimpleLogger logger = new SimpleLogger(HibernateUtil.class);
+
 }

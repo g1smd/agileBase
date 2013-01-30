@@ -1,11 +1,13 @@
 package com.gtwm.pb.model.manageSchema.apps;
 
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import com.gtwm.pb.model.interfaces.AppDataStreamInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.util.RandomString;
 
+@Entity
 public class DataStreamApp extends AbstractApp implements AppDataStreamInfo {
 
 	public DataStreamApp(String colour, BaseReportInfo report) {

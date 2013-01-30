@@ -1,10 +1,12 @@
 package com.gtwm.pb.model.manageSchema.apps;
 
+import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import com.gtwm.pb.model.interfaces.AppChatInfo;
 import com.gtwm.pb.util.RandomString;
 
+@Entity
 public class ChatApp extends AbstractApp implements AppChatInfo {
 
 	public ChatApp(String colour) {

@@ -1,9 +1,16 @@
 package com.gtwm.pb.model.manageSchema.apps;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import com.gtwm.pb.model.interfaces.AppInfo;
 import com.gtwm.pb.util.Enumerations.AppType;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractApp {
 
 	@Id
@@ -15,6 +22,7 @@ public abstract class AbstractApp {
 		this.internalAppName = internalAppName;
 	}
 	
+	@Enumerated(EnumType.STRING)
 	public AppType getAppType() {
 		return this.appType;
 	}
