@@ -116,7 +116,6 @@ public final class HibernateUtil {
 			// basic types such as integer or boolean) properties, these have to
 			// be added manually. Error messages will show the expected names of
 			// the fields
-			(new SchemaUpdate(configuration)).execute(true, true);
 			configuration.setProperty("hibernate.query.substitutions", "yes 'Y', no 'N'");
 			configuration.setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/agileBaseSchema");
 			configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
@@ -132,6 +131,7 @@ public final class HibernateUtil {
 			configuration.setProperty("hibernate.cache.use_structured_entries","true");
 			configuration.setProperty("hibernate.cache.provider_class","org.hibernate.cache.HashtableCacheProvider");
 			configuration.configure();
+			(new SchemaUpdate(configuration)).execute(true, true);
 			ServiceRegistry serviceRegistry = (new ServiceRegistryBuilder()).applySettings(configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (Throwable ex) {
