@@ -116,6 +116,20 @@ public final class HibernateUtil {
 			// be added manually. Error messages will show the expected names of
 			// the fields
 			// new SchemaUpdate(cfg).execute(true, true);
+			configuration.setProperty("hibernate.query.substitutions", "yes 'Y', no 'N'");
+			configuration.setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/agileBaseSchema");
+			configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+			configuration.setProperty("hibernate.show_sql", "false");
+			configuration.setProperty("hibernate.format_sql", "true");
+			configuration.setProperty("hibernate.use_sql_comments", "true");
+			configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+			configuration.setProperty("hibernate.max_fetch_depth","1");
+			configuration.setProperty("hibernate.default_batch_fetch_size", "8");
+			configuration.setProperty("hibernate.jdbc.batch_versioned_data", "true");
+			configuration.setProperty("hibernate.jdbc.use_streams_for_binary", "true");
+			configuration.setProperty("hibernate.cache.region_prefix","hibernate.test");
+			configuration.setProperty("hibernate.cache.use_structured_entries","true");
+			configuration.setProperty("hibernate.cache.provider_class","org.hibernate.cache.HashtableCacheProvider");
 			configuration.configure();
 			ServiceRegistry serviceRegistry = (new ServiceRegistryBuilder()).applySettings(configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
