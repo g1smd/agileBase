@@ -49,6 +49,14 @@ import com.gtwm.pb.model.manageSchema.ChartDefn;
 import com.gtwm.pb.model.manageSchema.ChartAggregateDefn;
 import com.gtwm.pb.model.manageSchema.ReportSort;
 import com.gtwm.pb.model.manageSchema.ChartGrouping;
+import com.gtwm.pb.model.manageSchema.apps.AbstractApp;
+import com.gtwm.pb.model.manageSchema.apps.CalendarApp;
+import com.gtwm.pb.model.manageSchema.apps.ChatApp;
+import com.gtwm.pb.model.manageSchema.apps.CommentStreamApp;
+import com.gtwm.pb.model.manageSchema.apps.DataLinkApp;
+import com.gtwm.pb.model.manageSchema.apps.DataStreamApp;
+import com.gtwm.pb.model.manageSchema.apps.FocusApp;
+import com.gtwm.pb.model.manageSchema.apps.VisualisationApp;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.model.manageSchema.fields.BigTextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.CheckboxFieldDefn;
@@ -62,7 +70,6 @@ import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
-
 
 public final class HibernateUtil {
 
@@ -110,12 +117,15 @@ public final class HibernateUtil {
 			configuration.addAnnotatedClass(SeparatorFieldDefn.class);
 			configuration.addAnnotatedClass(ReferencedReportDataFieldDefn.class);
 			configuration.addAnnotatedClass(CommentFeedFieldDefn.class);
-			// TODO: not sure if this is necessary or not, check next time we
-			// have a schema update
-			// NB automatic schema updates don't work for adding non null (e.g.
-			// basic types such as integer or boolean) properties, these have to
-			// be added manually. Error messages will show the expected names of
-			// the fields
+			configuration.addPackage("com.gtwm.pb.model.manageSchema.apps");
+			configuration.addAnnotatedClass(AbstractApp.class);
+			configuration.addAnnotatedClass(CalendarApp.class);
+			configuration.addAnnotatedClass(ChatApp.class);
+			configuration.addAnnotatedClass(CommentStreamApp.class);
+			configuration.addAnnotatedClass(DataLinkApp.class);
+			configuration.addAnnotatedClass(DataStreamApp.class);
+			configuration.addAnnotatedClass(FocusApp.class);
+			configuration.addAnnotatedClass(VisualisationApp.class);
 			configuration.setProperty("hibernate.query.substitutions", "yes 'Y', no 'N'");
 			configuration.setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/agileBaseSchema");
 			configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
@@ -131,7 +141,13 @@ public final class HibernateUtil {
 			configuration.setProperty("hibernate.cache.use_structured_entries","true");
 			configuration.setProperty("hibernate.cache.provider_class","org.hibernate.cache.HashtableCacheProvider");
 			configuration.configure();
-			(new SchemaUpdate(configuration)).execute(true, true);
+			// TODO: not sure if this is necessary or not, check next time we
+			// have a schema update
+			// NB automatic schema updates don't work for adding non null (e.g.
+			// basic types such as integer or boolean) properties, these have to
+			// be added manually. Error messages will show the expected names of
+			// the fields
+			//(new SchemaUpdate(configuration)).execute(true, true);
 			ServiceRegistry serviceRegistry = (new ServiceRegistryBuilder()).applySettings(configuration.getProperties()).buildServiceRegistry();
 			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 		} catch (Throwable ex) {
