@@ -17,6 +17,7 @@
     <button>last month</button> 
     <button>this year</button> 
     <button>last year</button> 
+    <button>all</button>
     <i class="icon-plus-sign zoom in"></i>  <i class="icon-minus-sign zoom out"></i>
   </div>
 </div>

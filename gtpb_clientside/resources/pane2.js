@@ -475,7 +475,11 @@ function dateFilterControls(event, inputObj) {
 			}
 		});
 		$("#dateRangePresets button").click(function() {
-			$(inputObj).val($(this).text());
+			var range = $(this).text();
+			if (range == "all") {
+				range = "";
+			}
+			$(inputObj).val(range);
 			$(inputObj).keyup();
 			$("#fieldFilterControls").fadeOut();
 		});
