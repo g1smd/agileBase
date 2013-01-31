@@ -27,6 +27,10 @@ public abstract class AbstractApp {
 		return this.appType;
 	}
 	
+	protected void setAppType(AppType appType) {
+		this.appType = appType;
+	}
+	
 	public String getColour() {
 		return this.colour;
 	}
