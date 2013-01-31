@@ -31,6 +31,7 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
+import com.gtwm.pb.model.manageSchema.apps.AbstractApp;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
@@ -38,6 +39,7 @@ import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
 import javax.mail.MessagingException;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -47,6 +49,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -238,8 +241,13 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		return this.formTables;
 	}
 	
+	@OneToMany(targetEntity=AbstractApp.class, cascade = {CascadeType.ALL})
 	public SortedSet<AppInfo> getApps() {
 		return this.apps;
+	}
+	
+	private void setApps(SortedSet<AppInfo> apps) {
+		this.apps = apps;
 	}
 	
 	public synchronized void addApp(AppInfo app) {
