@@ -476,10 +476,11 @@ function dateFilterControls(event, inputObj) {
 		});
 		$("#dateRangePresets button").click(function() {
 			var range = $(this).text();
+			console.log("Range is " + range);
 			if (range == "all") {
 				range = "";
 			}
-			
+			console.log("Range is " + range);
 			$(inputObj).val(range);
 			$(inputObj).keyup();
 			$("#fieldFilterControls").fadeOut();
