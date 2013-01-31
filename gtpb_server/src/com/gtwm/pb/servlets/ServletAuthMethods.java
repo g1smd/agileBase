@@ -112,7 +112,7 @@ public final class ServletAuthMethods {
 	public synchronized static void addUser(SessionDataInfo sessionData, HttpServletRequest request,
 			AuthManagerInfo authManager) throws DisallowedException, MissingParametersException,
 			ObjectNotFoundException, CodingErrorException, CantDoThatException {
-		String baseUsername = request.getParameter(AppUserInfo.USERNAME.toLowerCase(Locale.UK));
+		String baseUsername = request.getParameter("username");
 		String username = baseUsername;
 		CompanyInfo company = authManager.getCompanyForLoggedInUser(request);
 		if (baseUsername == null) {
@@ -140,19 +140,19 @@ public final class ServletAuthMethods {
 						+ " already exists, please choose a different one");
 			}
 		}
-		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase(Locale.UK));
-		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase(Locale.UK));
+		String surname = request.getParameter("surname");
+		String forename = request.getParameter("forename");
 		if (surname == null && forename == null) {
 			surname = "User";
 			forename = "New";
 		}
-		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase(Locale.UK));
+		String password = request.getParameter("password");
 		if (password == null) {
 			password = RandomString.generate();
 		}
-		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
-		String custom1 = request.getParameter(AppUserInfo.CUSTOM1.toLowerCase());
-		String useCustomUIString = request.getParameter(AppUserInfo.USES_CUSTOM_UI.toLowerCase());
+		String email = request.getParameter("email");
+		String custom1 = request.getParameter("custom1");
+		String useCustomUIString = request.getParameter("uses_custom_ui");
 		boolean useCustomUI = false;
 		if (useCustomUIString != null) {
 			useCustomUI = Helpers.valueRepresentsBooleanTrue(useCustomUIString);
@@ -291,19 +291,19 @@ public final class ServletAuthMethods {
 			throw new ObjectNotFoundException(
 					"'internalusername' was not provided and there is no user in the session");
 		}
-		String userName = request.getParameter(AppUserInfo.USERNAME.toLowerCase());
-		String surname = request.getParameter(AppUserInfo.SURNAME.toLowerCase());
-		String forename = request.getParameter(AppUserInfo.FORENAME.toLowerCase());
-		String password = request.getParameter(AppUserInfo.PASSWORD.toLowerCase());
-		String email = request.getParameter(AppUserInfo.EMAIL.toLowerCase());
+		String userName = request.getParameter("username");
+		String surname = request.getParameter("surname");
+		String forename = request.getParameter("forename");
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
 		boolean usesCustomUI = appUser.getUsesCustomUI();
-		String usesCustomUIString = request.getParameter(AppUserInfo.USES_CUSTOM_UI.toLowerCase());
+		String usesCustomUIString = request.getParameter("uses_custom_ui");
 		if (usesCustomUIString != null) {
 			usesCustomUI = Helpers.valueRepresentsBooleanTrue(usesCustomUIString);
 		}
 		boolean usesAppLauncher = appUser.getUsesAppLauncher();
 		String usesAppLauncherString = request
-				.getParameter(AppUserInfo.USES_APP_LAUNCHER.toLowerCase());
+				.getParameter("uses_app_launcher");
 		if (usesAppLauncherString != null) {
 			usesAppLauncher = Helpers.valueRepresentsBooleanTrue(usesAppLauncherString);
 		}
@@ -312,7 +312,7 @@ public final class ServletAuthMethods {
 				throw new CantDoThatException("User update failed: error setting password");
 			}
 		}
-		String userTypeString = request.getParameter(AppUserInfo.INITIALVIEW.toLowerCase());
+		String userTypeString = request.getParameter("initialview");
 		InitialView userType = null;
 		if (userTypeString != null) {
 			userType = InitialView.valueOf(userTypeString.toUpperCase());

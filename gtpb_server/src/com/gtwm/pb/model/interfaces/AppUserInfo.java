@@ -33,25 +33,6 @@ import com.gtwm.pb.util.Enumerations.InitialView;
  */
 public interface AppUserInfo {
 
-	// TODO: get rid of these contants, I think they're only used in one place
-	public static final String USERNAME = "username";
-
-	public static final String PASSWORD = "password";
-
-	public static final String SURNAME = "surname";
-
-	public static final String FORENAME = "forename";
-
-	public static final String INITIALVIEW = "initialview";
-
-	public static final String EMAIL = "email";
-
-	public static final String CUSTOM1 = "custom1";
-
-	public static final String USES_CUSTOM_UI = "uses_custom_ui";
-
-	public static final String USES_APP_LAUNCHER = "uses_app_launcher";
-
 	public CompanyInfo getCompany();
 
 	public String getInternalUserName();
