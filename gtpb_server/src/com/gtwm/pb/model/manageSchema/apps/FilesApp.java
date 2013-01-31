@@ -7,6 +7,7 @@ import com.gtwm.pb.model.interfaces.AppFilesInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.util.RandomString;
+import com.gtwm.pb.util.Enumerations.AppType;
 
 @Entity
 public class FilesApp extends AbstractApp implements AppFilesInfo {
@@ -14,10 +15,12 @@ public class FilesApp extends AbstractApp implements AppFilesInfo {
 	public FilesApp(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalAppName(RandomString.generate());
+		super.setAppType(AppType.FILES);
 		this.setReport(report);
 	}
 
 	@Transient
+	@Override
 	public String getAppName() {
 		return this.getReport().getParentTable().getSimpleName();
 	}
@@ -31,9 +34,5 @@ public class FilesApp extends AbstractApp implements AppFilesInfo {
 		this.report = report;		
 	}
 	
-	public String toString() {
-		return this.getAppName();
-	}
-
 	private BaseReportInfo report = null;
 }

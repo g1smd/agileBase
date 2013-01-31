@@ -343,12 +343,6 @@ public final class AppController extends VelocityViewServlet {
 				case GLOBAL_EDIT:
 					ServletDataMethods.globalEdit(sessionData, request, databaseDefn, multipartItems);
 					break;
-				case CONTRACT_SECTION:
-					ServletSchemaMethods.contractSection(sessionData, request, databaseDefn);
-					break;
-				case EXPAND_SECTION:
-					ServletSchemaMethods.expandSection(sessionData, request, databaseDefn);
-					break;
 				case ADD_COMMENT:
 					ServletDataMethods.addComment(sessionData, request, databaseDefn);
 					break;
@@ -566,8 +560,17 @@ public final class AppController extends VelocityViewServlet {
 					ServletSchemaMethods.removeDistinctFromReport(sessionData, request, databaseDefn);
 					break;
 				case UPLOAD_PROFILE_PICTURE:
-					ServletAuthMethods.uploadProfilePicture(sessionData, databaseDefn, request, multipartItems);
+					ServletAuthMethods.uploadProfilePicture(sessionData, databaseDefn, request,
+							multipartItems);
 					break;
+				case ADD_APP:
+					ServletSchemaMethods.addAppToUser(request, sessionData, databaseDefn);
+					break;
+				case REMOVE_APP:
+					ServletSchemaMethods.removeAppFromUser(request, databaseDefn);
+					break;
+				default:
+					throw new CodingErrorException("Unhandled app action " + appAction);
 				}
 			}
 		}
@@ -575,7 +578,8 @@ public final class AppController extends VelocityViewServlet {
 
 	public static void carryOutPostSessionActions(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn, EnumSet<SessionAction> sessionActions)
-			throws SQLException, ObjectNotFoundException, MissingParametersException, DisallowedException {
+			throws SQLException, ObjectNotFoundException, MissingParametersException,
+			DisallowedException, CantDoThatException {
 		for (SessionAction sessionAction : sessionActions) {
 			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase(
 					Locale.UK));
@@ -593,6 +597,9 @@ public final class AppController extends VelocityViewServlet {
 				case POSTSET_CUSTOM_REPORT:
 					ServletSessionMethods.setCustomReport(sessionData, request, false, databaseDefn);
 					break;
+				default:
+					throw new CantDoThatException(sessionAction.toString()
+							+ " is not supported as a post-session action");
 				}
 			}
 		}

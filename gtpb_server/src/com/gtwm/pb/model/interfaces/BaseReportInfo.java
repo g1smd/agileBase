@@ -183,11 +183,13 @@ public interface BaseReportInfo extends Comparable<BaseReportInfo> {
 	 * Return the field whose contents are to be used for generating a word
 	 * cloud. If the field is the report table's primary key, a cloud from all
 	 * relevant fields in the report joined together will be used
+	 * 
+	 * If null, there is no word cloud
 	 */
 	public ReportFieldInfo getWordCloudField();
 
 	/**
-	 * Return an object to represent map data. If no object exists, create one
+	 * Return an object to represent map data
 	 */
 	public ReportMapInfo getMap();
 

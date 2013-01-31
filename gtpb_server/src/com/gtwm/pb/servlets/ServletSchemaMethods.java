@@ -36,7 +36,9 @@ import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
+import com.gtwm.pb.model.interfaces.AppInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
+import com.gtwm.pb.model.interfaces.AppVisualisationInfo;
 import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
@@ -70,6 +72,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Enumerations.AppType;
 import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
@@ -87,6 +90,15 @@ import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
+import com.gtwm.pb.model.manageSchema.apps.CalendarApp;
+import com.gtwm.pb.model.manageSchema.apps.ChatApp;
+import com.gtwm.pb.model.manageSchema.apps.CommentStreamApp;
+import com.gtwm.pb.model.manageSchema.apps.DataLinkApp;
+import com.gtwm.pb.model.manageSchema.apps.DataStreamApp;
+import com.gtwm.pb.model.manageSchema.apps.FilesApp;
+import com.gtwm.pb.model.manageSchema.apps.FocusApp;
+import com.gtwm.pb.model.manageSchema.apps.VisualisationApp;
+import com.gtwm.pb.model.manageSchema.apps.VisualisationApp.VisualisationType;
 
 /**
  * Methods to do with the schema (editing companies, tables, fields etc.) to be
@@ -809,8 +821,8 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			conn = databaseDefn.getDataSource().getConnection();
 			conn.setAutoCommit(false);
-			newReport = databaseDefn.addReport(sessionData, request, conn, table,
-					reportName, reportDesc, populateReport);
+			newReport = databaseDefn.addReport(sessionData, request, conn, table, reportName, reportDesc,
+					populateReport);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (SQLException sqlex) {
@@ -1915,8 +1927,8 @@ public final class ServletSchemaMethods {
 			DatabaseFieldType databaseType = DatabaseFieldType.valueOf(dbType.toUpperCase(Locale.UK));
 			Map<TableInfo, Set<BaseReportInfo>> availableDataStores = databaseDefn
 					.getViewableDataStores(request);
-			newCalculationField = new ReportCalcFieldDefn(report,
-					calculationName, calculationDefn, databaseType, availableDataStores);
+			newCalculationField = new ReportCalcFieldDefn(report, calculationName, calculationDefn,
+					databaseType, availableDataStores);
 			databaseDefn.addCalculationToReport(request, conn, report, newCalculationField);
 			conn.commit();
 			HibernateUtil.currentSession().getTransaction().commit();
@@ -2783,6 +2795,134 @@ public final class ServletSchemaMethods {
 		}
 	}
 
+	/**
+	 * Create an app object and add it to the logged in user, or a specified user
+	 */
+	public synchronized static void addAppToUser(HttpServletRequest request,
+			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
+			ObjectNotFoundException, MissingParametersException, CodingErrorException,
+			CantDoThatException {
+		AppUserInfo user = null;
+		String username = request.getParameter("username");
+		if (username != null) {
+			user = databaseDefn.getAuthManager().getUserByUserName(request, username);
+		} else {
+			user = databaseDefn.getAuthManager().getLoggedInUser(request);
+		}
+		String appTypeString = request.getParameter("apptype");
+		if (appTypeString == null) {
+			throw new MissingParametersException("apptype needed to add an app");
+		}
+		AppType appType = AppType.valueOf(appTypeString.toUpperCase());
+		String colour = request.getParameter("colour");
+		AppInfo app;
+		switch (appType) {
+		case CALENDAR:
+			app = new CalendarApp(colour);
+			break;
+		case CHAT:
+			app = new ChatApp(colour);
+			break;
+		case COMMENT_STREAM:
+			app = new CommentStreamApp(colour);
+			break;
+		case DATA_LINK:
+			BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
+					databaseDefn, false);
+			app = new DataLinkApp(colour, report);
+			break;
+		case DATA_STREAM:
+			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
+			app = new DataStreamApp(colour, report);
+			break;
+		case FILES:
+			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
+			app = new FilesApp(colour, report);
+			break;
+		case FOCUS:
+			app = new FocusApp(colour);
+			break;
+		case VISUALISATION:
+			String visualisationTypeString = request.getParameter("visualisationtype");
+			if (visualisationTypeString == null) {
+				throw new MissingParametersException(
+						"visualisationtype needed to create a visualisation app");
+			}
+			VisualisationType visualisationType = VisualisationType.valueOf(visualisationTypeString
+					.toUpperCase());
+			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
+			app = new VisualisationApp(colour, visualisationType);
+			switch (visualisationType) {
+			// Note this is an inner case statement inside an outer one
+			case CHART:
+				Long chartId = Long.valueOf(request.getParameter("chartid"));
+				ChartInfo chart = report.getSavedChart(chartId);
+				((AppVisualisationInfo) app).setChart(chart);
+				break;
+			case MAP:
+			case WORD_CLOUD:
+				((AppVisualisationInfo) app).setReport(report);
+				break;
+			default:
+				throw new CodingErrorException("Unhandled visualisation type " + visualisationType);
+			}
+			break;
+		default:
+			throw new CodingErrorException("Unhandled app type " + appType);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(user);
+			HibernateUtil.currentSession().save(app);
+			user.addApp(app);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("app addition failed", hex);
+		} catch (CantDoThatException cdtex) {
+			rollbackConnections(null);
+			throw cdtex;
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
+	public synchronized static void removeAppFromUser(HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException, MissingParametersException, CantDoThatException {
+		AppUserInfo user = null;
+		String username = request.getParameter("username");
+		if (username != null) {
+			user = databaseDefn.getAuthManager().getUserByUserName(request, username);
+		} else {
+			user = databaseDefn.getAuthManager().getLoggedInUser(request);
+		}
+		String internalAppName = request.getParameter("internalappname");
+		if (internalAppName == null) {
+			throw new MissingParametersException("internalappname needed to remove an app from a user");
+		}
+		AppInfo app = null;
+		for (AppInfo testApp : user.getApps()) {
+			if (testApp.getInternalAppName().equals(internalAppName)) {
+				app = testApp;
+				break;
+			}
+		}
+		if (app == null) {
+			throw new ObjectNotFoundException("App with internal name " + internalAppName + " not found for user " + user);
+		}
+		try {
+			HibernateUtil.startHibernateTransaction();
+			HibernateUtil.activateObject(user);
+			user.removeApp(app);
+			HibernateUtil.currentSession().delete(app);
+			HibernateUtil.currentSession().getTransaction().commit();
+		} catch (HibernateException hex) {
+			rollbackConnections(null);
+			throw new CantDoThatException("app removal failed", hex);
+		} finally {
+			HibernateUtil.closeSession();
+		}
+	}
+
 	public synchronized static void hideReportFromUser(SessionDataInfo sessionData,
 			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
 			ObjectNotFoundException, DisallowedException, CantDoThatException {
@@ -3050,60 +3190,6 @@ public final class ServletSchemaMethods {
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
 			throw new CantDoThatException("setting default report failed", hex);
-		} finally {
-			HibernateUtil.closeSession();
-		}
-	}
-
-	@Deprecated
-	public synchronized static void contractSection(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
-			ObjectNotFoundException, DisallowedException, CantDoThatException {
-		String internalFieldName = request.getParameter("internalfieldname");
-		if (internalFieldName == null) {
-			throw new MissingParametersException(
-					"An internalFieldName to identify the section is necessary to contract a section");
-		}
-		TableInfo table = sessionData.getTable();
-		// Get the field just to ensure the identifier is valid
-		BaseField field = table.getField(internalFieldName);
-		AppUserInfo appUser = databaseDefn.getAuthManager().getLoggedInUser(request);
-		try {
-			HibernateUtil.startHibernateTransaction();
-			HibernateUtil.activateObject(appUser);
-			appUser.contractSection(field.getInternalFieldName());
-			HibernateUtil.currentSession().getTransaction().commit();
-		} catch (HibernateException hex) {
-			rollbackConnections(null);
-			throw new CantDoThatException("contracting section " + field + " in table " + table
-					+ " failed", hex);
-		} finally {
-			HibernateUtil.closeSession();
-		}
-	}
-
-	@Deprecated
-	public synchronized static void expandSection(SessionDataInfo sessionData,
-			HttpServletRequest request, DatabaseInfo databaseDefn) throws MissingParametersException,
-			ObjectNotFoundException, DisallowedException, CantDoThatException {
-		String internalFieldName = request.getParameter("internalfieldname");
-		if (internalFieldName == null) {
-			throw new MissingParametersException(
-					"An internalFieldName to identify the section is necessary to expand a section");
-		}
-		TableInfo table = sessionData.getTable();
-		// Get the field just to ensure the identifier is valid
-		BaseField field = table.getField(internalFieldName);
-		AppUserInfo appUser = databaseDefn.getAuthManager().getLoggedInUser(request);
-		try {
-			HibernateUtil.startHibernateTransaction();
-			HibernateUtil.activateObject(appUser);
-			appUser.expandSection(field.getInternalFieldName());
-			HibernateUtil.currentSession().getTransaction().commit();
-		} catch (HibernateException hex) {
-			rollbackConnections(null);
-			throw new CantDoThatException(
-					"expanding section " + field + " in table " + table + " failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}

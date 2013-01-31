@@ -6,6 +6,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
+
 import com.gtwm.pb.model.interfaces.AppInfo;
 import com.gtwm.pb.util.Enumerations.AppType;
 
@@ -29,6 +31,11 @@ public abstract class AbstractApp {
 	
 	protected void setAppType(AppType appType) {
 		this.appType = appType;
+	}
+	
+	@Transient
+	public String getAppName() {
+		return this.getAppType().getAppName();
 	}
 	
 	public String getColour() {
@@ -59,6 +66,10 @@ public abstract class AbstractApp {
 	
 	public int hashCode() {
 		return this.getInternalAppName().hashCode();
+	}
+	
+	public String toString() {
+		return this.getAppName();
 	}
 	
 	/**

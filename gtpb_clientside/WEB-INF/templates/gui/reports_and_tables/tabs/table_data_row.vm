@@ -18,7 +18,6 @@
 ## Used by view.vm and edit.vm
 ## $tableDataRow and $field must be defined by them
 #set($loggedInUser = $view.getLoggedInUser())
-#set($contractedSections = $loggedInUser.getContractedSections())
 #set($internalFieldName = $field.getInternalFieldName())
 #if (!$field.isPrimaryKey()) ## remove to show primary key field
   #if($address)
@@ -62,12 +61,6 @@
   	#if(($fieldCategory != "REFERENCED_REPORT_DATA") || $referencedData.contains("span"))
   	  #if(($fieldCategory != "FILE") || (!$ab_calendar_display)) ## Don't show file fields in calendar editor for now
       	#set($rowCount = $rowCount + 1)
-        #if($fieldCategory == 'SEPARATOR')
-          #set($contracted = false)
-          #if((!$edit_nav) && $contractedSections.contains($internalFieldName))
-            #set($contracted = true)
-          #end
-        #end
         #set($singleColumn = ($formStyle == "SINGLE_COLUMN") || $mobile_device || ($tabCaption == "global edit"))
         #if($singleColumn)
           #parse('gui/reports_and_tables/tabs/table_data_row_single_column.vm')

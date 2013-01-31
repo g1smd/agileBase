@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import com.gtwm.pb.model.interfaces.AppInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -40,11 +39,9 @@ import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
 import javax.mail.MessagingException;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -52,7 +49,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.grlea.log.SimpleLogger;
 
@@ -295,23 +291,6 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		this.operationalDashboardReports = operationalDashboardReports;
 	}
 
-	public synchronized void contractSection(String internalFieldName) {
-		this.getContractedSections().add(internalFieldName);
-	}
-
-	public synchronized void expandSection(String internalFieldName) {
-		this.getContractedSections().remove(internalFieldName);
-	}
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	public Set<String> getContractedSections() {
-		return this.contractedSections;
-	}
-
-	private void setContractedSections(Set<String> contractedSections) {
-		this.contractedSections = contractedSections;
-	}
-
 	@OneToOne(targetEntity = BaseReportDefn.class, cascade = {})
 	public BaseReportInfo getDefaultReport() {
 		return this.defaultReport;
@@ -475,8 +454,6 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<TableInfo> formTables = new HashSet<TableInfo>();
 	
 	private SortedSet<AppInfo> apps = new TreeSet<AppInfo>();
-
-	private Set<String> contractedSections = new HashSet<String>();
 
 	private BaseReportInfo defaultReport = null;
 

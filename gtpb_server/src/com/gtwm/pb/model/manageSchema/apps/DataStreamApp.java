@@ -7,6 +7,7 @@ import javax.persistence.Transient;
 import com.gtwm.pb.model.interfaces.AppDataStreamInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
+import com.gtwm.pb.util.Enumerations.AppType;
 import com.gtwm.pb.util.RandomString;
 
 @Entity
@@ -15,10 +16,12 @@ public class DataStreamApp extends AbstractApp implements AppDataStreamInfo {
 	public DataStreamApp(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalAppName(RandomString.generate());
+		super.setAppType(AppType.DATA_STREAM);
 		this.setReport(report);
 	}
 
 	@Transient
+	@Override
 	public String getAppName() {
 		return this.getReport().getParentTable().getSimpleName();
 	}
@@ -32,9 +35,5 @@ public class DataStreamApp extends AbstractApp implements AppDataStreamInfo {
 		this.report = report;		
 	}
 	
-	public String toString() {
-		return this.getAppName();
-	}
-
 	private BaseReportInfo report = null;
 }
