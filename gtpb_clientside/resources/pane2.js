@@ -479,6 +479,7 @@ function dateFilterControls(event, inputObj) {
 			if (range == "all") {
 				range = "";
 			}
+			
 			$(inputObj).val(range);
 			$(inputObj).keyup();
 			$("#fieldFilterControls").fadeOut();
