@@ -21,7 +21,10 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
+
+import com.gtwm.pb.model.interfaces.AppInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
@@ -233,6 +236,18 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	@ManyToMany(targetEntity = TableDefn.class, cascade = {})
 	private Set<TableInfo> getFormTablesDirect() {
 		return this.formTables;
+	}
+	
+	public SortedSet<AppInfo> getApps() {
+		return this.apps;
+	}
+	
+	public synchronized void addApp(AppInfo app) {
+		this.getApps().add(app);
+	}
+	
+	public synchronized void removeApp(AppInfo app) {
+		this.getApps().remove(app);
 	}
 
 	/**
@@ -450,6 +465,8 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<BaseReportInfo> operationalDashboardReports = new HashSet<BaseReportInfo>();
 
 	private Set<TableInfo> formTables = new HashSet<TableInfo>();
+	
+	private SortedSet<AppInfo> apps = new TreeSet<AppInfo>();
 
 	private Set<String> contractedSections = new HashSet<String>();
 

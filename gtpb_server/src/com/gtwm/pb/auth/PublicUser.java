@@ -18,6 +18,10 @@ package com.gtwm.pb.auth;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import com.gtwm.pb.model.interfaces.AppInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -269,6 +273,21 @@ public class PublicUser implements AppUserInfo {
 	@Override
 	public void setUsesAppLauncher(boolean usesAppLauncher) throws CantDoThatException {
 		throw new CantDoThatException("Not valid for public users");
+	}
+
+	@Override
+	public SortedSet<AppInfo> getApps() {
+		return new TreeSet<AppInfo>();
+	}
+
+	@Override
+	public void addApp(AppInfo app) throws CantDoThatException {
+		throw new CantDoThatException("Public users can't have apps");
+	}
+
+	@Override
+	public void removeApp(AppInfo app) throws CantDoThatException {
+		throw new CantDoThatException("Public users can't have apps");
 	}
 
 }

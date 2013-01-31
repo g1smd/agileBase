@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.interfaces;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 import javax.mail.MessagingException;
 
@@ -71,11 +72,11 @@ public interface AppUserInfo {
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
 	
-	public Set<AppInfo> getApps();
+	public SortedSet<AppInfo> getApps();
 	
-	public void addApp(AppInfo app);
+	public void addApp(AppInfo app) throws CantDoThatException;
 	
-	public void removeApp(AppInfo app);
+	public void removeApp(AppInfo app) throws CantDoThatException;
 
 	/**
 	 * Reports that should be visible by default on the user's operational
