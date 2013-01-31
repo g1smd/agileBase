@@ -55,6 +55,7 @@ import com.gtwm.pb.model.manageSchema.apps.ChatApp;
 import com.gtwm.pb.model.manageSchema.apps.CommentStreamApp;
 import com.gtwm.pb.model.manageSchema.apps.DataLinkApp;
 import com.gtwm.pb.model.manageSchema.apps.DataStreamApp;
+import com.gtwm.pb.model.manageSchema.apps.FilesApp;
 import com.gtwm.pb.model.manageSchema.apps.FocusApp;
 import com.gtwm.pb.model.manageSchema.apps.VisualisationApp;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
@@ -126,6 +127,7 @@ public final class HibernateUtil {
 			configuration.addAnnotatedClass(DataStreamApp.class);
 			configuration.addAnnotatedClass(FocusApp.class);
 			configuration.addAnnotatedClass(VisualisationApp.class);
+			configuration.addAnnotatedClass(FilesApp.class);
 			configuration.setProperty("hibernate.query.substitutions", "yes 'Y', no 'N'");
 			configuration.setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/agileBaseSchema");
 			configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
