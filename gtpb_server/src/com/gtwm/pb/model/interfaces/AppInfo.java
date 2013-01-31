@@ -5,7 +5,7 @@ import com.gtwm.pb.util.Enumerations.AppType;
 /**
  * An app for the Agilebase social interface
  */
-public interface AppInfo {
+public interface AppInfo extends Comparable<AppInfo> {
 	
 	public String getInternalAppName();
 

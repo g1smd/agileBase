@@ -28,9 +28,8 @@ import org.apache.commons.lang.WordUtils;
 public class Enumerations {
 
 	public enum AppType {
-		COMMENT_STREAM("Comment stream", true), DATA_STREAM("Data stream", true), DATA_LINK(
-				"Data link", false), VISUALISATION("Visualisation", false), FOCUS("Item focus", false), CHAT(
-				"Chat", false);
+		COMMENT_STREAM("Comment stream", true), DATA_STREAM("Data stream", true), FOCUS("Item focus", false), DATA_LINK(
+				"Data link", false), VISUALISATION("Visualisation", false), CHAT("Chat", false);
 
 		private String appName;
 

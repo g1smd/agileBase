@@ -70,6 +70,12 @@ public interface AppUserInfo {
 	 * to reduce clutter
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
+	
+	public Set<AppInfo> getApps();
+	
+	public void addApp(AppInfo app);
+	
+	public void removeApp(AppInfo app);
 
 	/**
 	 * Reports that should be visible by default on the user's operational

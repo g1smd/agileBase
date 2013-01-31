@@ -60,6 +60,17 @@ public abstract class AbstractApp {
 	public int hashCode() {
 		return this.getInternalAppName().hashCode();
 	}
+	
+	/**
+	 * Compare first by app type (apps of the same type go together) then consistent with equals
+	 */
+	public int compareTo(AppInfo otherApp) {
+		AppType otherAppType = otherApp.getAppType();
+		if (!otherAppType.equals(this.getAppType())) {
+			return this.getAppType().compareTo(otherAppType);
+		}
+		return this.getInternalAppName().compareTo(otherApp.getInternalAppName());
+	}
 
 	private String internalAppName = null;
 	
