@@ -1,65 +1,42 @@
+##
+##  Copyright 2013 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
-    <title>Agilebase</title>
-    <script src="resources/jquery.js" language="JavaScript"></script>
-    <script language="JavaScript" src="resources/simple/simple.js"></script>
+	<link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+	<link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
+	<link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+	<link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
+	<title>Agilebase</title>
+	<script src="resources/jquery.js" language="JavaScript"></script>
+	<script language="JavaScript" src="resources/simple/simple.js"></script>
 </head>
 <body>
-<!--
   <div class="container">
-    <div class="row">
-      <div class="span4">
-        <div style="height: 100px; width: 100%; background-color: red;"></div>
+    <div class="header row">
+      <div class="span4 spaced">
+        <a href="#"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
       </div>
-      <div class="span8">
-        <div class="row">
-          <div class="span2">
-            <div style="height: 45px; margin-bottom: 10px;  margin-bottom: 10px; width: 100%; background-color: green;"></div>
-          </div>
-          <div class="span2">
-            <div style="height: 45px; margin-bottom: 10px;  width: 100%; background-color: green;"></div>
-          </div>
-          <div class="span2">
-            <div style="height: 45px; margin-bottom: 10px;  width: 100%; background-color: green;"></div>
-          </div>
-          <div class="span2">
-            <div style="height: 45px; margin-bottom: 10px;  width: 100%; background-color: green;"></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="span2">
-            <div style="height: 45px; width: 100%; background-color: green;"></div>
-          </div>
-          <div class="span2">
-            <div style="height: 45px; width: 100%; background-color: green;"></div>
-          </div>
-          <div class="span2">
-            <div style="height: 45px; width: 100%; background-color: green;"></div>
-          </div>
-          <div class="span2">
-            <div style="height: 45px; width: 100%; background-color: green;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
-  <div class="container style="height:200px;">
-    <div class="app"></div>
-    <div class="app"></div>
-    <div class="app"></div>
-    <div class="app"></div>
-    <div class="app"></div>
-    <div class="app"></div>
-    <div class="app"></div>
+    </div> ## end row
+    #parse("s/tiles/tiles.vm")
   </div>
   
 </body>

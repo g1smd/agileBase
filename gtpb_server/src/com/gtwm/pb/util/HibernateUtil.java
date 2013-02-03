@@ -22,7 +22,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.HibernateException;
@@ -66,6 +65,7 @@ import com.gtwm.pb.model.manageSchema.tiles.AbstractTile;
 import com.gtwm.pb.model.manageSchema.tiles.CalendarTile;
 import com.gtwm.pb.model.manageSchema.tiles.ChatTile;
 import com.gtwm.pb.model.manageSchema.tiles.CommentStreamTile;
+import com.gtwm.pb.model.manageSchema.tiles.CustomTile;
 import com.gtwm.pb.model.manageSchema.tiles.DataLinkTile;
 import com.gtwm.pb.model.manageSchema.tiles.DataStreamTile;
 import com.gtwm.pb.model.manageSchema.tiles.FilesTile;
@@ -118,7 +118,7 @@ public final class HibernateUtil {
 			configuration.addAnnotatedClass(SeparatorFieldDefn.class);
 			configuration.addAnnotatedClass(ReferencedReportDataFieldDefn.class);
 			configuration.addAnnotatedClass(CommentFeedFieldDefn.class);
-			configuration.addPackage("com.gtwm.pb.model.manageSchema.apps");
+			configuration.addPackage("com.gtwm.pb.model.manageSchema.tiles");
 			configuration.addAnnotatedClass(AbstractTile.class);
 			configuration.addAnnotatedClass(CalendarTile.class);
 			configuration.addAnnotatedClass(ChatTile.class);
@@ -128,6 +128,7 @@ public final class HibernateUtil {
 			configuration.addAnnotatedClass(FocusTile.class);
 			configuration.addAnnotatedClass(VisualisationTile.class);
 			configuration.addAnnotatedClass(FilesTile.class);
+			configuration.addAnnotatedClass(CustomTile.class);
 			configuration.setProperty("hibernate.query.substitutions", "yes 'Y', no 'N'");
 			configuration.setProperty("hibernate.connection.datasource", "java:comp/env/jdbc/agileBaseSchema");
 			configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
@@ -143,8 +144,6 @@ public final class HibernateUtil {
 			configuration.setProperty("hibernate.cache.use_structured_entries","true");
 			configuration.setProperty("hibernate.cache.provider_class","org.hibernate.cache.HashtableCacheProvider");
 			configuration.configure();
-			// TODO: not sure if this is necessary or not, check next time we
-			// have a schema update
 			// NB automatic schema updates don't work for adding non null (e.g.
 			// basic types such as integer or boolean) properties, these have to
 			// be added manually. Error messages will show the expected names of

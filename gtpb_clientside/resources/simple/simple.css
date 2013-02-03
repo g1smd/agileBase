@@ -12,6 +12,15 @@
     overflow:hidden;  
 }
 
+body {
+  transition-duration: 1s;
+  transition-property: color;
+  -moz-transition-duration: 1s;
+  -moz-transition-property: color;
+  -webkit-transition-duration: 1s;
+  -webkit-transition-property: color;
+}
+
 .container {
   transition-duration: 1s;
   transition-property: opacity, width, height;
@@ -21,10 +30,14 @@
   -webkit-transition-property: opacity, width, height;
 }
 
-.app {
+.header {
+  backgrounc-color: rgba(255,255,255,0.5);
+}
+
+.tile {
   opacity: 1;
-  height: 45px;
-  width: 45px;
+  height: 395px;
+  width: 395px;
   margin-right: 10px;
   margin-bottom: 10px;
   background-color: green;
@@ -33,16 +46,36 @@
   transition-property: opacity, width, height, margin-right, top, left;
 }
 
-.app.expanded {
+.tile.expanded {
   width: 100%;
-  height: 100px;
+  height: 800px;
 }
 
-.app.notfocus {
-  background-color: blue;
+.tile.notfocus {
   opacity: 0;
   width: 0; 
   margin-right: 0;
-  transition-duration: 0.9s; /* stop placement 'jump' at end of transition - hide faster than expand */
-  /* height: 10px; */
+  transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
+  height: 100px;
+}
+
+/* Colours */
+.blue {
+  background-color: #009FE3;
+}
+
+.pink {
+  background-color: #EC00BC;
+}
+
+.green {
+  background-color: 8DC63F;
+}
+
+.yellow {
+  background-colour: #E6BC3A;
+}
+
+.purple {
+  background-colour: #522d67;
 }

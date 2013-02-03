@@ -5,21 +5,23 @@ $(document).ready(function() {
   if($("#infovis").size() > 0) {
   	loadTreemap();
   } else {
-    appEvents();
+    tileEvents();
   }
 }); // end of document.ready
 
-function appEvents() {
-	$('.app').click(function() {
-		var app = $(this);
-		if (app.hasClass("expanded")) {
-			$(".app").not(app).removeClass("notfocus");
-			app.removeClass("expanded");
+function tileEvents() {
+	$('.tile').click(function() {
+		var tile = $(this);
+		if (tile.hasClass("expanded")) {
+			$(".tile").not(tile).removeClass("notfocus");
+			tile.removeClass("expanded");
 		} else {
-			$(".app").not(app).addClass("notfocus");
-			app.addClass("expanded");
+			$(".tile").not(tile).addClass("notfocus");
+			tile.addClass("expanded");
+			var colour = tile.attr("data-colour");
+			$(body).removeClass("blue pink green yellow purple").addClass(colour);
 		}
-	})
+	});
 }
 
 
