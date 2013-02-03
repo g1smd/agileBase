@@ -49,6 +49,9 @@ body {
 
 #title {
   color: white;
+  margin: 2em;
+  position: absolute;
+  margin: 2em;
 }
 
 .tile {
