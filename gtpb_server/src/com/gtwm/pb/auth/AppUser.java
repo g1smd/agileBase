@@ -51,6 +51,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.grlea.log.SimpleLogger;
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 
 @Entity
 public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
@@ -238,20 +240,21 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 	
 	@OneToMany(targetEntity=AbstractTile.class, cascade = {CascadeType.ALL})
+	@Sort(type = SortType.NATURAL)
 	public SortedSet<TileInfo> getTiles() {
-		return this.apps;
+		return this.tiles;
 	}
 	
-	private void setApps(SortedSet<TileInfo> apps) {
-		this.apps = apps;
+	private void setApps(SortedSet<TileInfo> tiles) {
+		this.tiles = tiles;
 	}
 	
-	public synchronized void addTile(TileInfo app) {
-		this.getTiles().add(app);
+	public synchronized void addTile(TileInfo tile) {
+		this.getTiles().add(tile);
 	}
 	
-	public synchronized void removeTile(TileInfo app) {
-		this.getTiles().remove(app);
+	public synchronized void removeTile(TileInfo tile) {
+		this.getTiles().remove(tile);
 	}
 
 	/**
@@ -453,7 +456,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	private Set<TableInfo> formTables = new HashSet<TableInfo>();
 	
-	private SortedSet<TileInfo> apps = new TreeSet<TileInfo>();
+	private SortedSet<TileInfo> tiles = new TreeSet<TileInfo>();
 
 	private BaseReportInfo defaultReport = null;
 
