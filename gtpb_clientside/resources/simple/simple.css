@@ -52,6 +52,8 @@ body {
   margin: 2em;
   position: absolute;
   margin: 2em;
+  top: 0;
+  right: 0;
 }
 
 .tile {
