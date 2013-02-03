@@ -1,10 +1,12 @@
 <div class="block">
   #foreach($tileType in $view.getTileTypes())
     #set($tileTypeId = $tileType.name().toLowerCase())
-    <label for="$tileTypeId">
-      <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
-      <h1>$tileType.getTileName()</h1>
-      <p>$tileType.getDescription()</p>
-    </label>
+    #if($tileTypeId != "custom")
+      <label for="$tileTypeId">
+        <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
+        <h1>$tileType.getTileName()</h1>
+        <p>$tileType.getDescription()</p>
+      </label>
+    #end
   #end
 </div>

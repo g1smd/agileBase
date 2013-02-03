@@ -111,8 +111,8 @@ label input[type=radio] {
 
 label {
   float: left;
-  width: 10em;
-  height: 3em;
+  width: 30em;
+  height: 5em;
   padding: 2em;
 }
 

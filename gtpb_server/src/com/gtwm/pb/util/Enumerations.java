@@ -28,7 +28,7 @@ import org.apache.commons.lang.WordUtils;
 public class Enumerations {
 
 	public enum TileType {
-		COMMENT_STREAM("Recent comments", "Stream of comments made by everyone in the organisation", true), DATA_STREAM("Data stream", "Show and search your most often used data", true), FOCUS("Item focus", "Show data highlights like twitter posts from contacts, and their phone and email addresses", false), DATA_LINK(
+		COMMENT_STREAM("Recent comments", "Stream of comments made by everyone in the organisation", true), DATA_STREAM("Data stream", "Show and search your most often used data", true), FOCUS("Item focus", "Show data highlights related to the currently selected record, like a contact's twitter post, phone numbers and email addresses", false), DATA_LINK(
 				"Data link", "Link to a report that allows searching and editing", false), FILES("Files", "Upload and present images and other files", false), CALENDAR("Today", "Show any date-related data on a calendar and integrate with other calendaring systems", false), VISUALISATION("Visualisation", "Show data visualisations like charts, maps or word clouds", false), CHAT("Chat", "View and post messages to other staff members", false), CUSTOM("Custom", "A custom app", false);
 
 		private String appName;
