@@ -21,6 +21,7 @@ function tileEvents() {
 			var colour = tile.attr("data-colour");
 			$("body").removeClass("blue pink green yellow purple").addClass(colour);
 			$(".header.row").addClass("expanded");
+			tile.find(".icon").fadeOut();
 		}
 	});
 }
