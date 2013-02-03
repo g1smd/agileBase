@@ -44,11 +44,14 @@ body {
   float: left;
   transition-duration: 1s;
   transition-property: opacity, width, height, margin-right, top, left;
+  cursor: pointer;
+  color: white;
 }
 
 .tile.expanded {
   width: 100%;
   height: 800px;
+  cursor: auto;
 }
 
 .tile.notfocus {
@@ -57,6 +60,11 @@ body {
   margin-right: 0;
   transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
   height: 100px;
+}
+
+.tile.adder {
+  width: 145px;
+  height: 145px;
 }
 
 /* Colours */
