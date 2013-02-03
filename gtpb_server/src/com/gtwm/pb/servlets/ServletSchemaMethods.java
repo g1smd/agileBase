@@ -93,6 +93,7 @@ import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOpti
 import com.gtwm.pb.model.manageSchema.tiles.CalendarTile;
 import com.gtwm.pb.model.manageSchema.tiles.ChatTile;
 import com.gtwm.pb.model.manageSchema.tiles.CommentStreamTile;
+import com.gtwm.pb.model.manageSchema.tiles.CustomTile;
 import com.gtwm.pb.model.manageSchema.tiles.DataLinkTile;
 import com.gtwm.pb.model.manageSchema.tiles.DataStreamTile;
 import com.gtwm.pb.model.manageSchema.tiles.FilesTile;
@@ -2798,7 +2799,7 @@ public final class ServletSchemaMethods {
 	/**
 	 * Create an app object and add it to the logged in user, or a specified user
 	 */
-	public synchronized static void addAppToUser(HttpServletRequest request,
+	public synchronized static void addTileToUser(HttpServletRequest request,
 			SessionDataInfo sessionData, DatabaseInfo databaseDefn) throws DisallowedException,
 			ObjectNotFoundException, MissingParametersException, CodingErrorException,
 			CantDoThatException {
@@ -2809,76 +2810,83 @@ public final class ServletSchemaMethods {
 		} else {
 			user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		}
-		String appTypeString = request.getParameter("apptype");
-		if (appTypeString == null) {
-			throw new MissingParametersException("apptype needed to add an app");
+		String tileTypeString = request.getParameter("tiletype");
+		if (tileTypeString == null) {
+			throw new MissingParametersException("tiletype needed to add an app");
 		}
-		TileType appType = TileType.valueOf(appTypeString.toUpperCase());
+		TileType tileType = TileType.valueOf(tileTypeString.toUpperCase());
 		String colour = request.getParameter("colour");
-		TileInfo app;
-		switch (appType) {
+		TileInfo tile;
+		switch (tileType) {
 		case CALENDAR:
-			app = new CalendarTile(colour);
+			tile = new CalendarTile(colour);
 			break;
 		case CHAT:
-			app = new ChatTile(colour);
+			tile = new ChatTile(colour);
 			break;
 		case COMMENT_STREAM:
-			app = new CommentStreamTile(colour);
+			tile = new CommentStreamTile(colour);
 			break;
 		case DATA_LINK:
 			BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 					databaseDefn, false);
-			app = new DataLinkTile(colour, report);
+			tile = new DataLinkTile(colour, report);
 			break;
 		case DATA_STREAM:
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
-			app = new DataStreamTile(colour, report);
+			tile = new DataStreamTile(colour, report);
 			break;
 		case FILES:
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
-			app = new FilesTile(colour, report);
+			tile = new FilesTile(colour, report);
 			break;
 		case FOCUS:
-			app = new FocusTile(colour);
+			tile = new FocusTile(colour);
+			break;
+		case CUSTOM:
+			String location = request.getParameter("location");
+			if (location == null) {
+				throw new MissingParametersException("location is needed to add a custom tile");
+			}
+			tile = new CustomTile(colour, location);
 			break;
 		case VISUALISATION:
 			String visualisationTypeString = request.getParameter("visualisationtype");
 			if (visualisationTypeString == null) {
 				throw new MissingParametersException(
-						"visualisationtype needed to create a visualisation app");
+						"visualisationtype needed to create a visualisation tile");
 			}
 			VisualisationType visualisationType = VisualisationType.valueOf(visualisationTypeString
 					.toUpperCase());
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
-			app = new VisualisationTile(colour, visualisationType);
+			tile = new VisualisationTile(colour, visualisationType);
 			switch (visualisationType) {
 			// Note this is an inner case statement inside an outer one
 			case CHART:
 				Long chartId = Long.valueOf(request.getParameter("chartid"));
 				ChartInfo chart = report.getSavedChart(chartId);
-				((TileVisualisationInfo) app).setChart(chart);
+				((TileVisualisationInfo) tile).setChart(chart);
 				break;
 			case MAP:
 			case WORD_CLOUD:
-				((TileVisualisationInfo) app).setReport(report);
+				((TileVisualisationInfo) tile).setReport(report);
 				break;
 			default:
 				throw new CodingErrorException("Unhandled visualisation type " + visualisationType);
 			}
 			break;
 		default:
-			throw new CodingErrorException("Unhandled app type " + appType);
+			throw new CodingErrorException("Unhandled tile type " + tileType);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(user);
-			HibernateUtil.currentSession().save(app);
-			user.addTile(app);
+			HibernateUtil.currentSession().save(tile);
+			user.addTile(tile);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("app addition failed", hex);
+			throw new CantDoThatException("Tile addition failed", hex);
 		} catch (CantDoThatException cdtex) {
 			rollbackConnections(null);
 			throw cdtex;
@@ -2887,7 +2895,7 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void removeAppFromUser(HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException, MissingParametersException, CantDoThatException {
+	public synchronized static void removeTileFromUser(HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException, MissingParametersException, CantDoThatException {
 		AppUserInfo user = null;
 		String username = request.getParameter("username");
 		if (username != null) {
@@ -2895,29 +2903,29 @@ public final class ServletSchemaMethods {
 		} else {
 			user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		}
-		String internalAppName = request.getParameter("internalappname");
-		if (internalAppName == null) {
-			throw new MissingParametersException("internalappname needed to remove an app from a user");
+		String internalTileName = request.getParameter("internaltilename");
+		if (internalTileName == null) {
+			throw new MissingParametersException("internaltilename needed to remove a tile from a user");
 		}
-		TileInfo app = null;
-		for (TileInfo testApp : user.getTiles()) {
-			if (testApp.getInternalTileName().equals(internalAppName)) {
-				app = testApp;
+		TileInfo tile = null;
+		for (TileInfo testTile : user.getTiles()) {
+			if (testTile.getInternalTileName().equals(internalTileName)) {
+				tile = testTile;
 				break;
 			}
 		}
-		if (app == null) {
-			throw new ObjectNotFoundException("App with internal name " + internalAppName + " not found for user " + user);
+		if (tile == null) {
+			throw new ObjectNotFoundException("Tile with internal name " + internalTileName + " not found for user " + user);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(user);
-			user.removeTile(app);
-			HibernateUtil.currentSession().delete(app);
+			user.removeTile(tile);
+			HibernateUtil.currentSession().delete(tile);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
-			throw new CantDoThatException("app removal failed", hex);
+			throw new CantDoThatException("Tile removal failed", hex);
 		} finally {
 			HibernateUtil.closeSession();
 		}

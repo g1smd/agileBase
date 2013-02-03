@@ -563,11 +563,11 @@ public final class AppController extends VelocityViewServlet {
 					ServletAuthMethods.uploadProfilePicture(sessionData, databaseDefn, request,
 							multipartItems);
 					break;
-				case ADD_APP:
-					ServletSchemaMethods.addAppToUser(request, sessionData, databaseDefn);
+				case ADD_TILE:
+					ServletSchemaMethods.addTileToUser(request, sessionData, databaseDefn);
 					break;
-				case REMOVE_APP:
-					ServletSchemaMethods.removeAppFromUser(request, databaseDefn);
+				case REMOVE_TILE:
+					ServletSchemaMethods.removeTileFromUser(request, databaseDefn);
 					break;
 				default:
 					throw new CodingErrorException("Unhandled app action " + appAction);
