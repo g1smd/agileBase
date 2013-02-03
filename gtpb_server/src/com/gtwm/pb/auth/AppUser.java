@@ -245,7 +245,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		return this.tiles;
 	}
 	
-	private void setApps(SortedSet<TileInfo> tiles) {
+	private void setTiles(SortedSet<TileInfo> tiles) {
 		this.tiles = tiles;
 	}
 	
