@@ -105,6 +105,10 @@ body {
   height: 145px;
 }
 
+label .input[type=radio] {
+  /* display: none; */
+}
+
 /* Colours */
 .blue {
   background-color: #009FE3;
