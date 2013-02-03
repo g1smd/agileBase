@@ -65,7 +65,7 @@ body {
   color: white;
 }
 
-.tile.icon {
+.tile .icon {
   font-size: 150pt;
   margin-right: auto;
   margin-left: auto;
