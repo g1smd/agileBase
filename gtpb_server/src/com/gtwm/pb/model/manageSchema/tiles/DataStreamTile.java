@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -16,7 +16,7 @@ public class DataStreamTile extends AbstractTile implements TileDataStreamInfo {
 	public DataStreamTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
-		super.setAppType(TileType.DATA_STREAM);
+		super.setTileType(TileType.DATA_STREAM);
 		this.setReport(report);
 	}
 

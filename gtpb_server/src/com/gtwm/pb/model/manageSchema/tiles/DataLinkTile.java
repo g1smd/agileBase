@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,7 +15,7 @@ public class DataLinkTile extends AbstractTile implements TileDataLinkInfo {
 	public DataLinkTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
-		super.setAppType(TileType.DATA_LINK);
+		super.setTileType(TileType.DATA_LINK);
 		this.setReport(report);
 	}
 

@@ -90,15 +90,15 @@ import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
-import com.gtwm.pb.model.manageSchema.apps.CalendarTile;
-import com.gtwm.pb.model.manageSchema.apps.ChatTile;
-import com.gtwm.pb.model.manageSchema.apps.CommentStreamTile;
-import com.gtwm.pb.model.manageSchema.apps.DataLinkTile;
-import com.gtwm.pb.model.manageSchema.apps.DataStreamTile;
-import com.gtwm.pb.model.manageSchema.apps.FilesTile;
-import com.gtwm.pb.model.manageSchema.apps.FocusTile;
-import com.gtwm.pb.model.manageSchema.apps.VisualisationTile;
-import com.gtwm.pb.model.manageSchema.apps.VisualisationTile.VisualisationType;
+import com.gtwm.pb.model.manageSchema.tiles.CalendarTile;
+import com.gtwm.pb.model.manageSchema.tiles.ChatTile;
+import com.gtwm.pb.model.manageSchema.tiles.CommentStreamTile;
+import com.gtwm.pb.model.manageSchema.tiles.DataLinkTile;
+import com.gtwm.pb.model.manageSchema.tiles.DataStreamTile;
+import com.gtwm.pb.model.manageSchema.tiles.FilesTile;
+import com.gtwm.pb.model.manageSchema.tiles.FocusTile;
+import com.gtwm.pb.model.manageSchema.tiles.VisualisationTile;
+import com.gtwm.pb.model.manageSchema.tiles.VisualisationTile.VisualisationType;
 
 /**
  * Methods to do with the schema (editing companies, tables, fields etc.) to be

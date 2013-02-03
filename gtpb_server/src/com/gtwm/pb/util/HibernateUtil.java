@@ -49,15 +49,6 @@ import com.gtwm.pb.model.manageSchema.ChartDefn;
 import com.gtwm.pb.model.manageSchema.ChartAggregateDefn;
 import com.gtwm.pb.model.manageSchema.ReportSort;
 import com.gtwm.pb.model.manageSchema.ChartGrouping;
-import com.gtwm.pb.model.manageSchema.apps.AbstractTile;
-import com.gtwm.pb.model.manageSchema.apps.CalendarTile;
-import com.gtwm.pb.model.manageSchema.apps.ChatTile;
-import com.gtwm.pb.model.manageSchema.apps.CommentStreamTile;
-import com.gtwm.pb.model.manageSchema.apps.DataLinkTile;
-import com.gtwm.pb.model.manageSchema.apps.DataStreamTile;
-import com.gtwm.pb.model.manageSchema.apps.FilesTile;
-import com.gtwm.pb.model.manageSchema.apps.FocusTile;
-import com.gtwm.pb.model.manageSchema.apps.VisualisationTile;
 import com.gtwm.pb.model.manageSchema.fields.AbstractField;
 import com.gtwm.pb.model.manageSchema.fields.BigTextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.CheckboxFieldDefn;
@@ -71,6 +62,15 @@ import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SequenceFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.SeparatorFieldDefn;
+import com.gtwm.pb.model.manageSchema.tiles.AbstractTile;
+import com.gtwm.pb.model.manageSchema.tiles.CalendarTile;
+import com.gtwm.pb.model.manageSchema.tiles.ChatTile;
+import com.gtwm.pb.model.manageSchema.tiles.CommentStreamTile;
+import com.gtwm.pb.model.manageSchema.tiles.DataLinkTile;
+import com.gtwm.pb.model.manageSchema.tiles.DataStreamTile;
+import com.gtwm.pb.model.manageSchema.tiles.FilesTile;
+import com.gtwm.pb.model.manageSchema.tiles.FocusTile;
+import com.gtwm.pb.model.manageSchema.tiles.VisualisationTile;
 
 public final class HibernateUtil {
 

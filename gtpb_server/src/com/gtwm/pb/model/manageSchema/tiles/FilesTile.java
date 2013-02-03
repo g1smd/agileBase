@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,7 +15,7 @@ public class FilesTile extends AbstractTile implements TileFilesInfo {
 	public FilesTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
-		super.setAppType(TileType.FILES);
+		super.setTileType(TileType.FILES);
 		this.setReport(report);
 	}
 

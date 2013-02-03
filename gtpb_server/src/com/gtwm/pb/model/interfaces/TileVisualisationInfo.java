@@ -1,6 +1,6 @@
 package com.gtwm.pb.model.interfaces;
 
-import com.gtwm.pb.model.manageSchema.apps.VisualisationTile.VisualisationType;
+import com.gtwm.pb.model.manageSchema.tiles.VisualisationTile.VisualisationType;
 
 public interface TileVisualisationInfo extends TileInfo {
 	

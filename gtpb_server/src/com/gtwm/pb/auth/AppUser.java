@@ -30,7 +30,7 @@ import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
-import com.gtwm.pb.model.manageSchema.apps.AbstractTile;
+import com.gtwm.pb.model.manageSchema.tiles.AbstractTile;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;

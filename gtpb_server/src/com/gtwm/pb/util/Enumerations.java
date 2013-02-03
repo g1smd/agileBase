@@ -29,7 +29,7 @@ public class Enumerations {
 
 	public enum TileType {
 		COMMENT_STREAM("Recent comments", true), DATA_STREAM("Data stream", true), FOCUS("Item focus", false), DATA_LINK(
-				"Data link", false), FILES("Files", false), CALENDAR("Today", false), VISUALISATION("Visualisation", false), CHAT("Chat", false);
+				"Data link", false), FILES("Files", false), CALENDAR("Today", false), VISUALISATION("Visualisation", false), CHAT("Chat", false), CUSTOM("Custom", false);
 
 		private String appName;
 

@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import com.gtwm.pb.model.interfaces.TileCommentStreamInfo;
@@ -11,7 +11,7 @@ public class CommentStreamTile extends AbstractTile implements TileCommentStream
 	public CommentStreamTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
-		super.setAppType(TileType.COMMENT_STREAM);
+		super.setTileType(TileType.COMMENT_STREAM);
 	}
 	
 }

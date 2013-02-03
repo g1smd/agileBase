@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -29,7 +29,7 @@ public abstract class AbstractTile {
 		return this.tileType;
 	}
 	
-	protected void setAppType(TileType tileType) {
+	protected void setTileType(TileType tileType) {
 		this.tileType = tileType;
 	}
 	

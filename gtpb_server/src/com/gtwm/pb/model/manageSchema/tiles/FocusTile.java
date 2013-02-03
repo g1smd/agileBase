@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import com.gtwm.pb.model.interfaces.TileFocusInfo;
@@ -11,7 +11,7 @@ public class FocusTile extends AbstractTile implements TileFocusInfo {
 	public FocusTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
-		super.setAppType(TileType.FOCUS);
+		super.setTileType(TileType.FOCUS);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.gtwm.pb.model.manageSchema.apps;
+package com.gtwm.pb.model.manageSchema.tiles;
 
 import javax.persistence.Entity;
 import com.gtwm.pb.model.interfaces.TileChatInfo;
@@ -11,7 +11,7 @@ public class ChatTile extends AbstractTile implements TileChatInfo {
 	public ChatTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
-		super.setAppType(TileType.CHAT);
+		super.setTileType(TileType.CHAT);
 	}
 
 }
