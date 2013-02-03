@@ -109,6 +109,12 @@ label .input[type=radio] {
   /* display: none; */
 }
 
+label {
+  float: left;
+  width: 395px;
+  height: 145px;
+}
+
 /* Colours */
 .blue {
   background-color: #009FE3;
