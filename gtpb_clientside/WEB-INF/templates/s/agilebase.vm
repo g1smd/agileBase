@@ -37,7 +37,7 @@
   </div> ## end row
   <div class="container">
     #parse("s/tiles/tiles.vm")
-    <div class="tile adder blue" data-colour="blue">
+    <div class="tile adder blue" data-colour="blue" title="add new app">
       <div class="icon">+</div>
     </div>
   </div>
