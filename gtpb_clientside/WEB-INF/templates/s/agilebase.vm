@@ -37,6 +37,9 @@
       </div>
     </div> ## end row
     #parse("s/tiles/tiles.vm")
+    <div class="tile adder blue">
+      <div class="icon">+</div>
+    </div>
   </div>
   
 </body>

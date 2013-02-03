@@ -23,7 +23,4 @@
     #set($template = $viewTools.cleanString($tileType.toString()))
     #parse("s/tiles/$template.vm")
   </div>
-  <div class="tile adder blue">
-    <div class="icon">+</div>
-  </div>
 #end
