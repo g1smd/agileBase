@@ -127,6 +127,7 @@ public final class AuthManager implements AuthManagerInfo {
 					logger.info("User " + user + " operational dashboard reports: "
 							+ user.getOperationalDashboardReports());
 					logger.info("User " + user + " form tables: " + user.getFormTables());
+					logger.info("User " + user + " tiles: " + user.getTiles());
 					((AppUser) user).setWebAppRoot(webAppRoot);
 				}
 				for (AppRoleInfo role : auth.getRoles()) {
