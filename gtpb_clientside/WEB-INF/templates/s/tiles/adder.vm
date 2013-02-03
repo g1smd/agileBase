@@ -1,0 +1,10 @@
+<div class="block">
+  #foreach($tileType in $view.getTileTypes())
+    #set($tileTypeId = $tileType.name().toLowerCase())
+    <legend for="$tileTypeId">
+      <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
+      <h1>$tileType.getTileName()<h1>
+      <p>$tileType.getTileDescription()
+    </legend>
+  #end
+</div>
