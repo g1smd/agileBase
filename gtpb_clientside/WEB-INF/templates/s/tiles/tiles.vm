@@ -19,7 +19,7 @@
 #set($tiles = $user.getTiles())
 #foreach($tile in $tiles)
   #set($tileType = $tile.getTileType())
-  <div class="tile $tileType.toString().toLowerCase() $tile.getColour() #if($tileType.isLarge()) large #end" data-colour="$tile.getColour">
+  <div class="tile $tile.getColour() #if($tileType.isLarge()) large #end" data-colour="$tile.getColour" data-type="$tileType.toString().toLowerCase()">
     #set($template = $viewTools.cleanString($tileType.toString()))
     #parse("s/tiles/$template.vm")
   </div>

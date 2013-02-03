@@ -77,6 +77,7 @@ import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 import com.gtwm.pb.util.Enumerations.ExtraAction;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
+import com.gtwm.pb.util.Enumerations.TileType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
@@ -1114,6 +1115,10 @@ public final class ViewMethods implements ViewMethodsInfo {
 	
 	public boolean isJoinUsed(SimpleReportInfo report, JoinClauseInfo join) throws CantDoThatException, CodingErrorException {
 		return this.databaseDefn.isJoinUsed(report, join);
+	}
+	
+	public EnumSet<TileType> getTileTypes() {
+		return EnumSet.allOf(TileType.class);
 	}
 
 	private String toolbarPluginName = null;

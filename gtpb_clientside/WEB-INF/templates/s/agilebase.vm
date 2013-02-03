@@ -35,9 +35,10 @@
       <a href="#"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
     </div>
   </div> ## end row
+  <div id="title"><h1></h1></div>
   <div class="container">
     #parse("s/tiles/tiles.vm")
-    <div class="tile adder blue" data-colour="blue" title="add new app">
+    <div class="tile adder blue" data-colour="blue" title="add new app" data-type="adder">
       <div class="icon">+</div>
     </div>
   </div>

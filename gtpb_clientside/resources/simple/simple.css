@@ -47,6 +47,10 @@ body {
   opacity: 0.5;
 }
 
+#title {
+  color: white;
+}
+
 .tile {
   opacity: 1;
   height: 395px;

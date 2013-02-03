@@ -27,6 +27,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.manageData.DataRow;
+import com.gtwm.pb.util.Enumerations.TileType;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.CantDoThatException;
@@ -767,5 +768,7 @@ public interface ViewMethodsInfo {
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
+	
+	public EnumSet<TileType> getTileTypes();
 	
 }

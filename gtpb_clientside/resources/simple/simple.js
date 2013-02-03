@@ -17,11 +17,18 @@ function tileEvents() {
 			tile.removeClass("expanded");
 		} else {
 			$(".tile").not(tile).addClass("notfocus");
+			var title = tile.attr("title");
+			$("#title").find("h1").text(title);
 			tile.addClass("expanded");
 			var colour = tile.attr("data-colour");
 			$("body").removeClass("blue pink green yellow purple").addClass(colour);
 			$(".header.row").addClass("expanded");
 			tile.find(".icon").fadeOut();
+			var template = "s/tiles/" + tile.attr("data-type");
+			tile.find(".content").load("AppController.servlet", {
+				"return": template
+			});
+			tile.find(".content").show();
 		}
 	});
 }
