@@ -4,7 +4,7 @@
     <legend for="$tileTypeId" class="btn">
       <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
       <h1>$tileType.getTileName()</h1>
-      <p>$tileType.getDescription()
+      <p>$tileType.getDescription()</p>
     </legend>
   #end
 </div>
