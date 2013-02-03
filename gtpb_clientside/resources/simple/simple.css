@@ -67,9 +67,9 @@ body {
 
 .tile .icon {
   font-size: 150pt;
-  margin-right: auto;
-  margin-left: auto;
   display: block;
+  text-align: center;
+  line-height: 0.75em;
 }
 
 .tile.expanded {
