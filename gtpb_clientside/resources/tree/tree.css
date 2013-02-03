@@ -210,8 +210,8 @@ ol li ul li ul li{
 }
 
 /* Company specific styles */
-.tapeconsultancy .module-tree-item-wrap a:first-letter {
-  text-transform: uppercase;
+.tapeconsultancy .module-tree-item-wrap {
+  text-transform: capitalize;
 }
 
 .tree-item-wrap {
