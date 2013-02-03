@@ -105,7 +105,7 @@ body {
   height: 145px;
 }
 
-label .input[type=radio] {
+label input[type=radio] {
   display: none;
 }
 
