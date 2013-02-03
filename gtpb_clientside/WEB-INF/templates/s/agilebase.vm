@@ -30,12 +30,12 @@
 	<script language="JavaScript" src="resources/simple/simple.js"></script>
 </head>
 <body>
+  <div class="header row">
+    <div class="span4 spaced">
+      <a href="#"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+    </div>
+  </div> ## end row
   <div class="container">
-    <div class="header row">
-      <div class="span4 spaced">
-        <a href="#"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
-      </div>
-    </div> ## end row
     #parse("s/tiles/tiles.vm")
     <div class="tile adder blue" data-colour="blue">
       <div class="icon">+</div>
