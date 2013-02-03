@@ -209,6 +209,11 @@ ol li ul li ul li{
 	border-radius: 0.5em;
 }
 
+/* Company specific styles */
+.tapeconsultancy .module-tree-item-wrap a:first-letter {
+  text-transform: uppercase;
+}
+
 .tree-item-wrap {
 	padding: 2px 15px 2px 7px;
 	text-transform: lowercase;

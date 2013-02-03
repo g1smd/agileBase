@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+#set($company = $view.getLoggedInUser().getCompany())
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <html>
 <head>
@@ -25,7 +26,7 @@
 	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
 	#end
-	<title>Agilebase - $view.getLoggedInUser().getCompany()</title>
+	<title>Agilebase - $company</title>
 	## CSS
 	#if($mobile_device)
 	  <link href="resources/mobile/pane1_amalgam.css" type="text/css" rel="stylesheet" />
@@ -99,7 +100,7 @@
       </div> ## end links
     </div>
 	#end
-	<ol id="tree"> ##<!-- ordered list for sections -->
+	<ol id="tree" class="$viewTools.cleanString($company.getCompanyName())"> ##<!-- ordered list for sections -->
 	  #parse('gui/reports_and_tables/report_list.vm')
 	  #if($mobile_device)
 		<li><h1><span>&nbsp;</span></h1>
