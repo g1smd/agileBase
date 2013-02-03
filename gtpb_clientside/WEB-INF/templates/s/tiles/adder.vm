@@ -3,8 +3,8 @@
     #set($tileTypeId = $tileType.name().toLowerCase())
     <legend for="$tileTypeId">
       <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
-      <h1>$tileType.getTileName()<h1>
-      <p>$tileType.getTileDescription()
+      <h1>$tileType.getTileName()</h1>
+      <p>$tileType.getDescription()
     </legend>
   #end
 </div>
