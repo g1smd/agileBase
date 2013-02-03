@@ -25,8 +25,6 @@ function tileEvents() {
 	});
 }
 
-
-
 function loadTreemap() {
 	$.getJSON("AppController.servlet?return=s/treemap_json&returntype=json", function(treemapJson) {
 		var tm = new $jit.TM.Squarified({  

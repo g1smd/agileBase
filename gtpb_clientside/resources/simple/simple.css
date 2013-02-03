@@ -57,6 +57,10 @@ body {
   float: left;
   transition-duration: 1s;
   transition-property: opacity, width, height, margin-right, top, left;
+  -moz-transition-duration: 1s;
+  -moz-transition-property: opacity, width, height, margin-right, top, left;
+  -webkit-transition-duration: 1s;
+  -webkit-transition-property: opacity, width, height, margin-right, top, left;
   cursor: pointer;
   color: white;
 }
