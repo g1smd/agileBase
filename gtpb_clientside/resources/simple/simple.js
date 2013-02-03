@@ -20,6 +20,7 @@ function tileEvents() {
 			tile.addClass("expanded");
 			var colour = tile.attr("data-colour");
 			$("body").removeClass("blue pink green yellow purple").addClass(colour);
+			$(".header.row").addClass("expanded");
 		}
 	});
 }
