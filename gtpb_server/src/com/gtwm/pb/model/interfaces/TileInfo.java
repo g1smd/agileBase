@@ -1,17 +1,17 @@
 package com.gtwm.pb.model.interfaces;
 
-import com.gtwm.pb.util.Enumerations.AppType;
+import com.gtwm.pb.util.Enumerations.TileType;
 
 /**
  * An app for the Agilebase social interface
  */
-public interface AppInfo extends Comparable<AppInfo> {
+public interface TileInfo extends Comparable<TileInfo> {
 	
-	public String getInternalAppName();
+	public String getInternalTileName();
 
-	public AppType getAppType();
+	public TileType getTileType();
 	
-	public String getAppName();
+	public String getTileName();
 	
 	/**
 	 * Get the icon name

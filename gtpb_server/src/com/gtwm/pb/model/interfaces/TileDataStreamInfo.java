@@ -1,6 +1,6 @@
 package com.gtwm.pb.model.interfaces;
 
-public interface AppDataStreamInfo extends AppInfo {
+public interface TileDataStreamInfo extends TileInfo {
 
 	public BaseReportInfo getReport();
 	

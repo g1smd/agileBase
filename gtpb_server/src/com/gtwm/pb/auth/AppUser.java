@@ -23,14 +23,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import com.gtwm.pb.model.interfaces.AppInfo;
+import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
-import com.gtwm.pb.model.manageSchema.apps.AbstractApp;
+import com.gtwm.pb.model.manageSchema.apps.AbstractTile;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
@@ -237,21 +237,21 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		return this.formTables;
 	}
 	
-	@OneToMany(targetEntity=AbstractApp.class, cascade = {CascadeType.ALL})
-	public SortedSet<AppInfo> getApps() {
+	@OneToMany(targetEntity=AbstractTile.class, cascade = {CascadeType.ALL})
+	public SortedSet<TileInfo> getTiles() {
 		return this.apps;
 	}
 	
-	private void setApps(SortedSet<AppInfo> apps) {
+	private void setApps(SortedSet<TileInfo> apps) {
 		this.apps = apps;
 	}
 	
-	public synchronized void addApp(AppInfo app) {
-		this.getApps().add(app);
+	public synchronized void addTile(TileInfo app) {
+		this.getTiles().add(app);
 	}
 	
-	public synchronized void removeApp(AppInfo app) {
-		this.getApps().remove(app);
+	public synchronized void removeTile(TileInfo app) {
+		this.getTiles().remove(app);
 	}
 
 	/**
@@ -453,7 +453,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 
 	private Set<TableInfo> formTables = new HashSet<TableInfo>();
 	
-	private SortedSet<AppInfo> apps = new TreeSet<AppInfo>();
+	private SortedSet<TileInfo> apps = new TreeSet<TileInfo>();
 
 	private BaseReportInfo defaultReport = null;
 

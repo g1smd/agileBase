@@ -21,7 +21,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.gtwm.pb.model.interfaces.AppInfo;
+import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
@@ -276,17 +276,17 @@ public class PublicUser implements AppUserInfo {
 	}
 
 	@Override
-	public SortedSet<AppInfo> getApps() {
-		return new TreeSet<AppInfo>();
+	public SortedSet<TileInfo> getTiles() {
+		return new TreeSet<TileInfo>();
 	}
 
 	@Override
-	public void addApp(AppInfo app) throws CantDoThatException {
+	public void addTile(TileInfo app) throws CantDoThatException {
 		throw new CantDoThatException("Public users can't have apps");
 	}
 
 	@Override
-	public void removeApp(AppInfo app) throws CantDoThatException {
+	public void removeTile(TileInfo app) throws CantDoThatException {
 		throw new CantDoThatException("Public users can't have apps");
 	}
 

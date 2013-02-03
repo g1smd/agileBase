@@ -4,25 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import com.gtwm.pb.model.interfaces.AppDataStreamInfo;
+import com.gtwm.pb.model.interfaces.TileDataStreamInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
-import com.gtwm.pb.util.Enumerations.AppType;
+import com.gtwm.pb.util.Enumerations.TileType;
 import com.gtwm.pb.util.RandomString;
 
 @Entity
-public class DataStreamApp extends AbstractApp implements AppDataStreamInfo {
+public class DataStreamTile extends AbstractTile implements TileDataStreamInfo {
 
-	public DataStreamApp(String colour, BaseReportInfo report) {
+	public DataStreamTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
-		super.setInternalAppName(RandomString.generate());
-		super.setAppType(AppType.DATA_STREAM);
+		super.setInternalTileName(RandomString.generate());
+		super.setAppType(TileType.DATA_STREAM);
 		this.setReport(report);
 	}
 
 	@Transient
 	@Override
-	public String getAppName() {
+	public String getTileName() {
 		return this.getReport().getParentTable().getSimpleName();
 	}
 

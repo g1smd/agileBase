@@ -5,7 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-import com.gtwm.pb.model.interfaces.AppVisualisationInfo;
+import com.gtwm.pb.model.interfaces.TileVisualisationInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.manageSchema.ChartDefn;
@@ -13,16 +13,16 @@ import com.gtwm.pb.model.manageSchema.SimpleReportDefn;
 import com.gtwm.pb.util.RandomString;
 
 @Entity
-public class VisualisationApp extends AbstractApp implements AppVisualisationInfo {
+public class VisualisationTile extends AbstractTile implements TileVisualisationInfo {
 
-	public VisualisationApp(String colour, VisualisationType visualisationType) {
+	public VisualisationTile(String colour, VisualisationType visualisationType) {
 		super.setColour(colour);
-		super.setInternalAppName(RandomString.generate());
+		super.setInternalTileName(RandomString.generate());
 		this.setVisualisationType(visualisationType);
 	}
 	
 	@Transient
-	public String getAppName() {
+	public String getTileName() {
 		return this.getChart().getTitle();
 	}
 
@@ -54,7 +54,7 @@ public class VisualisationApp extends AbstractApp implements AppVisualisationInf
 	}
 
 	public String toString() {
-		return this.getAppName();
+		return this.getTileName();
 	}
 	
 	public enum VisualisationType {

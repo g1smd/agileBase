@@ -1,8 +1,8 @@
 package com.gtwm.pb.model.interfaces;
 
-import com.gtwm.pb.model.manageSchema.apps.VisualisationApp.VisualisationType;
+import com.gtwm.pb.model.manageSchema.apps.VisualisationTile.VisualisationType;
 
-public interface AppVisualisationInfo extends AppInfo {
+public interface TileVisualisationInfo extends TileInfo {
 	
 	public ChartInfo getChart();
 	

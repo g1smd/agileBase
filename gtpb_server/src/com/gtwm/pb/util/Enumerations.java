@@ -27,7 +27,7 @@ import org.apache.commons.lang.WordUtils;
  */
 public class Enumerations {
 
-	public enum AppType {
+	public enum TileType {
 		COMMENT_STREAM("Recent comments", true), DATA_STREAM("Data stream", true), FOCUS("Item focus", false), DATA_LINK(
 				"Data link", false), FILES("Files", false), CALENDAR("Today", false), VISUALISATION("Visualisation", false), CHAT("Chat", false);
 
@@ -35,12 +35,12 @@ public class Enumerations {
 
 		private boolean large;
 
-		AppType(String appName, boolean large) {
+		TileType(String appName, boolean large) {
 			this.appName = appName;
 			this.large = large;
 		}
 
-		public String getAppName() {
+		public String getTileName() {
 			return this.appName;
 		}
 

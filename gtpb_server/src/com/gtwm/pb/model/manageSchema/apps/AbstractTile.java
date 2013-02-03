@@ -8,34 +8,34 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Transient;
 
-import com.gtwm.pb.model.interfaces.AppInfo;
-import com.gtwm.pb.util.Enumerations.AppType;
+import com.gtwm.pb.model.interfaces.TileInfo;
+import com.gtwm.pb.util.Enumerations.TileType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class AbstractApp {
+public abstract class AbstractTile {
 
 	@Id
-	public String getInternalAppName() {
-		return this.internalAppName;
+	public String getInternalTileName() {
+		return this.internalTileName;
 	}
 
-	protected void setInternalAppName(String internalAppName) {
-		this.internalAppName = internalAppName;
+	protected void setInternalTileName(String internalTileName) {
+		this.internalTileName = internalTileName;
 	}
 	
 	@Enumerated(EnumType.STRING)
-	public AppType getAppType() {
-		return this.appType;
+	public TileType getTileType() {
+		return this.tileType;
 	}
 	
-	protected void setAppType(AppType appType) {
-		this.appType = appType;
+	protected void setAppType(TileType tileType) {
+		this.tileType = tileType;
 	}
 	
 	@Transient
-	public String getAppName() {
-		return this.getAppType().getAppName();
+	public String getTileName() {
+		return this.getTileType().getTileName();
 	}
 	
 	public String getColour() {
@@ -61,31 +61,31 @@ public abstract class AbstractApp {
 		if ((obj == null) || (obj.getClass() != this.getClass())) {
 			return false;
 		}
-		return this.getInternalAppName().equals(((AppInfo) obj).getInternalAppName());
+		return this.getInternalTileName().equals(((TileInfo) obj).getInternalTileName());
 	}
 	
 	public int hashCode() {
-		return this.getInternalAppName().hashCode();
+		return this.getInternalTileName().hashCode();
 	}
 	
 	public String toString() {
-		return this.getAppName();
+		return this.getTileName();
 	}
 	
 	/**
 	 * Compare first by app type (apps of the same type go together) then consistent with equals
 	 */
-	public int compareTo(AppInfo otherApp) {
-		AppType otherAppType = otherApp.getAppType();
-		if (!otherAppType.equals(this.getAppType())) {
-			return this.getAppType().compareTo(otherAppType);
+	public int compareTo(TileInfo otherTile) {
+		TileType otherAppType = otherTile.getTileType();
+		if (!otherAppType.equals(this.getTileType())) {
+			return this.getTileType().compareTo(otherAppType);
 		}
-		return this.getInternalAppName().compareTo(otherApp.getInternalAppName());
+		return this.getInternalTileName().compareTo(otherTile.getInternalTileName());
 	}
 
-	private String internalAppName = null;
+	private String internalTileName = null;
 	
-	private AppType appType = null;
+	private TileType tileType = null;
 	
 	private String colour = null;
 	

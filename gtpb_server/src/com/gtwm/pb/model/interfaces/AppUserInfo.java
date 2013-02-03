@@ -72,11 +72,11 @@ public interface AppUserInfo {
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
 	
-	public SortedSet<AppInfo> getApps();
+	public SortedSet<TileInfo> getTiles();
 	
-	public void addApp(AppInfo app) throws CantDoThatException;
+	public void addTile(TileInfo tile) throws CantDoThatException;
 	
-	public void removeApp(AppInfo app) throws CantDoThatException;
+	public void removeTile(TileInfo tile) throws CantDoThatException;
 
 	/**
 	 * Reports that should be visible by default on the user's operational

@@ -36,9 +36,9 @@ import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
-import com.gtwm.pb.model.interfaces.AppInfo;
+import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
-import com.gtwm.pb.model.interfaces.AppVisualisationInfo;
+import com.gtwm.pb.model.interfaces.TileVisualisationInfo;
 import com.gtwm.pb.model.interfaces.FormTabInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.ChartAggregateInfo;
@@ -72,7 +72,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.PossibleListOptions;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
-import com.gtwm.pb.util.Enumerations.AppType;
+import com.gtwm.pb.util.Enumerations.TileType;
 import com.gtwm.pb.util.Enumerations.FormStyle;
 import com.gtwm.pb.util.Enumerations.ReportStyle;
 import com.gtwm.pb.util.Enumerations.SummaryFilter;
@@ -90,15 +90,15 @@ import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.Enumerations.SummaryGroupingModifier;
 import com.gtwm.pb.model.manageSchema.TextFieldDescriptorOption.PossibleTextOptions;
-import com.gtwm.pb.model.manageSchema.apps.CalendarApp;
-import com.gtwm.pb.model.manageSchema.apps.ChatApp;
-import com.gtwm.pb.model.manageSchema.apps.CommentStreamApp;
-import com.gtwm.pb.model.manageSchema.apps.DataLinkApp;
-import com.gtwm.pb.model.manageSchema.apps.DataStreamApp;
-import com.gtwm.pb.model.manageSchema.apps.FilesApp;
-import com.gtwm.pb.model.manageSchema.apps.FocusApp;
-import com.gtwm.pb.model.manageSchema.apps.VisualisationApp;
-import com.gtwm.pb.model.manageSchema.apps.VisualisationApp.VisualisationType;
+import com.gtwm.pb.model.manageSchema.apps.CalendarTile;
+import com.gtwm.pb.model.manageSchema.apps.ChatTile;
+import com.gtwm.pb.model.manageSchema.apps.CommentStreamTile;
+import com.gtwm.pb.model.manageSchema.apps.DataLinkTile;
+import com.gtwm.pb.model.manageSchema.apps.DataStreamTile;
+import com.gtwm.pb.model.manageSchema.apps.FilesTile;
+import com.gtwm.pb.model.manageSchema.apps.FocusTile;
+import com.gtwm.pb.model.manageSchema.apps.VisualisationTile;
+import com.gtwm.pb.model.manageSchema.apps.VisualisationTile.VisualisationType;
 
 /**
  * Methods to do with the schema (editing companies, tables, fields etc.) to be
@@ -2813,34 +2813,34 @@ public final class ServletSchemaMethods {
 		if (appTypeString == null) {
 			throw new MissingParametersException("apptype needed to add an app");
 		}
-		AppType appType = AppType.valueOf(appTypeString.toUpperCase());
+		TileType appType = TileType.valueOf(appTypeString.toUpperCase());
 		String colour = request.getParameter("colour");
-		AppInfo app;
+		TileInfo app;
 		switch (appType) {
 		case CALENDAR:
-			app = new CalendarApp(colour);
+			app = new CalendarTile(colour);
 			break;
 		case CHAT:
-			app = new ChatApp(colour);
+			app = new ChatTile(colour);
 			break;
 		case COMMENT_STREAM:
-			app = new CommentStreamApp(colour);
+			app = new CommentStreamTile(colour);
 			break;
 		case DATA_LINK:
 			BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 					databaseDefn, false);
-			app = new DataLinkApp(colour, report);
+			app = new DataLinkTile(colour, report);
 			break;
 		case DATA_STREAM:
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
-			app = new DataStreamApp(colour, report);
+			app = new DataStreamTile(colour, report);
 			break;
 		case FILES:
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
-			app = new FilesApp(colour, report);
+			app = new FilesTile(colour, report);
 			break;
 		case FOCUS:
-			app = new FocusApp(colour);
+			app = new FocusTile(colour);
 			break;
 		case VISUALISATION:
 			String visualisationTypeString = request.getParameter("visualisationtype");
@@ -2851,17 +2851,17 @@ public final class ServletSchemaMethods {
 			VisualisationType visualisationType = VisualisationType.valueOf(visualisationTypeString
 					.toUpperCase());
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);
-			app = new VisualisationApp(colour, visualisationType);
+			app = new VisualisationTile(colour, visualisationType);
 			switch (visualisationType) {
 			// Note this is an inner case statement inside an outer one
 			case CHART:
 				Long chartId = Long.valueOf(request.getParameter("chartid"));
 				ChartInfo chart = report.getSavedChart(chartId);
-				((AppVisualisationInfo) app).setChart(chart);
+				((TileVisualisationInfo) app).setChart(chart);
 				break;
 			case MAP:
 			case WORD_CLOUD:
-				((AppVisualisationInfo) app).setReport(report);
+				((TileVisualisationInfo) app).setReport(report);
 				break;
 			default:
 				throw new CodingErrorException("Unhandled visualisation type " + visualisationType);
@@ -2874,7 +2874,7 @@ public final class ServletSchemaMethods {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(user);
 			HibernateUtil.currentSession().save(app);
-			user.addApp(app);
+			user.addTile(app);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
@@ -2899,9 +2899,9 @@ public final class ServletSchemaMethods {
 		if (internalAppName == null) {
 			throw new MissingParametersException("internalappname needed to remove an app from a user");
 		}
-		AppInfo app = null;
-		for (AppInfo testApp : user.getApps()) {
-			if (testApp.getInternalAppName().equals(internalAppName)) {
+		TileInfo app = null;
+		for (TileInfo testApp : user.getTiles()) {
+			if (testApp.getInternalTileName().equals(internalAppName)) {
 				app = testApp;
 				break;
 			}
@@ -2912,7 +2912,7 @@ public final class ServletSchemaMethods {
 		try {
 			HibernateUtil.startHibernateTransaction();
 			HibernateUtil.activateObject(user);
-			user.removeApp(app);
+			user.removeTile(app);
 			HibernateUtil.currentSession().delete(app);
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
