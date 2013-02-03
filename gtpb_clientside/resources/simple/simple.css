@@ -12,13 +12,13 @@
     overflow:hidden;  
 }
 
-html {
+body {
   transition-duration: 1s;
-  transition-property: color;
+  transition-property: background-color;
   -moz-transition-duration: 1s;
-  -moz-transition-property: color;
+  -moz-transition-property: background-color;
   -webkit-transition-duration: 1s;
-  -webkit-transition-property: color;
+  -webkit-transition-property: background-color;
 }
 
 .container {
