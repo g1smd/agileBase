@@ -57,6 +57,11 @@ body {
   cursor: auto;
 }
 
+.tile.adder.expanded {
+  width: 100%;
+  height: 800px;
+}
+
 .tile.notfocus {
   opacity: 0;
   width: 0; 
