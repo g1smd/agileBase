@@ -96,6 +96,7 @@ body {
   opacity: 0;
   width: 0; 
   margin-right: 0;
+  padding: 0;
   transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
   height: 100px;
 }
@@ -115,11 +116,11 @@ label {
   height: 5em;
   padding: 2em;
   transition-duration: 1s;
-  transition-property: opacity, width, height, margin-right, top, left;
+  transition-property: opacity, width, height, padding, margin-right, top, left;
   -moz-transition-duration: 1s;
-  -moz-transition-property: opacity, width, height, margin-right, top, left;
+  -moz-transition-property: opacity, width, height, padding, margin-right, top, left;
   -webkit-transition-duration: 1s;
-  -webkit-transition-property: opacity, width, height, margin-right, top, left;
+  -webkit-transition-property: opacity, width, height, padding, margin-right, top, left;
 }
 
 /* Colours */
