@@ -35,6 +35,7 @@ function tileEvents() {
 function newTileSetup() {
 	$("label").click(function() {
 		$("label").not($(this)).addClass("notfocus");
+		$(this).find("p").fadeOut();
 	});
 }
 
