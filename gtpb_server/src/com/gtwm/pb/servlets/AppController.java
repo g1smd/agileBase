@@ -584,6 +584,7 @@ public final class AppController extends VelocityViewServlet {
 			String sessionActionParam = request.getParameter(sessionAction.toString().toLowerCase(
 					Locale.UK));
 			if (sessionActionParam != null) {
+				// NB no default in this case, as otherwise the default will fire on every action that isn't one of these
 				switch (sessionAction) {
 				case POSTSET_TABLE:
 					ServletSessionMethods.setTable(sessionData, request, sessionActionParam, databaseDefn);
@@ -597,9 +598,6 @@ public final class AppController extends VelocityViewServlet {
 				case POSTSET_CUSTOM_REPORT:
 					ServletSessionMethods.setCustomReport(sessionData, request, false, databaseDefn);
 					break;
-				default:
-					throw new CantDoThatException(sessionAction.toString()
-							+ " is not supported as a post-session action");
 				}
 			}
 		}
