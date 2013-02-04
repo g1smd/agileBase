@@ -12,10 +12,7 @@ $(document).ready(function() {
 function tileEvents() {
 	$('.tile').click(function() {
 		var tile = $(this);
-		if (tile.hasClass("expanded")) {
-			$(".tile").not(tile).removeClass("notfocus");
-			tile.removeClass("expanded");
-		} else {
+		if (!tile.hasClass("expanded")) {
 			$(".tile").not(tile).addClass("notfocus");
 			var title = tile.attr("title");
 			$("#title").find("h1").text(title);
