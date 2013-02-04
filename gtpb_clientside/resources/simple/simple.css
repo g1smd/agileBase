@@ -92,7 +92,7 @@ body {
   height: 800px;
 }
 
-.tile.notfocus {
+.tile.notfocus, label.notfocus {
   opacity: 0;
   width: 0; 
   margin-right: 0;

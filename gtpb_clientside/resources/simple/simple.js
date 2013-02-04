@@ -27,9 +27,17 @@ function tileEvents() {
 			var template = "s/tiles/" + tile.attr("data-type");
 			tile.find(".content").load("AppController.servlet", {
 				"return": template
+			}, function() {
+				newTileSetup();
 			});
 			tile.find(".content").show();
 		}
+	});
+}
+
+function newTileSetup() {
+	$("label").click(function() {
+		$("label").not($(this)).addClass("notfocus");
 	});
 }
 
