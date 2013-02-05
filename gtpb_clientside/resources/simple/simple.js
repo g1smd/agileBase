@@ -11,7 +11,6 @@ $(document).ready(function() {
 
 function tileEvents() {
 	$('.tile').not(".expanded").click(function() {
-		alert('click');
 		var tile = $(this);
 		$(".tile").not(tile).addClass("notfocus");
 		var title = tile.attr("title");
@@ -42,7 +41,6 @@ function tileLoaded(tile) {
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			$(this).find("p").fadeOut();
 			var selectedApp = $(this).attr("data-tiletype");
-			alert(selectedApp);
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				backHome();
@@ -61,7 +59,6 @@ function backHome() {
 	$(".tile.notfocus").removeClass("notfocus");
 	$("body").removeClass("blue pink green yellow purple");
 	$(".header.row").removeClass("expanded");
-	alert("back");
 }
 
 function loadTreemap() {
