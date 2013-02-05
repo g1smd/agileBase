@@ -6,6 +6,9 @@ $(document).ready(function() {
 		loadTreemap();
 	} else {
 		tileEvents();
+		$(".backHome").click(function() {
+			backHome();
+		});
 	}
 }); // end of document.ready
 
@@ -30,9 +33,6 @@ function tileEvents() {
 			tileLoaded(tile);
 		});
 		tile.find(".content").show();
-	});
-	$(".backHome").click(function() {
-		backHome();
 	});
 }
 
