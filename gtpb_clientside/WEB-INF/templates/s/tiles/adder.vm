@@ -40,5 +40,5 @@
       #end
     #end
   #end
-  <button id="submit_tile" class="btn">OK, add app<button>
+  <button id="submit_tile" class="btn">OK, add app</button>
 </div>
