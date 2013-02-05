@@ -31,6 +31,9 @@ function tileEvents() {
 		});
 		tile.find(".content").show();
 	});
+	$(".backHome").click(function() {
+		backHome();
+	}
 }
 
 /**

@@ -39,6 +39,6 @@
   <div class="container" id="tiles">
     #parse("s/tiles/tiles.vm")
   </div>
-  
+  <div class="backHome"><i class="icon-angle-left"></i></div>
 </body>
 </html>
