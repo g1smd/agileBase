@@ -11,6 +11,7 @@ $(document).ready(function() {
 
 function tileEvents() {
 	$('.tile').not(".expanded").click(function() {
+		alert('click');
 		var tile = $(this);
 		$(".tile").not(tile).addClass("notfocus");
 		var title = tile.attr("title");
