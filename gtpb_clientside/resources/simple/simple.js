@@ -42,6 +42,7 @@ function tileLoaded(tile) {
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			$(this).find("p").fadeOut();
 			var selectedApp = $(this).attr("data-tiletype");
+			alert(selectedApp);
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				backHome();
