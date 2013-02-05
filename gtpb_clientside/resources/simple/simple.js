@@ -36,13 +36,12 @@ function tileEvents() {
  * This function runs when a tile is clicked and content has loaded
  */
 function tileLoaded(tile) {
-	var dataType = tile.attr("data-type");
-	if (dataType == "adder") {
+	var tileType = tile.attr("data-type");
+	if (tileType == "adder") {
 		$("label.tiletype").click(function() {
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			$(this).find("p").fadeOut();
-			var tiletype = $(this).attr("data-tiletype");
-			if (tiletype == "chat" || tiletype == "comment_stream") {
+			if (tileType == "chat" || tileType == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				backHome();
 			}
