@@ -37,7 +37,8 @@ function tileEvents() {
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
 	if (tileType == "adder") {
-		$("label.tiletype").click(function() {
+		$("label.tiletype").click(function(event) {
+			event.stopPropagation(); // stop the .tile click being called
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			$(this).find("p").fadeOut();
 			var selectedApp = $(this).attr("data-tiletype");
