@@ -37,6 +37,7 @@ function tileEvents() {
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
+	alert("Loaded: " + tileType);
 	if (tileType == "adder") {
 		$("label.tiletype").click(function() {
 			$("label.tiletype").not($(this)).addClass("notfocus");
