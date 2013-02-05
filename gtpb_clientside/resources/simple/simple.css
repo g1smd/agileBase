@@ -123,7 +123,7 @@ label {
   -webkit-transition-property: opacity, width, height, padding, margin-right, top, left;
 }
 
-.submit_tile {
+#submit_tile {
   display: none;
 }
 
