@@ -61,6 +61,7 @@ function backHome() {
   $(".tile.notfocus").removeClass("notfocus");
   $("body").removeClass("blue pink green yellow purple");
 	$(".header.row").removeClass("expanded");
+	alert("back");
 }
 
 function loadTreemap() {
