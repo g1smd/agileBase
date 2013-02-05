@@ -33,7 +33,7 @@ function tileEvents() {
 	});
 	$(".backHome").click(function() {
 		backHome();
-	}
+	});
 }
 
 /**
