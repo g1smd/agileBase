@@ -10,25 +10,23 @@ $(document).ready(function() {
 }); // end of document.ready
 
 function tileEvents() {
-	$('.tile').click(function() {
+	$('.tile').not(".expanded").click(function() {
 		var tile = $(this);
-		if (!tile.hasClass("expanded")) {
-			$(".tile").not(tile).addClass("notfocus");
-			var title = tile.attr("title");
-			$("#title").find("h1").text(title);
-			tile.addClass("expanded");
-			var colour = tile.attr("data-colour");
-			$("body").removeClass("blue pink green yellow purple").addClass(colour);
-			$(".header.row").addClass("expanded");
-			tile.find(".icon").fadeOut();
-			var template = "s/tiles/" + tile.attr("data-type");
-			tile.find(".content").load("AppController.servlet", {
-				"return" : template
-			}, function() {
-				tileLoaded(tile);
-			});
-			tile.find(".content").show();
-		}
+		$(".tile").not(tile).addClass("notfocus");
+		var title = tile.attr("title");
+		$("#title").find("h1").text(title);
+		tile.addClass("expanded");
+		var colour = tile.attr("data-colour");
+		$("body").removeClass("blue pink green yellow purple").addClass(colour);
+		$(".header.row").addClass("expanded");
+		tile.find(".icon").fadeOut();
+		var template = "s/tiles/" + tile.attr("data-type");
+		tile.find(".content").load("AppController.servlet", {
+			"return" : template
+		}, function() {
+			tileLoaded(tile);
+		});
+		tile.find(".content").show();
 	});
 }
 
@@ -55,11 +53,11 @@ function tileLoaded(tile) {
  * Contract the expanded tile, go back to the main screen
  */
 function backHome() {
-  $(".tile.expanded").find(".content").empty();
+	$(".tile.expanded").find(".content").empty();
 	$(".tile.expanded").find(".icon").fadeIn();
 	$(".tile.expanded").removeClass("expanded");
-  $(".tile.notfocus").removeClass("notfocus");
-  $("body").removeClass("blue pink green yellow purple");
+	$(".tile.notfocus").removeClass("notfocus");
+	$("body").removeClass("blue pink green yellow purple");
 	$(".header.row").removeClass("expanded");
 	alert("back");
 }
