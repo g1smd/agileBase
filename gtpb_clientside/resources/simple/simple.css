@@ -123,6 +123,10 @@ label {
   -webkit-transition-property: opacity, width, height, padding, margin-right, top, left;
 }
 
+.submit_tile {
+  display: none;
+}
+
 /* Colours */
 .blue {
   background-color: #009FE3;
@@ -142,4 +146,8 @@ label {
 
 .purple {
   background-colour: #522d67;
+}
+
+.white {
+  background-color: white;
 }

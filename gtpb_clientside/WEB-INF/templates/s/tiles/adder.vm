@@ -1,12 +1,44 @@
+##
+##  Copyright 2013 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($tiles = $view.getLoggedInUser().getTiles())
+#set($colours = ["blue,yellow,green,purple,pink"])
 <div class="block">
+  <input type="hidden" name="colour" id="tile_colour" />
   #foreach($tileType in $view.getTileTypes())
     #set($tileTypeId = $tileType.name().toLowerCase())
     #if($tileTypeId != "custom")
-      <label for="$tileTypeId">
-        <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
-        <h1>$tileType.getTileName()</h1>
-        <p>$tileType.getDescription()</p>
-      </label>
+      #set($alreadyAdded = false)
+      #if(($tileTypeId == "comment_stream") || ($tileTypeId == "data_stream") || ($tileTypeId == "focus") || ($tileTypeId == "calendar") || ($tileTypeId == "chat"))
+        ## check existing tiles
+        #foreach($tile in $tiles)
+          #if($tileTypeId == $tile.getTileType().name().toLowerCase())
+            #set($alreadyAdded = true)
+          #end
+        #end
+      #end
+      #if(!$alreadyAdded)
+        <label for="$tileTypeId" class="tiletype" data-tiletype="$tileTypeId">
+          <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
+          <h1>$tileType.getTileName()</h1>
+          <p>$tileType.getDescription()</p>
+        </label>
+      #end
     #end
   #end
+  <button id="submit_tile" class="btn">OK, add app<button>
 </div>

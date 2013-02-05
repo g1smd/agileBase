@@ -1,3 +1,0 @@
-#set($table = $sessionData.getTable())
-Child tables dependent on $table: $view.getDependentTables($table, true))<p>
-Parent tables dependent on $table: $view.getDependentTables($table, false))<p>
