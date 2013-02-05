@@ -9,6 +9,8 @@ $(document).ready(function() {
 	}
 }); // end of document.ready
 
+var abTileColours = ["blue", "yellow", "green", "purple", "pink"];
+
 function tileEvents() {
 	$('.tile').not(".expanded").click(function() {
 		var tile = $(this);
@@ -17,7 +19,8 @@ function tileEvents() {
 		$("#title").find("h1").text(title);
 		tile.addClass("expanded");
 		var colour = tile.attr("data-colour");
-		$("body").removeClass("blue pink green yellow purple").addClass(colour);
+		var allColours = abTileColours.join(" ");
+		$("body").removeClass(allColours).addClass(colour);
 		$(".header.row").addClass("expanded");
 		tile.find(".icon").fadeOut();
 		var template = "s/tiles/" + tile.attr("data-type");
@@ -44,6 +47,19 @@ function tileLoaded(tile) {
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				backHome();
+				// Choose a colour
+				var numExistingTiles = $(".tile.notfocus").size();
+				var colourIndex = numExistingTiles % abTileColours.length;
+				var colour = abTileColours[colourIndex];
+				$.post("AppController.servlet", {
+					"return": "s/tiles/tiles",
+					add_tile: true,
+					tiletype: selectedApp,
+					colour: colour
+				}, function(data) {
+					$("#tiles").html(data);
+					tileEvents();
+				});
 			}
 		});
 	}

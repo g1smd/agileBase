@@ -24,3 +24,7 @@
     #parse("s/tiles/$template.vm")
   </div>
 #end
+<div class="tile adder blue" data-colour="blue" title="add new app" data-type="adder">
+  <div class="icon">+</div>
+  <div class="content"></div>
+</div>

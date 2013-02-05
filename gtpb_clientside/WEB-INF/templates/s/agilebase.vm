@@ -36,12 +36,8 @@
     </div>
   </div> ## end row
   <div id="title"><h1></h1></div>
-  <div class="container">
+  <div class="container" id="tiles">
     #parse("s/tiles/tiles.vm")
-    <div class="tile adder blue" data-colour="blue" title="add new app" data-type="adder">
-      <div class="icon">+</div>
-      <div class="content"></div>
-    </div>
   </div>
   
 </body>
