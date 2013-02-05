@@ -30,6 +30,10 @@ body {
   -webkit-transition-property: opacity, width, height;
 }
 
+#tiles {
+  position: relative;
+}
+
 .header.row {
   background-color: white;
   padding-bottom: 1em;
@@ -133,6 +137,7 @@ label {
   font-size: 30pt;
   position: absolute;
   left: 0;
+  top: 0;
 }
 
 /* Colours */

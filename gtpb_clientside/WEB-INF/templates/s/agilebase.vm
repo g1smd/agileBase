@@ -38,7 +38,7 @@
   <div id="title"><h1></h1></div>
   <div class="container" id="tiles">
     #parse("s/tiles/tiles.vm")
+    <div class="backHome"><i class="icon-chevron-left"></i></div>
   </div>
-  <div class="backHome"><i class="icon-chevron-left"></i></div>
 </body>
 </html>
