@@ -65,7 +65,6 @@ function tileLoaded(tile) {
 				var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
 				var colourIndex = numExistingTiles % abTileColours.length;
 				var colour = abTileColours[colourIndex];
-				console.log(abTileColours);
 				backHome();
 				$.post("AppController.servlet", {
 					"return": "s/tiles/tiles",

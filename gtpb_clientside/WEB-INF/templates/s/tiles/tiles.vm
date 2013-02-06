@@ -31,3 +31,5 @@
   <div class="icon">+</div>
   <div class="content"></div>
 </div>
+<div class="sideAction backHome" title="home"><i class="icon-chevron-left"></i></div>
+<div class="sideAction removeTile" title="remove tile"><i class="icon-remove-sign"></i></div>
