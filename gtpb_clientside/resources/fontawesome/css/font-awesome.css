@@ -32,7 +32,7 @@
 
 /* Oliver */
   [class^="icon-"], [class*=" icon-"]{
-    background: none!important;
+    background-color: red;
   }
   
 /*  Font Awesome styles
