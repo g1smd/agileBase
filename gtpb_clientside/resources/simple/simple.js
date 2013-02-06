@@ -44,6 +44,7 @@ function tileEvents() {
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
+	console.log("tile loaded: " + tileType);
 	$(".sideAction.backHome").addClass("expanded");
 	if (tileType != "adder"){
 		$(".sideAction.removeTile").addClass("expanded");
