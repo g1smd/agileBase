@@ -22,7 +22,9 @@
   #set($colour = $tile.getColour())
   <div class="tile $colour #if($tileType.isLarge()) large #end" data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
-    #parse("s/tiles/${template}.vm")
+    <div class="content">
+      #parse("s/tiles/${template}.vm")
+    </div>
   </div>
 #end
 <div class="tile adder blue" data-colour="blue" title="add new app" data-type="adder">
