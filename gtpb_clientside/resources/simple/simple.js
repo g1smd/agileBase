@@ -28,7 +28,6 @@ function tileEvents() {
 		$("body").removeClass(allColours).addClass(colour);
 		tile.addClass("expanded");
 		$(".header.row").addClass("expanded");
-		$(".sideAction").addClass("expanded");
 		tile.find(".icon").fadeOut();
 		var template = "s/tiles/" + tile.attr("data-type");
 		tile.find(".content").load("AppController.servlet", {
@@ -45,6 +44,10 @@ function tileEvents() {
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
+	$(".sideAction.backHome").addClass("expanded");
+	if (tileType != "adder"){
+		$(".sideAction.removeTile").addClass("expanded");
+	}
 	if (tileType == "adder") {
 		$("label.tiletype").click(function(event) {
 			event.stopPropagation(); // stop the .tile click being called
