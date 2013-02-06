@@ -11,6 +11,11 @@
   box-sizing: border-box;
 }
 
+/* http://stackoverflow.com/questions/11452356/duplicated-icon-issue-with-twitter-bootstrap-and-font-awesome */
+[class^="icon-"], [class*=" icon-"]{
+  background: none;
+}
+
 body { 
   background-color:#E8E7E3; 
   font-family: Verdana,Geneva,sans-serif;
