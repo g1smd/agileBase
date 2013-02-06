@@ -394,7 +394,8 @@
                         text: 'Download an image to share',
                         onclick: function() {
                             this.exportChart({
-                    			url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
+                                ## Use highcharts server rather than our own
+                    			##url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
                     			filename: '$export_filename',
                     			type: 'image/png',
                     			width: 1024
@@ -404,7 +405,8 @@
                         text: 'Download a PDF doc to print',
                         onclick: function() {
                             this.exportChart({
-                    			url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
+                                ## Use highcharts server rather than our own
+                    			##url: 'http://www.agilebase.co.uk/static_features/highcharts_export/index.php',
                     			filename: '$export_filename',
                     			type: 'application/pdf'
 							});
