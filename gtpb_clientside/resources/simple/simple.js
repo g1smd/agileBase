@@ -18,10 +18,13 @@ $(document).ready(function() {
 var abTileColours = ["blue", "yellow", "green", "purple", "pink"];
 
 function tileEvents() {
-	console.log("tile events");
-	$('.tile').not(".expanded").click(function() {
-		console.log("not expanded tile");
+	$('.tile').click(function() {
 		var tile = $(this);
+		if (tile.hasClass("expanded")) {
+			console.log("expanded tile");
+			return;
+		}
+		console.log("not expanded tile");
 		$(".tile").not(tile).addClass("notfocus");
 		var title = tile.attr("title");
 		$("#title").find("h1").text(title);
