@@ -67,8 +67,8 @@ body {
 
 .tile {
   opacity: 1;
-  height: 395px;
-  width: 395px;
+  height: 195px;
+  width: 195px;
   margin-right: 10px;
   margin-bottom: 10px;
   float: left;
@@ -80,6 +80,11 @@ body {
   -webkit-transition-property: opacity, width, height, margin-right, top, left;
   cursor: pointer;
   color: white;
+}
+
+.tile.large {
+  height: 395px;
+  width: 395px;
 }
 
 .tile .icon {
