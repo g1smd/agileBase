@@ -6,18 +6,18 @@ $(document).ready(function() {
 		loadTreemap();
 	} else {
 		tileEvents();
-		$(".backHome").click(function() {
-			backHome();
-		});
-		$(".removeTile").click(function() {
-			removeTile();
-		});
 	}
 }); // end of document.ready
 
 var abTileColours = ["blue", "yellow", "green", "purple", "pink"];
 
 function tileEvents() {
+	$(".backHome").click(function() {
+		backHome();
+	});
+	$(".removeTile").click(function() {
+		removeTile();
+	});
 	$('.tile').click(function() {
 		var tile = $(this);
 		if (tile.hasClass("expanded")) {
