@@ -20,7 +20,7 @@
 #foreach($tile in $tiles)
   #set($tileType = $tile.getTileType())
   #set($colour = $tile.getColour())
-  <div class="tile $colour #if($tileType.isLarge()) large #end" data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
+  <div title="$tile" class="tile $colour #if($tileType.isLarge()) large #end" data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
     <div class="content">
       #parse("s/tiles/${template}.vm")
