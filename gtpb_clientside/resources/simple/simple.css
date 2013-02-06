@@ -142,6 +142,16 @@ label {
   font-size: 30pt;
   position: absolute;
   top: 1em;
+  opacity: 0;
+  transition-duration: 2s;
+  transition-property: opacity;
+  -moz-transition-duration: 2s;
+  -moz-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+  -webkit-transition-property: opacity;
+}
+
+.sideAction.expanded {
   opacity: 0.5;
 }
 

@@ -23,11 +23,12 @@ function tileEvents() {
 		$(".tile").not(tile).addClass("notfocus");
 		var title = tile.attr("title");
 		$("#title").find("h1").text(title);
-		tile.addClass("expanded");
 		var colour = tile.attr("data-colour");
 		var allColours = abTileColours.join(" ");
 		$("body").removeClass(allColours).addClass(colour);
+		tile.addClass("expanded");
 		$(".header.row").addClass("expanded");
+		$(".sideAction").addClass("expanded");
 		tile.find(".icon").fadeOut();
 		var template = "s/tiles/" + tile.attr("data-type");
 		tile.find(".content").load("AppController.servlet", {
@@ -81,6 +82,7 @@ function backHome() {
 	$(".tile.notfocus").removeClass("notfocus");
 	$("body").removeClass("blue pink green yellow purple");
 	$(".header.row").removeClass("expanded");
+	$(".sideAction").removeClass("expanded");
 }
 
 /**
