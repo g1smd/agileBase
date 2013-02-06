@@ -58,9 +58,13 @@ function tileLoaded(tile) {
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				// Choose a colour
-				var numExistingTiles = $(".tile.notfocus").size();
+				var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
+				console.log("Existing tiles: " + numExistingTiles + ", num colours: " + abTileColours.length);
 				var colourIndex = numExistingTiles % abTileColours.length;
+				console.log("Colour index: " + colourIndex);
 				var colour = abTileColours[colourIndex];
+				console.log(abTileColours);
+				console.log("Colour: " + colour);
 				$.post("AppController.servlet", {
 					"return": "s/tiles/tiles",
 					add_tile: true,
