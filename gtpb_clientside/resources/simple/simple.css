@@ -145,7 +145,7 @@ label {
 }
 
 .sideAction.removeTile {
-  right: -1em;
+  right: -0.5em;
 }
 
 /* Colours */

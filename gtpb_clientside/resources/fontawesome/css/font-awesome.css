@@ -29,6 +29,12 @@
   font-weight: normal;
   font-style: normal;
 }
+
+/* Oliver */
+  [class^="icon-"], [class*=" icon-"]{
+    background:none;
+  }
+  
 /*  Font Awesome styles
     ------------------------------------------------------- */
 [class^="icon-"],
