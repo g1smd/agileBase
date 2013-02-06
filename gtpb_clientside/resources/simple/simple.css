@@ -131,14 +131,21 @@ label {
   display: none;
 }
 
-.backHome {
+.sideAction {
   color: white;
   cursor: pointer;
   font-size: 30pt;
   position: absolute;
-  left: -1em;
   top: 1em;
   opacity: 0.5;
+}
+
+.sideAction.backHome {
+  left: -1em;
+}
+
+.sideAction.removeTile {
+  right: -1em;
 }
 
 /* Colours */
