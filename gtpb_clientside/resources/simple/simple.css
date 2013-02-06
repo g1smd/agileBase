@@ -71,7 +71,6 @@ body {
   width: 395px;
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: green;
   float: left;
   transition-duration: 1s;
   transition-property: opacity, width, height, margin-right, top, left;
@@ -177,11 +176,11 @@ label {
 }
 
 .yellow {
-  background-colour: #E6BC3A;
+  background-color: #E6BC3A;
 }
 
 .purple {
-  background-colour: #522d67;
+  background-color: #522d67;
 }
 
 .white {
