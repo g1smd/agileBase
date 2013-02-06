@@ -28,6 +28,12 @@
 	<title>Agilebase</title>
 	<script src="resources/jquery.js" language="JavaScript"></script>
 	<script language="JavaScript" src="resources/simple/simple.js"></script>
+	<style>
+	/* Oliver */
+  [class^="icon-"], [class*=" icon-"]{
+    background-color: red;
+  }
+	</style>
 </head>
 <body>
   <div class="header row">

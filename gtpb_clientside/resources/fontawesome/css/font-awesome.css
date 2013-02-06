@@ -30,11 +30,6 @@
   font-style: normal;
 }
 
-/* Oliver */
-  [class^="icon-"], [class*=" icon-"]{
-    background-color: red;
-  }
-  
 /*  Font Awesome styles
     ------------------------------------------------------- */
 [class^="icon-"],
