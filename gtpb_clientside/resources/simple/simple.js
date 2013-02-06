@@ -9,6 +9,9 @@ $(document).ready(function() {
 		$(".backHome").click(function() {
 			backHome();
 		});
+		$(".removeTile").click(function() {
+			removeTile();
+		});
 	}
 }); // end of document.ready
 
@@ -49,7 +52,6 @@ function tileLoaded(tile) {
 			var selectedApp = $(this).attr("data-tiletype");
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
-				backHome();
 				// Choose a colour
 				var numExistingTiles = $(".tile.notfocus").size();
 				var colourIndex = numExistingTiles % abTileColours.length;
@@ -63,6 +65,7 @@ function tileLoaded(tile) {
 					$("#tiles").html(data);
 					tileEvents();
 				});
+				backHome();
 			}
 		});
 	}
@@ -78,6 +81,22 @@ function backHome() {
 	$(".tile.notfocus").removeClass("notfocus");
 	$("body").removeClass("blue pink green yellow purple");
 	$(".header.row").removeClass("expanded");
+}
+
+/**
+ * Remove the currently expanded tile
+ */
+function removeTile() {
+	var internalTileName = $(".tile.expanded").attr("data-internaltilename");
+	$.post("AppController.servlet", {
+		"return": "s/tiles/tiles",
+		remove_tile: true,
+		internaltilename: internalTileName
+	}, function(data) {
+		$("#tiles").html(data);
+		tileEvents();
+	});
+	backHome();
 }
 
 function loadTreemap() {
