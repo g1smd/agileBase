@@ -46,7 +46,6 @@ function tileEvents() {
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
-	console.log("tile loaded: " + tileType);
 	$(".sideAction.backHome").addClass("expanded");
 	if (tileType != "adder"){
 		$(".sideAction.removeTile").addClass("expanded");
@@ -61,12 +60,10 @@ function tileLoaded(tile) {
 				// These types add a tile immediately without further configuration
 				// Choose a colour
 				var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
-				console.log("Existing tiles: " + numExistingTiles + ", num colours: " + abTileColours.length);
 				var colourIndex = numExistingTiles % abTileColours.length;
-				console.log("Colour index: " + colourIndex);
 				var colour = abTileColours[colourIndex];
 				console.log(abTileColours);
-				console.log("Colour: " + colour);
+				backHome();
 				$.post("AppController.servlet", {
 					"return": "s/tiles/tiles",
 					add_tile: true,
@@ -76,7 +73,6 @@ function tileLoaded(tile) {
 					$("#tiles").html(data);
 					tileEvents();
 				});
-				backHome();
 			}
 		});
 	}
@@ -100,6 +96,7 @@ function backHome() {
  */
 function removeTile() {
 	var internalTileName = $(".tile.expanded").attr("data-internaltilename");
+	backHome();
 	$.post("AppController.servlet", {
 		"return": "s/tiles/tiles",
 		remove_tile: true,
@@ -108,7 +105,6 @@ function removeTile() {
 		$("#tiles").html(data);
 		tileEvents();
 	});
-	backHome();
 }
 
 function loadTreemap() {
