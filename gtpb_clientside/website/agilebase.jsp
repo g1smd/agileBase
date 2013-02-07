@@ -39,7 +39,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       <div id="content">
         <h1 class="light"><img src="/agileBase/website/images/brandmark.png" /> : log in</h1>
         <div class="hidden-desktop alert alert-info big">
-            On a mobile/tablet? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
+            On a mobile or tablet? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
         </div>
         <div class="big spaced">
           <% if(live) { %>
