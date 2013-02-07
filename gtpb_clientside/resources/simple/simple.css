@@ -119,6 +119,20 @@ body {
   height: 145px;
 }
 
+.adder ul.reportSelector {
+  background-color: transparent;
+}
+
+.adder ul.reportSelector li {
+  float: left;
+  margin: 1em;
+}
+
+.adder ul.reportSelector li:first-child {
+  clear: left;
+}
+
+
 label input[type=radio] {
   display: none;
 }
