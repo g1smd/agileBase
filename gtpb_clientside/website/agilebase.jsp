@@ -32,6 +32,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	</head>
 	<body>
     <div class="container">
+      <div class="hidden-desktop alert alert-info big">
+        On a mobile or tablet? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
+      </div>
       <div class="row abNav">
         <div class="span2 home">
           <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" /></a>
@@ -40,9 +43,6 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       </div>
       <div id="content">
         <h1 class="light"><img src="/agileBase/website/images/brandmark.png" /> : log in</h1>
-        <div class="hidden-desktop alert alert-info big">
-            On a mobile or tablet? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
-        </div>
         <div class="big spaced">
           <% if(live) { %>
             <form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
