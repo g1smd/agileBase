@@ -85,6 +85,7 @@ function tileLoaded(tile) {
 		$(".adder .reportSelector ul.reports li").click(function(event) {
 			event.stopPropagation();
 			var internalReportName = $(this).attr("data-internalreportname");
+			var selectedApp = $("label:visible").attr("data-tiletype");
 			var colour = nextColour();
 			$.post("AppController.servlet", {
 				"return" : "s/tiles/tiles",
@@ -97,7 +98,7 @@ function tileLoaded(tile) {
 				tileEvents();
 			});
 		});
-	}
+	} // end of if adder
 }
 
 function nextColour() {
