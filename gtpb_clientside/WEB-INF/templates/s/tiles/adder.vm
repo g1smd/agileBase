@@ -47,7 +47,7 @@
         $module
         <ul>
           #foreach($report in $moduleReports.get($module))
-            <li data-internalreportname="$report.getInternalReportName">$report</li>
+            <li data-internalreportname="$report.getInternalReportName" style="display:none">$module: $report</li>
           #end
         </ul>
       </li>
