@@ -59,7 +59,11 @@ function tileLoaded(tile) {
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			var selectedApp = $(this).attr("data-tiletype");
 			if (selectedApp == "data_stream" || selectedApp == "data_link") {
-				tile.find(".reportSelector").show("normal");
+				$(".adder .reportSelector").show("normal");
+				$(".adder .reportSelector li.module").click(function() {
+					$(".adder .reportSelector li.module").not($(this)).hide("normal");
+					$(this).find("ul.reports").show("normal");
+				})
 				$(this).find("p").text("Which data would you like to use?");
 			}
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {

@@ -43,9 +43,9 @@
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #foreach($module in $moduleReports.keySet())
-      <li>
+      <li class="module">
         $module
-        <ul style="display:none">
+        <ul class="reports" style="display:none">
           #foreach($report in $moduleReports.get($module))
             <li data-internalreportname="$report.getInternalReportName">$module: $report</li>
           #end

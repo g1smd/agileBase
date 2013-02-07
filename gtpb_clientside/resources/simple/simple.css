@@ -126,6 +126,7 @@ body {
 .adder ul.reportSelector li {
   float: left;
   margin: 1em;
+  cursor: pointer;
 }
 
 .adder ul.reportSelector li:first-child {
