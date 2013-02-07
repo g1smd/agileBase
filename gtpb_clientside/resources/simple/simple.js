@@ -59,25 +59,32 @@ function tileLoaded(tile) {
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			var selectedApp = $(this).attr("data-tiletype");
 			if (selectedApp == "data_stream" || selectedApp == "data_link") {
+				$(this).find("p").text("Which data would you like to use?");
 				$(".adder .reportSelector").show("normal");
 				$(".adder .reportSelector li.module").click(function() {
 					$(".adder .reportSelector li.module").not($(this)).hide("normal");
 					$(this).find("ul.reports").show("normal");
-				})
-				$(this).find("p").text("Which data would you like to use?");
+				});
+				$(".adder .reportSelector ul.reports li").click(function() {
+					var internalReportName = $(this).attr("internalreportname");
+					$.post("AppController.servlet", {
+						"return": "s/tiles/tiles",
+						add_tile: true,
+						tiletype: selectedApp,
+						colour: nextColour(),
+						internalreportname: internalReportName
+					});
+				});
 			}
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				// Choose a colour
-				var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
-				var colourIndex = numExistingTiles % abTileColours.length;
-				var colour = abTileColours[colourIndex];
 				backHome();
 				$.post("AppController.servlet", {
 					"return": "s/tiles/tiles",
 					add_tile: true,
 					tiletype: selectedApp,
-					colour: colour
+					colour: nextColour()
 				}, function(data) {
 					$("#tiles").html(data);
 					tileEvents();
@@ -85,6 +92,12 @@ function tileLoaded(tile) {
 			}
 		});
 	}
+}
+
+function nextColour() {
+	var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
+	var colourIndex = numExistingTiles % abTileColours.length;
+	return abTileColours[colourIndex];	
 }
 
 /**

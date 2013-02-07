@@ -39,7 +39,7 @@
       #end
     #end
   #end
-  <ul class="reportSelector" style="display: none">
+  <ul class="reportSelector big" style="display: none">
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #foreach($module in $moduleReports.keySet())

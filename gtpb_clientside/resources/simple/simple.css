@@ -132,6 +132,7 @@ body {
 .adder ul.reportSelector ul.reports {
  display: inline-block;
  color: #009FE3;
+ text-transform: lowercase;
 }
 
 .adder ul.reportSelector li:first-child {
