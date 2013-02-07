@@ -83,7 +83,7 @@ function tileLoaded(tile) {
 			}
 		}); /* end of label.tiletype.click */
 		$(".adder .reportSelector ul.reports li").click(function(event) {
-			event.stopPropogation();
+			event.stopPropagation();
 			var internalReportName = $(this).attr("data-internalreportname");
 			var colour = nextColour();
 			$.post("AppController.servlet", {
