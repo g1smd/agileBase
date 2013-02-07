@@ -9,7 +9,7 @@ $(document).ready(function() {
 	}
 }); // end of document.ready
 
-var abTileColours = ["blue", "yellow", "green", "purple", "pink"];
+var abTileColours = [ "blue", "yellow", "green", "purple", "pink" ];
 
 function tileEvents() {
 	$(".backHome").click(function() {
@@ -50,7 +50,7 @@ function tileEvents() {
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
 	$(".sideAction.backHome").addClass("expanded");
-	if (tileType != "adder"){
+	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
 	}
 	if (tileType == "adder") {
@@ -65,18 +65,6 @@ function tileLoaded(tile) {
 					$(".adder .reportSelector li.module").not($(this)).hide("normal");
 					$(this).find("ul.reports").show("normal");
 				});
-				$(".adder .reportSelector ul.reports li").click(function(event) {
-					event.stopPropogation();
-					var internalReportName = $(this).attr("data-internalreportname");
-					var colour = nextColour();
-					$.post("AppController.servlet", {
-						"return": "s/tiles/tiles",
-						add_tile: true,
-						tiletype: selectedApp,
-						colour: colour,
-						internalreportname: internalReportName
-					});
-				});
 			}
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
@@ -84,15 +72,30 @@ function tileLoaded(tile) {
 				backHome();
 				var colour = nextColour();
 				$.post("AppController.servlet", {
-					"return": "s/tiles/tiles",
-					add_tile: true,
-					tiletype: selectedApp,
-					colour: colour
+					"return" : "s/tiles/tiles",
+					add_tile : true,
+					tiletype : selectedApp,
+					colour : colour
 				}, function(data) {
 					$("#tiles").html(data);
 					tileEvents();
 				});
 			}
+		}); /* end of label.tiletype.click */
+		$(".adder .reportSelector ul.reports li").click(function(event) {
+			event.stopPropogation();
+			var internalReportName = $(this).attr("data-internalreportname");
+			var colour = nextColour();
+			$.post("AppController.servlet", {
+				"return" : "s/tiles/tiles",
+				add_tile : true,
+				tiletype : selectedApp,
+				colour : colour,
+				internalreportname : internalReportName
+			}, function(data) {
+				$("#tiles").html(data);
+				tileEvents();
+			});
 		});
 	}
 }
@@ -100,7 +103,7 @@ function tileLoaded(tile) {
 function nextColour() {
 	var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
 	var colourIndex = numExistingTiles % abTileColours.length;
-	return abTileColours[colourIndex];	
+	return abTileColours[colourIndex];
 }
 
 /**
@@ -123,9 +126,9 @@ function removeTile() {
 	var internalTileName = $(".tile.expanded").attr("data-internaltilename");
 	backHome();
 	$.post("AppController.servlet", {
-		"return": "s/tiles/tiles",
-		remove_tile: true,
-		internaltilename: internalTileName
+		"return" : "s/tiles/tiles",
+		remove_tile : true,
+		internaltilename : internalTileName
 	}, function(data) {
 		$("#tiles").html(data);
 		tileEvents();
