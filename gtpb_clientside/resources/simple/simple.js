@@ -87,6 +87,7 @@ function tileLoaded(tile) {
 			var internalReportName = $(this).attr("data-internalreportname");
 			var selectedApp = $("label:visible").attr("data-tiletype");
 			var colour = nextColour();
+			backHome();
 			$.post("AppController.servlet", {
 				"return" : "s/tiles/tiles",
 				add_tile : true,
