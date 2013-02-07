@@ -129,6 +129,10 @@ body {
   cursor: pointer;
 }
 
+.adder ul.reportSelector ul.reports {
+ display: inline-block; 
+}
+
 .adder ul.reportSelector li:first-child {
   clear: left;
 }
