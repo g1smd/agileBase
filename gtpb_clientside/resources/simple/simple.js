@@ -65,13 +65,15 @@ function tileLoaded(tile) {
 					$(".adder .reportSelector li.module").not($(this)).hide("normal");
 					$(this).find("ul.reports").show("normal");
 				});
-				$(".adder .reportSelector ul.reports li").click(function() {
-					var internalReportName = $(this).attr("internalreportname");
+				$(".adder .reportSelector ul.reports li").click(function(event) {
+					event.stopPropogation();
+					var internalReportName = $(this).attr("data-internalreportname");
+					var colour = nextColour();
 					$.post("AppController.servlet", {
 						"return": "s/tiles/tiles",
 						add_tile: true,
 						tiletype: selectedApp,
-						colour: nextColour(),
+						colour: colour,
 						internalreportname: internalReportName
 					});
 				});
@@ -80,11 +82,12 @@ function tileLoaded(tile) {
 				// These types add a tile immediately without further configuration
 				// Choose a colour
 				backHome();
+				var colour = nextColour();
 				$.post("AppController.servlet", {
 					"return": "s/tiles/tiles",
 					add_tile: true,
 					tiletype: selectedApp,
-					colour: nextColour()
+					colour: colour
 				}, function(data) {
 					$("#tiles").html(data);
 					tileEvents();
