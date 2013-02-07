@@ -59,6 +59,9 @@ function tileLoaded(tile) {
 			$("label.tiletype").not($(this)).addClass("notfocus");
 			$(this).find("p").fadeOut();
 			var selectedApp = $(this).attr("data-tiletype");
+			if (selectedApp == "data_stream" || selectedApp == "data_link") {
+				tile.find(".reportSelector").show("normal");
+			}
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration
 				// Choose a colour
