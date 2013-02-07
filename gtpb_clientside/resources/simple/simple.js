@@ -57,10 +57,10 @@ function tileLoaded(tile) {
 		$("label.tiletype").click(function(event) {
 			event.stopPropagation(); // stop the .tile click being called
 			$("label.tiletype").not($(this)).addClass("notfocus");
-			$(this).find("p").fadeOut();
 			var selectedApp = $(this).attr("data-tiletype");
 			if (selectedApp == "data_stream" || selectedApp == "data_link") {
 				tile.find(".reportSelector").show("normal");
+				$(this).find("p").text("Which data would you like to use?");
 			}
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {
 				// These types add a tile immediately without further configuration

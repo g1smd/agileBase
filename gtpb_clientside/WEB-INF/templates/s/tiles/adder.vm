@@ -45,9 +45,9 @@
     #foreach($module in $moduleReports.keySet())
       <li>
         $module
-        <ul>
+        <ul style="display:none">
           #foreach($report in $moduleReports.get($module))
-            <li data-internalreportname="$report.getInternalReportName" style="display:none">$module: $report</li>
+            <li data-internalreportname="$report.getInternalReportName">$module: $report</li>
           #end
         </ul>
       </li>
