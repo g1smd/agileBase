@@ -16,6 +16,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     <meta charset="UTF-8">
 		<title>agilebase : log in</title>
     <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/agileBase/website/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="/agileBase/website/styles.css" rel="stylesheet">
