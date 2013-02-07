@@ -24,6 +24,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
     <script type="text/javascript" src="/agileBase/website/scripts/agilebase.js"></script>
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <% if(!live) { %>
       <!-- don't index the test server -->
       <meta name="robots" content="noindex">
