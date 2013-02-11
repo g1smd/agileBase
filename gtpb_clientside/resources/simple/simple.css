@@ -82,11 +82,11 @@ body {
   margin: 1em;
 }
 
-#tiles .tile .icon {
+#tiles .tile .tile_icon {
   font-size: 150pt;
   display: block;
   text-align: center;
-  line-height: 0.68em!important; /* override fontawesome */
+  line-height: 0.68em!important;
 }
 
 .tile.expanded {
