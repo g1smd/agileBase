@@ -93,12 +93,16 @@ body {
   height: 800px;
 }
 
-.notfocus, .tile.notfocus, label.notfocus  {
+.notfocus {
   opacity: 0;
   width: 0; 
   margin-right: 0;
   padding: 0;
   transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
+  height: 0px;
+}
+
+.tile.notfocus {
   height: 100px;
 }
 
