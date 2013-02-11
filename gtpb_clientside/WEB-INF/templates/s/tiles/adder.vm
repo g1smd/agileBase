@@ -31,7 +31,7 @@
         #end
       #end
       #if(!$alreadyAdded)
-        <label for="$tileTypeId" class="tiletype" data-tiletype="$tileTypeId">
+        <label for="$tileTypeId" class="tiletype transition" data-tiletype="$tileTypeId">
           <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
           <h1>$tileType.getTileName()</h1>
           <p>$tileType.getDescription()</p>
@@ -39,13 +39,13 @@
       #end
     #end
   #end
-  <ul class="reportSelector big notfocused" style="display: none">
+  <ul class="reportSelector big notfocus transition" style="display: none">
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #foreach($module in $moduleReports.keySet())
-      <li class="module">
+      <li class="module transition">
         <p>$module</p>
-        <ul class="reports notfocus" style="display:none">
+        <ul class="reports notfocus transition" style="display:none">
           #foreach($report in $moduleReports.get($module))
             <li data-internalreportname="$report.getInternalReportName()">$report</li>
           #end

@@ -62,7 +62,7 @@ function tileLoaded(tile) {
 				$(this).find("p").text("Which data would you like to use?");
 				$(".adder .reportSelector").show().removeClass("notfocus");
 				$(".adder .reportSelector li.module").click(function() {
-					$(".adder .reportSelector li.module").not($(this)).addClass("notfocs");
+					$(".adder .reportSelector li.module").not($(this)).addClass("notfocus");
 					$(this).find("ul.reports").show().removeClass("notfocus");
 				});
 			}

@@ -26,13 +26,13 @@ body {
   -webkit-transition-property: background-color;
 }
 
-.container {
+.transition {
   transition-duration: 1s;
-  transition-property: opacity, width, height;
+  transition-property: opacity, width, height, margin-right, top, left;
   -moz-transition-duration: 1s;
-  -moz-transition-property: opacity, width, height;
+  -moz-transition-property: opacity, width, height, margin-right, top, left;
   -webkit-transition-duration: 1s;
-  -webkit-transition-property: opacity, width, height;
+  -webkit-transition-property: opacity, width, height, margin-right, top, left;
 }
 
 #tiles {
@@ -44,12 +44,6 @@ body {
   padding-bottom: 1em;
   width: 100%;
   margin-left: 0px; /* override bootstrap */
-  transition-duration: 1s;
-  transition-property: opacity;
-  -moz-transition-duration: 1s;
-  -moz-transition-property: opacity;
-  -webkit-transition-duration: 1s;
-  -webkit-transition-property: opacity;
 }
 
 .header.row.expanded {
@@ -72,12 +66,6 @@ body {
   margin-right: 10px;
   margin-bottom: 10px;
   float: left;
-  transition-duration: 1s;
-  transition-property: opacity, width, height, margin-right, top, left;
-  -moz-transition-duration: 1s;
-  -moz-transition-property: opacity, width, height, margin-right, top, left;
-  -webkit-transition-duration: 1s;
-  -webkit-transition-property: opacity, width, height, margin-right, top, left;
   cursor: pointer;
   color: white;
 }
@@ -105,7 +93,7 @@ body {
   height: 800px;
 }
 
-.tile.notfocus, label.notfocus {
+.notfocus, label.notfocus,  {
   opacity: 0;
   width: 0; 
   margin-right: 0;
@@ -149,12 +137,6 @@ label {
   width: 30em;
   height: 5em;
   padding: 2em;
-  transition-duration: 1s;
-  transition-property: opacity, width, height, padding, margin-right, top, left;
-  -moz-transition-duration: 1s;
-  -moz-transition-property: opacity, width, height, padding, margin-right, top, left;
-  -webkit-transition-duration: 1s;
-  -webkit-transition-property: opacity, width, height, padding, margin-right, top, left;
 }
 
 #submit_tile {

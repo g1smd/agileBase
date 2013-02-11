@@ -30,13 +30,13 @@
 	<script language="JavaScript" src="resources/simple/simple.js"></script>
 </head>
 <body>
-  <div class="header row">
+  <div class="header row transition">
     <div class="span4 spaced">
       <a href="#"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
     </div>
   </div> ## end row
   <div id="title"><h1></h1></div>
-  <div class="container" id="tiles">
+  <div class="container transition" id="tiles">
     #parse("s/tiles/tiles.vm")
   </div>
 </body>
