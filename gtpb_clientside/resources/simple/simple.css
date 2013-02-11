@@ -82,7 +82,7 @@ body {
   margin: 1em;
 }
 
-.tile .icon {
+#tiles .tile .icon {
   font-size: 150pt;
   display: block;
   text-align: center;
