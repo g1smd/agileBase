@@ -755,6 +755,10 @@ div#reportData {
   overflow-x: hidden;
 }
 
+#reportData .block.grandchildren a {
+  text-decoration: none;
+}
+
 #reportData .block .row {
   vertical-align: bottom;
 }

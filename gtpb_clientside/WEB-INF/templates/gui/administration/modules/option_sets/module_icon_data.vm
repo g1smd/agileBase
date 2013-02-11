@@ -304,7 +304,7 @@
 	  var selected = $(this);
 		$("table.iconPickerTable td").removeAttr("id");
 		var iconName = $(this).attr("data-iconname");
-		$.post("AppController.servlet", {
+		jQuery.post("AppController.servlet", {
 			"return": "blank",
 			update_module: true,
 			iconpath: iconName

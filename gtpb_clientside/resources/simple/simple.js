@@ -60,10 +60,10 @@ function tileLoaded(tile) {
 			var selectedApp = $(this).attr("data-tiletype");
 			if (selectedApp == "data_stream" || selectedApp == "data_link") {
 				$(this).find("p").text("Which data would you like to use?");
-				$(".adder .reportSelector").show("normal");
+				$(".adder .reportSelector").show().removeClass("notfocus");
 				$(".adder .reportSelector li.module").click(function() {
-					$(".adder .reportSelector li.module").not($(this)).hide("normal");
-					$(this).find("ul.reports").show("normal");
+					$(".adder .reportSelector li.module").not($(this)).addClass("notfocs");
+					$(this).find("ul.reports").show().removeClass("notfocus");
 				});
 			}
 			if (selectedApp == "chat" || selectedApp == "comment_stream") {

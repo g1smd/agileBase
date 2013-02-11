@@ -135,7 +135,7 @@
 
   #if($userCanEdit && !$globalEdit)
 	#if($field.getNotNull() && ( ($tableDataRow.get($field).isNull() || $customAction) ))
-		<span class="mandated">* Mandatory field - please enter a value</span>
+		<span class="mandated">* mandatory</span>
 	#end
   #end
 #else ##user can't edit

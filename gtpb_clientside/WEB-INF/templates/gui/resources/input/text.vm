@@ -64,7 +64,7 @@
 		      <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url" /></a>##
         #end
 		  #elseif($field.getNotNull() && (($fieldValue == "") || $customAction))
-			  <span class="mandated">* Mandatory field - please enter a value</span>
+			  <span class="mandated">* mandatory</span>
       #end##
 		#end##
 	  #else ## start of normal (not big text) field
@@ -100,7 +100,7 @@
 	    #elseif ($mobile_device && $fieldValueObject.isPhoneNumber())##
 		    <a href="tel:$fieldValue">phone</a>##
       #elseif($field.getNotNull() && $fieldValue == "")
-	      <span class="mandated">* Mandatory field - please enter a value</span>
+	      <span class="mandated">* mandatory</span>
       #end##
     #end##
 		##

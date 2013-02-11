@@ -35,7 +35,7 @@
   	  #else##
   	    		$currencySymbol <input type="text" gtpb_internaltablename="$internalTableName" #if($field.getNotNull()) required #end gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" #if($mobile_device) onblur="top.oBuffer.writeBuffer(this);" #end>##
 				#if($field.getNotNull() && (($fieldValue == "") || $customAction))
-					<span class="mandated">* Mandatory field - please enter a value</span>
+					<span class="mandated">* mandatory</span>
 				#end
 				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
 	  #end##
@@ -55,7 +55,7 @@
   	  #else##
   	    		$currencySymbol <input type="text" #if($field.getNotNull()) required #end gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_rowid="$sessionRowId" gtpb_update_record name="$field.getInternalFieldName()" value="$fieldValue" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" maxKeyCount="4" #if($mobile_device) onblur="top.oBuffer.writeBuffer(this);" #end>##
 				#if($field.getNotNull() && (($tableDataRow.get($field) == "") || $customAction))
-					<span class="mandated">* Mandatory field - please enter a value</span>
+					<span class="mandated">* mandatory</span>
 				#end
 				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
   	  #end##
