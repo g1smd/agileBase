@@ -23,6 +23,9 @@
   <div title="$tile" class="tile transition $colour #if($tileType.isLarge()) large #end" data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
     <div class="title">$tile</div>
+    #if($tileType == "data_link")
+      <div class="tile_icon"><i class="$tile.getReport().getModule().getIconPath()"></i></div>
+    #end
     <div class="content">
       #parse("s/tiles/${template}.vm")
     </div>

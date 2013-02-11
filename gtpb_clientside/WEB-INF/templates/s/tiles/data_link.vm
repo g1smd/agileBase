@@ -1,2 +1,0 @@
-#set($icon = $tile.getReport().getModule().getIconPath())
-<div class="tile_icon"><i class="$icon"></i></div>
