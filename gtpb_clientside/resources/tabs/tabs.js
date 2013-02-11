@@ -1152,8 +1152,8 @@ function fTabs() {
 						tablekey : "tabTable",
 						custominternaltablename : tabInternalTableName,
 						set_row_id: parentRowId,
-						rowidinternaltablename: parentInternalTableName, 
-						set_table: parentInternalTableName
+						rowidinternaltablename: parentInternalTableName,
+						set_table: parentInternalTableName,
 						abCache: new Date().getTime()
 					}, function() {
 						// Elaine
