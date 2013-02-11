@@ -86,7 +86,10 @@ body {
   font-size: 150pt;
   display: block;
   text-align: center;
-  line-height: 0.68em!important;
+}
+
+#tiles .tile .tile_icon i {
+    line-height: 0.68em;
 }
 
 .tile.expanded {
