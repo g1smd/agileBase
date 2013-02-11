@@ -54,7 +54,7 @@ function tileLoaded(tile) {
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
 	}
-	tile.find(".tile_icon i").hide();
+	$(".tile_icon i").hide();
 	if (tileType == "adder") {
 		$("label.tiletype").click(function(event) {
 			event.stopPropagation(); // stop the .tile click being called
