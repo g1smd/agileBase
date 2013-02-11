@@ -112,6 +112,7 @@ function addDataTile(selectedApp, colour, internalReportName, icon) {
 		add_tile : true,
 		tiletype : selectedApp,
 		colour : colour,
+		icon: icon,
 		internalreportname : internalReportName
 	}, function(data) {
 		$("#tiles").html(data);
