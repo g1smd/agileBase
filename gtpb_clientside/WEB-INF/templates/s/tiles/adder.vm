@@ -53,7 +53,7 @@
       </li>
     #end
   </ul>
-  <div class="iconChooser big">
+  <div class="iconChooser big notfocus" style="display:none">
 <i class='icon-large icon-adjust'></i>
 <i class='icon-large icon-asterisk'></i>
 <i class='icon-large icon-ban-circle'></i>
