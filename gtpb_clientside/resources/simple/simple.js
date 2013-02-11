@@ -87,19 +87,28 @@ function tileLoaded(tile) {
 			var internalReportName = $(this).attr("data-internalreportname");
 			var selectedApp = $("label:visible").attr("data-tiletype");
 			var colour = nextColour();
-			backHome();
-			$.post("AppController.servlet", {
-				"return" : "s/tiles/tiles",
-				add_tile : true,
-				tiletype : selectedApp,
-				colour : colour,
-				internalreportname : internalReportName
-			}, function(data) {
-				$("#tiles").html(data);
-				tileEvents();
-			});
+			var icon = $(this).closest("li.module").attr("data-icon");
+			if (icon == "") {
+				$(".iconChooser").show().removeClass("notfocus");
+			} else {
+				addDataTile(selectedApp, colour, internalReportName, icon);
+			}
 		});
 	} // end of if adder
+}
+
+function addDataTile(selectedApp, colour, internalReportName, icon) {
+	backHome();
+	$.post("AppController.servlet", {
+		"return" : "s/tiles/tiles",
+		add_tile : true,
+		tiletype : selectedApp,
+		colour : colour,
+		internalreportname : internalReportName
+	}, function(data) {
+		$("#tiles").html(data);
+		tileEvents();
+	});
 }
 
 function nextColour() {
