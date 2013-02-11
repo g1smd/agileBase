@@ -2811,11 +2811,12 @@ public final class ServletSchemaMethods {
 			user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		}
 		String tileTypeString = request.getParameter("tiletype");
-		if (tileTypeString == null) {
-			throw new MissingParametersException("tiletype needed to add an app");
+		String colour = request.getParameter("colour");
+		String icon = request.getParameter("icon");
+		if (tileTypeString == null || colour == null) {
+			throw new MissingParametersException("tiletype and colour needed to add an app");
 		}
 		TileType tileType = TileType.valueOf(tileTypeString.toUpperCase());
-		String colour = request.getParameter("colour");
 		TileInfo tile;
 		switch (tileType) {
 		case CALENDAR:
@@ -2830,7 +2831,10 @@ public final class ServletSchemaMethods {
 		case DATA_LINK:
 			BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 					databaseDefn, false);
-			tile = new DataLinkTile(colour, report);
+			if (icon == null) {
+				throw new MissingParametersException("icon needed to add a data_link tile");
+			}
+			tile = new DataLinkTile(colour, report, icon);
 			break;
 		case DATA_STREAM:
 			report = ServletUtilMethods.getReportForRequest(sessionData, request, databaseDefn, false);

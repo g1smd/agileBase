@@ -12,10 +12,11 @@ import com.gtwm.pb.util.RandomString;
 @Entity
 public class DataLinkTile extends AbstractTile implements TileDataLinkInfo {
 
-	public DataLinkTile(String colour, BaseReportInfo report) {
+	public DataLinkTile(String colour, BaseReportInfo report, String icon) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
 		super.setTileType(TileType.DATA_LINK);
+		super.setIcon(icon);
 		this.setReport(report);
 	}
 

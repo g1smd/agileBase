@@ -89,10 +89,18 @@ function tileLoaded(tile) {
 			var colour = nextColour();
 			var icon = $(this).closest("li.module").attr("data-icon");
 			if (icon == "") {
+				$(".iconChooser").attr("data-internalreportname", internalReportName);
 				$(".iconChooser").show().removeClass("notfocus");
 			} else {
 				addDataTile(selectedApp, colour, internalReportName, icon);
 			}
+		});
+		$(".adder .iconChooser i").click(function(event)) {
+			var internalReportName = $(".iconChooser").attr("attr-internalreportname");
+			var selectedApp = $("label:visible").attr("data-tiletype");
+			var colour = nextColour();
+			var icon = $(this).attr("class");
+			addDataTile(selectedApp, colour, internalReportName, icon);
 		});
 	} // end of if adder
 }
