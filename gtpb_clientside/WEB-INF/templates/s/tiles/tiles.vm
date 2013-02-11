@@ -22,6 +22,7 @@
   #set($colour = $tile.getColour())
   <div title="$tile" class="tile transition $colour #if($tileType.isLarge()) large #end" data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
+    <div class="title">$tile</div>
     <div class="content">
       #parse("s/tiles/${template}.vm")
     </div>

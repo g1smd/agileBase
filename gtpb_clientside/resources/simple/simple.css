@@ -75,6 +75,11 @@ body {
   width: 400px;
 }
 
+.tile .title {
+  font-weight: 300;
+  text-transform: uppercase;  
+}
+
 .tile .icon {
   font-size: 150pt;
   display: block;
