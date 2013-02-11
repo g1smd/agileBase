@@ -86,7 +86,7 @@ body {
   font-size: 150pt;
   display: block;
   text-align: center;
-  line-height: 0.68em;
+  line-height: 0.68em!important;
 }
 
 .tile.expanded {
