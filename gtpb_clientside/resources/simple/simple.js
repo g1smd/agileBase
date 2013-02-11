@@ -95,7 +95,7 @@ function tileLoaded(tile) {
 				addDataTile(selectedApp, colour, internalReportName, icon);
 			}
 		});
-		$(".adder .iconChooser i").click(function(event)) {
+		$(".adder .iconChooser i").click(function(event) {
 			var internalReportName = $(".iconChooser").attr("attr-internalreportname");
 			var selectedApp = $("label:visible").attr("data-tiletype");
 			var colour = nextColour();
