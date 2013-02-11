@@ -79,7 +79,8 @@ body {
   font-weight: 300;
   text-transform: uppercase;
   font-size: 14pt;
-  margin: 1em;  
+  margin: 1em;
+  overflow: hidden;
 }
 
 .tile .icon {
@@ -108,11 +109,7 @@ body {
   padding: 0;
   transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
 }
-/*
-.tile.notfocus {
-  height: 100px;
-}
-*/
+
 .tile.adder {
   width: 145px;
   height: 145px;
