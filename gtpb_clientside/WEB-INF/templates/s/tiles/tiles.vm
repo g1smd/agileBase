@@ -29,7 +29,7 @@
   </div>
 #end
 <div class="tile adder blue transition" data-colour="blue" title="add new app" data-type="adder">
-  <div class="icon">+</div>
+  <div class="icon transition">+</div>
   <div class="content"></div>
 </div>
 <div class="sideAction backHome" title="home"><i class="icon-chevron-left"></i></div>
