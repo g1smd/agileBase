@@ -54,6 +54,7 @@ function tileLoaded(tile) {
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
 	}
+	tile.find(".tile_icon i").hide();
 	if (tileType == "adder") {
 		$("label.tiletype").click(function(event) {
 			event.stopPropagation(); // stop the .tile click being called
@@ -132,7 +133,6 @@ function nextColour() {
  */
 function backHome() {
 	$(".tile.expanded").find(".content").empty();
-	$(".tile.expanded").find(".tile_icon").removeClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
 	$(".tile.notfocus").removeClass("notfocus");
 	$("body").removeClass("blue pink green yellow purple");
@@ -140,6 +140,7 @@ function backHome() {
 	$(".sideAction").removeClass("expanded");
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
+	$('.tile .tile_icon i').show();
 }
 
 /**
