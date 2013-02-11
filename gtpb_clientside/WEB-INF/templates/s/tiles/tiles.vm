@@ -24,7 +24,7 @@
     #set($template = $viewTools.cleanString($tileType.toString()))
     <div class="title">$tile</div>
     #if($template == "data_link")
-      <div class="tile_icon"><i class="$tile.getReport().getModule().getIconPath()"></i></div>
+      <div class="tile_icon transition"><i class="$tile.getReport().getModule().getIconPath()"></i></div>
     #end
     <div class="content">
       #parse("s/tiles/${template}.vm")
