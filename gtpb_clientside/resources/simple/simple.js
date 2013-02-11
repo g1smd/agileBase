@@ -139,6 +139,7 @@ function backHome() {
 	$(".header.row").removeClass("expanded");
 	$(".sideAction").removeClass("expanded");
 	$(".tile .title").removeClass("notfocus");
+	$(".tile .tile_icon").removeClass("notfocus");
 }
 
 /**
