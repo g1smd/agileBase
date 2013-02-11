@@ -43,7 +43,7 @@
     ## Create a collection $moduleReports: each module maps to an array of reports
     #parse("gui/resources/calc_module_reports.vm")
     #foreach($module in $moduleReports.keySet())
-      <li class="module transition" #if($module.getIcon()) data-icon="$module.getIcon()" #else data-icon="" #end>
+      <li class="module transition" #if($module.getIconPath()) data-icon="$module.getIconPath()" #else data-icon="" #end>
         <p>$module</p>
         <ul class="reports notfocus transition" style="display:none">
           #foreach($report in $moduleReports.get($module))
