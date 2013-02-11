@@ -101,11 +101,11 @@ body {
   transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
   height: 0px;
 }
-
+/*
 .tile.notfocus {
   height: 100px;
 }
-
+*/
 .tile.adder {
   width: 145px;
   height: 145px;
