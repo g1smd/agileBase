@@ -89,8 +89,10 @@ body {
   line-height: 0.68em;
 }
 
+/* fontawesome / bootstrap overrides */
 #tiles .tile .tile_icon i {
   line-height: 0.68em;
+  width: auto;
 }
 
 .tile.expanded {
