@@ -54,6 +54,7 @@ function tileLoaded(tile) {
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
 	}
+	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").hide();
 	if (tileType == "adder") {
 		$("label.tiletype").click(function(event) {
