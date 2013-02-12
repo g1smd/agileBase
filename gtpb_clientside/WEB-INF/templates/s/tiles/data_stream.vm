@@ -1,0 +1,52 @@
+##
+##  Copyright 2013 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($report = $tile.getReport())
+## Work out which fields should form the title
+#set($fields = $report.getReportBaseFields())
+#set($titleFields = [])
+#foreach($field in $fields)
+  #if($fields.size() < 2)
+    #if($field.getFieldCategory() == "FILE")
+      #set($success = $titleFields.put($field))
+    #elseif($field.getFieldCategory() == "TEXT") && ($field.getContentSize() < 100) && (!$field.getUsesLookup())
+      #set($success = $titleFields.put($field))
+    #end
+  #end
+#end
+#set($reportDataRows = $view.getReportDataRows($report))
+#foreach($reportDataRow in $reportDataRows)
+  <div class="report_data_row">
+    #if($titleFields.size() > 0)
+      <div class="title">
+        #foreach($field in $titleFields)
+          $reportDataRow.getValue($field)#if($foreach.count < $titleFields.size()),#end
+        #end
+      </div>
+    #end
+    <div class="body">
+      #foreach($field in $fields)
+        #if(!$titleFields.contains($field))
+          #if(($field.getFieldCategory() != "TEXT") || ($field.getUsesLookup()))
+            $field: 
+          #end
+          $reportDataRow.getValue($field)
+        #end
+      #end
+    </div>
+  </div>
+#end

@@ -68,7 +68,6 @@ import com.gtwm.pb.model.manageUsage.UsageStats;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.model.manageData.ModuleAction;
 import com.gtwm.pb.servlets.ServletUtilMethods;
-import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
