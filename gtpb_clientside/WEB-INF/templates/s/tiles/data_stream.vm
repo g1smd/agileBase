@@ -20,12 +20,12 @@
 #set($fields = $report.getReportBaseFields())
 #set($titleFields = [])
 #foreach($field in $fields)
-  #if(($titleFields.size() lt 2) && (!$field.isPrimaryKey()))
+  #if((2 > $titleFields.size()) && (!$field.isPrimaryKey()))
     #set($category = $field.getFieldCategory())
     #if(($category == "FILE") && ($field.getAttachmentType() != "PROFILE_PHOTO")) 
       #set($success = $titleFields.add($field))
     #end
-    #if(($category == "TEXT") && ($field.getContentSize() lt 100) && (!$field.usesLookup()))
+    #if(($category == "TEXT") && (100 > $field.getContentSize()) && (!$field.usesLookup()))
       #set($success = $titleFields.add($field))
     #end
   #end
