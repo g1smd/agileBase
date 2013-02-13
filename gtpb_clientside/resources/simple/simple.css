@@ -68,6 +68,7 @@ body {
   float: left;
   cursor: pointer;
   color: white;
+  overflow: hidden;
 }
 
 .tile.large {
@@ -162,6 +163,12 @@ label {
   margin: 1em;
   padding: 0.5em;
   color: #656766;
+}
+
+.report_data_row .body {
+  height: 3em;
+  overflow: hidden;
+  font-size: 9pt;
 }
 
 .sideAction {
