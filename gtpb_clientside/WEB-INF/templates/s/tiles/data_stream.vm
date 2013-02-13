@@ -21,7 +21,7 @@
 #set($fields = $report.getReportBaseFields())
 #set($titleFields = [])
 #foreach($field in $fields)
-  #if((!$field.isPrimaryKey()) && (2 > $titleFields.size()))
+  #if(!($field.isPrimaryKey()))
     #set($category = $field.getFieldCategory())
     #if(($category == "FILE") && ($field.getAttachmentType() != "PROFILE_PHOTO")) 
       #set($success = $titleFields.add($field))
@@ -30,7 +30,7 @@
       #set($success = $titleFields.add($field))
     #end
   #end
-#end
+#end ## end title fields finding
 #set($colour = $tile.getColour())
 #set($reportDataRows = $view.getReportDataRows($report))
 #foreach($reportDataRow in $reportDataRows)
