@@ -20,7 +20,7 @@
 #set($fields = $report.getReportBaseFields())
 #set($titleFields = [])
 #foreach($field in $fields)
-  #if($fields.size() < 2)
+  #if($titleFields.size() < 2)
     #if($field.getFieldCategory() == "FILE")
       #set($success = $titleFields.put($field))
     #elseif($field.getFieldCategory() == "TEXT") && ($field.getContentSize() < 100) && (!$field.getUsesLookup())
@@ -28,6 +28,7 @@
     #end
   #end
 #end
+
 #set($reportDataRows = $view.getReportDataRows($report))
 #foreach($reportDataRow in $reportDataRows)
   <div class="report_data_row">
