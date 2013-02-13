@@ -28,6 +28,7 @@
     #end
     <div class="content">
       Parsing s/tiles/${template}.vm
+      
       #parse("s/tiles/${template}.vm")
     </div>
   </div>
