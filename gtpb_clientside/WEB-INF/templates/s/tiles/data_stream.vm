@@ -28,12 +28,12 @@
     #end
   #end
 #end
-
+#set($colour = $tile.getColour())
 #set($reportDataRows = $view.getReportDataRows($report))
 #foreach($reportDataRow in $reportDataRows)
   <div class="report_data_row">
     #if($titleFields.size() > 0)
-      <div class="title">
+      <div class="row_title ${colour}_fg">
         #foreach($field in $titleFields)
           $reportDataRow.getValue($field)#if($foreach.count < $titleFields.size()),#end
         #end

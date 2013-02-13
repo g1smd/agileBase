@@ -171,6 +171,10 @@ label {
   font-size: 9pt;
 }
 
+.report_data_row .row_title {
+  font-weight: bold;
+}
+
 .sideAction {
   color: white;
   cursor: pointer;
@@ -221,4 +225,24 @@ label {
 
 .white {
   background-color: white;
+}
+
+.blue_fg {
+  color: #009FE3;
+}
+
+.pink_fg {
+  color: #EC00BC;
+}
+
+.green_fg {
+  color: #8DC63F;
+}
+
+.yellow_fg {
+  color: #f5bd26;
+}
+
+.purple_fg {
+  color: #5c2969;
 }
