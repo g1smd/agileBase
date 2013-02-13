@@ -173,6 +173,9 @@ label {
 
 .report_data_row .row_title {
   font-weight: bold;
+  font-size: 10pt;
+  height: 1.5em;
+  overflow: hidden;
 }
 
 .sideAction {

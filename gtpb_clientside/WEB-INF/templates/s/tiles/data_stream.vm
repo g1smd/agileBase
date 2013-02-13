@@ -23,7 +23,7 @@
   #if($titleFields.size() < 2)
     #if($field.getFieldCategory() == "FILE")
       #set($success = $titleFields.add($field))
-    #elseif($field.getFieldCategory() == "TEXT") && ($field.getContentSize() < 100) && (!$field.getUsesLookup())
+    #elseif($field.getFieldCategory() == "TEXT") && ($field.getContentSize() < 100) && (!$field.usesLookup())
       #set($success = $titleFields.add($field))
     #end
   #end
