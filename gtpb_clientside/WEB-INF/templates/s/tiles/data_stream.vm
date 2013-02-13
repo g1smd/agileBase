@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($report = $tile.getReport())
+
 ## Work out which fields should form the title
 #set($fields = $report.getReportBaseFields())
 #set($titleFields = [])
