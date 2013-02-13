@@ -21,9 +21,11 @@
 #set($titleFields = [])
 #foreach($field in $fields)
   #if($titleFields.size() < 2)
-    #if(($field.getFieldCategory() == "FILE") && ($field.getAttachmentType() != "IMAGE")  && ($field.getAttachmentType() != "PROFILE_PHOTO")) 
+    #set($category = $field.getFieldCategory())
+    #if(($category == "FILE") && ($field.getAttachmentType() != "PROFILE_PHOTO")) 
       #set($success = $titleFields.add($field))
-    #elseif(($field.getFieldCategory() == "TEXT") && ($field.getContentSize() < 100) && (!$field.usesLookup()))
+    #end
+    #if(($category == "TEXT") && ($field.getContentSize() lt 100) && (!$field.usesLookup()))
       #set($success = $titleFields.add($field))
     #end
   #end
