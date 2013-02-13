@@ -27,6 +27,7 @@
       <div class="tile_icon transition"><i class="$tile.getReport().getModule().getIconPath()"></i></div>
     #end
     <div class="content">
+      Parsing s/tiles/${template}.vm
       #parse("s/tiles/${template}.vm")
     </div>
   </div>
