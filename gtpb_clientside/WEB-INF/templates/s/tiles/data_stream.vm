@@ -29,6 +29,7 @@
   #end
 #end
 #set($reportDataRows = $view.getReportDataRows($report))
+Report data rows are $reportDataRows
 #foreach($reportDataRow in $reportDataRows)
   <div class="report_data_row">
     #if($titleFields.size() > 0)
