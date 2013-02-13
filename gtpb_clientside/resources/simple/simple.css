@@ -156,6 +156,13 @@ label {
   display: none;
 }
 
+.report_data_row {
+  background-color: white;
+  border-radius: 1em;
+  margin: 1em;
+  padding: 0.5em;
+}
+
 .sideAction {
   color: white;
   cursor: pointer;
