@@ -44,7 +44,7 @@
     #end
     <div class="body">
       #foreach($field in $fields)
-        #if(!($titleFields.contains($field)) && (!$field.isPrimaryKey()))
+        #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()))
           #if(($field.getFieldCategory() != "TEXT") || ($field.getUsesLookup()))
             $field: 
           #end
