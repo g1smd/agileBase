@@ -45,6 +45,7 @@
     <div class="body">
       #foreach($field in $fields)
         #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()))
+          pkey: $field.isPrimaryKey()
           #if(($field.getFieldCategory() != "TEXT") || ($field.getUsesLookup()))
             $field: 
           #end
