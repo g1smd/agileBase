@@ -36,18 +36,18 @@
 #foreach($reportDataRow in $reportDataRows)
   #set($thisUniqueId = $reportDataRow.getRowId()) ## used by image.vm
   ## Any images first, so they can float left
-  #foreach($field in $fields)
-    #set($category = $field.getFieldCategory())
-    #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()) && ($category == "FILE"))
-      #set($cell = $reportDataRow.getValue($field).getKeyValue())
-      #set($fileValue = $viewTools.getFileValueTool($cell))
-      #if($fileValue.isImage())
-        ## image.vm sets cell to be an img tag
-        #parse("gui/pane2/image.vm") $cell
-      #end
-    #end
-  #end
   <div class="report_data_row">
+    #foreach($field in $fields)
+      #set($category = $field.getFieldCategory())
+      #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()) && ($category == "FILE"))
+        #set($cell = $reportDataRow.getValue($field).getKeyValue())
+        #set($fileValue = $viewTools.getFileValueTool($cell))
+        #if($fileValue.isImage())
+          ## image.vm sets cell to be an img tag
+          #parse("gui/pane2/image.vm") $cell
+        #end
+      #end
+    #end ## end of images
     #if($titleFields.size() > 0)
       <div class="row_title ${colour}_fg">
         #foreach($field in $titleFields)
