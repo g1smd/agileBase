@@ -1,9 +1,7 @@
 #if($field.getTableContainingField().equals($sessionTable))
   #set($fieldId = $thisUniqueId)
-  Field ID is $thisUniqueId<br>
 #else
   #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
-  Field id looked up as $fieldId<br>
 #end
 #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getPreviewExtension()")
 #set($cell = "<img src='$srcUrl' />")
