@@ -196,6 +196,7 @@ label {
 
 input[type=search] {
   width: 100%;
+  margin: 1em;
 }
 
 .sideAction {
