@@ -161,7 +161,9 @@ label {
 .report_data_row {
   background-color: white;
   border-radius: 1em;
-  margin: 1em;
+  margin-right: 1em;
+  margin-left: 1em;
+  margin-bottom: 0.75em;
   padding: 0.5em;
   color: #656766;
 }
