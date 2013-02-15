@@ -145,6 +145,23 @@ function addDataTile(selectedApp, colour, internalReportName, icon) {
 }
 
 function nextColour() {
+	// Find available colours: create a copy of abTileColours, remove existing tile colours	
+	var availableColours = abTileColours.slice(0);
+	$(".tile").each(function() {
+		for (var i=0; i++; i < abTileColours.length) {
+			var tileColour = abTileColours[i];
+			if($(this).hasClass(tileColour)) {
+				var index = availableColours.indexOf(tileColour);
+				availableColours.splice(index, 1);
+			}
+		}
+	});
+	console.log(availableColours);
+	if (availableColours.length > 0) {
+		// Return the next available colour
+		return availableColours[0];
+	}
+	// All colours used already, cycle
 	var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
 	var colourIndex = numExistingTiles % abTileColours.length;
 	return abTileColours[colourIndex];
