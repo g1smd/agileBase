@@ -42,9 +42,14 @@
       #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()) && ($category == "FILE"))
         #set($cell = $reportDataRow.getValue($field).getKeyValue())
         #set($fileValue = $viewTools.getFileValueTool($cell))
+        #set($attachmentType = $field.getAttachmentType())
         #if($fileValue.isImage())
           ## image.vm sets cell to be an img tag
           #parse("gui/pane2/image.vm") $cell
+        #elseif($attachmentType == "PROFILE_PHOTO")
+          <img src="resources/icons/file_placeholders/profile_photo.png"' />
+        #else
+          <img src="resources/icons/filetypes/${fileValue.getIconName()}.png" />
         #end
       #end
     #end ## end of images

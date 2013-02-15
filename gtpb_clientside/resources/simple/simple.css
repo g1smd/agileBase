@@ -183,6 +183,8 @@ label {
 
 .report_data_row img {
   float: left;
+  border-radius: 0.75em;
+  margin-right: 0.5em;
 }
 
 .sideAction {
