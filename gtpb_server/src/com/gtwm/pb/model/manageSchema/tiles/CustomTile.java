@@ -9,6 +9,9 @@ import com.gtwm.pb.util.RandomString;
 @Entity
 public class CustomTile extends AbstractTile implements TileCustomInfo {
 
+	private CustomTile() {
+	}
+	
 	public CustomTile(String colour, String location) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());

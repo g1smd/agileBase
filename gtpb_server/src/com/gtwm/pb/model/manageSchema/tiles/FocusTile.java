@@ -8,6 +8,9 @@ import com.gtwm.pb.util.Enumerations.TileType;
 @Entity
 public class FocusTile extends AbstractTile implements TileFocusInfo {
 
+	private FocusTile() {
+	}
+	
 	public FocusTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());

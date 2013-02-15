@@ -15,6 +15,9 @@ import com.gtwm.pb.util.RandomString;
 @Entity
 public class VisualisationTile extends AbstractTile implements TileVisualisationInfo {
 
+	private VisualisationTile() {
+	}
+	
 	public VisualisationTile(String colour, VisualisationType visualisationType) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());

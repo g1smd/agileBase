@@ -13,6 +13,9 @@ import com.gtwm.pb.util.RandomString;
 @Entity
 public class DataStreamTile extends AbstractTile implements TileDataStreamInfo {
 
+	private DataStreamTile() {
+	}
+	
 	public DataStreamTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());

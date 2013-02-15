@@ -12,6 +12,9 @@ import com.gtwm.pb.util.Enumerations.TileType;
 @Entity
 public class FilesTile extends AbstractTile implements TileFilesInfo {
 
+	private FilesTile() {
+	}
+	
 	public FilesTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
