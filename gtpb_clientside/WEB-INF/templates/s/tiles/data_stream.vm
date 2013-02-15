@@ -16,7 +16,6 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($report = $tile.getReport())
-
 ## Work out which fields should form the title
 #set($fields = $report.getReportBaseFields())
 #set($titleFields = [])
@@ -33,6 +32,7 @@
 #end ## end title fields finding
 #set($colour = $tile.getColour())
 #set($reportDataRows = $view.getReportDataRows($report))
+#set($sessionTable = $report.getParentTable())
 #foreach($reportDataRow in $reportDataRows)
   <div class="report_data_row">
     #if($titleFields.size() > 0)
@@ -46,16 +46,18 @@
       #foreach($field in $fields)
         #set($category = $field.getFieldCategory())
         #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()))
+          #set($cell = $reportDataRow.getValue($field).getKeyValue())
           #if($category == "FILE")
             #set($fileValue = $viewTools.getFileValueTool($cell))
             #if($fileValue.isImage())
+              ## image.vm sets cell to be an img tag
               #parse("gui/pane2/image.vm") $cell
             #end
           #else
             #if(($category != "TEXT") || ($field.getUsesLookup()))
               $field: 
             #end
-            $reportDataRow.getValue($field)
+            $cell
           #end ## end of not file
         #end
       #end
