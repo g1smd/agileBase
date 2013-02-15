@@ -151,7 +151,9 @@ function nextColour() {
 		for (var i=0; i++; i < abTileColours.length) {
 			var tileColour = abTileColours[i];
 			if($(this).hasClass(tileColour)) {
+				console.log("Removing " + tileColour)
 				removeItem(availableColours, tileColour);
+				console.log(availableColours);
 			}
 		}
 	});
