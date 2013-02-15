@@ -6,11 +6,13 @@ $(document).ready(function() {
 		loadTreemap();
 	} else {
 		tileEvents();
+		dataStreamEvents();
 	}
-}); // end of document.ready
+});
 
 var abTileColours = [ "blue", "yellow", "green", "purple", "pink" ];
 
+/** Common tile events */
 function tileEvents() {
 	$(".backHome").click(function() {
 		backHome();
@@ -21,10 +23,8 @@ function tileEvents() {
 	$('.tile').click(function() {
 		var tile = $(this);
 		if (tile.hasClass("expanded")) {
-			console.log("expanded tile");
 			return;
 		}
-		console.log("not expanded tile");
 		$(".tile").not(tile).addClass("notfocus");
 		var title = tile.attr("title");
 		$("#title").find("h1").text(title);
@@ -45,8 +45,27 @@ function tileEvents() {
 	});
 }
 
+/** Data stream tile specific events */
+function dataStreamEvents() {
+	var searchBox = $(".tile.data_stream input[type=search]");
+	searchBox.click(function(event) {
+		event.stopPropagation();
+	});
+	searchBox.keyup(function(event) {
+		$(this).addClass("changed");
+		var filterString = $(this).val();
+		searchBox.closest(".tile").find(".content").load("AppController.servlet", {
+			"return": "s/tiles/data_stream",
+			set_global_report_filter_string: true,
+			filterstring: filterString
+		}, function() {
+			$(this).removeClass("changed");
+		});
+	});
+}
+
 /**
- * This function runs when a tile is clicked and content has loaded
+ * This function runs when a tile is clicked to expand it and content has loaded
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");

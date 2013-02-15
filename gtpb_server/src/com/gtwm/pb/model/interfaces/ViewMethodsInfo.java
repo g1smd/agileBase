@@ -429,6 +429,10 @@ public interface ViewMethodsInfo {
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException;
 
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report, int rowLimit)
+			throws DisallowedException, SQLException, ObjectNotFoundException,
+			CodingErrorException, CantDoThatException;
+
 	/**
 	 * Get report rows taking nothing from the session, i.e. specify report, row
 	 * limit and filter values explicitly

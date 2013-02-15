@@ -545,7 +545,13 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return reportDataRows;
 	}
 
-	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report)
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report) throws DisallowedException, SQLException, ObjectNotFoundException,
+	CodingErrorException, CantDoThatException {
+		int rowLimit = this.sessionData.getReportRowLimit();
+		return this.getGloballyFilteredReportDataRows(report, rowLimit);
+	}
+	
+	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report, int rowLimit)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
 		if (report == null) {
@@ -562,7 +568,6 @@ public final class ViewMethods implements ViewMethodsInfo {
 		CompanyInfo company = user.getCompany();
 		Map<BaseField, Boolean> sessionReportSorts = new HashMap<BaseField, Boolean>(0);
 		boolean exactFilters = false;
-		int rowLimit = this.sessionData.getReportRowLimit();
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				user, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
 				QuickFilterType.OR, false);
