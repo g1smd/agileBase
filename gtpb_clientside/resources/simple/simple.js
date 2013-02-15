@@ -55,6 +55,7 @@ function dataStreamEvents() {
 		$(this).addClass("changed");
 		var filterString = $(this).val();
 		var internalTileName = $(this).closest("tile").attr("data-internaltilename");
+		alert(internalTileName);
 		$(this).closest(".tile").find(".content").load("AppController.servlet", {
 			"return": "s/tiles/data_stream",
 			set_global_report_filter_string: true,
