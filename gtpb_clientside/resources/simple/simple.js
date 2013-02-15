@@ -150,6 +150,7 @@ function nextColour() {
 	$(".tile").each(function() {
 		for (var i=0; i++; i < abTileColours.length) {
 			var tileColour = abTileColours[i];
+			console.log($(this).attr("title") + " has colour " + tileColour + ": " + $(this).hasClass(tileColour));
 			if($(this).hasClass(tileColour)) {
 				console.log("Removing " + tileColour)
 				removeItem(availableColours, tileColour);
