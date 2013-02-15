@@ -193,7 +193,7 @@ label {
 }
 
 input[type=search] {
-  width: 100%;
+  border-radius: 1em;
 }
 
 .sideAction {
