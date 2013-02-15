@@ -34,6 +34,7 @@
 #set($reportDataRows = $view.getReportDataRows($report))
 #set($sessionTable = $report.getParentTable())
 #foreach($reportDataRow in $reportDataRows)
+  #set($thisUniqueId = $reportDataRow.getRowId()) ## used by image.vm
   <div class="report_data_row">
     #if($titleFields.size() > 0)
       <div class="row_title ${colour}_fg">
