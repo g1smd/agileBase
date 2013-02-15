@@ -47,7 +47,7 @@ function tileEvents() {
 
 /** Data stream tile specific events */
 function dataStreamEvents() {
-	var searchBox = $(".tile.data_stream input[type=search]");
+	var searchBox = $(".tile.large input[type=search]");
 	searchBox.click(function(event) {
 		event.stopPropagation();
 	});
