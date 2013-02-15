@@ -148,6 +148,8 @@ function nextColour() {
 	// Find available colours: create a copy of abTileColours, remove existing tile colours	
 	var availableColours = abTileColours.slice(0);
 	$(".tile").each(function() {
+		console.log("Tile " + $(this).attr("title"));
+		console.log(abTileColours.length);
 		for (var i=0; i++; i < abTileColours.length) {
 			var tileColour = abTileColours[i];
 			console.log($(this).attr("title") + " has colour " + tileColour + ": " + $(this).hasClass(tileColour));
