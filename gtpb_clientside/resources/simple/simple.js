@@ -152,7 +152,7 @@ function nextColour() {
 			var tileColour = abTileColours[i];
 			if($(this).hasClass(tileColour)) {
 				var index = availableColours.indexOf(tileColour);
-				availableColours.splice(index, 1);
+				availableColours = availableColours.splice(index, 1);
 			}
 		}
 	});
