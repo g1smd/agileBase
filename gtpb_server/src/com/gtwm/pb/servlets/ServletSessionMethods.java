@@ -1167,7 +1167,7 @@ public final class ServletSessionMethods {
 	public static void setTile(SessionDataInfo sessionData, DatabaseInfo databaseDefn, HttpServletRequest request, String internalTileName) throws DisallowedException, ObjectNotFoundException {
 		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		for (TileInfo tile : user.getTiles()) {
-			if (tile.equals(internalTileName)) {
+			if (tile.getInternalTileName().equals(internalTileName)) {
 				sessionData.setTile(tile);
 				return;
 			}
