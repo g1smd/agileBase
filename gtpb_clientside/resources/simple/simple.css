@@ -187,6 +187,10 @@ label {
   margin-right: 0.5em;
 }
 
+input[type=search] {
+  width: 100%;
+}
+
 .sideAction {
   color: white;
   cursor: pointer;
