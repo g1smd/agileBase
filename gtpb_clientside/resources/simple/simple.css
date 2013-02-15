@@ -95,12 +95,12 @@ body {
   font-size: 150pt;
   display: block;
   text-align: center;
-  line-height: 0.68em;
+  line-height: 0.5em;
 }
 
 /* fontawesome / bootstrap overrides */
 #tiles .tile .tile_icon i {
-  line-height: 0.68em;
+  line-height: 1em;
   width: auto;
 }
 
@@ -168,8 +168,6 @@ label {
 .report_data_row {
   background-color: white;
   border-radius: 1em;
-  margin-right: 1em;
-  margin-left: 1em;
   margin-bottom: 0.75em;
   padding: 0.5em;
   color: #656766;
