@@ -158,7 +158,7 @@ label {
   float: left;
   width: 30em;
   height: 5em;
-  padding: 2em;
+  margin: 2em;
 }
 
 #submit_tile {
