@@ -132,7 +132,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($attachmentType = $field.getAttachmentType().name())
         #if($fileValue.isImage())
           #set($image = true)
-          #parse("gui/pane2/image.vm") ## sets $cell to the img tag
+          #parse("gui/pane2/image.vm") ## sets $cell to the img tag 
           #set($cellContentLength=40)
         #else ## not image
           #set($placeholderIcon = "${attachmentType.toLowerCase()}.png")
