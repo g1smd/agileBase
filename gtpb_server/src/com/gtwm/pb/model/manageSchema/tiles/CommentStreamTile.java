@@ -8,6 +8,9 @@ import com.gtwm.pb.util.RandomString;
 @Entity
 public class CommentStreamTile extends AbstractTile implements TileCommentStreamInfo {
 
+	private CommentStreamTile() {
+	}
+	
 	public CommentStreamTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
