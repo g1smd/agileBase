@@ -31,7 +31,7 @@
   #end
 #end ## end title fields finding
 #set($colour = $tile.getColour())
-#set($reportDataRows = $view.getReportDataRows($report))
+#set($reportDataRows = $view.getReportDataRows($report, 10))
 #set($sessionTable = $report.getParentTable())
 #foreach($reportDataRow in $reportDataRows)
   #set($thisUniqueId = $reportDataRow.getRowId()) ## used by image.vm
