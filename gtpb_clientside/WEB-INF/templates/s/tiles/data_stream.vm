@@ -64,7 +64,7 @@
     <div class="body">
       #foreach($field in $fields)
         #set($category = $field.getFieldCategory())
-        #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()))
+        #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()) && ($category != "FILE"))
           #set($cell = $reportDataRow.getValue($field).getKeyValue())
           #if(($category != "TEXT") || ($field.getUsesLookup()))
             $field: 
