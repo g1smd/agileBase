@@ -151,8 +151,7 @@ function nextColour() {
 		for (var i=0; i++; i < abTileColours.length) {
 			var tileColour = abTileColours[i];
 			if($(this).hasClass(tileColour)) {
-				var index = availableColours.indexOf(tileColour);
-				availableColours = availableColours.splice(index, 1);
+				removeItem(availableColours, tileColour);
 			}
 		}
 	});
@@ -165,6 +164,15 @@ function nextColour() {
 	var numExistingTiles = $(".tile").size() - 1; /* -1 to discount the tile adder */
 	var colourIndex = numExistingTiles % abTileColours.length;
 	return abTileColours[colourIndex];
+}
+
+function removeItem(array, item){
+  for(var i in array){
+      if(array[i]==item){
+          array.splice(i,1);
+          break;
+          }
+  }
 }
 
 /**
