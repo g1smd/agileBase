@@ -54,10 +54,12 @@ function dataStreamEvents() {
 	searchBox.keyup(function(event) {
 		$(this).addClass("changed");
 		var filterString = $(this).val();
-		searchBox.closest(".tile").find(".content").load("AppController.servlet", {
+		var internalTileName = $(this).closest("tile").attr("data-internaltilename");
+		$(this).closest(".tile").find(".content").load("AppController.servlet", {
 			"return": "s/tiles/data_stream",
 			set_global_report_filter_string: true,
-			filterstring: filterString
+			filterstring: filterString,
+			set_tile: internalTileName
 		}, function() {
 			$(this).removeClass("changed");
 		});
