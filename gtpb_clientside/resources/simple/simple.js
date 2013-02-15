@@ -10,7 +10,7 @@ $(document).ready(function() {
 	}
 });
 
-var abTileColours = [ "blue", "yellow", "green", "purple", "pink", "turquoise" ];
+var abTileColours = ["blue", "yellow", "green", "purple", "pink", "turquoise"];
 
 /** Common tile events */
 function tileEvents() {
@@ -157,7 +157,8 @@ function backHome() {
 	$(".tile.expanded").find(".content").empty();
 	$(".tile.expanded").removeClass("expanded");
 	$(".tile.notfocus").removeClass("notfocus");
-	$("body").removeClass("blue pink green yellow purple");
+	var allColours = abTileColours.join(" ");
+	$("body").removeClass(allColours);
 	$(".header.row").removeClass("expanded");
 	$(".sideAction").removeClass("expanded");
 	$(".tile .title").removeClass("notfocus");
