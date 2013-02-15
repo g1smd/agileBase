@@ -43,6 +43,7 @@
         #end
       </div>
     #end
+    #set($imageCell = false)
     <div class="body">
       #foreach($field in $fields)
         #set($category = $field.getFieldCategory())
@@ -52,7 +53,8 @@
             #set($fileValue = $viewTools.getFileValueTool($cell))
             #if($fileValue.isImage())
               ## image.vm sets cell to be an img tag
-              #parse("gui/pane2/image.vm") $cell
+              #parse("gui/pane2/image.vm")
+              #set($imageCell = $cell)
             #end
           #else
             #if(($category != "TEXT") || ($field.getUsesLookup()))
@@ -63,5 +65,6 @@
         #end
       #end
     </div>
+    #if($imageCell) $imageCell #end
   </div>
 #end

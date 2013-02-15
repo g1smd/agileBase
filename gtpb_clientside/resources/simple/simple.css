@@ -181,6 +181,10 @@ label {
   overflow: hidden;
 }
 
+.report_data_row img {
+  float: left;
+}
+
 .sideAction {
   color: white;
   cursor: pointer;
