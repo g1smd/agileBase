@@ -123,6 +123,10 @@ public interface SessionDataInfo {
 	public Map<BaseField, Boolean> getReportSorts();
 
 	public int getReportRowLimit();
+	
+	public TileInfo getTile();
+	
+	public void setTile(TileInfo tile);
 
 	/**
 	 * @return The current role being edited by an administrator

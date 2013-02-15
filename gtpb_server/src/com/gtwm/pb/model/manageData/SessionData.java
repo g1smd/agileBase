@@ -23,6 +23,7 @@ import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
+import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
@@ -145,6 +146,14 @@ public final class SessionData implements SessionDataInfo {
 		logger.warn("No viewable report found to show for user " + user + " in company " + company);
 	}
 
+	public TileInfo getTile() {
+		return this.tile;
+	}
+	
+	public void setTile(TileInfo tile) {
+		this.tile = tile;
+	}
+	
 	public synchronized void setTable(TableInfo table) throws SQLException {
 		// clear the cached record data:
 		this.setFieldInputValues(new HashMap<BaseField, BaseValue>());
@@ -637,6 +646,8 @@ public final class SessionData implements SessionDataInfo {
 	private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
 
 	private Map<BaseReportInfo, String> globalFilterStrings = new HashMap<BaseReportInfo, String>();
+	
+	private TileInfo tile = null;
 	
 	private String appId = null;
 
