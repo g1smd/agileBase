@@ -36,6 +36,7 @@ import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.SessionDataInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.manageData.InputRecordException;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
 import com.gtwm.pb.model.manageData.fields.DateValueDefn;
@@ -1161,6 +1162,17 @@ public final class ServletSessionMethods {
 	
 	public static void clearAppId(SessionDataInfo sessionData) {
 		sessionData.setAppId(null);
+	}
+	
+	public static void setTile(SessionDataInfo sessionData, DatabaseInfo databaseDefn, HttpServletRequest request, String internalTileName) throws DisallowedException, ObjectNotFoundException {
+		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
+		for (TileInfo tile : user.getTiles()) {
+			if (tile.equals(internalTileName)) {
+				sessionData.setTile(tile);
+				return;
+			}
+		}
+		throw new ObjectNotFoundException("Tile " + internalTileName + " not found for user " + user);
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(ServletSessionMethods.class);
