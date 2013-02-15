@@ -244,6 +244,10 @@ input[type=search] {
   background-color: #5c2969;
 }
 
+.turquoise {
+  background-color: #009d90;
+}
+
 .white {
   background-color: white;
 }
@@ -266,4 +270,8 @@ input[type=search] {
 
 .purple_fg {
   color: #5c2969;
+}
+
+.turquoise_fs {
+  color: #009d90;
 }

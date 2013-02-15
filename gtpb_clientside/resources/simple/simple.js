@@ -10,7 +10,7 @@ $(document).ready(function() {
 	}
 });
 
-var abTileColours = [ "blue", "yellow", "green", "purple", "pink" ];
+var abTileColours = [ "blue", "yellow", "green", "purple", "pink", "turquoise" ];
 
 /** Common tile events */
 function tileEvents() {
