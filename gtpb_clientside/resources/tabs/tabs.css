@@ -787,6 +787,7 @@ div#reportData {
 
 #reportData .block img {
 	margin-right: 1em;
+	max-width: 100%;
 }
 
 #reportData .block input, #reportData .block select {

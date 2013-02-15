@@ -69,6 +69,7 @@ body {
   cursor: pointer;
   color: white;
   overflow: hidden;
+  border-radius: 0.25em;
 }
 
 .tile.large {
