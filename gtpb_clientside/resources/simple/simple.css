@@ -121,6 +121,7 @@ body {
   height: 0!important;
   margin-right: 0;
   padding: 0;
+  overflow: hidden;
   transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
 }
 
