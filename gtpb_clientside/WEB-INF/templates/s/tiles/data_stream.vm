@@ -72,7 +72,7 @@
           #if(($category != "TEXT") || ($field.getUsesLookup()))
             $field: 
           #end
-          $cell
+          $cell &middot; 
         #end
       #end
     </div>
