@@ -147,7 +147,7 @@ function addDataTile(selectedApp, colour, internalReportName, icon) {
 function nextColour() {
 	// Find available colours: create a copy of abTileColours, remove existing tile colours	
 	var availableColours = abTileColours.slice(0);
-	$(".tile").each(function() {
+	$(".tile").not(".adder").each(function() {
 		for (var i in abTileColours) {
 			var tileColour = abTileColours[i];
 			if($(this).hasClass(tileColour)) {
@@ -155,7 +155,6 @@ function nextColour() {
 			}
 		}
 	});
-	console.log(availableColours);
 	if (availableColours.length > 0) {
 		// Return the next available colour
 		return availableColours[0];
