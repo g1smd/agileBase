@@ -69,10 +69,12 @@
         #set($category = $field.getFieldCategory())
         #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()) && ($category != "FILE"))
           #set($cell = $reportDataRow.getValue($field).getKeyValue())
-          #if(($category != "TEXT") || ($field.getUsesLookup()))
-            $field: 
-          #end
+          #if($cell > "")
+            #if(($category != "TEXT") || ($field.getUsesLookup()))
+              $field: 
+            #end
           $cell &middot; 
+          #end
         #end
       #end
     </div>
