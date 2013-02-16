@@ -150,7 +150,7 @@ function nextColour() {
 	$(".tile").each(function() {
 		console.log("Tile " + $(this).attr("title"));
 		console.log(abTileColours.length);
-		for (var i=0; i++; i < abTileColours.length) {
+		for (var i in abTileColours) {
 			var tileColour = abTileColours[i];
 			console.log($(this).attr("title") + " has colour " + tileColour + ": " + $(this).hasClass(tileColour));
 			if($(this).hasClass(tileColour)) {
