@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.gtwm.pb.model.interfaces.ChartInfo;
 import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.AuthenticatorInfo;
@@ -288,6 +289,16 @@ public class PublicUser implements AppUserInfo {
 	@Override
 	public void removeTile(TileInfo app) throws CantDoThatException {
 		throw new CantDoThatException("Public users can't have apps");
+	}
+
+	@Override
+	public void removeTilesDependentOnReport(BaseReportInfo report) throws CantDoThatException {
+		throw new CantDoThatException("Public users can't have tiles");
+	}
+
+	@Override
+	public void removeTilesDependentOnChart(ChartInfo chart) throws CantDoThatException {
+		throw new CantDoThatException("Public users can't have tiles");
 	}
 
 }

@@ -23,11 +23,16 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import com.gtwm.pb.model.interfaces.ChartInfo;
+import com.gtwm.pb.model.interfaces.TileDataLinkInfo;
+import com.gtwm.pb.model.interfaces.TileDataStreamInfo;
 import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CompanyInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
+import com.gtwm.pb.model.interfaces.TileVisualisationInfo;
 import com.gtwm.pb.model.manageSchema.BaseReportDefn;
 import com.gtwm.pb.model.manageSchema.TableDefn;
 import com.gtwm.pb.model.manageSchema.tiles.AbstractTile;
@@ -245,6 +250,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		return this.tiles;
 	}
 	
+	/* Hibernate use */
 	private void setTiles(SortedSet<TileInfo> tiles) {
 		this.tiles = tiles;
 	}
@@ -255,6 +261,30 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	
 	public synchronized void removeTile(TileInfo tile) {
 		this.getTiles().remove(tile);
+	}
+	
+	public void removeTilesDependentOnReport(BaseReportInfo report) {
+		for (TileInfo tile : this.getTiles()) {
+			if (tile instanceof TileDataLinkInfo) {
+				if (report.equals(((TileDataLinkInfo) tile).getReport())) {
+					this.removeTile(tile);
+				}
+			} else if (tile instanceof TileDataStreamInfo) {
+				if (report.equals(((TileDataStreamInfo) tile).getReport())) {
+					this.removeTile(tile);
+				}
+			}
+		}
+	}
+	
+	public void removeTilesDependentOnChart(ChartInfo chart) throws CantDoThatException {
+		for (TileInfo tile : this.getTiles()) {
+			if (tile instanceof TileVisualisationInfo) {
+				if (chart.equals(((TileVisualisationInfo) tile).getChart())) {
+					this.removeTile(tile);
+				}
+			}
+		}
 	}
 
 	/**

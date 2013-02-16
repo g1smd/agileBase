@@ -77,15 +77,22 @@ public interface AppUserInfo {
 	public void addTile(TileInfo tile) throws CantDoThatException;
 	
 	public void removeTile(TileInfo tile) throws CantDoThatException;
+	
+	public void removeTilesDependentOnReport(BaseReportInfo report) throws CantDoThatException;
+	
+	public void removeTilesDependentOnChart(ChartInfo chart) throws CantDoThatException;
 
 	/**
 	 * Reports that should be visible by default on the user's operational
 	 * dashboard and calendar
 	 */
+	@Deprecated
 	public Set<BaseReportInfo> getOperationalDashboardReports();
 
+	@Deprecated
 	public void addOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
 
+	@Deprecated
 	public void removeOperationalDashboardReport(BaseReportInfo report) throws CantDoThatException;
 
 	/**

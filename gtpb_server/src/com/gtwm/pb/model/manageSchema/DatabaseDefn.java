@@ -1072,6 +1072,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			HibernateUtil.activateObject(user);
 			user.unhideReport(reportToRemove);
 			user.removeOperationalDashboardReport(reportToRemove);
+			user.removeTilesDependentOnReport(reportToRemove);
 			if (reportToRemove.equals(user.getDefaultReport())) {
 				logger.warn("Default report " + reportToRemove.getModule() + " - " + reportToRemove
 						+ " removed for user " + user);
@@ -1100,7 +1101,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 	}
-
+	
 	public void uploadCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
 			String templateName, List<FileItem> multipartItems) throws DisallowedException,
 			ObjectNotFoundException, CantDoThatException, FileUploadException {
@@ -3149,29 +3150,35 @@ public final class DatabaseDefn implements DatabaseInfo {
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 
-	public void removeChart(HttpServletRequest request, ChartInfo reportSummary)
+	public void removeChart(HttpServletRequest request, ChartInfo chart)
 			throws DisallowedException, CantDoThatException, ObjectNotFoundException {
 		if (!(this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable()))) {
+				PrivilegeType.MANAGE_TABLE, chart.getReport().getParentTable()))) {
 			throw new DisallowedException(this.authManager.getLoggedInUser(request),
-					PrivilegeType.MANAGE_TABLE, reportSummary.getReport().getParentTable());
+					PrivilegeType.MANAGE_TABLE, chart.getReport().getParentTable());
 		}
-		BaseReportInfo report = reportSummary.getReport();
-		if (reportSummary.equals(report.getChart())) {
+		BaseReportInfo report = chart.getReport();
+		if (chart.equals(report.getChart())) {
 			throw new CantDoThatException("The default report summary can't be removed");
 		}
 		HibernateUtil.activateObject(report);
-		report.removeSavedChart(reportSummary);
+		report.removeSavedChart(chart);
 		// Move the saved summary definition back to the default summary
 		ChartInfo oldDefaultChart = report.getChart();
-		((BaseReportDefn) report).setChart(reportSummary);
+		((BaseReportDefn) report).setChart(chart);
 		report.removeSavedChart(oldDefaultChart);
 		HibernateUtil.currentSession().delete(oldDefaultChart);
 		this.dataManagement.logLastSchemaChangeTime(request);
 		UsageLogger usageLogger = new UsageLogger(this.relationalDataSource);
+		// Remove any user tiles for this chart
+		CompanyInfo company = this.getAuthManager().getCompanyForLoggedInUser(request);
+		for (AppUserInfo user : company.getUsers()) {
+			HibernateUtil.activateObject(user);
+			user.removeTilesDependentOnChart(chart);
+		}
 		AppUserInfo user = this.authManager.getUserByUserName(request, request.getRemoteUser());
 		usageLogger.logReportSchemaChange(user, report, AppAction.REMOVE_CHART, "title: "
-				+ reportSummary.getTitle());
+				+ chart.getTitle());
 		UsageLogger.startLoggingThread(usageLogger);
 	}
 

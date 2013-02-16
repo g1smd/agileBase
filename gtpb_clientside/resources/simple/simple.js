@@ -6,14 +6,18 @@ $(document).ready(function() {
 		loadTreemap();
 	} else {
 		tileEvents();
-		dataStreamEvents();
 	}
 });
 
 var abTileColours = ["blue", "yellow", "green", "purple", "pink", "turquoise"];
 
-/** Common tile events */
 function tileEvents() {
+	commonTileEvents();
+	dataStreamEvents();
+}
+
+/** Common tile events */
+function commonTileEvents() {
 	$(".backHome").click(function() {
 		backHome();
 	});
