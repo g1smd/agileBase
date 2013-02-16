@@ -69,7 +69,7 @@
         #set($category = $field.getFieldCategory())
         #if((!$titleFields.contains($field)) && (!$field.isPrimaryKey()) && ($category != "FILE"))
           #set($cell = $reportDataRow.getValue($field).getKeyValue())
-          #if($cell != "")
+          #if($cell && ($cell != ""))
             #if(($category != "TEXT") || ($field.getUsesLookup()))
               $field: 
             #end
