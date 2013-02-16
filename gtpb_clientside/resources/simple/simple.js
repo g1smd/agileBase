@@ -148,15 +148,10 @@ function nextColour() {
 	// Find available colours: create a copy of abTileColours, remove existing tile colours	
 	var availableColours = abTileColours.slice(0);
 	$(".tile").each(function() {
-		console.log("Tile " + $(this).attr("title"));
-		console.log(abTileColours.length);
 		for (var i in abTileColours) {
 			var tileColour = abTileColours[i];
-			console.log($(this).attr("title") + " has colour " + tileColour + ": " + $(this).hasClass(tileColour));
 			if($(this).hasClass(tileColour)) {
-				console.log("Removing " + tileColour)
 				removeItem(availableColours, tileColour);
-				console.log(availableColours);
 			}
 		}
 	});
