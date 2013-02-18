@@ -36,6 +36,7 @@ import org.hibernate.HibernateException;
 import com.gtwm.pb.auth.Company;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
+import com.gtwm.pb.model.interfaces.TileFocusInfo;
 import com.gtwm.pb.model.interfaces.TileInfo;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
 import com.gtwm.pb.model.interfaces.TileVisualisationInfo;
@@ -2887,6 +2888,11 @@ public final class ServletSchemaMethods {
 			HibernateUtil.activateObject(user);
 			HibernateUtil.currentSession().save(tile);
 			user.addTile(tile);
+			if (tileType.equals(TileType.DATA_STREAM)) {
+				TileFocusInfo focusTile = new FocusTile(colour);
+				HibernateUtil.currentSession().save(focusTile);
+				user.addTile(focusTile);
+			}
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);

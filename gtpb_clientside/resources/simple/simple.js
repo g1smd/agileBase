@@ -68,6 +68,9 @@ function dataStreamEvents() {
 			$(this).removeClass("changed");
 		});
 	});
+	$(".tile.large .report_data_row").mouseenter(function() {
+		var focusTile = $(".tile[data-type=focus]");
+	});
 }
 
 /**
