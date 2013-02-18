@@ -3,13 +3,14 @@
 #else
   #set($pKeyFieldNum = $pKeyFieldNums.get($field.getTableContainingField()))
   #if($thisValues)
-    ## Find the row ID
+    ## Find the row ID - quick way, $thisValues precalculated
     #set($fieldId = $thisValues.get($pKeyFieldNum))
   #else
+    ## Slow way - manual lookup
     #foreach($testField in $fields)
       #if($foreach.count == ($pKeyFieldNum + 1))
         #set($fieldId = $row.getValue($testField).getKeyValue())
-        $viewTools.log("Test field is $testField, Field ID is $fieldId")
+        #break
       #end
     #end
   #end
