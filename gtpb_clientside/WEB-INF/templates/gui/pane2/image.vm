@@ -1,13 +1,18 @@
 #if($field.getTableContainingField().equals($sessionTable))
   #set($fieldId = $thisUniqueId)
-  $viewTools.log("Field $field is from session table $sessionTable")
 #else
-  $viewTools.log("Field $field is not from session table $sessionTable")
-  #if(!$thisValues)
-    #set($thisValues = $row.get(0))
-    $viewTools.log("thisValues is $thisValues, pKeyFieldNums is $pKeyFieldNums")
+  #set($pKeyFieldNum = $pKeyFieldNums.get($field.getTableContainingField()))
+  #if($thisValues)
+    ## Find the row ID
+    #set($fieldId = $thisValues.get($pKeyFieldNum))
+  #else
+    #foreach($testField in $fields)
+      #if($foreach.count == $pKeyFieldNum)
+        #set($fieldId = $row.getValue($testField).getKeyValue()
+        $viewTools.log("Field ID is $fieldId")
+      #end
+    #end
   #end
-  #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
 #end
 #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getPreviewExtension()")
 #set($cell = "<img src='$srcUrl' />")
