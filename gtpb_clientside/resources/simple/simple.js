@@ -82,7 +82,7 @@ function dataStreamEvents() {
 			integerkey: "focus_row_id",
 			customintegervalue: rowId
 		}, function() {
-			var rowTitle = row.find("row_title").text();
+			var rowTitle = row.find(".row_title").text();
 			focusTile.find(".title").text(rowTitle);
 		});
 	});
