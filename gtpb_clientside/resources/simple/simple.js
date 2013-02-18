@@ -58,7 +58,6 @@ function dataStreamEvents() {
 	searchBox.keyup(function(event) {
 		$(this).addClass("changed");
 		var filterString = $(this).val();
-		alert(filterString);
 		var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
 		$(this).closest(".tile").find(".content").load("AppController.servlet", {
 			"return": "s/tiles/data_stream",
