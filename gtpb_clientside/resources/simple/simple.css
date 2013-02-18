@@ -89,6 +89,10 @@ body {
   font-weight: 300;
   text-transform: uppercase;
   font-size: 14pt;
+  height: 1.25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #tiles .tile .tile_icon {
