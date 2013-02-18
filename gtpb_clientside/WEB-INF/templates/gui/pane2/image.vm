@@ -7,5 +7,5 @@
   #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
 #end
 #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getPreviewExtension()")
-#set($cell = "<img src='$srcUrl' />")
+#set($cell = "<img src='$srcUrl' /> thisValues = $thisValues, pkeyFieldNums = $pkeyFieldNums")
  
