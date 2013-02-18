@@ -30,6 +30,17 @@
   #parse("s/tiles/focus/field.vm")
 #end
 
-#foreach($commentHtml in $allComments)
-  $commentHtml
+#foreach($fieldComments in $allComments)
+  #foreach($comment in $fieldComments)
+  <div class="comment">
+    #set($profileImage = false)
+    #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
+    #if($profileImage)
+      <img src="$profileImage" class="comment_author_picture" />
+    #else
+      <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+    #end
+    <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
+  </div>
+  #end
 #end

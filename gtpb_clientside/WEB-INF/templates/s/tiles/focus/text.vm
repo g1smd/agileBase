@@ -26,20 +26,9 @@
 #elseif($fieldValueObject.isEmailAddress())
   #set($success = $allEmails.add($fieldValueObject))
 #elseif($fieldValueObject.isPostcode())
-
-  #set($postcodeParam = $fieldValue.replace(" ","+"))
-  <a href="http://maps.google.com?q=$postcodeParam" style="height:100%" target="_blank"><div class="appelement map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=250x150&zoom=10&maptype=terrain&sensor=false)"></div></a>
+  #set($success = $allPostcodes.add($fieldValueObject))
 #elseif($fieldValueObject.isPhoneNumber())
-  #parse("gui/pane1/heading.vm")
-  #set($phoneArea = false)
-  #if($fieldValueObject.isPhoneNumberGB())
-    #set($phoneArea = $viewTools.getAreaForPhoneNumber($fieldValue))
-  #elseif($fieldValueObject.isPhoneNumberInternational())
-    #set($phoneArea = $viewTools.getCountryForPhoneNumber($fieldValue))
-  #else
-    #set($phoneArea = "unknown phone area")
-  #end
-  <div class="appelement"><i class="icon-phone"></i> <span style="font-size:180%">$fieldValueObject</span>#if($phoneArea)<br>$phoneArea #end</div>
+  #set($success = $allPhoneNumbers.add($fieldValueObject))
 #elseif(!$field.getHidden() && $otherRelatedData)
   #set($success = $otherRelatedData.put("$field",$fieldValue))
 #end

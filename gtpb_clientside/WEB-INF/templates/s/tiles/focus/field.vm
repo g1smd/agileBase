@@ -31,13 +31,5 @@
 #end
 #set($fieldComments = $view.getComments($field, $rowIdUse))
 #if ($fieldComments.size() > 0)
-  #if(!$allComments) #set($allComments = []) #end
-  #set($commentHtml="<div class='comments' title='$field'>")
-  #foreach($comment in $comments)
-    #set($commentHtml = "$commentHtml <div class='comment'>")
-    #set($commentHtml = "$commentHtml <span class='comment_text'>$comment.getText()</span><span class='comment_attribution'> - $comment.getAuthor(), $comment.getTimestampString()</span>")
-    #set($commentHtml = "$commentHtml </div>")
-  #end
-  #set($commentHtml = "$commentHtml </div>")
-  #set($success = $allComments.add($commentHtml))
+  #set($success = $allComments.add($fieldComments))
 #end
