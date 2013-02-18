@@ -40,7 +40,7 @@
       #else
         <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
       #end
-      <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
+      <span class="comment_text pink">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
     </div>
   #end
 #end

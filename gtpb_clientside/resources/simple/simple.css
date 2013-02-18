@@ -191,10 +191,18 @@ label {
   overflow: hidden;
 }
 
-.report_data_row img {
+.report_data_row img, .comment img {
   float: left;
   border-radius: 0.75em;
   margin-right: 0.5em;
+}
+
+.comment_attribution {
+  font-size: 9pt;
+}
+
+.comment_text {
+  background-color: #EC00BC;
 }
 
 input[type=search] {
