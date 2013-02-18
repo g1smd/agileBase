@@ -60,12 +60,14 @@ function dataStreamEvents() {
 		var filterString = $(this).val();
 		var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
 		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
+		var internalReportName = $(this).closest(".tile").attr("data-internalreportname");
 		$(this).closest(".tile").find(".content").load("AppController.servlet", {
 			"return": "s/tiles/data_stream",
 			set_global_report_filter_string: true,
 			filterstring: filterString,
 			set_tile: internalTileName,
-			set_table: internalTableName
+			set_table: internalTableName,
+			set_report: internalReportName
 		}, function() {
 			$(this).removeClass("changed");
 		});

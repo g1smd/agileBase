@@ -25,9 +25,10 @@
   #end
   #set($table = false)
   #if($tile.getReport())
-    #set($table = $tile.getReport().getParentTable())
+    #set($report = $tile.getReport())
+    #set($table = $report.getParentTable())
   #end
-  <div title="$tile" class="tile transition $colour #if($tileType.isLarge()) large #end" #if($table) data-internaltablename="$table.getInternalTableName()" #end data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
+  <div title="$tile" class="tile transition $colour #if($tileType.isLarge()) large #end" #if($table) data-internaltablename="$table.getInternalTableName()" data-internalreportname="$report.getInternalReportName()" #end data-colour="$colour" data-type="$tileType.toString().toLowerCase()" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
     #if($template == "data_stream")
       #set($filter = $sessionData.getGlobalFilterString($tile.getReport()))
