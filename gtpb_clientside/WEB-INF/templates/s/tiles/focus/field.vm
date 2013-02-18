@@ -1,0 +1,43 @@
+##
+##  Copyright 2013 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($fieldValueObject = $tableDataRow.get($field))
+#set($fieldValue = $fieldValueObject.toString().trim())
+#set($category = $field.getFieldCategory().toString().toLowerCase())
+#if(($fieldValue != "") || ($category == "referenced_report_data") || ($category == "file"))
+  #if(($category == "text") || ($category == "file") || ($category == "referenced_report_data"))
+    #parse("s/tiles/focus/${category}.vm")
+  #end
+#end
+## Comments
+#if($relatedRowId)
+  #set($rowIdUse = $relatedRowId)
+#else
+  #set($rowIdUse = $rowId)
+#end
+#set($fieldComments = $view.getComments($field, $rowIdUse))
+#if ($fieldComments.size() > 0)
+  #if(!$allComments) #set($allComments = []) #end
+  #set($commentHtml="<div class='comments' title='$field'>")
+  #foreach($comment in $comments)
+    #set($commentHtml = "$commentHtml <div class='comment'>")
+    #set($commentHtml = "$commentHtml <span class='comment_text'>$comment.getText()</span><span class='comment_attribution'> - $comment.getAuthor(), $comment.getTimestampString()</span>")
+    #set($commentHtml = "$commentHtml </div>")
+  #end
+  #set($commentHtml = "$commentHtml </div>")
+  #set($success = $allComments.add($commentHtml))
+#end

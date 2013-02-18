@@ -1,0 +1,45 @@
+##
+##  Copyright 2013 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#if ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.length() > 1)))
+  #set($success = $allTweets.add($fieldValueObject))
+#elseif($fieldValueObject.isURL())
+  #if($fieldValueObject.isImage()) ## remote image
+    #set($success = $allImages.add($fieldValueObject))
+  #else
+    #set($success = $allUrls.add($fieldValueObject))
+  #end
+#elseif($fieldValueObject.isEmailAddress())
+  #set($success = $allEmails.add($fieldValueObject))
+#elseif($fieldValueObject.isPostcode())
+
+  #set($postcodeParam = $fieldValue.replace(" ","+"))
+  <a href="http://maps.google.com?q=$postcodeParam" style="height:100%" target="_blank"><div class="appelement map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=250x150&zoom=10&maptype=terrain&sensor=false)"></div></a>
+#elseif($fieldValueObject.isPhoneNumber())
+  #parse("gui/pane1/heading.vm")
+  #set($phoneArea = false)
+  #if($fieldValueObject.isPhoneNumberGB())
+    #set($phoneArea = $viewTools.getAreaForPhoneNumber($fieldValue))
+  #elseif($fieldValueObject.isPhoneNumberInternational())
+    #set($phoneArea = $viewTools.getCountryForPhoneNumber($fieldValue))
+  #else
+    #set($phoneArea = "unknown phone area")
+  #end
+  <div class="appelement"><i class="icon-phone"></i> <span style="font-size:180%">$fieldValueObject</span>#if($phoneArea)<br>$phoneArea #end</div>
+#elseif(!$field.getHidden() && $otherRelatedData)
+  #set($success = $otherRelatedData.put("$field",$fieldValue))
+#end

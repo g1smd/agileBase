@@ -1,0 +1,9 @@
+## Record which col. nos. store which primary keys, for reference by any included images
+#set($fieldNum = 0)
+#set($pKeyFieldNums = {})
+#foreach($field in $fields)
+  #if($field.isPrimaryKey())
+    #set($success = $pKeyFieldNums.put($field.getTableContainingField(),$fieldNum))
+  #end
+  #set($fieldNum = $fieldNum + 1)
+#end
