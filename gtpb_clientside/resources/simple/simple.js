@@ -59,17 +59,27 @@ function dataStreamEvents() {
 		$(this).addClass("changed");
 		var filterString = $(this).val();
 		var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
+		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
 		$(this).closest(".tile").find(".content").load("AppController.servlet", {
 			"return": "s/tiles/data_stream",
 			set_global_report_filter_string: true,
 			filterstring: filterString,
-			set_tile: internalTileName
+			set_tile: internalTileName,
+			set_table: internalTableName
 		}, function() {
 			$(this).removeClass("changed");
 		});
 	});
 	$(".tile.large .report_data_row").mouseenter(function() {
 		var focusTile = $(".tile[data-type=focus]");
+		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
+		focusTile.find(".content").load("AppController.servlet", {
+			"return": "s/tiles/focus/focus",
+			set_table: internalTableName,
+			set_custom_integer: true,
+			integerkey: "focus_row_id",
+			customintegervalue: rowId
+		});
 	});
 }
 

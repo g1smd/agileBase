@@ -29,3 +29,7 @@
 #foreach($field in $table.getFields())
   #parse("s/focus/field.vm")
 #end
+
+#foreach($commentHtml in $allComments)
+  $commentHtml
+#end
