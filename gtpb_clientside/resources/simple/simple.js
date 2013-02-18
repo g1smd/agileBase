@@ -71,6 +71,7 @@ function dataStreamEvents() {
 		});
 	});
 	$(".tile.large .report_data_row").mouseenter(function() {
+		var row = $(this);
 		var focusTile = $(".tile[data-type=focus]");
 		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
 		var rowId = $(this).attr("data-rowid");
@@ -80,6 +81,9 @@ function dataStreamEvents() {
 			set_custom_integer: true,
 			integerkey: "focus_row_id",
 			customintegervalue: rowId
+		}, function() {
+			var rowTitle = row.find("row_title").text();
+			focusTile.find(".title").text(rowTitle);
 		});
 	});
 }

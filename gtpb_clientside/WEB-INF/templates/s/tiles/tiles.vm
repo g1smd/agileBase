@@ -20,6 +20,9 @@
 #foreach($tile in $tiles)
   #set($tileType = $tile.getTileType())
   #set($colour = $tile.getColour())
+  #if($tileType == "FOCUS")
+    #set($colour = "${colour}_fg")
+  #end
   #set($table = false)
   #if($tile.getReport())
     #set($table = $tile.getReport().getParentTable())
