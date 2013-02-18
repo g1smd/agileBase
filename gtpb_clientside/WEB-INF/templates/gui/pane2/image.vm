@@ -1,11 +1,13 @@
 #if($field.getTableContainingField().equals($sessionTable))
   #set($fieldId = $thisUniqueId)
+  $viewTools.log("Field $field is from session table $sessionTable")
 #else
+  $viewTools.log("Field $field is not from session table $sessionTable")
   #if(!$thisValues)
     #set($thisValues = $row.get(0))
   #end
   #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
 #end
 #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.40.$fileValue.getPreviewExtension()")
-#set($cell = "<img src='$srcUrl' /> thisValues = $thisValues, pkeyFieldNums = $pkeyFieldNums")
+#set($cell = "<img src='$srcUrl' />")
  
