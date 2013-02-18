@@ -5,6 +5,7 @@
   $viewTools.log("Field $field is not from session table $sessionTable")
   #if(!$thisValues)
     #set($thisValues = $row.get(0))
+    $viewTools.log("thisValues is $thisValues, pKeyFieldNums is $pKeyFieldNums")
   #end
   #set($fieldId = $thisValues.get($pKeyFieldNums.get($field.getTableContainingField())))
 #end
