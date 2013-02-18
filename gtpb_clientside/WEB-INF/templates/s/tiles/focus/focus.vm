@@ -27,7 +27,7 @@
 #set($allImages = [])
 #set($allPostcodes = [])
 #foreach($field in $table.getFields())
-  #parse("s/focus/field.vm")
+  #parse("s/tiles/focus/field.vm")
 #end
 
 #foreach($commentHtml in $allComments)
