@@ -207,6 +207,12 @@ label {
 
 .comment_text:before {
   content: '\201C'; 
+  color: #EC00BC;
+  font-size: 200%;
+  float: left;
+  font-weight: 300;
+  padding-right: 0.1em;
+  color: #EC00BC;
 }
 
 input[type=search] {
