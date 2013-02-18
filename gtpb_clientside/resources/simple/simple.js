@@ -55,6 +55,7 @@ function dataStreamEvents() {
 	searchBox.click(function(event) {
 		event.stopPropagation();
 	});
+	dataStreamFocus();
 	searchBox.keyup(function(event) {
 		$(this).addClass("changed");
 		var filterString = $(this).val();
@@ -77,7 +78,6 @@ function dataStreamEvents() {
 
 function dataStreamFocus() {
 	$(".tile.large .report_data_row").mouseenter(function() {
-		alert('enter');
 		var row = $(this);
 		var focusTile = $(".tile[data-type=focus]");
 		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
