@@ -70,8 +70,12 @@ function dataStreamEvents() {
 			set_report: internalReportName
 		}, function() {
 			$(this).removeClass("changed");
+			dataStreamFocus();
 		});
 	});
+}
+
+function dataStreamFocus() {
 	$(".tile.large .report_data_row").mouseenter(function() {
 		var row = $(this);
 		var focusTile = $(".tile[data-type=focus]");
@@ -89,7 +93,6 @@ function dataStreamEvents() {
 		});
 	});
 }
-
 /**
  * This function runs when a tile is clicked to expand it and content has loaded
  */
