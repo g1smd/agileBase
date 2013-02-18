@@ -77,6 +77,7 @@ function dataStreamEvents() {
 
 function dataStreamFocus() {
 	$(".tile.large .report_data_row").mouseenter(function() {
+		alert('enter');
 		var row = $(this);
 		var focusTile = $(".tile[data-type=focus]");
 		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
@@ -93,6 +94,7 @@ function dataStreamFocus() {
 		});
 	});
 }
+
 /**
  * This function runs when a tile is clicked to expand it and content has loaded
  */
