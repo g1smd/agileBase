@@ -73,6 +73,7 @@ function dataStreamEvents() {
 	$(".tile.large .report_data_row").mouseenter(function() {
 		var focusTile = $(".tile[data-type=focus]");
 		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
+		var rowId = $(this).attr("data-rowid");
 		focusTile.find(".content").load("AppController.servlet", {
 			"return": "s/tiles/focus/focus",
 			set_table: internalTableName,
