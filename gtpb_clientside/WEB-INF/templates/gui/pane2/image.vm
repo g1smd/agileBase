@@ -7,9 +7,9 @@
     #set($fieldId = $thisValues.get($pKeyFieldNum))
   #else
     #foreach($testField in $fields)
-      #if($foreach.count == ($pKeyFieldNum - 1))
+      #if($foreach.count == ($pKeyFieldNum + 1))
         #set($fieldId = $row.getValue($testField).getKeyValue())
-        $viewTools.log("Field ID is $fieldId")
+        $viewTools.log("Test field is $testField, Field ID is $fieldId")
       #end
     #end
   #end
