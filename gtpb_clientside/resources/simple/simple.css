@@ -254,9 +254,6 @@ label {
 }
 
 .tile .group.images img {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
   max-width: 100%;
 }
 
