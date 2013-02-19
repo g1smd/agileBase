@@ -168,6 +168,10 @@ body {
   margin-right: 1em;
 }
 
+.focus_switch {
+  
+}
+
 label input[type=radio] {
   display: none;
 }

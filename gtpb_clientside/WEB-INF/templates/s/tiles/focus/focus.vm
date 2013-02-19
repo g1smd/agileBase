@@ -80,3 +80,15 @@
     #end
   </div>
 #end
+
+<div class="focus_switch">
+  #if($allTweets.size() > 0)
+    <i class="icon-twitter"></i>
+  #end
+  #if($allPhoneNumbers.size() > 0)
+    <i class="icon-phone"></i>
+  #end
+  #if($allEmails.size() > 0)
+    <i class="icon-envelope"></i>
+  #end
+</div>
