@@ -175,6 +175,12 @@ body {
   margin-right: 0.5em;
 }
 
+.tile[data-type=focus] .content {
+  height: 225px;
+  width: 200%;
+  overflow-y: auto;
+}
+
 .focus_switch {
   position: absolute;
   font-size: 14pt;
