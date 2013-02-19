@@ -187,6 +187,11 @@ body {
 .focus_switch i {
 }
 
+.tile .map {
+  width: 100%;
+  height: 100%;
+}
+
 label input[type=radio] {
   display: none;
 }
