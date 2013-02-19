@@ -28,6 +28,7 @@
 	<title>Agilebase</title>
 	<script src="resources/jquery.js" language="JavaScript"></script>
   <script language="JavaScript" src="resources/simple/simple.js"></script>
+  <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
 </head>
 <body>
   <div class="header row transition">
