@@ -253,6 +253,13 @@ label {
   margin-right: 0.5em;
 }
 
+.tile .group.images img {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 100%;
+}
+
 ul.tweet_list {
   margin: 0;
   padding: 0;
