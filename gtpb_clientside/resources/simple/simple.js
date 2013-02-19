@@ -6,6 +6,7 @@ $(document).ready(function() {
 		loadTreemap();
 	} else {
 		tileEvents();
+		$(".tile.large .report_data_row:first-child").mouseenter();
 	}
 });
 
