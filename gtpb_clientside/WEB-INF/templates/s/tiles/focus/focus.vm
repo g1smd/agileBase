@@ -68,7 +68,7 @@
       #else
         #set($phoneArea = "unknown phone area")
       #end
-      <div class="phone_number"><i class="icon-phone"></i> <span style="font-size:180%">$phoneNumber</span>#if($phoneArea)<br>$phoneArea #end</div></div>
+      <div class="phone_number"><i class="icon-large icon-phone"></i> <span style="font-size:180%">$phoneNumber</span>#if($phoneArea)<br>$phoneArea #end</div></div>
     #end
   </div>
 #end
