@@ -159,20 +159,21 @@ body {
   clear: left;
 }
 
-.tile .group {
+.tile.focus .group {
   margin-top: 0.5em;
   padding-top: 0.5em;
+  width: 245px;
   clear: left;
 }
 
-.tile .group .email {
+.tile.focus .group .email {
   height: 1.5em;
   overflow: hidden;
   white-space: nowrap;
   margin-top: 0.25em;
 }
 
-.tile .group .email i {
+.tile.focus .group .email i {
   float: left;
   margin-right: 0.5em;
 }
@@ -183,7 +184,7 @@ body {
 
 .tile.focus .content {
   height: 225px;
-  width: 200%;
+  width: 200%; /* hide scroll bar off to the right */
   overflow-y: auto;
 }
 
