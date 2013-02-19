@@ -179,6 +179,7 @@ body {
   padding-top: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
+  border-bottom-left-radius: 0.75em;
 }
 
 .focus_switch i {

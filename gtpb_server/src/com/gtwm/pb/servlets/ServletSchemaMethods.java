@@ -2932,6 +2932,16 @@ public final class ServletSchemaMethods {
 			HibernateUtil.activateObject(user);
 			user.removeTile(tile);
 			HibernateUtil.currentSession().delete(tile);
+			if (tile.getTileType().equals(TileType.DATA_STREAM)) {
+				// Also remove the focus tile which goes with the data stream
+				for (TileInfo testTile : user.getTiles()) {
+					if (testTile.getTileType().equals(TileType.FOCUS)) {
+						user.removeTile(testTile);
+						HibernateUtil.currentSession().delete(testTile);
+						break;
+					}
+				}
+			}
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(null);
