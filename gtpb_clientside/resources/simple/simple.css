@@ -167,6 +167,7 @@ body {
   height: 1.5em;
   overflow: hidden;
   white-space: nowrap;
+  margin-top: 0.25em;
 }
 
 .tile .group .email i {
@@ -180,7 +181,7 @@ body {
   top: 0;
   right: 0;
   width: 2em;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.75);
   border: 1px solid rgba(101,103,102, 0.25);
   padding-top: 0.5em;
   padding-left: 0.5em;

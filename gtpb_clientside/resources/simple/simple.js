@@ -39,6 +39,11 @@ function focusEvents() {
 			username : username
 		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
 	});
+	$(".focus_switch i").click(function(event) {
+		event.stopPropagation();
+		var scrollTo = $(this).attr("data-scrollto");
+		$(".group ." + scrollTo).animate({scrollTop: 0}, 'normal');
+	});
 }
 
 /** Common tile events */

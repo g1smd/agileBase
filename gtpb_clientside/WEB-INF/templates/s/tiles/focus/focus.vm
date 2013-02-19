@@ -117,19 +117,19 @@
 
 <div class="focus_switch">
   #if($allComments.size() > 0)
-    <i class="icon-comments" title="comments"></i>
+    <i class="icon-comments" title="comments" data-scrollto="comments"></i>
   #end
   #if($allTweets.size() > 0)
-    <i class="icon-twitter" title="tweets"></i>
+    <i class="icon-twitter" title="tweets" data-scrollto="tweets"></i>
   #end
   #if($allPhoneNumbers.size() > 0)
-    <i class="icon-phone" title="phone numbers"></i>
+    <i class="icon-phone" title="phone numbers" data-scrollto="phones"></i>
   #end
   #if(($allEmails.size() > 0) || ($allUrls.size() > 0))
-    <i class="icon-envelope" title="email and website addresses"></i>
+    <i class="icon-envelope" title="email and website addresses" data-scrollto="emails"></i>
   #end
   #if($allPostcodes.size() > 0)
-    <i class="icon-map-marker" title="map"></i>
+    <i class="icon-map-marker" title="map" data-scrollto="postcodes"></i>
   #end
 </div>
 
