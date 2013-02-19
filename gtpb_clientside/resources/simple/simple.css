@@ -81,6 +81,10 @@ body {
   position: relative;
 }
 
+.tile a {
+  color: #009FE3;
+}
+
 .tile.large {
   height: 500px;
   width: 400px;
@@ -166,7 +170,7 @@ body {
 
 .tile .group .email i {
   float: left;
-  margin-right: 1em;
+  margin-right: 0.5em;
 }
 
 .focus_switch {

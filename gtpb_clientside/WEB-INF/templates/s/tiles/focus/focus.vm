@@ -76,7 +76,7 @@
 #if(($allEmails.size() > 0) || ($allUrls.size() > 0))
   <div class="group emails">
     #foreach($email in $allEmails)
-      <div class="email"><a href="mailto:$femail"><i class="icon-envelope"></i> $email</a></div>
+      <div class="email"><a href="mailto:$femail"><i class="icon-large icon-envelope"></i> $email</a></div>
     #end
     #foreach($url in $allUrls)
       <div class="email"><a href="$url" target="_blank"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $url.getShortURL()</a></div>
