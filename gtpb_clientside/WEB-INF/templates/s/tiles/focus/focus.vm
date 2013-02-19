@@ -76,7 +76,7 @@
 #if($allEmails.size() > 0)
   <div class="group emails">
     #foreach($email in $allEmails)
-      <div class="email"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $fieldValue</a></div>
+      <div class="email"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $email</a></div>
     #end
   </div>
 #end
