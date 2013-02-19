@@ -166,6 +166,7 @@ body {
 .tile .group .email {
   height: 1.5em;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .tile .group .email i {
