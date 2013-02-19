@@ -173,7 +173,7 @@ body {
   position: absolute;
   font-size: 20pt;
   top: 0;
-  right: 0.75em;
+  right: 0;
   width: 1em;
   background-color: rgba(255,255,255,0.7);
   padding-top: 0.25em;
@@ -181,7 +181,6 @@ body {
 }
 
 .focus_switch i {
-  padding: 0.5em;
 }
 
 label input[type=radio] {
