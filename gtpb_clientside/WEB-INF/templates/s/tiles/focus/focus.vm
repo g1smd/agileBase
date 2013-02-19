@@ -56,3 +56,19 @@
     #end
   </div>
 #end
+
+#if($allPhoneNumbers.size() > 0)
+  <div class="group phones">
+    #foreach($phoneNumber in $allPhoneNumbers)
+      #set($phoneArea = false)
+      #if($phoneNumber.isPhoneNumberGB())
+        #set($phoneArea = $viewTools.getAreaForPhoneNumber("$phoneNumber"))
+      #elseif($phoneNumber.isPhoneNumberInternational())
+        #set($phoneArea = $viewTools.getCountryForPhoneNumber("$phoneNumber"))
+      #else
+        #set($phoneArea = "unknown phone area")
+      #end
+      <div class="phone_number"><i class="icon-phone"></i> <span style="font-size:180%">$phoneNumber</span>#if($phoneArea)<br>$phoneArea #end</div></div>
+    #end
+  </div>
+#end
