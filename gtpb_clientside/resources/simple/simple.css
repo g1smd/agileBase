@@ -158,6 +158,11 @@ body {
   margin-top: 0.5em;
 }
 
+.tile .group .email i {
+  float: left;
+  margin-right: 1em;
+}
+
 label input[type=radio] {
   display: none;
 }
