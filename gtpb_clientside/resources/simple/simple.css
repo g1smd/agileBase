@@ -78,6 +78,7 @@ body {
   overflow: hidden;
   border-radius: 0.25em;
   padding: 1em;
+  position: relative;
 }
 
 .tile.large {
@@ -169,7 +170,11 @@ body {
 }
 
 .focus_switch {
-  
+  position: absolute;
+  font-size: 14pt;
+  top: 0;
+  right: 0;
+  width: 1.5em;
 }
 
 label input[type=radio] {
