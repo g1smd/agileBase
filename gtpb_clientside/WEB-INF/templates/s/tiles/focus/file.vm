@@ -1,0 +1,16 @@
+#if($relatedRowId)
+  #set($rowIdUse = $relatedRowId)
+#else
+  #set($rowIdUse = $rowId)
+#end
+#set($downloadBase = "uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$rowIdUse/")
+#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValueObject"))
+## Image
+#if($fieldValueObject.isImage())
+  #set($success = $allImages.add("$downloadUrl.500.$fieldValueObject.getPreviewExtension()"))
+#elseif($downloadUrl.endsWith("pdf"))
+  #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
+  #set($success = $allImages.add($previewUrl))
+#elseif($fieldValue != "")
+  #set($success = $allDocuments.add($fieldValueObject))
+#end

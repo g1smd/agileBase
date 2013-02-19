@@ -25,8 +25,9 @@
 #set($allPhoneNumbers = [])
 #set($allEmails = [])
 #set($allUrls = [])
-#set($allImages = [])
 #set($allPostcodes = [])
+#set($allImages = [])
+#set($allDocuments = [])
 #foreach($field in $table.getFields())
   #parse("s/tiles/focus/field.vm")
 #end
@@ -115,6 +116,21 @@
   </div>
 #end
 
+#if($allImages.size() > 0)
+  <div class="group images">
+    #foreach($image in $allImages)
+      <img src="$image" />
+    #end
+  </div>
+#end
+
+#if($allDocuments.size() > 0)
+  <div class="group documents">
+    #foreach($document in $allDocuments)
+     <img border="0" style="float:left" src="resources/icons/filetypes/${document.getIconName()}.png"/> $document</a>    #end
+  </div>
+#end
+
 <div class="focus_switch">
   #if($allComments.size() > 0)
     <i class="icon-comments" title="comments" data-scrollto="comments"></i>
@@ -130,6 +146,12 @@
   #end
   #if($allPostcodes.size() > 0)
     <i class="icon-map-marker" title="map" data-scrollto="postcodes"></i>
+  #end
+  #if($allImages.size() > 0)
+    <i class="icon-picture" title="images" data-scrollto="images"></i>
+  #end
+  #if($allDocuments.size() > 0)
+    <i class="icon-file" title="documents" data-scrollto="documents"></i>
   #end
 </div>
 
