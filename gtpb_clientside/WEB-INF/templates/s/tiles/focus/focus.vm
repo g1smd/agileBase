@@ -87,7 +87,7 @@
 #if($allPostcodes.size() > 0)
   <div class="group postcodes">
     #foreach($postcode in $allPostcodes)
-      #set($postcodeParam = $postcode.keyValue().replace(" ","+"))
+      #set($postcodeParam = $postcode.toString().replace(" ","+"))
       <a href="http://maps.google.com?q=$postcodeParam" style="height:100%" target="_blank">
         <div class="map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=250x250&zoom=10&maptype=terrain&sensor=false)"></div>
       </a>
