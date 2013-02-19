@@ -73,10 +73,24 @@
   </div>
 #end
 
-#if($allEmails.size() > 0)
+#if(($allEmails.size() > 0) || ($allUrls.size() > 0))
   <div class="group emails">
     #foreach($email in $allEmails)
-      <div class="email"><a href="mailto:$fieldValue"><i class="icon-envelope"></i> $email</a></div>
+      <div class="email"><a href="mailto:$femail"><i class="icon-envelope"></i> $email</a></div>
+    #end
+    #foreach($url in $allUrls)
+      <div class="email"><a href="$url" target="_blank"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $url.getShortURL()</a></div>
+    #end
+  </div>
+#end
+
+#if($allPostcodes.size() > 0)
+  <div class="group postcodes">
+    #foreach($postcode in $allPostcodes)
+      #set($postcodeParam = $postcode.replace(" ","+"))
+      <a href="http://maps.google.com?q=$postcodeParam" style="height:100%" target="_blank">
+        <div class="map" style="background-image: url(https://maps.googleapis.com/maps/api/staticmap?center=$postcodeParam&size=250x250&zoom=10&maptype=terrain&sensor=false)"></div>
+      </a>
     #end
   </div>
 #end
@@ -91,7 +105,12 @@
   #if($allPhoneNumbers.size() > 0)
     <i class="icon-phone" title="phone numbers"></i>
   #end
-  #if($allEmails.size() > 0)
-    <i class="icon-envelope" title="email address"></i>
+  #if(($allEmails.size() > 0) || ($allUrls.size() > 0))
+    <i class="icon-envelope" title="email and website addresses"></i>
+  #end
+  #if($allPostcodes.size() > 0)
+    <i class="icon-map-marker" title="map"></i>
   #end
 </div>
+
+
