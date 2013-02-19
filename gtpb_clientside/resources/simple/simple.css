@@ -204,10 +204,8 @@ body {
 }
 
 .tile .map {
-  width: 245px;
+  width: 255px;
   height: 245px;
-  position: relative;
-  left: -15px;
 }
 
 label input[type=radio] {
