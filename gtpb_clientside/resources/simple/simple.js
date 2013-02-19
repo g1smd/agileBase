@@ -46,7 +46,7 @@ function focusEvents() {
 		console.log(content.size());
 		var scrollToElement = $(".group." + scrollTo);
 		console.log(scrollToElement.html());
-		content.scrollTo(scrollToElement);
+		content.scrollTo(scrollToElement, 100);
 	});
 }
 
