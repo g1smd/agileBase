@@ -154,6 +154,9 @@ body {
   clear: left;
 }
 
+.tile .group {
+  margin-top: 0.5em;
+}
 
 label input[type=radio] {
   display: none;
