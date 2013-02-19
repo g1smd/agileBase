@@ -42,7 +42,7 @@ function focusEvents() {
 	$(".focus_switch i").click(function(event) {
 		event.stopPropagation();
 		var scrollTo = $(this).attr("data-scrollto");
-		$(this).closest(".content").animate({scrollTop: -100}, 'normal');
+		$("body").scrollTop(-100);
 	});
 }
 
