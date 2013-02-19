@@ -173,11 +173,12 @@ body {
   position: absolute;
   font-size: 20pt;
   top: 0;
-  right: 0;
+  right: 1em;
   width: 1em;
-  background-color: rgba(255,255,255,0.7);
-  padding-top: 0.25em;
-  padding-left: 0.25em;
+  background-color: rgba(101, 103, 102, 0.1);
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 .focus_switch i {
