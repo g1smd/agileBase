@@ -158,6 +158,11 @@ body {
   margin-top: 0.5em;
 }
 
+.tile .group .email {
+  height: 1.5em;
+  overflow: hidden;
+}
+
 .tile .group .email i {
   float: left;
   margin-right: 1em;
