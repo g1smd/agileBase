@@ -82,13 +82,16 @@
 #end
 
 <div class="focus_switch">
+  #if($allComments.size() > 0)
+    <i class="icon-comments" title="comments"></i>
+  #end
   #if($allTweets.size() > 0)
-    <i class="icon-twitter"></i>
+    <i class="icon-twitter" title="tweets"></i>
   #end
   #if($allPhoneNumbers.size() > 0)
-    <i class="icon-phone"></i>
+    <i class="icon-phone" title="phone numbers"></i>
   #end
   #if($allEmails.size() > 0)
-    <i class="icon-envelope"></i>
+    <i class="icon-envelope" title="email address"></i>
   #end
 </div>
