@@ -42,7 +42,7 @@ function focusEvents() {
 	$(".focus_switch i").click(function(event) {
 		event.stopPropagation();
 		var scrollTo = $(this).attr("data-scrollto");
-		$(".group.postcodes").scrollTop(100);
+		$(".tile[data-type=focus]").find(".content").scrollTop(100);
 	});
 }
 
