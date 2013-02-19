@@ -175,6 +175,10 @@ body {
   margin-right: 0.5em;
 }
 
+.tile.focus {
+  padding-left: 0;
+}
+
 .tile.focus .content {
   height: 225px;
   width: 200%;
