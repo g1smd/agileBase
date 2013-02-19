@@ -191,10 +191,16 @@ label {
   overflow: hidden;
 }
 
-.report_data_row img, .comment img {
+.tile img  {
   float: left;
   border-radius: 0.75em;
   margin-right: 0.5em;
+}
+
+ul.tweet_list {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
 }
 
 .comment_attribution {

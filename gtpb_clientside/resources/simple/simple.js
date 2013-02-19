@@ -28,7 +28,6 @@ function focusEvents() {
 		}
 		var username = $(this).attr("data-username");
 		$(this).tweet({
-			avatar_size : 32,
 			count : 1,
 			fetch : 20,
 			filter : function(t) {
