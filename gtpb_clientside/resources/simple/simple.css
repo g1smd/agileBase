@@ -173,8 +173,8 @@ body {
   position: absolute;
   font-size: 20pt;
   top: 0;
-  right: 1em;
-  width: 1em;
+  right: 0;
+  width: 2em;
   background-color: rgba(101, 103, 102, 0.1);
   padding-top: 0.5em;
   padding-left: 0.5em;
