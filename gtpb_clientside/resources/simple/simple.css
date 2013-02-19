@@ -180,6 +180,10 @@ body {
   padding-left: 0.25em;
 }
 
+.focus_switch i {
+  padding: 0.5em;
+}
+
 label input[type=radio] {
   display: none;
 }
