@@ -29,6 +29,25 @@
 #foreach($field in $table.getFields())
   #parse("s/tiles/focus/field.vm")
 #end
+## Related data from other tables
+#foreach($reportField in $report.getReportFields())
+  #set($field = $reportField.getBaseField())
+  #if($field.isPrimaryKey())
+    #set($reportFieldTable = $field.getTableContainingField())
+    #if(!$reportFieldTable.equals($table))
+      #set($relatedRowIds = $view.getRelatedRowIds($rowId, $reportFieldTable))
+      #if($relatedRowIds.size() == 1)
+        #foreach($relatedRowId in $relatedRowIds) 
+          #set($rrd_rowId = $relatedRowId)
+          #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
+          #foreach($field in $reportFieldTable.getFields())
+            #parse("s/tiles/focus/field.vm")
+          #end
+        #end
+      #end
+    #end
+  #end
+#end
 
 #if($allComments.size() > 0)
   <div class="group comments">
@@ -76,7 +95,7 @@
 #if(($allEmails.size() > 0) || ($allUrls.size() > 0))
   <div class="group emails">
     #foreach($email in $allEmails)
-      <div class="email"><a href="mailto:$femail"><i class="icon-large icon-envelope"></i> $email</a></div>
+      <div class="email"><a href="mailto:$email"><i class="icon-large icon-envelope"></i> $email</a></div>
     #end
     #foreach($url in $allUrls)
       <div class="email"><a href="$url" target="_blank"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $url.getShortURL()</a></div>
