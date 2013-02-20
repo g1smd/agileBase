@@ -250,6 +250,8 @@ label {
 .tile iframe {
   width: 100%;
   height: 500px;
+  border-radius: 0.75em;
+  border: 0;
 }
 
 .tile img  {
