@@ -141,7 +141,7 @@ function tileLoaded(tile) {
 	}
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").hide();
-	if(tile.hasAttr("data-internalreportname")) {
+	if(tile.attr("data-internalreportname").length > 1) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		tile.find(".content").load("AppController.servlet", {

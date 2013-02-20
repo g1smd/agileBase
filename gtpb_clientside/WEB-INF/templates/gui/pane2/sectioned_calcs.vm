@@ -55,7 +55,6 @@
       #end
     #end
   #elseif($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
-    $viewTools.log("$reportField detail started $detailStarted")
     #if(!$detailStarted)
       ## Calcs just go in the current heading
       #set($calcLevel = $headingLevel - 1)
