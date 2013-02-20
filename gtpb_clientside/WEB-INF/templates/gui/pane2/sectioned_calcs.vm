@@ -41,11 +41,11 @@
           #set($headingLevel = $headingLevel + 1)
           #set($previousTable = $table)
 	      #if($reportStyle == "ONE_SECTION")
-			#set($detailStartsNext = true)
-		  #end
+			    #set($detailStartsNext = true)
+		    #end
         #end
       #end
-      #if($table.equals($sessionTable))
+      #if($table.equals($sessionTable) || ($headingLevel == 2))
         #set($detailStartsNext = true) ## Detail starts at the next table we encounter
       #end
     #end

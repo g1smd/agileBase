@@ -141,6 +141,15 @@ function tileLoaded(tile) {
 	}
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").hide();
+	if(tile.hasAttr("data-internalreportname")) {
+		var internalReportName = tile.attr("data-internalreportname");
+		var internalTableName = tile.attr("data-internaltablename");
+		tile.find(".content").load("AppController.servlet", {
+			"return": "s/tiles/report_iframe",
+			set_table: internalTableName,
+			set_report: internalReportName
+		});
+	}
 	if (tileType == "adder") {
 		$("label.tiletype").click(function(event) {
 			event.stopPropagation(); // stop the .tile click being called
