@@ -150,6 +150,7 @@ function tileLoaded(tile) {
 			set_report: internalReportName
 		});
 	}
+	
 	if (tileType == "adder") {
 		$("label.tiletype").click(function(event) {
 			event.stopPropagation(); // stop the .tile click being called
