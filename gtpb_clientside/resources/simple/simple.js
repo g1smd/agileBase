@@ -145,8 +145,9 @@ function tileLoaded(tile) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		var internalTileName = tile.attr("data-internaltilename");
-		var iframeSrc = "return=s/tiles/report_data&set_table=" + internalTableName + "&set_report=" + internalReportName;
+		var iframeSrc = "AppController.servlet?return=s/tiles/report_data&set_table=" + internalTableName + "&set_report=" + internalReportName;
 		iframeSrc += "&set_report_row_limit=50&set_tile=" + internalTileName
+		iframeSrc += "&cachebust=" + (new Date()).getTime();
 		tile.find(".content").html("<iframe src='" + iframeSrc + "'></iframe");
 	}
 	
