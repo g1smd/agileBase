@@ -28,13 +28,14 @@
 #set($sessionReport = $sessionData.getReport())##
 #set($sessionTable = $sessionReport.getParentTable())
 #set($reportStyle = $sessionReport.getReportStyle)
+## Map heading fields to heading levels
 #foreach($reportField in $sessionReport.getReportFields())
   #set($field = $reportField.getBaseField())
-  #if($reportField.isFieldFromReport())
-    #set($table = $reportField.getReportFieldIsFrom().getParentTable())
-  #else
+  ###if($reportField.isFieldFromReport())
+  ##  #set($table = $reportField.getReportFieldIsFrom().getParentTable())
+  ###else
     #set($table = $field.getTableContainingField())
-  #end
+  ###end
   #if($field.isPrimaryKey())
     #if(!$detailStarted)
       #if(!$table.equals($previousTable))
