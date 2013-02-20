@@ -267,6 +267,30 @@ table#reportData tr.rowb  {
   border-left: 0;
 }
 
+#wrapper.blue table#reportData tr.rowb {
+  border: 1px solid rgba(0,174,239,0.5);
+}
+
+#wrapper.pink table#reportData tr.rowb {
+  border: 1px solid rgba(236,0,140,0.5);
+}
+
+#wrapper.green table#reportData tr.rowb {
+  border: 1px solid rgba(141,198,63,0.5);
+}
+
+#wrapper.turquoise table#reportData tr.rowb {
+  border: 1px solid rgba(0,157,144,0.5);
+}
+
+#wrapper.purple table#reportData tr.rowb {
+  border: 1px solid rgba(92,41,105,0.5);
+}
+
+#wrapper.yellow table#reportData tr.rowb {
+  border: 1px solid rgba(245,189,38,0.5);
+}
+
 table#reportData .trailing { 
   border-right:0 
 }

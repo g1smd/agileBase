@@ -261,7 +261,7 @@
   
   #set($filters = $sessionData.getReportFilterValues())
   <body #if((!$mobile_device) && (!$tile)) style="margin-left:0.5em;" onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
-    <div id=wrapper>
+    <div id=wrapper #if($tile) class="$tile.getColour()" #end>
 	  #if($mobile_device)
 		  #parse("gui/mobile/pane2_header.vm")
 	  #end
