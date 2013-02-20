@@ -247,6 +247,11 @@ label {
   overflow: hidden;
 }
 
+.tile iframe {
+  width: 100%;
+  height: 500px;
+}
+
 .tile img  {
   float: left;
   border-radius: 0.75em;
