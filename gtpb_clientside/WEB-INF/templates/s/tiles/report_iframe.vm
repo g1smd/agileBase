@@ -16,4 +16,4 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($report = $sessionData.getReport())
-<iframe src="AppController.servlet?return=gui/pane2/pane2"></iframe>
+<iframe src="AppController.servlet?return=gui/reports_and_tables/report_data"></iframe>
