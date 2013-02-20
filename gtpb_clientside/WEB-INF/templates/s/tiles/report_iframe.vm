@@ -15,5 +15,4 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($report = $sessionData.getReport())
-<iframe src="AppController.servlet?return=gui/reports_and_tables/report_data"></iframe>
+<iframe src="AppController.servlet?return=s/tiles/report_data"></iframe>
