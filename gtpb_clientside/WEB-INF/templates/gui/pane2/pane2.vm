@@ -152,7 +152,8 @@
     <script language=Javascript src="resources/$resource_folder/new_delete.js"></script>
 	<script src="resources/pane2_amalgam.js" type="text/javascript"></script>
     <script language=Javascript>
-        #set($numRows = $data.size())
+      #set($numRows = $data.size())
+      #if(!$tile)
         #set($reportRowLimit = $sessionData.getReportRowLimit())
         #if($numRows < $reportRowLimit)
           parent.pane_1.fSetCurrentOption('$pane1_id','$numRows');##
@@ -165,14 +166,12 @@
           #end
         #end
       var jqDoc = $(top.document);
-##    	#if(!$isNotTable)
-##          jqDoc.find('#filter').removeAttr('disabled');
-##    	#end
     	## Enable the dashboard if relevant
       jqDoc.find('#button_dashboard').removeAttr('disabled');
       jqDoc.find('#button_forms').removeAttr('disabled');
       jqDoc.find('#button_calendar').removeAttr('disabled');
-		
+    #end ## end if not tile
+      
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())
