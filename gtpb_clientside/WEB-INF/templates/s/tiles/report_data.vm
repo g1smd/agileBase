@@ -1,0 +1,2 @@
+#set($tile = $sessionData.getTile())
+#parse("gui/reports_and_tables/report_data.vm")
