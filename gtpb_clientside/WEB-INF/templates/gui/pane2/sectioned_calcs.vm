@@ -45,7 +45,7 @@
 		    #end
         #end
       #end
-      #if($table.equals($sessionTable) || ($headingLevel == 2))
+      #if($table.equals($sessionTable) || ($headingLevel == 3))
         #set($detailStartsNext = true) ## Detail starts at the next table we encounter
       #end
     #end
