@@ -31,11 +31,11 @@
 ## Map heading fields to heading levels
 #foreach($reportField in $sessionReport.getReportFields())
   #set($field = $reportField.getBaseField())
-  ###if($reportField.isFieldFromReport())
-  ##  #set($table = $reportField.getReportFieldIsFrom().getParentTable())
-  ###else
+  #if($reportField.isFieldFromReport())
+    #set($table = $reportField.getReportFieldIsFrom().getParentTable())
+  #else
     #set($table = $field.getTableContainingField())
-  ###end
+  #end
   #if($field.isPrimaryKey())
     #if(!$detailStarted)
       #if(!$table.equals($previousTable))
@@ -55,6 +55,7 @@
       #end
     #end
   #elseif($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
+    $viewTools.log("$reportField detail started $detailStarted")
     #if(!$detailStarted)
       ## Calcs just go in the current heading
       #set($calcLevel = $headingLevel - 1)
