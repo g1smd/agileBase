@@ -272,7 +272,7 @@ table#reportData tr.rowb  {
 }
 
 #wrapper.pink table#reportData tr.rowb {
-  border: 1px solid rgba(236,0,140,0.5);
+  border: 1px solid rgba(236,0,140,0.25);
 }
 
 #wrapper.green table#reportData tr.rowb {
@@ -280,7 +280,7 @@ table#reportData tr.rowb  {
 }
 
 #wrapper.turquoise table#reportData tr.rowb {
-  border: 1px solid rgba(0,157,144,0.5);
+  border: 1px solid rgba(0,157,144,0.25);
 }
 
 #wrapper.purple table#reportData tr.rowb {
