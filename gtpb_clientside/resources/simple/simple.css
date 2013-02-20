@@ -252,6 +252,7 @@ label {
   height: 500px;
   border-radius: 0.75em;
   border: 0;
+  background-color: white;
 }
 
 .tile img  {
