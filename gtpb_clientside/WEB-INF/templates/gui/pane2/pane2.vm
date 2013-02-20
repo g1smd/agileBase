@@ -220,7 +220,9 @@
 		  //jqFilterElement.css("left",left+1);
 		  i++;
 		});
-		$("#fieldFilters").css("left","0.5em");
+    #if(!$tile)
+		  $("#fieldFilters").css("left","0.5em");
+    #end
 	}
 	#end
 	
@@ -258,7 +260,7 @@
   #end
   
   #set($filters = $sessionData.getReportFilterValues())
-  <body #if(!$mobile_device) style="margin-left:0.5em;" onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
+  <body #if((!$mobile_device) && (!$tile)) style="margin-left:0.5em;" onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
     <div id=wrapper>
 	  #if($mobile_device)
 		  #parse("gui/mobile/pane2_header.vm")
