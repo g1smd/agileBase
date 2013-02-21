@@ -41,6 +41,7 @@ import com.gtwm.pb.model.manageSchema.fields.IntegerFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.RelationFieldDefn;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 import com.gtwm.pb.servlets.ServletSchemaMethods;
+import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.AppProperties;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
@@ -177,8 +178,8 @@ public final class AuthManager implements AuthManagerInfo {
 					String masterUsername = "master";
 					CompanyInfo masterCompany = new Company("Master Company");
 					((Authenticator) this.authenticator).addCompany(masterCompany);
-					AppUserInfo masterUser = new AppUser(masterCompany, masterUsername, "Master",
-							"User", masterPassword, "", "", false);
+					AppUserInfo masterUser = new AppUser(masterCompany, masterUsername, "Master", "User",
+							masterPassword, "", "", false);
 					((Authenticator) this.authenticator).addUser(masterUser);
 					((Authenticator) this.authenticator).addUserPrivilege(masterUser, PrivilegeType.MASTER);
 					hibernateTransaction.commit();
@@ -341,8 +342,8 @@ public final class AuthManager implements AuthManagerInfo {
 		String adminUsername = "admin" + company.getCompanyName().toLowerCase();
 		adminUsername = adminUsername.replaceAll("\\W", "");
 		String adminPassword = RandomString.generate();
-		AppUserInfo adminUser = new AppUser(company, adminUsername, "User", "Admin",
-				adminPassword, "", "", false);
+		AppUserInfo adminUser = new AppUser(company, adminUsername, "User", "Admin", adminPassword, "",
+				"", false);
 		String adminRolename = adminUsername;
 		AppRoleInfo adminRole = new AppRole(company, adminRolename);
 		// no mapping from role to authenticator so we have to explicitly save it
@@ -949,7 +950,15 @@ public final class AuthManager implements AuthManagerInfo {
 
 	public AppUserInfo getLoggedInUser(HttpServletRequest request) throws DisallowedException,
 			ObjectNotFoundException {
-		return this.getUserByUserName(request, request.getRemoteUser());
+		String username = request.getRemoteUser();
+		if (username != null) {
+			return this.getUserByUserName(request, username);
+		}
+		try {
+			return ServletUtilMethods.getPublicUserForRequest(request, this.authenticator);
+		} catch (MissingParametersException mpex) {
+			throw new ObjectNotFoundException("No user logged in and public user not defined", mpex);
+		}
 	}
 
 	public void sendPasswordReset(HttpServletRequest request) throws CantDoThatException,
