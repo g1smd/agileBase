@@ -134,7 +134,7 @@ body {
 
 .tile.expanded {
   width: 100%;
-  height: auto;
+  height: 800px;
   cursor: auto;
 }
 
