@@ -102,6 +102,11 @@ body {
 
 .tile .content {
   border-radius: 1em;
+  width: auto;
+  height: auto;
+  opacity: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .tile.expanded .content {
