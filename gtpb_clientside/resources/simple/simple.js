@@ -264,7 +264,6 @@ function removeItem(array, item){
  */
 function backHome() {
 	$(".tile.expanded").find(".content").addClass("notfocus");
-	/*
 	$(".tile.expanded").removeClass("expanded");
 	$(".tile.notfocus").removeClass("notfocus");
 	var allColours = abTileColours.join(" ");
@@ -274,7 +273,7 @@ function backHome() {
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
 	$('.tile .tile_icon i').removeClass("notfocus");
-	*/
+	
 }
 
 /**
