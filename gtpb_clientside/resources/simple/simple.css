@@ -111,6 +111,10 @@ body {
   transition-duration: 0.5s;
 }
 
+.tile.adder .content {
+  overflow: hidden;
+}
+
 #tiles .tile .tile_icon {
   font-size: 150pt;
   display: block;
