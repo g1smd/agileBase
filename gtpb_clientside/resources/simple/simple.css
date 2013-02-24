@@ -296,6 +296,8 @@ input[type=search] {
 table.reportData {
   border-collapse: separate;
   border-spacing: 0.5em;
+  background-colour: rgba(255,255,255,0.5);
+  border-radius: 1em;
 }
 
 table.reportData tr {
@@ -306,10 +308,10 @@ table.reportData td {
   vertical-align: top;
   padding: 0.5em;
   border-radius: 0.5em;
+  color: #656766;
 }
 
 table.reportData td.colored {
-  color: black
 }
 
 /* Side actions */
