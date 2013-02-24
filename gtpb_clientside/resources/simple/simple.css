@@ -104,7 +104,7 @@ body {
   border-radius: 1em;
 }
 
-tile.expanded .content {
+.tile.expanded .content {
   overflow: auto;
 }
 
