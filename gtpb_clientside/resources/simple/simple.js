@@ -153,9 +153,9 @@ function tileLoaded(tile) {
 			set_tile: internalTileName,
 			cache_bust: (new Date()).getTime()
 		}, function() {
-			$(".reportData tr").click(function) {
+			$(".reportData tr").click(function() {
 				alert("click");
-			}
+			});
 		});
 /*		
 		var iframeSrc = "AppController.servlet?return=s/tiles/report_data&set_table=" + internalTableName + "&set_report=" + internalReportName;
