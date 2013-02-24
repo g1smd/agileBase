@@ -134,13 +134,13 @@ body {
 
 .tile.expanded {
   width: 100%;
-  height: 800px;
+  height: 600px;
   cursor: auto;
 }
 
 .tile.adder.expanded {
   width: 100%;
-  height: 800px;
+  height: 600px;
 }
 
 .notfocus {
