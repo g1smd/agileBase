@@ -1,16 +1,18 @@
-#set($reportStyle = $sessionReport.getReportStyle())
-#if((!$isNotTable) && $reportStyle && ($reportStyle != "SPREADSHEET"))
-  ## First work out heading levels
-  #parse("gui/pane2/sectioned_calcs.vm")
-  #parse("gui/pane2/sectioned_head.vm")
-  <tbody name=reportBody id=reportBody class="selectable">
-    #parse("gui/pane2/sectioned_body.vm")
-  </tbody>
-#else
-  <thead>
-    #parse("gui/pane2/pane2_head.vm")
-  </thead>
-  <tbody name=reportBody id=reportBody class="selectable">
-    #parse("gui/pane2/pane2_body.vm")
-  </tbody>
-#end
+<table>
+  #set($reportStyle = $sessionReport.getReportStyle())
+  #if((!$isNotTable) && $reportStyle && ($reportStyle != "SPREADSHEET"))
+    ## First work out heading levels
+    #parse("gui/pane2/sectioned_calcs.vm")
+    #parse("gui/pane2/sectioned_head.vm")
+    <tbody name=reportBody id=reportBody class="selectable">
+      #parse("gui/pane2/sectioned_body.vm")
+    </tbody>
+  #else
+    <thead>
+      #parse("gui/pane2/pane2_head.vm")
+    </thead>
+    <tbody name=reportBody id=reportBody class="selectable">
+      #parse("gui/pane2/pane2_body.vm")
+    </tbody>
+  #end
+</table>

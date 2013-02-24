@@ -293,6 +293,12 @@ input[type=search] {
   border-radius: 1em;
 }
 
+table td {
+  vertical-align: top;
+}
+
+/* Side actions */
+
 .sideAction {
   color: white;
   cursor: pointer;
