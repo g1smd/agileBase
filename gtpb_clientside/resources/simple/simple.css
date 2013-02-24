@@ -108,6 +108,7 @@ body {
 
 .tile.expanded .content {
   overflow: auto;
+  transition-duration: 0.5s;
 }
 
 #tiles .tile .tile_icon {
