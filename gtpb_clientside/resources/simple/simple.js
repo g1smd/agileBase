@@ -145,10 +145,21 @@ function tileLoaded(tile) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		var internalTileName = tile.attr("data-internaltilename");
+		
+		tile.find(".content").load("AppController.servlet", {
+			"return": "s/tiles/report_data",
+			set_table: internalTableName,
+			set_report: internalReportName,
+			set_report_row_limit: 50,
+			set_tile: internalTileName,
+			cache_bust: (new Date()).getTime()
+		});
+/*		
 		var iframeSrc = "AppController.servlet?return=s/tiles/report_data&set_table=" + internalTableName + "&set_report=" + internalReportName;
 		iframeSrc += "&set_report_row_limit=50&set_tile=" + internalTileName
 		iframeSrc += "&cachebust=" + (new Date()).getTime();
 		tile.find(".content").html("<iframe src='" + iframeSrc + "'></iframe");
+	*/
 	}
 	
 	if (tileType == "adder") {
