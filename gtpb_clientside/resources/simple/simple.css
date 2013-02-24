@@ -293,11 +293,16 @@ input[type=search] {
   border-radius: 1em;
 }
 
-table tr {
+table.reportData {
+  border-collapse: separate;
+  border-spacing: 0.5em;
+}
+
+table.reportData tr {
   margin-bottom: 0.5em;
 }
 
-table td {
+table.reportData td {
   vertical-align: top;
   padding: 0.5em;
   border-radius: 0.5em;
