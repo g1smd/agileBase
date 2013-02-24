@@ -332,7 +332,7 @@ table.reportData td {
   vertical-align: top;
   padding: 0.5em;
   border-radius: 0.5em;
-  color: #656766;
+  color: #353736; /* departure from normal 656766 to make a bit darker */
 }
 
 .seemorerows td {
