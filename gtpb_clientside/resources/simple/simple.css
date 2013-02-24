@@ -31,8 +31,6 @@ body {
   -moz-transition-property: background-color;
   -webkit-transition-duration: 1s;
   -webkit-transition-property: background-color;
-  overflow-y: hidden;
-  overflow-x: auto;
 }
 
 .transition {
@@ -134,14 +132,16 @@ body {
 
 .tile.expanded {
   width: 100%;
-  height: 600px;
+  height: 550px;
   cursor: auto;
 }
 
+/*
 .tile.adder.expanded {
   width: 100%;
-  height: 600px;
+  height: 550px;
 }
+*/
 
 .notfocus {
   opacity: 0;
