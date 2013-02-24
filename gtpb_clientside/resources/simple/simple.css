@@ -301,7 +301,11 @@ table.reportData {
 }
 
 table.reportData tr {
-  margin-bottom: 0.5em;
+}
+
+table.reportData th {
+  color: #656766;
+  text-align: left;
 }
 
 table.reportData td {
