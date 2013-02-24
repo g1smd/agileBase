@@ -308,10 +308,6 @@ table.reportData td {
   border-radius: 0.5em;
 }
 
-table.reportData td.coloured {
-  color: black;
-}
-
 /* Side actions */
 
 .sideAction {
