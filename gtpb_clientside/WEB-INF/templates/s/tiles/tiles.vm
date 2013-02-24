@@ -38,7 +38,7 @@
       <div class="title">$tile</div>
     #end
     #if($template == "data_link")
-      <div class="tile_icon transition"><i class="$tile.getReport().getModule().getIconPath()"></i></div>
+      <div class="tile_icon transition"><i class="transition $tile.getReport().getModule().getIconPath()"></i></div>
     #end
     <div class="content transition #if(($template != 'data_stream') && ($template != 'focus')) notfocus #end">
       #parse("s/tiles/${template}.vm")
