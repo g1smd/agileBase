@@ -335,11 +335,12 @@ table.reportData td {
   color: #656766;
 }
 
-.seemorerows {
+.seemorerows td {
   background-color: white;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
 }
+
 /* Side actions */
 
 .sideAction {
