@@ -293,8 +293,14 @@ input[type=search] {
   border-radius: 1em;
 }
 
+table tr {
+  margin-bottom: 0.5em;
+}
+
 table td {
   vertical-align: top;
+  padding: 0.5em;
+  border-radius: 0.5em;
 }
 
 /* Side actions */
