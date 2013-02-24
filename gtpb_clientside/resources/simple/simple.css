@@ -320,6 +320,7 @@ table.reportData {
 }
 
 table.reportData tr {
+  cursor: pointer;
 }
 
 table.reportData th {

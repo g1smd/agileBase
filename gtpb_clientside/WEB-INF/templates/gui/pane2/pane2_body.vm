@@ -69,7 +69,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           $expando.get(0)="$expando.get(1)"
         #end
       #end 
-      onclick="$row.get(1)" 
+      #if(!$tile) onclick="$row.get(1)" #end 
       forcehighlight="true">
 		#if($parentTable && (!$grandchild))
 			<td class="deleter"><i title="Delete this $formTab.getTable().getSingularName()" class="icon-remove" onclick="deleteTabRecord(this, false);"></i></td>
