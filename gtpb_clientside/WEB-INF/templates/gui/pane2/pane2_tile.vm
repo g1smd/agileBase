@@ -1,4 +1,4 @@
-<table>
+<table class="reportData">
   #set($reportStyle = $sessionReport.getReportStyle())
   #if((!$isNotTable) && $reportStyle && ($reportStyle != "SPREADSHEET"))
     ## First work out heading levels
