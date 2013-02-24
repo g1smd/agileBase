@@ -79,7 +79,7 @@ function commonTileEvents() {
 		}, function() {
 			tileLoaded(tile);
 		});
-		tile.find(".content").show();
+		tile.find(".content").removeClass("notfocus");
 	});
 }
 
