@@ -100,6 +100,14 @@ body {
   white-space: nowrap;
 }
 
+.tile .content {
+  border-radius: 1em;
+}
+
+tile.expanded .content {
+  overflow: auto;
+}
+
 #tiles .tile .tile_icon {
   font-size: 150pt;
   display: block;
