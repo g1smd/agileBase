@@ -31,6 +31,8 @@ body {
   -moz-transition-property: background-color;
   -webkit-transition-duration: 1s;
   -webkit-transition-property: background-color;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 .transition {
