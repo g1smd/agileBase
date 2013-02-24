@@ -140,7 +140,7 @@ function tileLoaded(tile) {
 		$(".sideAction.removeTile").addClass("expanded");
 	}
 	// Hide all icons otherwise they can be clicked
-	$(".tile_icon i").hide();
+	$(".tile_icon i").addClass("notfocus");
 	if(tile.attr("data-internalreportname")) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
@@ -263,7 +263,7 @@ function removeItem(array, item){
  * Contract the expanded tile, go back to the main screen
  */
 function backHome() {
-	$(".tile.expanded").find(".content").empty();
+	$(".tile.expanded").find(".content").addClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
 	$(".tile.notfocus").removeClass("notfocus");
 	var allColours = abTileColours.join(" ");
@@ -272,7 +272,7 @@ function backHome() {
 	$(".sideAction").removeClass("expanded");
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
-	$('.tile .tile_icon i').show();
+	$('.tile .tile_icon i').removeClass("notfocus");
 }
 
 /**

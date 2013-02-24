@@ -313,6 +313,7 @@ table.reportData tr {
 table.reportData th {
   color: #656766;
   text-align: left;
+  vertical-align: top;
 }
 
 table.reportData td {
