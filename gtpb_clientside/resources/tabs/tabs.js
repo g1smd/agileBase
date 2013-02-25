@@ -598,12 +598,15 @@ function fSexyUpload() {
 											jqProgressBar.text("Upload complete");
 											jqProgressBar.addClass("upload_complete");
 											jqProgressBar.css("width", "100%");
-											// var returnTemplate =
-											// jqForm.find("input[name=return]").val();
-											// TODO: check if uploads are used anywhere else other
-											// than pane 3
-											document.location = "?return=gui/reports_and_tables/pane3&cachebust="
-													+ (new Date()).getTime();
+											var returnTemplate = jqForm.find(
+													"input[name=upload_return]").val();
+											if (returnTemplate != "") {
+												document.location = "?return=" + returnTemplate
+														+ "&cachebust=" + (new Date()).getTime();
+											} else {
+												document.location = "?return=gui/reports_and_tables/pane3&cachebust="
+														+ (new Date()).getTime();
+											}
 										} else {
 											var exceptionMessage = exception.text();
 											alert(exceptionMessage);

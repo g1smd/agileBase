@@ -62,7 +62,8 @@
   #end
 Upload a new template for $report: 
 <form class="fileUploader" method="POST" action="AppController.servlet">
-<input type="hidden" name="return" value="gui/printouts/manage" />
+<input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" />
+<input type="hidden" name="upload_return" value="gui/printouts/manage" />
 <input type="hidden" name="upload_custom_template" value="true" />
 <input type="file" name="templatename" class="submit-trigger" onChange="uploadFile(this);" />
 <div class="upload_progress_container">
