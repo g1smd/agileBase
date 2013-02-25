@@ -25,7 +25,7 @@ var pane3Scripts = function() {
 	pane3ScriptsPub.functionList = new Array();
 	pane3ScriptsPub.update = function() {
 		var len = pane3ScriptsPub.functionList.length;
-		for (var i = 0; i < len; i++) {
+		for ( var i = 0; i < len; i++) {
 			pane3ScriptsPub.functionList[i]();
 		}
 	}
@@ -71,7 +71,7 @@ var TabInterfaceObject = function(containerElem) {
 			tabLoaded = false;
 			loadSpinner.show();
 			jqTabContainer.load(tabSource, {
-				abCache: new Date().getTime()
+				abCache : new Date().getTime()
 			}, function() {
 				TabObjectPub.showTab();
 				loadSpinner.hide();
@@ -97,7 +97,7 @@ var TabInterfaceObject = function(containerElem) {
 				jqTabContainer.empty();
 				loadSpinner.show();
 				jqTabContainer.load(tabSource, {
-					abCache: new Date().getTime()
+					abCache : new Date().getTime()
 				}, function() {
 					loadSpinner.hide();
 					if (parent.pane_2 && currentRowId != -1) {
@@ -178,17 +178,17 @@ var TabInterfaceObject = function(containerElem) {
 	TabInterfaceObjectPub.refresh = function(rowId) {
 		TabInterfaceObjectPub.invalidate();
 		if (typeof rowId != "undefined") {
-		  currentRowId = rowId;
+			currentRowId = rowId;
 		}
-		//Elaine
-		//console.log("TabInterfaceObjectPub.refresh(" + rowId + ")");
+		// Elaine
+		// console.log("TabInterfaceObjectPub.refresh(" + rowId + ")");
 		currentTab.queueTab();
 	}
 
 	TabInterfaceObjectPub.getNumberOfTabs = function() {
 		return tabList.length;
 	}
-	
+
 	TabInterfaceObjectPub.showTab = function(tabNumber) {
 		if (tabList[tabNumber] != currentTab) {
 			tabList[tabNumber].showTab();
@@ -324,7 +324,8 @@ function fUpdateGlobalRelation() {
 }
 
 function fRelationPickers() {
-	$("input.relation_hidden").each(function() {
+	$("input.relation_hidden").each(
+			function() {
 				var oHidden = this;
 				var jqHidden = $(oHidden);
 				if (jqHidden.attr("ab_setup_complete") == "true") {
@@ -355,12 +356,12 @@ function fRelationPickers() {
 							relationNewRecord(oHidden);
 						} else {
 							// a normal save
-							if(jqHidden.attr("gtpb_refresh_after") == "true") {
-							  new fChange(oHidden, function() {
-							  	pane3TabInterface.refresh();
-							  });
+							if (jqHidden.attr("gtpb_refresh_after") == "true") {
+								new fChange(oHidden, function() {
+									pane3TabInterface.refresh();
+								});
 							} else {
-							  new fChange(oHidden);
+								new fChange(oHidden);
 							}
 							try {
 								// any additional actions to the save
@@ -423,7 +424,8 @@ function fRelationPickers() {
 			selectFirst : true,
 			width : 296,
 			formatItem : function(rawValue, i, optionsDataLength) {
-				var formattedValue = rawValue[0].replace("{", " <span class='secondary'>");
+				var formattedValue = rawValue[0].replace("{",
+						" <span class='secondary'>");
 				formattedValue = formattedValue.replace("}", "</span>");
 				return formattedValue;
 			}
@@ -451,16 +453,16 @@ function fRelationPickers() {
 		// just before
 		// this
 		// TODO: test newer IE, the code may work now
-		//if ($.browser.msie) {
-			// $('<span
-			// style="padding-right:10px">'+this.value+'</span>').insertBefore($(this));
-			// $(this).remove();
-			//return;
-		//} else {
-			var internalTableName = jqThis.attr('internalTableName');
-			var internalFieldName = jqThis.attr('internalFieldName');
-			bindAutoComplete(jqThis, internalTableName, internalFieldName);
-		//}
+		// if ($.browser.msie) {
+		// $('<span
+		// style="padding-right:10px">'+this.value+'</span>').insertBefore($(this));
+		// $(this).remove();
+		// return;
+		// } else {
+		var internalTableName = jqThis.attr('internalTableName');
+		var internalFieldName = jqThis.attr('internalFieldName');
+		bindAutoComplete(jqThis, internalTableName, internalFieldName);
+		// }
 	});
 
 	function relationNewRecord(oHidden) {
@@ -474,7 +476,7 @@ function fRelationPickers() {
 			"return" : "gui/resources/input/xmlreturn_record_info",
 			set_table : relatedInternalTableName,
 			save_new_record : true,
-			abCache: new Date().getTime()
+			abCache : new Date().getTime()
 		};
 		postData[displayFieldInternalName] = newValue;
 		$.post("AppController.servlet", postData, function(data) {
@@ -483,8 +485,8 @@ function fRelationPickers() {
 			jqHidden.attr("gtpb_set_row_id", newRowId);
 			jqHidden.next("input").val(newValue);
 			jqHidden.next("input").addClass("new_relation_value"); // bit of a hack -
-																															// see
-																															// jquery.autocomplete.js
+			// see
+			// jquery.autocomplete.js
 			// relationChangeActions = any additional actions after the save
 			if (typeof relationChangeActions == 'function') {
 				new fChange(jqHidden[0], relationChangeActions);
@@ -568,49 +570,57 @@ function uploadFile(fileInputElement) {
  * https://github.com/jurisgalang/jquery-sexypost#readme
  */
 function fSexyUpload() {
-	$("form.fileUploader").each(function() {
-		var jqForm = $(this);
-		if (jqForm.hasClass("uploadEventRegistered")) {
-			return;
-		}
-		var jqProgressBar = jqForm.find(".upload_progress_bar");
-		var jqUploadInfo = jqForm.find(".upload_info");
-		jqForm.sexyPost({
-			start : function(event) {
-				jqProgressBar.parent().show();
-				jqProgressBar.html(jqUploadInfo.html());
-				jqProgressBar.removeClass("upload_complete");
-				jqProgressBar.css("width", "0%");
-			},
-			progress : function(event, completed, loaded, total) {
-				jqProgressBar.css("width", (completed * 100).toFixed(1) + "%");
-			},
-			complete : function(event, responseText) {
-				var response = $(responseText).find("response").text();
-				if (response == "ok") {
-					jqProgressBar.text("Upload complete");
-					jqProgressBar.addClass("upload_complete");
-					jqProgressBar.css("width", "100%");
-					//var returnTemplate = jqForm.find("input[name=return]").val();
-					//TODO: check if uploads are used anywhere else other than pane 3
-					document.location = "?return=gui/reports_and_tables/pane3&cachebust=" + (new Date()).getTime();
-				} else {
-					var exceptionMessage = $(responseText).find("exception").text();
-					alert(exceptionMessage);
-					jqProgressBar.text(exceptionMessage );
-					jqUploadInfo.text(exceptionMessage);
-				}
-			},
-			error : function(event) {
-				jqProgressBar.text("Error, file upload incomplete");
-				jqUploadInfo.text("Error, file upload incomplete");
-			}/*
-				 * , abort: function(event) { jqProgressBar.text("Upload aborted");
-				 * jqUploadInfo.text("Upload aborted"); }
-				 */
-		});
-		jqForm.addClass("uploadEventRegistered");
-	});
+	$("form.fileUploader")
+			.each(
+					function() {
+						var jqForm = $(this);
+						if (jqForm.hasClass("uploadEventRegistered")) {
+							return;
+						}
+						var jqProgressBar = jqForm.find(".upload_progress_bar");
+						var jqUploadInfo = jqForm.find(".upload_info");
+						jqForm
+								.sexyPost({
+									start : function(event) {
+										jqProgressBar.parent().show();
+										jqProgressBar.html(jqUploadInfo.html());
+										jqProgressBar.removeClass("upload_complete");
+										jqProgressBar.css("width", "0%");
+									},
+									progress : function(event, completed, loaded, total) {
+										jqProgressBar.css("width", (completed * 100).toFixed(1)
+												+ "%");
+									},
+									complete : function(event, responseText) {
+										var response = $(responseText).find("response").text();
+										var exception = $(responseText).find("exception");
+										if (response == "ok") {
+											jqProgressBar.text("Upload complete");
+											jqProgressBar.addClass("upload_complete");
+											jqProgressBar.css("width", "100%");
+											// var returnTemplate =
+											// jqForm.find("input[name=return]").val();
+											// TODO: check if uploads are used anywhere else other
+											// than pane 3
+											document.location = "?return=gui/reports_and_tables/pane3&cachebust="
+													+ (new Date()).getTime();
+										} else {
+											var exceptionMessage = exception.text();
+											alert(exceptionMessage);
+											jqProgressBar.text(exceptionMessage);
+											jqUploadInfo.text(exceptionMessage);
+										}
+									},
+									error : function(event) {
+										jqProgressBar.text("Error, file upload incomplete");
+										jqUploadInfo.text("Error, file upload incomplete");
+									}/*
+										 * , abort: function(event) { jqProgressBar.text("Upload
+										 * aborted"); jqUploadInfo.text("Upload aborted"); }
+										 */
+								});
+						jqForm.addClass("uploadEventRegistered");
+					});
 }
 
 /* for date fields */
@@ -811,21 +821,22 @@ function fDatePickers() {
 }
 
 function fAssignButtonTableActions() {
-	$('button.tableaction').click(
-		function() {
-			var actionName = $(this).attr('actionname');
-			if (self == top) { // if mobile un-framed version
-				document.location = "?return=gui/mobile/module_action&set_custom_string=true&key=actionname&value="
-						+ actionName;
-			} else {
-				var actionTemplate = $(this).attr('actiontemplate');
-				var actionButtons = $(this).attr('actionbuttons');
-				var callbackFunction = $(this).attr('callbackfunction');
-				top.fShowModalDialog(actionTemplate, actionName,
-						callbackFunction, actionButtons, 'width=800px; height=600px');
-			}
-			return false;
-		});
+	$('button.tableaction')
+			.click(
+					function() {
+						var actionName = $(this).attr('actionname');
+						if (self == top) { // if mobile un-framed version
+							document.location = "?return=gui/mobile/module_action&set_custom_string=true&key=actionname&value="
+									+ actionName;
+						} else {
+							var actionTemplate = $(this).attr('actiontemplate');
+							var actionButtons = $(this).attr('actionbuttons');
+							var callbackFunction = $(this).attr('callbackfunction');
+							top.fShowModalDialog(actionTemplate, actionName,
+									callbackFunction, actionButtons, 'width=800px; height=600px');
+						}
+						return false;
+					});
 }
 
 /** http://tweet.seaofclouds.com/ */
@@ -846,7 +857,9 @@ function fTwitter() {
 				return !/^@\w+/.test(t["tweet_raw_text"]);
 			},
 			username : username
-		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
+		}).bind("loaded", function() {
+			$(this).find("a").attr("target", "_blank");
+		});
 	});
 }
 
@@ -861,7 +874,7 @@ function fShowTableUsage() {
 						"AppController.servlet",
 						{
 							"return" : "gui/administration/tables/option_sets/table_usage_data_loader",
-							abCache: new Date().getTime()
+							abCache : new Date().getTime()
 						}, function(returned_content) {
 							$("#table_usage_loader").html(returned_content);
 							$("#table_usage_loader").removeClass("load_spinner");
@@ -877,7 +890,7 @@ function fShowReportUsage() {
 						"AppController.servlet",
 						{
 							"return" : "gui/administration/reports/option_sets/report_usage_data_loader",
-							abCache: new Date().getTime()
+							abCache : new Date().getTime()
 						}, function(returned_content) {
 							$("#report_usage_loader").html(returned_content);
 							$("#report_usage_loader").removeClass("load_spinner");
@@ -928,13 +941,13 @@ function addComment(jqCommentInput) {
 			fieldkey : "comment",
 			custominternaltablename : internalTableName,
 			custominternalfieldname : internalFieldName,
-			set_custom_integer: true,
-			integerkey: "comment_rowid",
-			customintegervalue: rowId,
+			set_custom_integer : true,
+			integerkey : "comment_rowid",
+			customintegervalue : rowId,
 			add_comment : true,
 			internalfieldname : internalFieldName,
-			internaltablename: internalTableName,
-			rowid: rowId,
+			internaltablename : internalTableName,
+			rowid : rowId,
 			comment : text
 		}, function(data) {
 			$("#comments_" + internalFieldName).html(data);
@@ -1115,110 +1128,124 @@ function fInitialiseDependencies() {
 }
 
 function fTabs() {
-	$(".tab_choice").each(function() {
-		var jqTab = $(this);
-		if (jqTab.hasClass("tabActionRegistered")) {
-			return;
-		}
-		jqTab.addClass("tabActionRegistered");
-		var parentInternalTableName = jqTab.closest(".form_tabber").attr(
-				"data-internaltablename");
-		// Set parent row ID for use if we're using a form table
-		var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
-		jqTab.click(function() {
-			var tabInternalTableName = $(this).attr("data-internaltablename");
-			$(".tab_choice").not(jqTab).removeClass("active");
-			var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
-					+ tabInternalTableName);
-			$("#tab_deleter").fadeOut();
-			// Load tab if there is no data yet or if this is the current tab (user has clicked to re-load it)
-			if ((tabContainer.children().size() == 0) || jqTab.hasClass("active")) {
-				jqTab.addClass("tabLoading");
-				if(jqTab.hasClass("no_records") && jqTab.hasClass("one_to_one")) {
-					$(".tab_container").fadeOut(); // fade out all tab containers
-					tabContainer.addClass("load-spinner").css("position", "relative");
-					tabContainer.fadeIn();
-					newChild(jqTab, parentInternalTableName);
-				} else {
-					// load existing content (if any)
-					$(".tab_container").fadeOut(); // fade out all tab containers
-					tabContainer.addClass("load-spinner").css("position", "relative");
-					tabContainer.fadeIn();
-					// Elaine
-					//console.log("About to load tab_content");
-					tabContainer.load("AppController.servlet", {
-						"return" : "gui/reports_and_tables/tabs/tab_content",
-						set_custom_table : true,
-						tablekey : "tabTable",
-						custominternaltablename : tabInternalTableName,
-						set_row_id: parentRowId,
-						rowidinternaltablename: parentInternalTableName,
-						set_table: parentInternalTableName,
-						abCache: new Date().getTime()
-					}, function() {
-						// Elaine
-						//console.log("Loaded load tab_content");
-						tabContainer.removeClass("load-spinner");
-						jqTab.addClass("active");
-						jqTab.removeClass("tabLoading");
-						editTabFunctions();
-						// If only one child record, show delete button in tabs bar
-						if ((tabContainer.find(".selectorReport").size() == 0)
-								&& jqTab.attr("data-singular") && (!jqTab.hasClass("no_records"))) {
-							var singularName = jqTab.attr("data-singular");
-							$("#tab_deleter").find("i").attr("title",
-									"delete this " + singularName);
-							$("#tab_deleter").fadeIn();
+	$(".tab_choice")
+			.each(
+					function() {
+						var jqTab = $(this);
+						if (jqTab.hasClass("tabActionRegistered")) {
+							return;
 						}
-					});
-				} // end of load existing content (if any)
-			} else {
-				$(".tab_container").hide();
-				tabContainer.show();
-				jqTab.addClass("active");
-				// Fire off a post to set the session tab - don't need any results
-				$.post("AppController.servlet", {
-					"return" : "blank",
-					set_custom_table : true,
-					tablekey : "tabTable",
-					custominternaltablename : tabInternalTableName,
-					abCache: new Date().getTime()
-				});
-				// If only one child record, show delete button in tabs bar
-				if ((tabContainer.find(".selectorReport").size() == 0)
-						&& jqTab.attr("data-singular")) {
-					var singularName = jqTab.attr("data=singular");
-					$("#deleter_text").text(singularName);
-					$("#tab_deleter").fadeIn();
-				}
-			}
-		}); // end of jqTab.click()
-		jqTab.find(".new").click(
-				function(e) {
-					// Elaine
-					//console.log("new");
-					newChild(jqTab, parentInternalTableName);
-					// Stop normal tab click
-					e.stopPropagation();
-				});
-		// Initialise to session tab on load (if not already the active tab)
-		if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active")) && (!jqTab.hasClass("tabLoading"))) {
-			jqTab.click();
-		}
-	}); // end of .tab_choice.each
+						jqTab.addClass("tabActionRegistered");
+						var parentInternalTableName = jqTab.closest(".form_tabber").attr(
+								"data-internaltablename");
+						// Set parent row ID for use if we're using a form table
+						var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
+						jqTab
+								.click(function() {
+									var tabInternalTableName = $(this).attr(
+											"data-internaltablename");
+									$(".tab_choice").not(jqTab).removeClass("active");
+									var tabContainer = $("#form_tabs_" + parentInternalTableName
+											+ "_" + tabInternalTableName);
+									$("#tab_deleter").fadeOut();
+									// Load tab if there is no data yet or if this is the current
+									// tab (user has clicked to re-load it)
+									if ((tabContainer.children().size() == 0)
+											|| jqTab.hasClass("active")) {
+										jqTab.addClass("tabLoading");
+										if (jqTab.hasClass("no_records")
+												&& jqTab.hasClass("one_to_one")) {
+											$(".tab_container").fadeOut(); // fade out all tab
+											// containers
+											tabContainer.addClass("load-spinner").css("position",
+													"relative");
+											tabContainer.fadeIn();
+											newChild(jqTab, parentInternalTableName);
+										} else {
+											// load existing content (if any)
+											$(".tab_container").fadeOut(); // fade out all tab
+											// containers
+											tabContainer.addClass("load-spinner").css("position",
+													"relative");
+											tabContainer.fadeIn();
+											// Elaine
+											// console.log("About to load tab_content");
+											tabContainer.load("AppController.servlet", {
+												"return" : "gui/reports_and_tables/tabs/tab_content",
+												set_custom_table : true,
+												tablekey : "tabTable",
+												custominternaltablename : tabInternalTableName,
+												set_row_id : parentRowId,
+												rowidinternaltablename : parentInternalTableName,
+												set_table : parentInternalTableName,
+												abCache : new Date().getTime()
+											}, function() {
+												// Elaine
+												// console.log("Loaded load tab_content");
+												tabContainer.removeClass("load-spinner");
+												jqTab.addClass("active");
+												jqTab.removeClass("tabLoading");
+												editTabFunctions();
+												// If only one child record, show delete button in tabs
+												// bar
+												if ((tabContainer.find(".selectorReport").size() == 0)
+														&& jqTab.attr("data-singular")
+														&& (!jqTab.hasClass("no_records"))) {
+													var singularName = jqTab.attr("data-singular");
+													$("#tab_deleter").find("i").attr("title",
+															"delete this " + singularName);
+													$("#tab_deleter").fadeIn();
+												}
+											});
+										} // end of load existing content (if any)
+									} else {
+										$(".tab_container").hide();
+										tabContainer.show();
+										jqTab.addClass("active");
+										// Fire off a post to set the session tab - don't need any
+										// results
+										$.post("AppController.servlet", {
+											"return" : "blank",
+											set_custom_table : true,
+											tablekey : "tabTable",
+											custominternaltablename : tabInternalTableName,
+											abCache : new Date().getTime()
+										});
+										// If only one child record, show delete button in tabs bar
+										if ((tabContainer.find(".selectorReport").size() == 0)
+												&& jqTab.attr("data-singular")) {
+											var singularName = jqTab.attr("data=singular");
+											$("#deleter_text").text(singularName);
+											$("#tab_deleter").fadeIn();
+										}
+									}
+								}); // end of jqTab.click()
+						jqTab.find(".new").click(function(e) {
+							// Elaine
+							// console.log("new");
+							newChild(jqTab, parentInternalTableName);
+							// Stop normal tab click
+							e.stopPropagation();
+						});
+						// Initialise to session tab on load (if not already the active tab)
+						if (jqTab.hasClass("session_tab") && (!jqTab.hasClass("active"))
+								&& (!jqTab.hasClass("tabLoading"))) {
+							jqTab.click();
+						}
+					}); // end of .tab_choice.each
 }
 
 /**
  * Save a new record in the table given by the tab's internaltablename property.
- * The record will be linked by relation to the parent table parentInternalTableName
+ * The record will be linked by relation to the parent table
+ * parentInternalTableName
  */
 function newChild(jqTab, parentInternalTableName) {
 	var tabInternalTableName = jqTab.attr("data-internaltablename");
 	var relationFieldInternalName = jqTab.attr("data-relationfield");
-	var parentRowId = jqTab.closest(".form_tabber")
-			.attr("data-rowid");
-	var tabContainer = $("#form_tabs_" + parentInternalTableName
-			+ "_" + tabInternalTableName);
+	var parentRowId = jqTab.closest(".form_tabber").attr("data-rowid");
+	var tabContainer = $("#form_tabs_" + parentInternalTableName + "_"
+			+ tabInternalTableName);
 	if (!tabContainer.hasClass("load-spinner")) {
 		tabContainer.fadeOut();
 	}
@@ -1229,7 +1256,7 @@ function newChild(jqTab, parentInternalTableName) {
 		set_custom_table : true,
 		tablekey : 'tabTable',
 		custominternaltablename : tabInternalTableName,
-		abCache: new Date().getTime()
+		abCache : new Date().getTime()
 	}
 	// Set relationFieldInternalName like this as it is a variable
 	// property name
@@ -1245,11 +1272,12 @@ function newChild(jqTab, parentInternalTableName) {
 
 /**
  * Used when clicking on a selector report in a tab, or a grandchild record
+ * 
  * @param oRow
- *    The tr being clicked
+ *          The tr being clicked
  * @param internalTableName
- *    The table of the selected tab, in the case of selector report clicks.
- *    The grandchild table in case of grandchild record clicks
+ *          The table of the selected tab, in the case of selector report
+ *          clicks. The grandchild table in case of grandchild record clicks
  */
 function loadIntoTabTable(oRow, internalTableName, rowId) {
 	var jqSelector = $(oRow).closest(".selectorReport");
@@ -1262,9 +1290,16 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 				+ tabTableInternalName
 				+ "&set_report="
 				+ tabReportInternalName
-				+ "&set_row_id=" + rowId + "&rowidinternaltablename=" + internalTableName
-				+ "&preset_row_id=" + tabRowId + "&preset_rowidinternaltablename=" + tabTableInternalName
-				+ "&set_custom_table=true&tablekey=tabTable&custominternaltablename=" + internalTableName
+				+ "&set_row_id="
+				+ rowId
+				+ "&rowidinternaltablename="
+				+ internalTableName
+				+ "&preset_row_id="
+				+ tabRowId
+				+ "&preset_rowidinternaltablename="
+				+ tabTableInternalName
+				+ "&set_custom_table=true&tablekey=tabTable&custominternaltablename="
+				+ internalTableName
 				+ "&set_custom_boolean=true&booleankey=overrideTableForm&custombooleanvalue=true"
 				+ "&cachebust=" + (new Date()).getTime();
 	} else {
@@ -1278,7 +1313,7 @@ function loadIntoTabTable(oRow, internalTableName, rowId) {
 			set_custom_table : true,
 			tablekey : "tabTable",
 			custominternaltablename : internalTableName,
-			abCache: new Date().getTime()
+			abCache : new Date().getTime()
 		}, function() {
 			jqSelector.find("tr#currentRow").removeAttr("id");
 			$(oRow).attr("id", "currentRow");
@@ -1303,7 +1338,8 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 		rowId = $("#rowid_" + internalTableName).attr("data-rowid");
 	} else {
 		rowId = jqElement.closest("tr").attr("name");
-		internalTableName = jqElement.closest(".selectorReport").attr("data-internaltablename");
+		internalTableName = jqElement.closest(".selectorReport").attr(
+				"data-internaltablename");
 	}
 	var options = {
 		remove_record : true,
@@ -1315,28 +1351,32 @@ function deleteTabRecord(oElement, deleteRelatedData) {
 	if (deleteRelatedData) {
 		options["cascadedelete"] = true;
 	}
-	$.post("AppController.servlet", options, function(sResponseXML) {
-		var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
-		if (sResponse == 'ok') {
-			var parentRowId = $(".form_tabber").attr("data-rowid");
-			pane3TabInterface.refresh(parentRowId);
-		} else {
-			sException = sResponseXML.getElementsByTagName('exception')[0]
-					.getAttribute('type');
-			var sExceptionMessage = sResponseXML
-					.getElementsByTagName('exception')[0].firstChild.nodeValue;
-			if (deleteRelatedData) {
-				alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
-						+ sExceptionMessage);
-			} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
-					+ 'DELETE ALL THIS?\n\n'
-					+ sExceptionMessage
-					+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
-				// recurse, but set it to delete related data
-				deleteTabRecord(oElement, true);
-			}
-		}
-	}, "xml");
+	$
+			.post(
+					"AppController.servlet",
+					options,
+					function(sResponseXML) {
+						var sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
+						if (sResponse == 'ok') {
+							var parentRowId = $(".form_tabber").attr("data-rowid");
+							pane3TabInterface.refresh(parentRowId);
+						} else {
+							sException = sResponseXML.getElementsByTagName('exception')[0]
+									.getAttribute('type');
+							var sExceptionMessage = sResponseXML
+									.getElementsByTagName('exception')[0].firstChild.nodeValue;
+							if (deleteRelatedData) {
+								alert('Record was not deleted because it is linked to data in other tables that you do not have permission to change.\n\n'
+										+ sExceptionMessage);
+							} else if (confirm('Record was not deleted because it is linked to data in other tables.\n'
+									+ 'DELETE ALL THIS?\n\n'
+									+ sExceptionMessage
+									+ '\n\nWould you like to delete this row and all related data or CANCEL this operation?')) {
+								// recurse, but set it to delete related data
+								deleteTabRecord(oElement, true);
+							}
+						}
+					}, "xml");
 }
 
 /**
@@ -1349,21 +1389,21 @@ function fMarkInactiveTabs() {
 	}
 	if (!($(".form_tabber").hasClass("inactives_marked"))) {
 		$(".form_tabber").addClass("inactives_marked");
-		$.getJSON(
-				"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
-				{
-					abCache: new Date().getTime()
-				},
-				function(data) {
-					for (i = 0; i < data.length; i++) {
-						var jqTab = $("#tab_choice_" + data[i]);
-						jqTab.addClass("no_records");
-						if (jqTab.hasClass("active")) {
-							// Hide the deleter if the active tab has no record(s)
-							$("#tab_deleter").fadeOut();
-						}
-					}
-				});
+		$
+				.getJSON(
+						"AppController.servlet?return=gui/reports_and_tables/tabs/tabs_inactive",
+						{
+							abCache : new Date().getTime()
+						}, function(data) {
+							for (i = 0; i < data.length; i++) {
+								var jqTab = $("#tab_choice_" + data[i]);
+								jqTab.addClass("no_records");
+								if (jqTab.hasClass("active")) {
+									// Hide the deleter if the active tab has no record(s)
+									$("#tab_deleter").fadeOut();
+								}
+							}
+						});
 	}
 }
 
@@ -1397,7 +1437,7 @@ function fSetupCharts() {
  */
 function fWebkitGlitch() {
 	return;
-	
+
 	if ($.browser.webkit) {
 		setTimeout(
 				"$(top.document.getElementById('oViewPane')).css('height', '0')", 1000);
@@ -1405,7 +1445,7 @@ function fWebkitGlitch() {
 				"$(top.document.getElementById('oViewPane')).css('height', '100%')",
 				1500);
 	}
-	
+
 }
 
 function fShowAddGroup() {
@@ -1450,7 +1490,7 @@ function fFormStyle() {
 			"return" : "blank",
 			"update_table" : true,
 			"formstyle" : formStyle,
-			abCache: new Date().getTime()
+			abCache : new Date().getTime()
 		}, function() {
 			clicked.addClass("selected_layout");
 		});
@@ -1484,7 +1524,7 @@ function fMap() {
 				.getJSON(
 						"AppController.servlet?return=gui/reports_and_tables/tabs/map_json",
 						{
-							abCache: new Date().getTime()
+							abCache : new Date().getTime()
 						},
 						function(data) {
 							var len = data.length;

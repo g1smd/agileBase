@@ -60,8 +60,8 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 	protected DecimalFieldDefn() {
 	}
 
-	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField, String fieldName, String fieldDesc, DecimalFieldOptions fieldOptions)
-			throws CantDoThatException {
+	public DecimalFieldDefn(DataSource dataSource, TableInfo tableContainingField, String fieldName,
+			String fieldDesc, DecimalFieldOptions fieldOptions) throws CantDoThatException {
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		super.setInternalFieldName(RandomString.generate());
@@ -79,6 +79,15 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		this.setUsesLookup(fieldOptions.isUsesLookup());
 		this.setStoresCurrency(fieldOptions.isStoresCurrency());
 		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
+	}
+
+	/**
+	 * Used only when creating a new decimal field due to a change of field type
+	 * from integer to decimal. The new field must be given the same internal name
+	 * as the old integer field
+	 */
+	protected void setInternalFieldName(String internalFieldName) {
+		super.setInternalFieldName(internalFieldName);
 	}
 
 	public boolean allowNotApplicable() {
