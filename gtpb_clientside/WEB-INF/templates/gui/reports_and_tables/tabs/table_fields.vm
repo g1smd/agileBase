@@ -113,11 +113,11 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 	                #end
 	                #if ($option.getClass().getSimpleName().equals("ListFieldDescriptorOption"))
 				      #if((($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylistvaluefield") || ($option.getFormInputName() == "fieldpropertylisttable"))
-	                  #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield")
-						#if($option.getSelectedItemKey() && $option.getSelectedItemKey() != "")
-						  #set($secondaryField = $field.getRelatedTable().getField($option.getSelectedItemKey()))
+              #elseif($option.getFormInputName() == "fieldpropertylistsecondaryfield")
+						    #if($option.getSelectedItemKey() && $option.getSelectedItemKey() != "")
+						    #set($secondaryField = $field.getRelatedTable().getField($option.getSelectedItemKey()))
 					      $option.getOptionDescription() : $secondaryField<br>
-						#end
+						  #end
 					  #else
 						$option.getOptionDescription() : $option.getSelectedItemDisplayValue()<br>
 	                  #end
@@ -146,7 +146,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
                   </label>
 			        #end
 			        #if($option.getClass().getSimpleName()=="ListFieldDescriptorOption")
-						#if( (($category == "Whole Number") && ($option.getFormInputName() == "fieldpropertynumberprecision")) || ($option.getFormInputName() == "fieldpropertylisttable"))
+						#if($option.getFormInputName() == "fieldpropertylisttable")
 						#else
 				  <label for="${formName}">$option.getOptionDescription()</label>
 			      <select class="small" name="$formName" onchange="new fChange(this);"
