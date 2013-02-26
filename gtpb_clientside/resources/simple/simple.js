@@ -39,6 +39,7 @@ function focusEvents() {
 			username : username
 		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
 	});
+	/* Focus switch unused
 	$(".focus_switch i").click(function(event) {
 		event.stopPropagation();
 		var scrollTo = $(this).attr("data-scrollto");
@@ -48,6 +49,7 @@ function focusEvents() {
 		console.log(scrollToElement.html());
 		content.scrollTo(scrollToElement, 100);
 	});
+	*/
 }
 
 /** Common tile events */
