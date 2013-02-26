@@ -319,14 +319,18 @@ input[type=search] {
 }
 
 table.reportData {
-  border-collapse: separate;
-  border-spacing: 0.5em;
+  /* border-collapse: separate;
+  border-spacing: 0.5em; */
   background-color: rgba(255,255,255,0.9);
   border-radius: 1em;
 }
 
 table.reportData tr {
   cursor: pointer;
+}
+
+table.reportData tr:nth-child(even) {
+  background-color: white;
 }
 
 table.reportData th {
