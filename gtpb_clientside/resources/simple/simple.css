@@ -329,7 +329,7 @@ table.reportData tr {
   cursor: pointer;
 }
 
-table.reportData tr:nth-child(even) {
+table.reportData tr:nth-child(odd) {
   background-color: white;
 }
 
