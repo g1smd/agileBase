@@ -64,6 +64,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
   #if($thisUniqueId != $lastUniqueId)
     #set($uniqueIdCount = $uniqueIdCount + 1)
   #end  
+  #set($coloured = false)
   <tr #if(($sessionRowId == $thisUniqueId) && (!$mobile_device) && (!$grandchild)) id="currentRow" #end
       name="$thisUniqueId" 
       #if($uniqueIdCount%2!=0) class="rowa" #else class="rowb" #end
@@ -157,7 +158,8 @@ $viewTools.startTimer("gui/pane2/pane2_body")
 		    #end
 		    #set($class="colored")
       #end
-      #if($tileColour && $cellNumber == 2)
+      #if($tileColour && (!$coloured))
+        #set($coloured = true)
         #set($class = "$class ${tileColour}_fg bold")
       #end
 		  #if($rightAlign) #set($style = "$style text-align:right; ") #end
