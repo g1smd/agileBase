@@ -383,6 +383,10 @@ table.reportData td {
   right: -0.5em;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 /* Colours */
 .blue {
   background-color: #009FE3;
