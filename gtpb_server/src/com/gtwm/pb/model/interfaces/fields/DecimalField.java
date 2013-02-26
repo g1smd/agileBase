@@ -29,6 +29,12 @@ import com.gtwm.pb.util.CantDoThatException;
  */
 public interface DecimalField extends BaseField {
 
+	/**
+	 * Used when converting an integer to a decimal field
+	 * @param internalFieldName
+	 */
+		public void setInternalFieldName(String internalFieldName);	
+	
     /**
      * @param precision
      *            the number of decimal places to display on screen The stored value is as accurate as the

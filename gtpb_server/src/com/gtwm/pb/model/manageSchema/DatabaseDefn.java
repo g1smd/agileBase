@@ -1742,9 +1742,37 @@ public final class DatabaseDefn implements DatabaseInfo {
 							integerField.setDefault(defaultValue);
 						}
 					}
+				} else if (fieldOption instanceof ListFieldDescriptorOptionInfo) {
+					if (formInputName.equals(inputStart + PossibleListOptions.NUMBERPRECISION.getFormInputName())) {
+						int precision = Integer.valueOf(formInputValue);
+						this.convertIntegerToDecimal(integerField, precision);
+					}
 				}
 			}
 		}
+	}
+	
+	public void convertIntegerToDecimal(IntegerField integerField, int precision) throws CantDoThatException {
+		DecimalFieldOptions fieldOptions = new DecimalFieldOptions();
+		fieldOptions.setUnique(integerField.getUnique());
+		fieldOptions.setNotNull(integerField.getNotNull());
+		fieldOptions.setPrintoutSetting(integerField.getPrintoutSetting());
+		Integer defaultInteger = integerField.getDefault();
+		if (defaultInteger != null) {
+			fieldOptions.setDefaultValue((double) defaultInteger);
+		}
+		// TODO: if not applicable used, set here
+		fieldOptions.setNotApplicable(false);
+		fieldOptions.setNotApplicableValue(0.0d);
+		fieldOptions.setPrecision(precision);
+		fieldOptions.setStoresCurrency(false);
+		fieldOptions.setUsesLookup(integerField.usesLookup());
+		DecimalField decimalField = new DecimalFieldDefn(this.relationalDataSource, integerField.getTableContainingField(), integerField.getFieldName(), integerField.getFieldDescription(), fieldOptions);
+		// The new decimal field needs to have the same internal name as the field will remain the same column, just changing type in the database
+		decimalField.setInternalFieldName( integerField.getInternalFieldName());
+		TableInfo table = integerField.getTableContainingField();
+		table.removeField(integerField);
+		table.addField(decimalField);
 	}
 
 	/**

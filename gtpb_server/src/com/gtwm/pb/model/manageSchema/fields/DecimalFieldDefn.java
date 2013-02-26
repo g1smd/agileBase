@@ -81,12 +81,7 @@ public class DecimalFieldDefn extends AbstractField implements DecimalField {
 		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
 	}
 
-	/**
-	 * Used only when creating a new decimal field due to a change of field type
-	 * from integer to decimal. The new field must be given the same internal name
-	 * as the old integer field
-	 */
-	protected void setInternalFieldName(String internalFieldName) {
+	public void setInternalFieldName(String internalFieldName) {
 		super.setInternalFieldName(internalFieldName);
 	}
 
