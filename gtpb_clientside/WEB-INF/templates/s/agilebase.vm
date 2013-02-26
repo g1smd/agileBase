@@ -24,7 +24,8 @@
 	<link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
 	<link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-	<link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
+  <link href="resources/simple/pane3_amalgam.css" type="text/css" rel="stylesheet" />
+  <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
 	<title>Agilebase</title>
 	<script src="resources/jquery.js" language="JavaScript"></script>
   <script language="JavaScript" src="resources/jquery.scrollTo.js"></script>
