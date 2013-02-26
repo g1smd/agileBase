@@ -337,6 +337,7 @@ table.reportData th {
   color: #353736; /* departure from normal 656766 to make a bit darker */
   text-align: left;
   vertical-align: top;
+  padding-left: 1em;
 }
 
 table.reportData td {
