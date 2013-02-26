@@ -156,7 +156,14 @@ function tileLoaded(tile) {
 			cache_bust: (new Date()).getTime()
 		}, function() {
 			$(".reportData tr").click(function() {
-				alert("click");
+				var row = $(this);
+				var rowId = row.attr("name");
+				var internalTableName = row.closest(".tile").attr("data-internaltablename");
+				row.closest(".content").load("AppController.servlet", {
+					"return": "gui/reports_and_tables/tabs/edit",
+					set_table: internalTableName,
+					set_rowid: rowId,
+				});
 			});
 		});
 /*		
