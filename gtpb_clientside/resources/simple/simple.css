@@ -413,25 +413,25 @@ table.reportData td {
 }
 
 .blue_fg {
-  color: #009FE3;
+  color: #009FE3!important;
 }
 
 .pink_fg {
-  color: #EC00BC;
+  color: #EC00BC!important;
 }
 
 .green_fg {
-  color: #8DC63F;
+  color: #8DC63F!important;
 }
 
 .yellow_fg {
-  color: #f5bd26;
+  color: #f5bd26!important;
 }
 
 .purple_fg {
-  color: #5c2969;
+  color: #5c2969!important;
 }
 
 .turquoise_fs {
-  color: #009d90;
+  color: #009d90!important;
 }
