@@ -127,6 +127,17 @@ body {
   overflow: hidden;
 }
 
+.foot_fade {
+  /* Allow mouse clicks through */
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4em;
+  background-image: linear-gradient(to bottom, white 0%, #009FE3 100%);
+}
+
 #tiles .tile .tile_icon {
   font-size: 150pt;
   display: block;
