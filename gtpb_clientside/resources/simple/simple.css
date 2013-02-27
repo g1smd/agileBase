@@ -308,11 +308,15 @@ ul.tweet_list {
 }
 
 .comment_attribution {
-  font-size: 9pt;
+  font-size: 8pt;
 }
 
 .comment_text {
-  font-size: 14pt;
+  font-size: 10pt;
+  background-color: transparent;
+  color: #EC00BC;
+  display: inline;
+  float: none;
 }
 
 .comment_text:before {
