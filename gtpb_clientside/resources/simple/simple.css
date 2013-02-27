@@ -65,7 +65,7 @@ body {
   margin-left: 0px; /* override bootstrap */
 }
 
-.tile .tab_container .row {
+.tile #reportData .row {
   margin-left: 0; /* override bootstrap and pane3_amalgam */
 }
 
