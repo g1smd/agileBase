@@ -30,7 +30,11 @@
   </div>
   #set($sessionRowId = $parentRowId)
 #end
-<div class="form_tabber" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
+#set($colour = false)
+#if($sessionData.getTile())
+  #set($colour = $sessionData.getTile().getColour())
+#end
+<div class="form_tabber #if($colour) $colour #end" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId">
   <div class="tab_choice #if(!$formTable) active #end main" data-internaltablename="$sessionTable.getInternalTableName()">$sessionTable.getSingularName()</div>
   #foreach($formTab in $formTabs)
     #set($formTable = $formTab.getTable())
