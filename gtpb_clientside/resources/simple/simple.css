@@ -3,6 +3,7 @@
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+  font-family: Calibri,"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif!important;
 }
 
 /* http://stackoverflow.com/questions/11452356/duplicated-icon-issue-with-twitter-bootstrap-and-font-awesome */
@@ -34,7 +35,6 @@ body {
   /* override pane3_amalgam.css */
   background-color: white;
   overflow: auto;
-  font-family: Calibri,"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .transition {
@@ -78,6 +78,14 @@ body {
 
 .tile .mini_action {
   display: none; /* override pane3_amalgam */
+}
+
+.tile .fieldname {
+  font-size: 11pt;
+}
+
+.tile #reportData .block input, .tile #reportData .block select {
+  font-size: 11pt;
 }
 
 .tile input {
