@@ -67,6 +67,7 @@ body {
 .tile div#reportData {
   background-color: rgba(255,255,255,0.75);  
   padding-top: 0.5em;
+  padding-right: 0.5em;
 }
 
 .tile .form_tabber {
