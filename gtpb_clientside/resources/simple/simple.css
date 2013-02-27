@@ -82,11 +82,11 @@ body {
 }
 
 .tile .fieldname {
-  font-size: 11pt;
+  font-size: 10pt;
 }
 
 .tile #reportData .block input, .tile #reportData .block select {
-  font-size: 11pt;
+  font-size: 10pt;
 }
 
 .tile input {
