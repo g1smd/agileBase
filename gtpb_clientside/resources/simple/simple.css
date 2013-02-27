@@ -85,7 +85,7 @@ body {
   font-size: 10pt;
 }
 
-.tile #reportData .block input, .tile #reportData .block select {
+.tile #reportData .block input, .tile #reportData .block select, .tile table#reportData td input {
   font-size: 10pt;
 }
 
