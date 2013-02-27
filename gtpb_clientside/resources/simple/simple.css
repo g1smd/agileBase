@@ -71,6 +71,7 @@ body {
 
 .tile .form_tabber {
   background-color: transparent;
+  color: #333333; /* bootstrap grey */
 }
 
 .tile #reportData .row {
