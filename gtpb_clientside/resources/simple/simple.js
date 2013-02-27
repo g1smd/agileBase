@@ -162,7 +162,7 @@ function tileLoaded(tile) {
 				row.closest(".content").load("AppController.servlet", {
 					"return": "gui/reports_and_tables/tabs/edit",
 					set_table: internalTableName,
-					set_rowid: rowId,
+					set_row_id: rowId,
 				}, function() {
 					editTabFunctions();
 				});
