@@ -1,0 +1,24 @@
+## nused currently
+<div class="focus_switch">
+  #if($allComments.size() > 0)
+    <i class="icon-comments" title="comments" data-scrollto="comments"></i>
+  #end
+  #if($allTweets.size() > 0)
+    <i class="icon-twitter" title="tweets" data-scrollto="tweets"></i>
+  #end
+  #if($allPhoneNumbers.size() > 0)
+    <i class="icon-phone" title="phone numbers" data-scrollto="phones"></i>
+  #end
+  #if(($allEmails.size() > 0) || ($allUrls.size() > 0))
+    <i class="icon-envelope" title="email and website addresses" data-scrollto="emails"></i>
+  #end
+  #if($allPostcodes.size() > 0)
+    <i class="icon-map-marker" title="map" data-scrollto="postcodes"></i>
+  #end
+  #if($allImages.size() > 0)
+    <i class="icon-picture" title="images" data-scrollto="images"></i>
+  #end
+  #if($allDocuments.size() > 0)
+    <i class="icon-file" title="documents" data-scrollto="documents"></i>
+  #end
+</div>
