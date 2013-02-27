@@ -59,7 +59,7 @@ public interface ReportDataInfo {
 	public List<DataRowInfo> getReportDataRows(Connection conn, AppUserInfo user,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType,
-			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
+			boolean lookupPostcodeLatLong, boolean enforceCustomUserFilter) throws SQLException, CodingErrorException,
 			CantDoThatException, ObjectNotFoundException;
 
 	/**

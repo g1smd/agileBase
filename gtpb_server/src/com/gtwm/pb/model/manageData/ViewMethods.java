@@ -522,20 +522,17 @@ public final class ViewMethods implements ViewMethodsInfo {
 		AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 		AppUserInfo user = authManager.getLoggedInUser(this.request);
 		AppUserInfo delegateUser = user;
-		if (authManager.getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE) && user.getUsesCustomUI()) {
+		if (authManager.getAuthenticator().loggedInUserAllowedTo(this.request, PrivilegeType.ADMINISTRATE) && user.getUsesCustomUI() && (this.sessionData.getUser() != null)) {
 			// If the user is an administrator and a custom app user, use a delegate user = the session user
 			// rather than the administrator themselves
 			delegateUser = this.sessionData.getUser();
-			if (delegateUser == null) {
-				throw new ObjectNotFoundException("There is no user in the session");
-			}
 			if (!delegateUser.getUsesCustomUI()) {
 				throw new CantDoThatException("The user " + delegateUser + " must be set to use the custom " + delegateUser.getCompany() + " user interface");
 			}
 		}
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				delegateUser, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
-				QuickFilterType.AND, false);
+				QuickFilterType.AND, false, this.request);
 		if (!exactFilters) {
 			// Also only log user requested (pane 2) reports
 			UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
@@ -550,7 +547,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		int rowLimit = this.sessionData.getReportRowLimit();
 		return this.getGloballyFilteredReportDataRows(report, rowLimit);
 	}
-	
+
 	public List<DataRowInfo> getGloballyFilteredReportDataRows(BaseReportInfo report, int rowLimit)
 			throws DisallowedException, SQLException, ObjectNotFoundException,
 			CodingErrorException, CantDoThatException {
@@ -570,7 +567,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		boolean exactFilters = false;
 		List<DataRowInfo> reportDataRows = this.databaseDefn.getDataManagement().getReportDataRows(
 				user, report, reportFilterValues, exactFilters, sessionReportSorts, rowLimit,
-				QuickFilterType.OR, false);
+				QuickFilterType.OR, false, this.request);
 		UsageLogger usageLogger = new UsageLogger(this.databaseDefn.getDataSource());
 		usageLogger.logReportView(user, report, reportFilterValues, rowLimit, "global search");
 		UsageLogger.startLoggingThread(usageLogger);

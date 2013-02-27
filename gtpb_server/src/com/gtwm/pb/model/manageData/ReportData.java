@@ -146,7 +146,7 @@ public class ReportData implements ReportDataInfo {
 				ReportData.enableOptimisations(conn, report, true);
 				PreparedStatement statement = conn.prepareStatement(SQLCode);
 				// setQueryTimeout not yet implemented by pgsql JDBC driver
-				//statement.setQueryTimeout(60);
+				// statement.setQueryTimeout(60);
 				ResultSet results = statement.executeQuery();
 				// Save average and mean of each colourable report field to
 				// cache
@@ -734,20 +734,33 @@ public class ReportData implements ReportDataInfo {
 	public List<DataRowInfo> getReportDataRows(Connection conn, AppUserInfo user,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> reportSorts, int rowLimit, QuickFilterType filterType,
-			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
-			CantDoThatException, ObjectNotFoundException {
+			boolean lookupPostcodeLatLong, boolean enforceCustomUserFilter) throws SQLException,
+			CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		List<DataRowInfo> reportData = null;
 		long executionStartTime = System.currentTimeMillis();
 		ReportFieldInfo postcodeField = null;
 		if (user != null) {
 			if (user.getUsesCustomUI()) {
-				// Throws ObjectNotFoundException if the report has no 'created
-				// by' field
-				BaseField createdByField = this.report.getReportField(
-						HiddenFields.CREATED_BY.getFieldName()).getBaseField();
-				String createdBy = "=" + user.getForename() + " " + user.getSurname() + " ("
-						+ user.getUserName() + ")";
-				filterValues.put(createdByField, createdBy);
+				if (enforceCustomUserFilter) {
+					// Throws ObjectNotFoundException if the report has no 'created
+					// by' field
+					BaseField createdByField = this.report.getReportField(
+							HiddenFields.CREATED_BY.getFieldName()).getBaseField();
+					String createdBy = "=" + user.getForename() + " " + user.getSurname() + " ("
+							+ user.getUserName() + ")";
+					filterValues.put(createdByField, createdBy);
+				} else {
+					try {
+						BaseField createdByField = this.report.getReportField(
+								HiddenFields.CREATED_BY.getFieldName()).getBaseField();
+						String createdBy = "=" + user.getForename() + " " + user.getSurname() + " ("
+								+ user.getUserName() + ")";
+						filterValues.put(createdByField, createdBy);
+					} catch (ObjectNotFoundException onfex) {
+						logger.warn("Falling back to unfiltered report for user " + user + ", report "
+								+ this.report);
+					}
+				}
 			}
 		}
 		if (lookupPostcodeLatLong) {

@@ -50,37 +50,41 @@ public interface DataManagementInfo {
 
 	/**
 	 * @param company
-	 *            Needed for internal caching mechanism. Can be null, but if so,
-	 *            no caching will be done
+	 *          Needed for internal caching mechanism. Can be null, but if so, no
+	 *          caching will be done
 	 * @param user
-	 *            The logged in user. Used to restrict results if the user is an app-only user without access to the full agileBase interface
+	 *          The logged in user. Used to restrict results if the user is an
+	 *          app-only user without access to the full agileBase interface
 	 * @param reportDefn
-	 *            The report definition which contains the list of fields etc.
+	 *          The report definition which contains the list of fields etc.
 	 * @param filterValues
-	 *            The values requested by the browser, e.g. if the request
-	 *            string is ?do=refreshReportData&field1=filtervalue, there will
-	 *            be one map key = "field1", one value "filtervalue"
+	 *          The values requested by the browser, e.g. if the request string is
+	 *          ?do=refreshReportData&field1=filtervalue, there will be one map
+	 *          key = "field1", one value "filtervalue"
 	 * @param exactFilters
-	 *            True if filter values should match data exactly (with an ILIKE
-	 *            'filtervalue'), false to return any rows where values start
-	 *            with the filter (with an ILIKE 'filtervalue%'). Matching is
-	 *            always case insensitive in any case
+	 *          True if filter values should match data exactly (with an ILIKE
+	 *          'filtervalue'), false to return any rows where values start with
+	 *          the filter (with an ILIKE 'filtervalue%'). Matching is always case
+	 *          insensitive in any case
 	 * @param sessionSorts
-	 *            Use to sort the results by particular a particular field
+	 *          Use to sort the results by particular a particular field
 	 * @param rowLimit
-	 *            The maximum number of rows to return, -1 means no limit
+	 *          The maximum number of rows to return, -1 means no limit
 	 * @param quickFilterType
-	 *            Whether to treat field filters as joined by AND or OR
+	 *          Whether to treat field filters as joined by AND or OR
 	 * @param lookupPostcodeLatLong
-	 *            Whether to look up latitudes and longitudes for every row
-	 *            containing a postcode and include them in results
+	 *          Whether to look up latitudes and longitudes for every row
+	 *          containing a postcode and include them in results
+	 * @param request
+	 *          Only need to supply if you want to allow custom app user filtering
+	 *          to be ignored for administrators, otherwise can be null
 	 * @return report data as a list of rows
 	 */
 	public List<DataRowInfo> getReportDataRows(AppUserInfo user, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
-			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
-			CantDoThatException, ObjectNotFoundException;
+			boolean lookupPostcodeLatLong, HttpServletRequest request) throws SQLException,
+			CodingErrorException, CantDoThatException, ObjectNotFoundException;
 
 	/**
 	 * Return all the text from the specified fields in the report as one big
@@ -92,8 +96,7 @@ public interface DataManagementInfo {
 			CantDoThatException;
 
 	/**
-	 * Return a calendar JSON feed for the data in a report, suitable for use
-	 * with
+	 * Return a calendar JSON feed for the data in a report, suitable for use with
 	 * 
 	 * http://arshaw.com/fullcalendar/
 	 * 
@@ -102,17 +105,18 @@ public interface DataManagementInfo {
 	 * http://www.simile-widgets.org/timeline/
 	 * 
 	 * @param filterValues
-	 *            Session filters *plus* a filter on the calendar date field so
-	 *            that only dates requested by fullcalendar are returned
-	 *            (controlled by start and end parameters in the HTTP request)
+	 *          Session filters *plus* a filter on the calendar date field so that
+	 *          only dates requested by fullcalendar are returned (controlled by
+	 *          start and end parameters in the HTTP request)
 	 * @param startEpoch
-	 *            The start unix timestamp as provided by fullcalendar
+	 *          The start unix timestamp as provided by fullcalendar
 	 * @param endEpoch
-	 *            The end unix timestamp as provided by fullcalendar
+	 *          The end unix timestamp as provided by fullcalendar
 	 */
 	public String getReportCalendarJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filterValues, Long startEpoch, Long endEpoch)
-			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException, ObjectNotFoundException;
+			throws CodingErrorException, CantDoThatException, SQLException, JsonGenerationException,
+			ObjectNotFoundException;
 
 	public String getReportMapJson(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters) throws CodingErrorException, CantDoThatException,
@@ -124,12 +128,12 @@ public interface DataManagementInfo {
 
 	/**
 	 * @param user
-	 *            Allows the method to log the user that made this request
+	 *          Allows the method to log the user that made this request
 	 * @param report
-	 *            The report to format as JSON or RSS
+	 *          The report to format as JSON or RSS
 	 * @param cacheMinutes
-	 *            The number of minutes to cache a response for a particular
-	 *            report before regenerating
+	 *          The number of minutes to cache a response for a particular report
+	 *          before regenerating
 	 */
 	public String getReportJSON(AppUserInfo user, BaseReportInfo report,
 			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
@@ -137,9 +141,8 @@ public interface DataManagementInfo {
 			ObjectNotFoundException, JsonGenerationException;
 
 	public String getReportRSS(AppUserInfo user, BaseReportInfo report,
-			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds)
-			throws SQLException, CodingErrorException, CantDoThatException, XMLStreamException,
-			ObjectNotFoundException;
+			Map<BaseField, String> filters, boolean exactFilters, long cacheSeconds) throws SQLException,
+			CodingErrorException, CantDoThatException, XMLStreamException, ObjectNotFoundException;
 
 	/**
 	 * Return a report data object that contains metadata about the report data.
@@ -149,13 +152,13 @@ public interface DataManagementInfo {
 	 * @see getReportDataRows
 	 * 
 	 * @param company
-	 *            Needed for internal caching mechanism. Can be null, but if so,
-	 *            no caching will be done at all
+	 *          Needed for internal caching mechanism. Can be null, but if so, no
+	 *          caching will be done at all
 	 * @param updateCacheIfObsolete
-	 *            If false, just read the cache, if true update it as well if
-	 *            it's obsolete. When you have a low tolerance of out of date
-	 *            cached statistics, use true but if you just need rough
-	 *            statistics, false can be used
+	 *          If false, just read the cache, if true update it as well if it's
+	 *          obsolete. When you have a low tolerance of out of date cached
+	 *          statistics, use true but if you just need rough statistics, false
+	 *          can be used
 	 */
 	public ReportDataInfo getReportData(CompanyInfo company, BaseReportInfo report,
 			boolean updateCacheIfObsolete) throws SQLException;
@@ -163,12 +166,12 @@ public interface DataManagementInfo {
 	/**
 	 * Get all comments attached to a particular field for a particular record
 	 */
-	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId) throws SQLException,
-			CantDoThatException;
+	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId)
+			throws SQLException, CantDoThatException;
 
-	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId,
-			AppUserInfo user, String comment) throws SQLException, ObjectNotFoundException,
-			CantDoThatException, CodingErrorException;
+	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
+			String comment) throws SQLException, ObjectNotFoundException, CantDoThatException,
+			CodingErrorException;
 
 	/**
 	 * Return true if the record with the given primary key is visible in the
@@ -187,7 +190,7 @@ public interface DataManagementInfo {
 	 * 
 	 * @throws SQLException
 	 * @throws ObjectNotFoundException
-	 *             If a record with the provided rowid is not found in the table
+	 *           If a record with the provided rowid is not found in the table
 	 */
 	public Map<RelationField, List<DataRow>> getChildDataTableRows(DatabaseInfo databaseDefn,
 			TableInfo tableDefn, int rowid, HttpServletRequest request) throws SQLException,
@@ -195,18 +198,18 @@ public interface DataManagementInfo {
 
 	/**
 	 * @param reportDefn
-	 *            Report to show summary for
+	 *          Report to show summary for
 	 * @param company
-	 *            Used to inform per-company caching
+	 *          Used to inform per-company caching
 	 * @param aggressiveCache
-	 *            If true, always use the cached data if any's available for the
-	 *            past 48 hrs
+	 *          If true, always use the cached data if any's available for the
+	 *          past 48 hrs
 	 * @return The report summary data, or null if the summary isn't valid, e.g.
 	 *         doesn't contain an aggregate function
 	 */
 	public ChartDataInfo getChartData(CompanyInfo company, ChartInfo reportSummaryDefn,
-			Map<BaseField, String> reportFilterValues, boolean aggressiveCache)
-			throws SQLException, CantDoThatException;
+			Map<BaseField, String> reportFilterValues, boolean aggressiveCache) throws SQLException,
+			CantDoThatException;
 
 	/**
 	 * Get a single row as a map of field name => value, for editing or viewing
@@ -215,10 +218,9 @@ public interface DataManagementInfo {
 	 *      int) See TableData.getTableDataRow for an explanation of the
 	 *      exceptions thrown
 	 * @param logView
-	 *            If true, increment the view count hidden field of the row
-	 *            returned
+	 *          If true, increment the view count hidden field of the row returned
 	 * @param sessionData
-	 *            Only necessary if logView is true, otherwise can be null
+	 *          Only necessary if logView is true, otherwise can be null
 	 */
 	public Map<BaseField, BaseValue> getTableDataRow(SessionDataInfo sessionData, TableInfo table,
 			int rowId, boolean logView) throws SQLException, ObjectNotFoundException,
@@ -228,17 +230,17 @@ public interface DataManagementInfo {
 			ObjectNotFoundException, CantDoThatException, CodingErrorException;
 
 	/**
-	 * When passed a row ID and a report, finds rows in the report with the
-	 * parent table's row ID set to that ID. For each row found, if
-	 * relatedTable's primary key is in the report, return the value of it.
+	 * When passed a row ID and a report, finds rows in the report with the parent
+	 * table's row ID set to that ID. For each row found, if relatedTable's
+	 * primary key is in the report, return the value of it.
 	 * 
 	 * @param masterRowId
-	 *            Row ID used as lookup: a value of the report parent table's
-	 *            primary key
+	 *          Row ID used as lookup: a value of the report parent table's
+	 *          primary key
 	 * @param relatedTable
-	 *            Table whose primary key value(s) we want from the report
+	 *          Table whose primary key value(s) we want from the report
 	 * @throws CantDoThatException
-	 *             if relatedTable's primary key isn't in the report
+	 *           if relatedTable's primary key isn't in the report
 	 */
 	public Set<Integer> getRelatedRowIds(BaseReportInfo masterReport, int masterRowId,
 			TableInfo relatedTable) throws CantDoThatException, SQLException;
@@ -250,49 +252,47 @@ public interface DataManagementInfo {
 			throws SQLException;
 
 	/**
-	 * Save a new record or update an existing one in a database table. Also
-	 * save the field input values in the session for later retrieval
+	 * Save a new record or update an existing one in a database table. Also save
+	 * the field input values in the session for later retrieval
 	 * 
 	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo#setFieldInputValues(Map)
 	 * 
 	 * @param table
-	 *            Table to save data to
+	 *          Table to save data to
 	 * @param dataToSave
-	 *            User input data as a map of field => value string. Type is a
-	 *            LinkedHashMap rather than a Map because we need to be sure
-	 *            that data can be iterated over in the same order twice
+	 *          User input data as a map of field => value string. Type is a
+	 *          LinkedHashMap rather than a Map because we need to be sure that
+	 *          data can be iterated over in the same order twice
 	 * @param newRecord
-	 *            Whether creating a new record or editing an existing, i.e.
-	 *            INSERT or UPDATE
+	 *          Whether creating a new record or editing an existing, i.e. INSERT
+	 *          or UPDATE
 	 * @param rowId
-	 *            Will only be used if doing an UPDATE
+	 *          Will only be used if doing an UPDATE
 	 * @param sessionData
-	 *            Will be used when doing an INSERT to change the session row id
-	 *            to that of the newly inserted row
+	 *          Will be used when doing an INSERT to change the session row id to
+	 *          that of the newly inserted row
 	 * @throws InputRecordException
-	 *             if a field in the record causes an error when trying to add
-	 *             to the database, be it an SQL or other error
+	 *           if a field in the record causes an error when trying to add to
+	 *           the database, be it an SQL or other error
 	 * @throws ObjectNotFoundException
-	 *             If the SQL didn't affect any records, or it potentially
-	 *             affected more than one
+	 *           If the SQL didn't affect any records, or it potentially affected
+	 *           more than one
 	 * @throws SQLException
-	 *             If there was an error closing the SQL connection. All other
-	 *             SQL exceptions will be re-thrown as InputRecordExceptions
+	 *           If there was an error closing the SQL connection. All other SQL
+	 *           exceptions will be re-thrown as InputRecordExceptions
 	 * @throws CodingErrorException
-	 *             If there was an internal error writing to the audit table
+	 *           If there was an internal error writing to the audit table
 	 */
 	public void saveRecord(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToSave, boolean newRecord, int rowId,
-			SessionDataInfo sessionData, List<FileItem> multipartItems)
-			throws InputRecordException, ObjectNotFoundException, SQLException,
-			CodingErrorException, DisallowedException, CantDoThatException,
-			MissingParametersException;
+			SessionDataInfo sessionData, List<FileItem> multipartItems) throws InputRecordException,
+			ObjectNotFoundException, SQLException, CodingErrorException, DisallowedException,
+			CantDoThatException, MissingParametersException;
 
 	public void cloneRecord(HttpServletRequest request, TableInfo table, int rowId,
-			SessionDataInfo sessionData, List<FileItem> multipartItems)
-			throws ObjectNotFoundException, SQLException, CantDoThatException,
-			CodingErrorException, InputRecordException, DisallowedException,
-			MissingParametersException;
+			SessionDataInfo sessionData, List<FileItem> multipartItems) throws ObjectNotFoundException,
+			SQLException, CantDoThatException, CodingErrorException, InputRecordException,
+			DisallowedException, MissingParametersException;
 
 	/**
 	 * Lock all unlocked table records in the current session table
@@ -305,11 +305,12 @@ public interface DataManagementInfo {
 	 * on.
 	 * 
 	 * NB This can be quite slow for a large number of rows. To speed things up,
-	 * pass in filters which reduce the number of rows or use
-	 * lockAllTableRecords instead if appropriate which is a lot faster
+	 * pass in filters which reduce the number of rows or use lockAllTableRecords
+	 * instead if appropriate which is a lot faster
 	 */
 	public void lockReportRecords(HttpServletRequest request, SessionDataInfo sessionData)
-			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException, DisallowedException;
+			throws ObjectNotFoundException, CantDoThatException, SQLException, CodingErrorException,
+			DisallowedException;
 
 	/**
 	 * Lock an individual record
@@ -321,86 +322,85 @@ public interface DataManagementInfo {
 			throws SQLException, ObjectNotFoundException;
 
 	/**
-	 * Import a CSV file into a table. The import is wrapped in one transaction
-	 * so if one record import fails the whole import will fail. CSV fields must
-	 * be ordered the same as the table fields being imported into. The first
-	 * file encountered in the input form will be imported, the form name
-	 * doesn't matter
+	 * Import a CSV file into a table. The import is wrapped in one transaction so
+	 * if one record import fails the whole import will fail. CSV fields must be
+	 * ordered the same as the table fields being imported into. The first file
+	 * encountered in the input form will be imported, the form name doesn't
+	 * matter
 	 * 
 	 * @param updateExistingRecords
-	 *            Whether to match the import data to existing records in the
-	 *            table or create all new records
+	 *          Whether to match the import data to existing records in the table
+	 *          or create all new records
 	 * @param recordIdentifierField
-	 *            If updating existing records, this field is the identifying
-	 *            key by which data is matched
+	 *          If updating existing records, this field is the identifying key by
+	 *          which data is matched
 	 * @param generateRowIds
-	 *            If true, row IDs will be generated as the data's imported. If
-	 *            false, they'll be read from the first field of each line in
-	 *            the CSV
+	 *          If true, row IDs will be generated as the data's imported. If
+	 *          false, they'll be read from the first field of each line in the
+	 *          CSV
 	 * @param separator
-	 *            Field separation character, e.g. a comma
+	 *          Field separation character, e.g. a comma
 	 * @param quotechar
-	 *            Character used to quote field content, e.g. a double quote
+	 *          Character used to quote field content, e.g. a double quote
 	 * @param numHeaderLines
-	 *            Number of lines to skip at the start of the file
+	 *          Number of lines to skip at the start of the file
 	 * @param useRelationDisplayValues
-	 *            Whether the import file contains the display values of
-	 *            relations or internal values
+	 *          Whether the import file contains the display values of relations
+	 *          or internal values
 	 * @param importSequenceValues
-	 *            Whether to import values into sequence fields. If true, the
-	 *            values will be imported and the sequence set to restart from
-	 *            the max. of all values in the table. If false, sequence fields
-	 *            will be ignored and the input file should miss out the
-	 *            sequence columns
+	 *          Whether to import values into sequence fields. If true, the values
+	 *          will be imported and the sequence set to restart from the max. of
+	 *          all values in the table. If false, sequence fields will be ignored
+	 *          and the input file should miss out the sequence columns
 	 * @param requireExactRelationValues
-	 *            If true, require that values for relation fields in the import
-	 *            spreadsheet exactly match display values in the database. If
-	 *            false, try to find the best match
+	 *          If true, require that values for relation fields in the import
+	 *          spreadsheet exactly match display values in the database. If
+	 *          false, try to find the best match
 	 * @param csvContent
-	 *            If uploading a file, CSV content will be taken from the file
-	 *            and the csvContent string left null. If not, csv content will
-	 *            be directly passed in in string form using csvContent
+	 *          If uploading a file, CSV content will be taken from the file and
+	 *          the csvContent string left null. If not, csv content will be
+	 *          directly passed in in string form using csvContent
 	 * @param trim
-	 *            Trim leading and trailing whitespace from each value as it's
-	 *            imported
+	 *          Trim leading and trailing whitespace from each value as it's
+	 *          imported
 	 * @param merge
-	 *            For updating (rather than inserting). If true, merge the
-	 *            spreadsheet and database data, i.e. where a spreadsheet field
-	 *            is empty, leave the existing value in the database. If false,
-	 *            overwrite all database data from the spreadsheet
+	 *          For updating (rather than inserting). If true, merge the
+	 *          spreadsheet and database data, i.e. where a spreadsheet field is
+	 *          empty, leave the existing value in the database. If false,
+	 *          overwrite all database data from the spreadsheet
 	 * @throws CantDoThatException
-	 *             if the form wasn't posted as multi-part/form data
+	 *           if the form wasn't posted as multi-part/form data
 	 * @throws InputRecordException
-	 *             If there was an error with the data being imported. Details
-	 *             of line number and field causing the error will be given
+	 *           If there was an error with the data being imported. Details of
+	 *           line number and field causing the error will be given
 	 */
-	public int importCSV(HttpServletRequest request, TableInfo table,
-			boolean updateExistingRecords, BaseField recordIdentifierField, boolean generateRowIds,
-			char separator, char quotechar, int numHeaderLines, boolean useRelationDisplayValues,
-			boolean importSequenceValues, boolean requireExactRelationMatches, boolean trim,
-			boolean merge, List<FileItem> multipartItems, String csvContent) throws SQLException,
-			InputRecordException, IOException, CantDoThatException, ObjectNotFoundException,
-			DisallowedException, CodingErrorException;
+	public int importCSV(HttpServletRequest request, TableInfo table, boolean updateExistingRecords,
+			BaseField recordIdentifierField, boolean generateRowIds, char separator, char quotechar,
+			int numHeaderLines, boolean useRelationDisplayValues, boolean importSequenceValues,
+			boolean requireExactRelationMatches, boolean trim, boolean merge,
+			List<FileItem> multipartItems, String csvContent) throws SQLException, InputRecordException,
+			IOException, CantDoThatException, ObjectNotFoundException, DisallowedException,
+			CodingErrorException;
 
 	/**
 	 * @throws ObjectNotFoundException
-	 *             If no rows were deleted (probably because the record
-	 *             identified by rowId couldn't be found) <b>or</b> if more than
-	 *             one row would be deleted
+	 *           If no rows were deleted (probably because the record identified
+	 *           by rowId couldn't be found) <b>or</b> if more than one row would
+	 *           be deleted
 	 * @throws CodingErrorException
-	 *             If there was an internal error writing to the audit table
+	 *           If there was an internal error writing to the audit table
 	 */
 	public void removeRecord(HttpServletRequest request, SessionDataInfo sessionData,
-			DatabaseInfo datbaseDefn, TableInfo table, int rowId, boolean cascade)
-			throws SQLException, ObjectNotFoundException, CodingErrorException,
-			CantDoThatException, DisallowedException, DataDependencyException;
+			DatabaseInfo datbaseDefn, TableInfo table, int rowId, boolean cascade) throws SQLException,
+			ObjectNotFoundException, CodingErrorException, CantDoThatException, DisallowedException,
+			DataDependencyException;
 
 	/**
 	 * A very basic global edit. Sets all field values specified in the
 	 * dataToEditParameter, for all rows in the table
 	 * 
 	 * @param dataToEdit
-	 *            A map of field to a value for each field
+	 *          A map of field to a value for each field
 	 */
 	public int globalEdit(HttpServletRequest request, TableInfo table,
 			LinkedHashMap<BaseField, BaseValue> dataToEdit, SessionDataInfo sessionData,
@@ -414,8 +414,8 @@ public interface DataManagementInfo {
 	public void anonymiseData(TableInfo table, HttpServletRequest request,
 			SessionDataInfo sessionData, Map<BaseField, FieldContentType> fieldContentTypes,
 			List<FileItem> multipartItems) throws SQLException, CodingErrorException,
-			CantDoThatException, InputRecordException, ObjectNotFoundException,
-			DisallowedException, MissingParametersException;
+			CantDoThatException, InputRecordException, ObjectNotFoundException, DisallowedException,
+			MissingParametersException;
 
 	/**
 	 * Given an HTTP request, find the company owning the logged in user and
@@ -439,14 +439,14 @@ public interface DataManagementInfo {
 	 * Get the next or previous row ID in the given report with filters active
 	 * 
 	 * @param forwardSearch
-	 *            Whether to get the next or previous ID
+	 *          Whether to get the next or previous ID
 	 */
-	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report,
-			boolean forwardSearch) throws SQLException, CantDoThatException;
+	public int getNextRowId(SessionDataInfo sessionData, BaseReportInfo report, boolean forwardSearch)
+			throws SQLException, CantDoThatException;
 
 	/**
 	 * Return the report that's most commonly viewed by the user
 	 */
-	public BaseReportInfo getMostPopularReport(HttpServletRequest request,
-			DatabaseInfo databaseDefn, AppUserInfo user) throws SQLException, CodingErrorException;
+	public BaseReportInfo getMostPopularReport(HttpServletRequest request, DatabaseInfo databaseDefn,
+			AppUserInfo user) throws SQLException, CodingErrorException;
 }

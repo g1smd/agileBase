@@ -283,7 +283,7 @@ public final class DataManagement implements DataManagementInfo {
 		Map<BaseField, String> filters = new HashMap<BaseField, String>(1);
 		filters.put(pKey, String.valueOf(rowId));
 		List<DataRowInfo> rows = this.getReportDataRows(null, report, filters, true,
-				new HashMap<BaseField, Boolean>(0), 1, QuickFilterType.AND, false);
+				new HashMap<BaseField, Boolean>(0), 1, QuickFilterType.AND, false, null);
 		if (rows.size() != 1) {
 			logger.warn("Row can't be retrieved for comment for table " + table + ", row ID " + rowId);
 			return;
@@ -556,7 +556,7 @@ public final class DataManagement implements DataManagementInfo {
 		Map<BaseField, Boolean> sorts = new HashMap<BaseField, Boolean>();
 		AppUserInfo user = this.authManager.getLoggedInUser(request);
 		List<DataRowInfo> dataRows = this.getReportDataRows(user, report, filters, false, sorts, -1,
-				QuickFilterType.AND, false);
+				QuickFilterType.AND, false, null);
 		String lockFieldInternalName = table.getField(HiddenFields.LOCKED.getFieldName())
 				.getInternalFieldName();
 		String SQLCode = "UPDATE " + table.getInternalTableName() + " SET " + lockFieldInternalName
@@ -1976,7 +1976,7 @@ public final class DataManagement implements DataManagementInfo {
 			numRows = 100;
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters, exactFilters,
-				new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND, false);
+				new HashMap<BaseField, Boolean>(0), numRows, QuickFilterType.AND, false, null);
 		String dataFeedString = null;
 		if (dataFormat.equals(DataFormat.JSON)) {
 			dataFeedString = this.generateJSON(report, reportDataRows);
@@ -2110,7 +2110,7 @@ public final class DataManagement implements DataManagementInfo {
 		ReportFieldInfo colourField = map.getColourField();
 		ReportFieldInfo categoryField = map.getCategoryField();
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filters, false,
-				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, true);
+				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, true, null);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -2245,7 +2245,7 @@ public final class DataManagement implements DataManagementInfo {
 				String className = "report_" + report.getInternalReportName();
 				ReportFieldInfo eventDateReportField = report.getCalendarStartField();
 				List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues,
-						false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
+						false, new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false, null);
 				ROWS_LOOP: for (DataRowInfo reportDataRow : reportDataRows) {
 					DataRowFieldInfo eventDateValue = reportDataRow.getValue(eventDateReportField);
 					if (eventDateValue.getKeyValue().equals("")) {
@@ -2336,7 +2336,7 @@ public final class DataManagement implements DataManagementInfo {
 			zone = DateTimeZone.forID("Europe/London");
 		}
 		List<DataRowInfo> reportDataRows = this.getReportDataRows(user, report, filterValues, false,
-				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false);
+				new HashMap<BaseField, Boolean>(0), 10000, QuickFilterType.AND, false, null);
 		JsonFactory jsonFactory = new JsonFactory();
 		StringWriter stringWriter = new StringWriter(1024);
 		JsonGenerator jg;
@@ -2497,20 +2497,25 @@ public final class DataManagement implements DataManagementInfo {
 	public List<DataRowInfo> getReportDataRows(AppUserInfo user, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
-			boolean lookupPostcodeLatLong) throws SQLException, CodingErrorException,
+			boolean lookupPostcodeLatLong, HttpServletRequest request) throws SQLException, CodingErrorException,
 			CantDoThatException, ObjectNotFoundException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
 		CompanyInfo company = null;
-		if (user != null) {
+		boolean enforceCustomUserFilter = true;
+		if ((user != null) && (request != null)) {
 			company = user.getCompany();
+			if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
+				// Administrators are allowed to fall back to getting the unfiltered report if there is no Created By column in the report
+				enforceCustomUserFilter = false;
+			}
 		}
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
 			ReportDataInfo reportData = this.getReportData(company, reportDefn, conn, true);
 			reportDataRows = reportData.getReportDataRows(conn, user, filterValues, exactFilters,
-					sessionSorts, rowLimit, filterType, lookupPostcodeLatLong);
+					sessionSorts, rowLimit, filterType, lookupPostcodeLatLong, enforceCustomUserFilter);
 		} finally {
 			if (conn != null) {
 				conn.close();
@@ -3191,7 +3196,7 @@ public final class DataManagement implements DataManagementInfo {
 		// Get data we're going to anonymise
 		List<DataRowInfo> dataRows = this.getReportDataRows(null, table.getDefaultReport(),
 				new HashMap<BaseField, String>(), false, new HashMap<BaseField, Boolean>(0), -1,
-				QuickFilterType.AND, false);
+				QuickFilterType.AND, false, null);
 		// Build up list of names
 		List<String> forenames = new LinkedList<String>();
 		List<String> surnames = new LinkedList<String>();
