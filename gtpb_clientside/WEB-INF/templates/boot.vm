@@ -18,7 +18,7 @@
 #set($appUser = $view.getLoggedInUser())
 #set($userType = $appUser.getUserType())
 #set($apps = $appUser.getCompany().getApps())
-#if($appUser.getUsesCustomUI())
+#if($appUser.getUsesCustomUI() && (!$view.loggedInUserAllowedTo("ADMINISTRATE")))
   #set($companyId = $viewTools.cleanString($appUser.getCompany().getCompanyName()))
   #set($customTemplate = "gui/customisations/$companyId/index.vm")
   #parse($customTemplate)
