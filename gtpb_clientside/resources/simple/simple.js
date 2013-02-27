@@ -163,6 +163,8 @@ function tileLoaded(tile) {
 					"return": "gui/reports_and_tables/tabs/edit",
 					set_table: internalTableName,
 					set_rowid: rowId,
+				}, function() {
+					editTabFunctions();
 				});
 			});
 		});

@@ -65,6 +65,10 @@ body {
   margin-left: 0px; /* override bootstrap */
 }
 
+.tile .tab_container .row {
+  margin-left: 0; /* override bootstrap and pane3_amalgam */
+}
+
 .header.row.expanded {
   opacity: 0.5;
 }
