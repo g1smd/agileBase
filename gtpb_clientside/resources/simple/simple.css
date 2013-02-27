@@ -35,6 +35,7 @@ body {
   /* override pane3_amalgam.css */
   background-color: white;
   overflow: auto;
+  font-size: 10pt;
 }
 
 .transition {
