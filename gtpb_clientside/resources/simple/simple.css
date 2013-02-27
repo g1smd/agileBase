@@ -65,6 +65,10 @@ body {
   margin-left: 0px; /* override bootstrap */
 }
 
+.tile div#reportData {
+  background-color: rgba(255,255,255,0.75);  
+}
+
 .tile #reportData .row {
   margin-left: 0; /* override bootstrap and pane3_amalgam */
 }
