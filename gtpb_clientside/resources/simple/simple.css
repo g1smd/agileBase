@@ -135,7 +135,7 @@ body {
   left: 0;
   right: 0;
   height: 4em;
-  background-image: linear-gradient(to bottom, white 0%, #009FE3 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #009FE3 100%);
 }
 
 #tiles .tile .tile_icon {
