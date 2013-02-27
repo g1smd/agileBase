@@ -134,6 +134,11 @@ body {
   line-height: 0.5em;
 }
 
+#tiles .tile.adder .tile_icon {
+  font-size: 115pt;
+  line-height: 0.6em;
+}
+
 /* fontawesome / bootstrap overrides */
 #tiles .tile .tile_icon i {
   line-height: 1em;
