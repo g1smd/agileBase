@@ -81,11 +81,7 @@ body {
   display: none; /* override pane3_amalgam */
 }
 
-.tile .fieldname {
-  font-size: 10pt;
-}
-
-.tile #reportData .block input, .tile #reportData .block select, .tile table#reportData td input {
+.tile #reportData .block input, .tile #reportData .block select, .tile table#reportData td input, .form_tabber .tab_choice, .tile .fieldname {
   font-size: 10pt;
 }
 
