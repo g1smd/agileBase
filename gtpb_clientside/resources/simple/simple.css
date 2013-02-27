@@ -69,6 +69,10 @@ body {
   background-color: rgba(255,255,255,0.75);  
 }
 
+.tile .form_tabber {
+  background-color: transparent;
+}
+
 .tile #reportData .row {
   margin-left: 0; /* override bootstrap and pane3_amalgam */
 }
