@@ -85,7 +85,7 @@ function commonTileEvents() {
 	});
 	$(".sideAction.backToView").click(function() {
 		tileLoaded($(".tile.expanded"));
-		$(this).removeClass("expanded");
+		$(".tile.expanded").find("#reportData").css("opacity","0");
 	});
 }
 
@@ -151,6 +151,7 @@ function tileLoaded(tile) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		var internalTileName = tile.attr("data-internaltilename");
+		tile.find(".reportData").css("opacity","0");
 		tile.find(".content").load("AppController.servlet", {
 			"return": "s/tiles/report_data",
 			set_table: internalTableName,
@@ -159,6 +160,7 @@ function tileLoaded(tile) {
 			set_tile: internalTileName,
 			cache_bust: (new Date()).getTime()
 		}, function() {
+			$(".sideAction.backToView").removeClass("expanded");
 			$(".reportData tr").click(function() {
 				var row = $(this);
 				var rowId = row.attr("name");
