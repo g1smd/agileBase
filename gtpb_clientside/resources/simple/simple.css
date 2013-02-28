@@ -435,8 +435,8 @@ table.reportData td {
 }
 
 .sideAction.backToView {
-  bottom: 3em;
-  right: 0.25em;
+  top: 5em;
+  left: 0.25em;
 }
 
 .bold {

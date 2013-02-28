@@ -85,6 +85,7 @@ function commonTileEvents() {
 	});
 	$(".sideAction.backToView").click(function() {
 		tileLoaded($(".tile.expanded"));
+		$(this).removeClass("expanded");
 	});
 }
 

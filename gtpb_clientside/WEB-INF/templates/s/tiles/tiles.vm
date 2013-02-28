@@ -52,4 +52,4 @@
 </div>
 <div class="sideAction backHome" title="home"><i class="icon-chevron-left"></i></div>
 <div class="sideAction removeTile" title="remove tile"><i class="icon-remove-sign"></i></div>
-<div class="sideAction backToView" title="finish changes"><i class="icon-ok"></i></div>
+<div class="sideAction backToView" title="finish changes"><i class="icon-ok-sign"></i></div>
