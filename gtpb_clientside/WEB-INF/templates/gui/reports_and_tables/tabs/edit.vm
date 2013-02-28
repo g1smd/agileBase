@@ -85,7 +85,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
     #set($rowTag = "div")
     #set($cellTag = "div")
   #end
-  <$containerTag
+  <$containerTag class="transition"
     #if($singleColumn)
       cellspacing="0" cellpadding="0" border="0" style="background-color: white"
     #end
