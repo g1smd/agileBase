@@ -83,6 +83,9 @@ function commonTileEvents() {
 		});
 		tile.find(".content").removeClass("notfocus");
 	});
+	$(".sideAction.backToView").click(function() {
+		tileLoaded($(".tile.expanded"));
+	});
 }
 
 /** Data stream tile specific events */
@@ -165,6 +168,7 @@ function tileLoaded(tile) {
 					set_row_id: rowId,
 				}, function() {
 					editTabFunctions();
+					$(".sideAction.backToView").addClass("expanded");
 				});
 			});
 		});

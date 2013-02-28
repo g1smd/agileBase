@@ -411,7 +411,6 @@ table.reportData td {
   cursor: pointer;
   font-size: 30pt;
   position: fixed;
-  top: 3em;
   opacity: 0;
   transition-duration: 3s;
   transition-property: opacity;
@@ -426,10 +425,17 @@ table.reportData td {
 }
 
 .sideAction.backHome {
+  top: 3em;
   left: 0.25em;
 }
 
 .sideAction.removeTile {
+  top: 3em;
+  right: 0.25em;
+}
+
+.sideAction.backToView {
+  bottom: 3em;
   right: 0.25em;
 }
 
