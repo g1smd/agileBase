@@ -158,6 +158,7 @@ function tileLoaded(tile) {
 			set_tile: internalTileName,
 			cache_bust: (new Date()).getTime()
 		}, function() {
+			// remove opacity
 			tile.find(".content").removeAttr("style");
 			$(".sideAction.backToView").removeClass("expanded");
 			$(".reportData tr").click(function() {
@@ -169,7 +170,8 @@ function tileLoaded(tile) {
 					set_table: internalTableName,
 					set_row_id: rowId,
 				}, function() {
-					row.closest(".content").removeAttr("style");
+					// remove opacity
+					$(".content").removeAttr("style");
 					editTabFunctions();
 					$(".sideAction.backToView").addClass("expanded");
 				});
