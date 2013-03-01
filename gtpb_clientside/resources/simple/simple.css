@@ -391,7 +391,7 @@ table.reportData tr:nth-child(odd) {
 }
 
 table.reportData th {
-  color: #353736; /* departure from normal 656766 to make a bit darker */
+  color: #656766;
   text-align: left;
   vertical-align: top;
   padding-left: 1em;
