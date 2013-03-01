@@ -60,7 +60,8 @@ function commonTileEvents() {
 	$(".removeTile").click(function() {
 		removeTile();
 	});
-	$(".tile input").click(function(event) {
+	$("#fieldFilters input").click(function(event) {
+		alert('click');
 		event.stopPropagation();
 	});
 	$('.tile').click(function() {
