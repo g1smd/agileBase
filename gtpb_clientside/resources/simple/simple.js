@@ -60,6 +60,9 @@ function commonTileEvents() {
 	$(".removeTile").click(function() {
 		removeTile();
 	});
+	$(".tile input").click(function(event) {
+		event.stopPropagation();
+	});
 	$('.tile').click(function() {
 		var tile = $(this);
 		if (tile.hasClass("expanded")) {

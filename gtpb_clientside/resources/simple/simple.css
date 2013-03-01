@@ -397,6 +397,10 @@ table.reportData th {
   padding-left: 1em;
 }
 
+#fieldFilters input {
+  width: 100%;
+}
+
 table.reportData td {
   vertical-align: top;
   padding: 0.5em;
