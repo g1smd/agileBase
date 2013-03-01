@@ -297,7 +297,7 @@ label {
 
 label:hover {
   /* override pane3_amalgam */
-  color: auto;
+  color: white;
 }
 
 #submit_tile {
