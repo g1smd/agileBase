@@ -295,7 +295,7 @@ label {
   margin: 2em;
 }
 
-label:hover {
+.adder label:hover {
   /* override pane3_amalgam */
   color: white;
 }
