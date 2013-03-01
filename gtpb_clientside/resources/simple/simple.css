@@ -295,6 +295,11 @@ label {
   margin: 2em;
 }
 
+label:hover {
+  /* override pane3_amalgam */
+  color: auto;
+}
+
 #submit_tile {
   display: none;
 }
