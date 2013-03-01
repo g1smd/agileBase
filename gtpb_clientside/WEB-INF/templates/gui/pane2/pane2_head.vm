@@ -64,7 +64,8 @@
 		    #set($internalFieldName = $field.getInternalFieldName())
 		    #set($fieldObject = $field)
 		    <td><div>
-		      #if($field.getInternalFieldName())
+          #set($profilePhoto = ($field.getAttachmentType() == "PROFILE_PHOTO"))
+		      #if($field.getInternalFieldName() && (!$profilePhoto))
 		        #parse("gui/pane2/filter_input.vm")
 		      #elseif($fields.size() == $foreach.count)
 		        <span onclick="clearFilters();">clear</span>
