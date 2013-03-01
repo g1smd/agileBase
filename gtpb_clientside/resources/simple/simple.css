@@ -430,13 +430,14 @@ table.reportData td {
 }
 
 .sideAction.removeTile {
-  top: 3em;
+  top: 0;
   right: 0.25em;
+  font-size: 20pt;
 }
 
 .sideAction.backToView {
-  top: 5em;
-  left: 0.25em;
+  top: 3em;
+  right: 0.25em;
 }
 
 .bold {

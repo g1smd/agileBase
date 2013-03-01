@@ -85,7 +85,6 @@ function commonTileEvents() {
 	});
 	$(".sideAction.backToView").click(function() {
 		tileLoaded($(".tile.expanded"));
-		$(".tile.expanded").find("#reportData").css("opacity","0");
 	});
 }
 
@@ -151,8 +150,7 @@ function tileLoaded(tile) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		var internalTileName = tile.attr("data-internaltilename");
-		tile.find(".reportData").css("opacity","0");
-		tile.find(".content").load("AppController.servlet", {
+		tile.find(".content").css("opacity","0.25").load("AppController.servlet", {
 			"return": "s/tiles/report_data",
 			set_table: internalTableName,
 			set_report: internalReportName,
@@ -160,16 +158,18 @@ function tileLoaded(tile) {
 			set_tile: internalTileName,
 			cache_bust: (new Date()).getTime()
 		}, function() {
+			tile.find(".content").removeAttr("style");
 			$(".sideAction.backToView").removeClass("expanded");
 			$(".reportData tr").click(function() {
 				var row = $(this);
 				var rowId = row.attr("name");
 				var internalTableName = row.closest(".tile").attr("data-internaltablename");
-				row.closest(".content").load("AppController.servlet", {
+				row.closest(".content").css("opacity","0.25").load("AppController.servlet", {
 					"return": "gui/reports_and_tables/tabs/edit",
 					set_table: internalTableName,
 					set_row_id: rowId,
 				}, function() {
+					row.closest(".content").removeAttr("style");
 					editTabFunctions();
 					$(".sideAction.backToView").addClass("expanded");
 				});
