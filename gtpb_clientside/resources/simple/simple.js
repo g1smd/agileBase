@@ -165,7 +165,10 @@ function tileLoaded(tile) {
 			// remove opacity
 			tile.find(".content").removeAttr("style");
 			$(".sideAction.backToView").removeClass("expanded");
-			$(".reportData tr").click(function() {
+			$(".reportData tr").click(function(event) {
+				if (event.target.nodeName == "INPUT") {
+					return;
+				}
 				var row = $(this);
 				var rowId = row.attr("name");
 				var internalTableName = row.closest(".tile").attr("data-internaltablename");
