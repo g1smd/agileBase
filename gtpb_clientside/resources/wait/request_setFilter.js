@@ -321,8 +321,8 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 			return; // the current value has changed since this request was sent
 		}
 		var callback = null;
-		if ($("#tiles").size() > 0) {
-			callback = reportRowClicks();
+		if (typeof reportRowClicks == "function") {
+			callback = reportRowClicks;
 		}
 		fLoadReport(sResponseText, oReportBody, callback);
 		fEnableDisable('enable');
