@@ -19,6 +19,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 ## edit the data in the session table
 
 ## used by the input element templates
+#set($tile = $sessionData.getTile())
 #if(!$ab_calendar_display)
   #set($updateAsType = true)
 #end
@@ -109,7 +110,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 				#end
 			#end
 	  #end
-	  #if($unfilledMandatories)
+	  #if($unfilledMandatories && (!$tile))
 	    <div class="unfilledMandatories">
 		  #set($rowCount = $rowCount + 1)
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
