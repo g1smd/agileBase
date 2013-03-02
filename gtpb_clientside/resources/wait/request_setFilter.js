@@ -320,7 +320,11 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 			$(oFormObject).css("color: red");
 			return; // the current value has changed since this request was sent
 		}
-		fLoadReport(sResponseText, oReportBody,null);
+		var callback = null;
+		if ($("#tiles").size() > 0) {
+			callback = tileLoaded($(".tile.expanded"));
+		}
+		fLoadReport(sResponseText, oReportBody, callback);
 		fEnableDisable('enable');
 		$(parent.pane_2).scrollTop(0);
 	}

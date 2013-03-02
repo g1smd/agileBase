@@ -39,17 +39,6 @@ function focusEvents() {
 			username : username
 		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
 	});
-	/* Focus switch unused
-	$(".focus_switch i").click(function(event) {
-		event.stopPropagation();
-		var scrollTo = $(this).attr("data-scrollto");
-		var content = $(this).closest(".content"); 
-		console.log(content.size());
-		var scrollToElement = $(".group." + scrollTo);
-		console.log(scrollToElement.html());
-		content.scrollTo(scrollToElement, 100);
-	});
-	*/
 }
 
 /** Common tile events */
@@ -61,7 +50,6 @@ function commonTileEvents() {
 		removeTile();
 	});
 	$("#fieldFilters input").click(function(event) {
-		alert('click');
 		event.stopPropagation();
 	});
 	$('.tile').click(function() {

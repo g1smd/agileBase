@@ -355,6 +355,7 @@ ul.tweet_list {
 
 span.comment_text {
   font-size: 10pt;
+  font-weight: bold;
   background-color: transparent;
   color: #EC00BC;
   display: inline;
