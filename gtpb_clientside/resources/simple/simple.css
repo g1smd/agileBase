@@ -416,6 +416,7 @@ table.reportData th#sortedColumn[sortDirn=false] {
 
 .tile #fieldFilters .ab_tooltip {
   top: 10em;
+  min-width: 15em;
 }
 
 .tile #filterhelp {
