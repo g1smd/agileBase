@@ -164,32 +164,6 @@ function tileLoaded(tile) {
 					reportRowClicks();
 				});
 	}
-
-	function reportRowClicks() {
-		console.log("reportRowClicks()");
-		$(".reportData tr").click(
-				function(event) {
-					if (event.target.nodeName == "INPUT") {
-						return;
-					}
-					var row = $(this);
-					var rowId = row.attr("name");
-					var internalTableName = row.closest(".tile").attr(
-							"data-internaltablename");
-					row.closest(".content").css("opacity", "0.25").load(
-							"AppController.servlet", {
-								"return" : "gui/reports_and_tables/tabs/edit",
-								set_table : internalTableName,
-								set_row_id : rowId,
-							}, function() {
-								// remove opacity
-								$(".content").removeAttr("style");
-								editTabFunctions();
-								$(".sideAction.backToView").addClass("expanded");
-							});
-				});
-	}
-
 	if (tileType == "adder") {
 		$("label.tiletype").click(
 				function(event) {
@@ -246,6 +220,33 @@ function tileLoaded(tile) {
 				});
 	} // end of if adder
 }
+
+function reportRowClicks() {
+	console.log("reportRowClicks()");
+	$(".reportData tr").click(
+			function(event) {
+				if (event.target.nodeName == "INPUT") {
+					return;
+				}
+				var row = $(this);
+				var rowId = row.attr("name");
+				var internalTableName = row.closest(".tile").attr(
+						"data-internaltablename");
+				row.closest(".content").css("opacity", "0.25").load(
+						"AppController.servlet", {
+							"return" : "gui/reports_and_tables/tabs/edit",
+							set_table : internalTableName,
+							set_row_id : rowId,
+						}, function() {
+							// remove opacity
+							$(".content").removeAttr("style");
+							editTabFunctions();
+							$(".sideAction.backToView").addClass("expanded");
+						});
+			});
+}
+
+
 
 function addDataTile(selectedApp, colour, internalReportName, icon) {
 	backHome();
