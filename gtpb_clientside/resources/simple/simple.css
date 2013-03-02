@@ -399,11 +399,11 @@ table.reportData th {
 }
 
 table.reportData th#sortedColumn[sortDirn=true] {
-  border-bottom: 0.25em 1px solid #8DC63F;
+  border-bottom: 0.25em solid #8DC63F;
 }
 
 table.reportData th#sortedColumn[sortDirn=false] {
-  border-bottom: 0.25em 1px solid #EC00BC;
+  border-bottom: 0.25em solid #EC00BC;
 }
 
 #fieldFilters input {
