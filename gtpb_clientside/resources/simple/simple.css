@@ -411,7 +411,11 @@ table.reportData th#sortedColumn[sortDirn=false] {
 }
 
 .tile .ab_tooltip {
-  top: 6em;
+  top: 4em;
+}
+
+.tile #fieldFilters .ab_tooltip {
+  top: 8em;
 }
 
 table.reportData td {
