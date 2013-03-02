@@ -68,16 +68,16 @@ table#reportData th[onclick]:hover {
 */
 }
 
-table#reportData th#sortedColumn{
+table#reportData th#sortedColumn, table.reportData th#sortedColumn {
   background-color: #E8E7E3;
 }
 
-table#reportData th#sortedColumn[sortDirn=true] {
+table#reportData th#sortedColumn[sortDirn=true], table.reportData th#sortedColumn[sortDirn=true] {
   background-image:url('reports/asc.png');
   border-bottom-color: #8DC63F;
 }
 
-table#reportData th#sortedColumn[sortDirn=false] {
+table#reportData th#sortedColumn[sortDirn=false] table.reportData th#sortedColumn[sortDirn=false] {
   background-image:url('reports/desc.png');
   border-bottom-color: #EC00BC;
 }
