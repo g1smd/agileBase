@@ -161,6 +161,13 @@ function tileLoaded(tile) {
 					// remove opacity
 					tile.find(".content").removeAttr("style");
 					$(".sideAction.backToView").removeClass("expanded");
+				  var hoverIntentConfig = {    
+			         over: showTooltip,
+			         out: hideTooltip,
+			         interval: 400
+				  };
+				  $("#filterhelp").hoverIntent(hoverIntentConfig);
+				  $(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
 				});
 	}
