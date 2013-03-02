@@ -476,6 +476,10 @@ table.reportData td {
   font-weight: bold;
 }
 
+.relative {
+  position: relative;
+}
+
 /* Colours */
 .blue {
   background-color: #009FE3;

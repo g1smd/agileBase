@@ -34,12 +34,15 @@
 	      #set($className=$fieldObject.getClass().getSimpleName())
 	      <th #if(($className == "TextFieldDefn") || ($className == "BigTextFieldDefn")) maxTextLength="$fieldObject.getContentSize()" #end #if(($className != "String") && ($internalFieldName!="")) internalName="$internalFieldName" onclick="fSetSort(this)"#end>
 	      #if($fieldObject)
+          <div class="relative"> ## position:relative can't be applied to td or th, so put a div in it and apply it to that.
+          ## This is so tooltips can be positioned relative to the cell
 	        #if(($className != "String") && ($internalFieldName!=""))
 	          <div class="ab_field_title">$fieldName</div>
 	          <div class="ab_tooltip" rel="?return=gui/reports_and_tables/field_tooltip&set_custom_string=true&key=tooltip_internalfieldname&value=$internalFieldName"></div>
 	        #else
 	          <div>$fieldName</div>
-	        #end
+          #end
+          </div>
 	      #else
 	        <div>&nbsp;</div>
 	      #end
