@@ -153,24 +153,7 @@ function tileLoaded(tile) {
 			// remove opacity
 			tile.find(".content").removeAttr("style");
 			$(".sideAction.backToView").removeClass("expanded");
-			$(".reportData tr").click(function(event) {
-				if (event.target.nodeName == "INPUT") {
-					return;
-				}
-				var row = $(this);
-				var rowId = row.attr("name");
-				var internalTableName = row.closest(".tile").attr("data-internaltablename");
-				row.closest(".content").css("opacity","0.25").load("AppController.servlet", {
-					"return": "gui/reports_and_tables/tabs/edit",
-					set_table: internalTableName,
-					set_row_id: rowId,
-				}, function() {
-					// remove opacity
-					$(".content").removeAttr("style");
-					editTabFunctions();
-					$(".sideAction.backToView").addClass("expanded");
-				});
-			});
+			reportRowClicks();
 		});
 /*		
 		var iframeSrc = "AppController.servlet?return=s/tiles/report_data&set_table=" + internalTableName + "&set_report=" + internalReportName;
@@ -178,6 +161,27 @@ function tileLoaded(tile) {
 		iframeSrc += "&cachebust=" + (new Date()).getTime();
 		tile.find(".content").html("<iframe src='" + iframeSrc + "'></iframe");
 	*/
+	}
+	
+	function reportRowClicks() {
+		$(".reportData tr").click(function(event) {
+			if (event.target.nodeName == "INPUT") {
+				return;
+			}
+			var row = $(this);
+			var rowId = row.attr("name");
+			var internalTableName = row.closest(".tile").attr("data-internaltablename");
+			row.closest(".content").css("opacity","0.25").load("AppController.servlet", {
+				"return": "gui/reports_and_tables/tabs/edit",
+				set_table: internalTableName,
+				set_row_id: rowId,
+			}, function() {
+				// remove opacity
+				$(".content").removeAttr("style");
+				editTabFunctions();
+				$(".sideAction.backToView").addClass("expanded");
+			});
+		});
 	}
 	
 	if (tileType == "adder") {

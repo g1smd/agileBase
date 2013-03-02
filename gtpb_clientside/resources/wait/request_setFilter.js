@@ -322,7 +322,7 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		}
 		var callback = null;
 		if ($("#tiles").size() > 0) {
-			callback = tileLoaded($(".tile.expanded"));
+			callback = reportRowClicks();
 		}
 		fLoadReport(sResponseText, oReportBody, callback);
 		fEnableDisable('enable');
