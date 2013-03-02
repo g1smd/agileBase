@@ -11,7 +11,7 @@ $(document).ready(function() {
 	}
 });
 
-var abTileColours = ["blue", "yellow", "green", "purple", "pink", "turquoise"];
+var abTileColours = [ "blue", "yellow", "green", "purple", "pink", "turquoise" ];
 
 function tileEvents() {
 	commonTileEvents();
@@ -37,7 +37,9 @@ function focusEvents() {
 				return !/^@\w+/.test(t["tweet_raw_text"]);
 			},
 			username : username
-		}).bind("loaded",function(){$(this).find("a").attr("target","_blank");});
+		}).bind("loaded", function() {
+			$(this).find("a").attr("target", "_blank");
+		});
 	});
 }
 
@@ -90,16 +92,19 @@ function dataStreamEvents() {
 	searchBox.keyup(function(event) {
 		$(this).addClass("changed");
 		var filterString = $(this).val();
-		var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
-		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
-		var internalReportName = $(this).closest(".tile").attr("data-internalreportname");
+		var internalTileName = $(this).closest(".tile").attr(
+				"data-internaltilename");
+		var internalTableName = $(this).closest(".tile").attr(
+				"data-internaltablename");
+		var internalReportName = $(this).closest(".tile").attr(
+				"data-internalreportname");
 		$(this).closest(".tile").find(".content").load("AppController.servlet", {
-			"return": "s/tiles/data_stream",
-			set_global_report_filter_string: true,
-			filterstring: filterString,
-			set_tile: internalTileName,
-			set_table: internalTableName,
-			set_report: internalReportName
+			"return" : "s/tiles/data_stream",
+			set_global_report_filter_string : true,
+			filterstring : filterString,
+			set_tile : internalTileName,
+			set_table : internalTableName,
+			set_report : internalReportName
 		}, function() {
 			$(this).removeClass("changed");
 			dataStreamFocus();
@@ -108,23 +113,25 @@ function dataStreamEvents() {
 }
 
 function dataStreamFocus() {
-	$(".tile.large .report_data_row").mouseenter(function() {
-		var row = $(this);
-		var focusTile = $(".tile[data-type=focus]");
-		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
-		var rowId = $(this).attr("data-rowid");
-		focusTile.find(".content").load("AppController.servlet", {
-			"return": "s/tiles/focus/focus",
-			set_table: internalTableName,
-			set_custom_integer: true,
-			integerkey: "focus_row_id",
-			customintegervalue: rowId
-		}, function() {
-			var rowTitle = row.find(".row_title").text();
-			focusTile.find(".title").text(rowTitle);
-			focusEvents();
-		});
-	});
+	$(".tile.large .report_data_row").mouseenter(
+			function() {
+				var row = $(this);
+				var focusTile = $(".tile[data-type=focus]");
+				var internalTableName = $(this).closest(".tile").attr(
+						"data-internaltablename");
+				var rowId = $(this).attr("data-rowid");
+				focusTile.find(".content").load("AppController.servlet", {
+					"return" : "s/tiles/focus/focus",
+					set_table : internalTableName,
+					set_custom_integer : true,
+					integerkey : "focus_row_id",
+					customintegervalue : rowId
+				}, function() {
+					var rowTitle = row.find(".row_title").text();
+					focusTile.find(".title").text(rowTitle);
+					focusEvents();
+				});
+			});
 }
 
 /**
@@ -138,81 +145,82 @@ function tileLoaded(tile) {
 	}
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").addClass("notfocus");
-	if(tile.attr("data-internalreportname")) {
+	if (tile.attr("data-internalreportname")) {
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		var internalTileName = tile.attr("data-internaltilename");
-		tile.find(".content").css("opacity","0.25").load("AppController.servlet", {
-			"return": "s/tiles/report_data",
-			set_table: internalTableName,
-			set_report: internalReportName,
-			set_report_row_limit: 50,
-			set_tile: internalTileName,
-			cache_bust: (new Date()).getTime()
-		}, function() {
-			// remove opacity
-			tile.find(".content").removeAttr("style");
-			$(".sideAction.backToView").removeClass("expanded");
-			reportRowClicks();
-		});
-/*		
-		var iframeSrc = "AppController.servlet?return=s/tiles/report_data&set_table=" + internalTableName + "&set_report=" + internalReportName;
-		iframeSrc += "&set_report_row_limit=50&set_tile=" + internalTileName
-		iframeSrc += "&cachebust=" + (new Date()).getTime();
-		tile.find(".content").html("<iframe src='" + iframeSrc + "'></iframe");
-	*/
+		tile.find(".content").css("opacity", "0.25").load("AppController.servlet",
+				{
+					"return" : "s/tiles/report_data",
+					set_table : internalTableName,
+					set_report : internalReportName,
+					set_report_row_limit : 50,
+					set_tile : internalTileName,
+					cache_bust : (new Date()).getTime()
+				}, function() {
+					// remove opacity
+					tile.find(".content").removeAttr("style");
+					$(".sideAction.backToView").removeClass("expanded");
+					reportRowClicks();
+				});
 	}
-	
+
 	function reportRowClicks() {
-		$(".reportData tr").click(function(event) {
-			if (event.target.nodeName == "INPUT") {
-				return;
-			}
-			var row = $(this);
-			var rowId = row.attr("name");
-			var internalTableName = row.closest(".tile").attr("data-internaltablename");
-			row.closest(".content").css("opacity","0.25").load("AppController.servlet", {
-				"return": "gui/reports_and_tables/tabs/edit",
-				set_table: internalTableName,
-				set_row_id: rowId,
-			}, function() {
-				// remove opacity
-				$(".content").removeAttr("style");
-				editTabFunctions();
-				$(".sideAction.backToView").addClass("expanded");
-			});
-		});
+		$(".reportData tr").click(
+				function(event) {
+					if (event.target.nodeName == "INPUT") {
+						return;
+					}
+					var row = $(this);
+					var rowId = row.attr("name");
+					var internalTableName = row.closest(".tile").attr(
+							"data-internaltablename");
+					row.closest(".content").css("opacity", "0.25").load(
+							"AppController.servlet", {
+								"return" : "gui/reports_and_tables/tabs/edit",
+								set_table : internalTableName,
+								set_row_id : rowId,
+							}, function() {
+								// remove opacity
+								$(".content").removeAttr("style");
+								editTabFunctions();
+								$(".sideAction.backToView").addClass("expanded");
+							});
+				});
 	}
-	
+
 	if (tileType == "adder") {
-		$("label.tiletype").click(function(event) {
-			event.stopPropagation(); // stop the .tile click being called
-			$("label.tiletype").not($(this)).addClass("notfocus");
-			var selectedApp = $(this).attr("data-tiletype");
-			if (selectedApp == "data_stream" || selectedApp == "data_link") {
-				$(this).find("p").text("Which data would you like to use?");
-				$(".adder .reportSelector").show().removeClass("notfocus");
-				$(".adder .reportSelector li.module").click(function() {
-					$(".adder .reportSelector li.module").not($(this)).addClass("notfocus");
-					$(this).find("ul.reports").show().removeClass("notfocus");
-				});
-			}
-			if (selectedApp == "chat" || selectedApp == "comment_stream") {
-				// These types add a tile immediately without further configuration
-				// Choose a colour
-				backHome();
-				var colour = nextColour();
-				$.post("AppController.servlet", {
-					"return" : "s/tiles/tiles",
-					add_tile : true,
-					tiletype : selectedApp,
-					colour : colour
-				}, function(data) {
-					$("#tiles").html(data);
-					tileEvents();
-				});
-			}
-		}); /* end of label.tiletype.click */
+		$("label.tiletype").click(
+				function(event) {
+					event.stopPropagation(); // stop the .tile click being called
+					$("label.tiletype").not($(this)).addClass("notfocus");
+					var selectedApp = $(this).attr("data-tiletype");
+					if (selectedApp == "data_stream" || selectedApp == "data_link") {
+						$(this).find("p").text("Which data would you like to use?");
+						$(".adder .reportSelector").show().removeClass("notfocus");
+						$(".adder .reportSelector li.module").click(
+								function() {
+									$(".adder .reportSelector li.module").not($(this)).addClass(
+											"notfocus");
+									$(this).find("ul.reports").show().removeClass("notfocus");
+								});
+					}
+					if (selectedApp == "chat" || selectedApp == "comment_stream") {
+						// These types add a tile immediately without further configuration
+						// Choose a colour
+						backHome();
+						var colour = nextColour();
+						$.post("AppController.servlet", {
+							"return" : "s/tiles/tiles",
+							add_tile : true,
+							tiletype : selectedApp,
+							colour : colour
+						}, function(data) {
+							$("#tiles").html(data);
+							tileEvents();
+						});
+					}
+				}); /* end of label.tiletype.click */
 		$(".adder .reportSelector ul.reports li").click(function(event) {
 			event.stopPropagation();
 			var internalReportName = $(this).attr("data-internalreportname");
@@ -226,13 +234,15 @@ function tileLoaded(tile) {
 				addDataTile(selectedApp, colour, internalReportName, icon);
 			}
 		});
-		$(".adder .iconChooser i").click(function(event) {
-			var internalReportName = $(".iconChooser").attr("attr-internalreportname");
-			var selectedApp = $("label:visible").attr("data-tiletype");
-			var colour = nextColour();
-			var icon = $(this).attr("class");
-			addDataTile(selectedApp, colour, internalReportName, icon);
-		});
+		$(".adder .iconChooser i").click(
+				function(event) {
+					var internalReportName = $(".iconChooser").attr(
+							"attr-internalreportname");
+					var selectedApp = $("label:visible").attr("data-tiletype");
+					var colour = nextColour();
+					var icon = $(this).attr("class");
+					addDataTile(selectedApp, colour, internalReportName, icon);
+				});
 	} // end of if adder
 }
 
@@ -243,7 +253,7 @@ function addDataTile(selectedApp, colour, internalReportName, icon) {
 		add_tile : true,
 		tiletype : selectedApp,
 		colour : colour,
-		icon: icon,
+		icon : icon,
 		internalreportname : internalReportName
 	}, function(data) {
 		$("#tiles").html(data);
@@ -252,12 +262,13 @@ function addDataTile(selectedApp, colour, internalReportName, icon) {
 }
 
 function nextColour() {
-	// Find available colours: create a copy of abTileColours, remove existing tile colours	
+	// Find available colours: create a copy of abTileColours, remove existing
+	// tile colours
 	var availableColours = abTileColours.slice(0);
 	$(".tile").not(".adder").each(function() {
-		for (var i in abTileColours) {
+		for ( var i in abTileColours) {
 			var tileColour = abTileColours[i];
-			if($(this).hasClass(tileColour)) {
+			if ($(this).hasClass(tileColour)) {
 				removeItem(availableColours, tileColour);
 			}
 		}
@@ -272,13 +283,13 @@ function nextColour() {
 	return abTileColours[colourIndex];
 }
 
-function removeItem(array, item){
-  for(var i in array){
-      if(array[i]==item){
-          array.splice(i,1);
-          break;
-          }
-  }
+function removeItem(array, item) {
+	for ( var i in array) {
+		if (array[i] == item) {
+			array.splice(i, 1);
+			break;
+		}
+	}
 }
 
 /**
@@ -295,7 +306,7 @@ function backHome() {
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
 	$('.tile .tile_icon i').removeClass("notfocus");
-	
+
 }
 
 /**
