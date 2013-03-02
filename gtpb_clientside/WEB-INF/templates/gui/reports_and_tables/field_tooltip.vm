@@ -21,11 +21,11 @@ $reportField
     	$aggregate.getAggregateFunction().getLabel() = $aggregateValues.get($aggregate)<br>
       #end
     #else
-      #if($chartDataRows.size() > 30)
-        #parse("gui/reports_and_tables/field_tooltip_cloud.vm")
-      #else
+      ###if($chartDataRows.size() > 30)
+      ##  #parse("gui/reports_and_tables/field_tooltip_cloud.vm")
+      ###else
         #parse("gui/reports_and_tables/field_tooltip_sparkline.vm")
-      #end
+      ###end
       #end ## if there is a grouping
 	#end
 #end ## if displayDetails

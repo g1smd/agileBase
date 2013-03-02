@@ -415,7 +415,12 @@ table.reportData th#sortedColumn[sortDirn=false] {
 }
 
 .tile #fieldFilters .ab_tooltip {
-  top: 8em;
+  top: 10em;
+}
+
+.tile #filterhelp {
+  color: white;
+  font-size: 16pt;
 }
 
 table.reportData td {
