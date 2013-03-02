@@ -322,6 +322,7 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		}
 		var callback = null;
 		if (typeof reportRowClicks == "function") {
+			console.log("Callback is reportRowClicks");
 			callback = reportRowClicks;
 		}
 		fLoadReport(sResponseText, oReportBody, callback);
