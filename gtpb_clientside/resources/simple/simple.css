@@ -396,6 +396,7 @@ table.reportData th {
   text-align: left;
   vertical-align: top;
   padding-left: 1em;
+  border-bottom-width: 0.25em;
 }
 
 #fieldFilters input {
