@@ -410,6 +410,10 @@ table.reportData td {
   color: #353736; /* departure from normal 656766 to make a bit darker */
 }
 
+.tile #dateControlWrapper .close {
+  border-top-right-radius: 0.6em;
+}
+
 .seemorerows td {
   background-color: white;
   border-bottom-left-radius: 1em;
