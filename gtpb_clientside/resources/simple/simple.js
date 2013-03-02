@@ -223,8 +223,8 @@ function tileLoaded(tile) {
 
 function reportRowClicks() {
 	$(".reportData tr").click(
-			console.log("row");
 			function(event) {
+				console.log("row");
 				if (event.target.nodeName == "INPUT") {
 					return;
 				}
