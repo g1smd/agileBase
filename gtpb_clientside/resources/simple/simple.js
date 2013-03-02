@@ -223,7 +223,7 @@ function tileLoaded(tile) {
 
 function reportRowClicks() {
 	$(".reportData tr").click(function(event) {
-				var thead = $(event.target).closest("thead");
+				var thead = $(event.target).closest("div");
 				console.log(thead[0]);
 				if ($(event.target).closest("thead").size() > 0) {
 					return;
