@@ -410,6 +410,10 @@ table.reportData th#sortedColumn[sortDirn=false] {
   width: 100%;
 }
 
+.tile .ab_tooltip {
+  top: 6em;
+}
+
 table.reportData td {
   vertical-align: top;
   padding: 0.5em;
