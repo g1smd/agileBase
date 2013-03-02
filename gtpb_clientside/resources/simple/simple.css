@@ -396,7 +396,14 @@ table.reportData th {
   text-align: left;
   vertical-align: top;
   padding-left: 1em;
-  border-bottom-width: 0.25em;
+}
+
+table.reportData th#sortedColumn[sortDirn=true] {
+  border-bottom: 0.25em 1px solid #8DC63F;
+}
+
+table.reportData th#sortedColumn[sortDirn=false] {
+  border-bottom: 0.25em 1px solid #EC00BC;
 }
 
 #fieldFilters input {
