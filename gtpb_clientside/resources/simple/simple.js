@@ -224,8 +224,7 @@ function tileLoaded(tile) {
 function reportRowClicks() {
 	$(".reportData tr").click(
 			function(event) {
-				console.log("row");
-				if (event.target.nodeName == "INPUT") {
+				if ($(event.target).closest("thead").size() > 0) {
 					return;
 				}
 				var row = $(this);
