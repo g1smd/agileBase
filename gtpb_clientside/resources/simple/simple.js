@@ -222,8 +222,9 @@ function tileLoaded(tile) {
 }
 
 function reportRowClicks() {
-	$(".reportData tr").click(
-			function(event) {
+	$(".reportData tr").click(function(event) {
+				var thead = if ($(event.target).closest("thead");
+				console.log(thead[0]);
 				if ($(event.target).closest("thead").size() > 0) {
 					return;
 				}
