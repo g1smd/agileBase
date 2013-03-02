@@ -222,7 +222,6 @@ function tileLoaded(tile) {
 }
 
 function reportRowClicks() {
-	console.log("reportRowClicks()");
 	$(".reportData tr").click(
 			function(event) {
 				if (event.target.nodeName == "INPUT") {

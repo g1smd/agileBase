@@ -321,9 +321,7 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 			return; // the current value has changed since this request was sent
 		}
 		var callback = null;
-		console.log(typeof reportRowClicks);
 		if (typeof reportRowClicks == "function") {
-			console.log("Callback is reportRowClicks");
 			callback = reportRowClicks;
 		}
 		fLoadReport(sResponseText, oReportBody, callback);

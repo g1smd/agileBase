@@ -88,47 +88,49 @@ function fSummaryPaneReady() {
 }
 
 function showPane3IfNecessary(oEvent) {
-  document.getElementById('oViewPane').contentWindow.pane_2.showPane3IfNecessary(oEvent);
+	if($("#oViewPane").size() > 0) {
+		$("#oViewPane")[0].contentWindow.pane_2.showPane3IfNecessary(oEvent);
+	}
 }
 
 function hidePane3() {
-  document.getElementById('oViewPane').contentWindow.pane_2.hidePane3();
+	$("#oViewPane")[0].contentWindow.pane_2.hidePane3();
 }
 
 function fNew() {  
-  document.getElementById('oViewPane').contentWindow.pane_2.fNew();
+	$("#oViewPane")[0].contentWindow.pane_2.fNew();
 } 
 
 function fClone() 	{  
-  document.getElementById('oViewPane').contentWindow.pane_2.fClone();
+	$("#oViewPane")[0].contentWindow.pane_2.fClone();
 } 
 
 function fDelete() 	{  
-  document.getElementById('oViewPane').contentWindow.pane_2.fDelete();
+	$("#oViewPane")[0].contentWindow.pane_2.fDelete();
 }
 
 function fImport() {  
-  document.getElementById('oViewPane').contentWindow.pane_2.fImport();
+	$("#oViewPane")[0].contentWindow.pane_2.fImport();
 }
 
 function fHelp() {
-  document.getElementById('oViewPane').contentWindow.pane_2.fHelp();
+	$("#oViewPane")[0].contentWindow.pane_2.fHelp();
 }
 
 function fExport() {  
-  document.getElementById('oViewPane').contentWindow.pane_2.fExport();
+	$("#oViewPane")[0].contentWindow.pane_2.fExport();
 }
 
 function fSetPassword() {
-  document.getElementById('oViewPane').contentWindow.pane_2.fSetPassword();
+	$("#oViewPane")[0].contentWindow.pane_2.fSetPassword();
 }
 
 function fLinks() {  
-  document.getElementById('oViewPane').contentWindow.pane_2.fLinks();
+	$("#oViewPane")[0].contentWindow.pane_2.fLinks();
 }
 
 function fLoadFromPreview(oBlock, event) {
-	document.getElementById('oViewPane').contentWindow.pane_2.fLoadFromPreview(oBlock, event);
+	$("#oViewPane")[0].contentWindow.pane_2.fLoadFromPreview(oBlock, event);
 }
 
 function fPrint() {
