@@ -414,6 +414,10 @@ table.reportData td {
   border-top-right-radius: 0.6em;
 }
 
+.tile #rangeWrapper {
+  padding-top: 0;
+}
+
 .seemorerows td {
   background-color: white;
   border-bottom-left-radius: 1em;
