@@ -127,6 +127,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 			if ($("#tiles").size() > 0) {
 				// Back to the view
 				tileLoaded($(".tile.expanded"));
+				return;
 			} else {
 				if (oCurrentRow == oSessionItem)
 					bRemovedSessionItem = true;
