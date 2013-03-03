@@ -66,7 +66,8 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		var aCheckedRows = new Array();
 
 		// set the header checkbox
-		var jqCheckbox = $(document.getElementById('reportData').rows[0]).find("input:checkbox");
+		var jqCheckbox = $(document.getElementById('reportData').rows[0]).find(
+				"input:checkbox");
 		if (jqCheckbox.length > 0) {
 			if (bDisable)
 				jqCheckbox.attr('disabled', 'true');
@@ -97,15 +98,16 @@ function fDeleteObj(sAction, sRowIdentifier) {
 
 	function fReqComplete(sResponseText, sResponseXML) {
 		function fReformatTable() {
-			$('#reportBody tr:even').not('.trailing').not('.seemorerows').not('.h1').not('.h2').not('.h3')
-					.removeClass('rowa').removeClass('rowb').addClass('rowa');
-			$('#reportBody tr:odd').not('.trailing').not('.seemorerows').not('.h1').not('.h2').not('.h3')
-					.removeClass('rowa').removeClass('rowb').addClass('rowb');
+			$('#reportBody tr:even').not('.trailing').not('.seemorerows').not('.h1')
+					.not('.h2').not('.h3').removeClass('rowa').removeClass('rowb')
+					.addClass('rowa');
+			$('#reportBody tr:odd').not('.trailing').not('.seemorerows').not('.h1')
+					.not('.h2').not('.h3').removeClass('rowa').removeClass('rowb')
+					.addClass('rowb');
 		}
 
 		function fRetryDeletions() {
-			var sExceptionMessage = sResponseXML
-					.getElementsByTagName('exception')[0].firstChild.nodeValue;
+			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
 			if (!confirm('Some rows were not deleted because they are linked to data in other tables.\n'
 					+ 'DELETE ALL THIS?\n\n'
 					+ sExceptionMessage
@@ -132,8 +134,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 			bFailedDeletions = true;
 			sException = sResponseXML.getElementsByTagName('exception')[0]
 					.getAttribute('type');
-			var sExceptionMessage = sResponseXML
-					.getElementsByTagName('exception')[0].firstChild.nodeValue;
+			var sExceptionMessage = sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue;
 			if (sException == 'DataDependencyException')
 				bRetryDeletions = true;
 		}
@@ -156,10 +157,11 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		// if we've removed the session set a new one as the first row
 		if (bRemovedSessionItem) {
 			if (document.getElementById('reportBody').rows.length > 1) {
-				var onClick = document.getElementById('reportBody').rows[0].getAttribute('onclick');
+				var onClick = document.getElementById('reportBody').rows[0]
+						.getAttribute('onclick');
 				try {
-				  eval(onClick);
-				} catch(err) {
+					eval(onClick);
+				} catch (err) {
 				}
 			} else {
 				parent.pane_3.document.location = 'AppController.servlet?return=gui/reports_and_tables/pane3';
@@ -169,24 +171,42 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		fReformatTable();
 	}
 
-	function fDeleteFirstItem() {
-		if (aCheckedRows.length < 1)
-			return false;
-		oCurrentRow = aCheckedRows.shift();
+	function deleteTileRecord() {
 		var aPostVars = new Array();
-
 		// always pass these in the post request
 		aPostVars['return'] = 'gui/administration/xmlreturn_fieldchange';
 		aPostVars['returntype'] = 'xml';
-
-		if (bDeleteRelatedData)
+		if (bDeleteRelatedData) {
 			aPostVars['cascadedelete'] = '1';
-
+		}
 		aPostVars[sAction] = 'true';
-		aPostVars[sRowIdentifier] = oCurrentRow.getAttribute('name');
-
+		aPostVars[sRowIdentifier] = $("#reportData").attr("data-rowid");
+		aPostVars["set_table"] = $("#reportData").attr("data-internaltablename");
 		oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, 1);
 		return true;
+	}
+	
+	function fDeleteFirstItem() {
+		var tiles = ($("#tiles").size() > 0);
+		if (tiles) {
+			return deleteTileRecord();
+		} else {
+			if (aCheckedRows.length < 1) {
+				return false;
+			}
+			oCurrentRow = aCheckedRows.shift();
+			var aPostVars = new Array();
+			// always pass these in the post request
+			aPostVars['return'] = 'gui/administration/xmlreturn_fieldchange';
+			aPostVars['returntype'] = 'xml';
+			if (bDeleteRelatedData) {
+				aPostVars['cascadedelete'] = '1';
+			}
+			aPostVars[sAction] = 'true';
+			aPostVars[sRowIdentifier] = oCurrentRow.getAttribute('name');
+			oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, 1);
+			return true;
+		}
 	}
 
 	var sAction = sAction;
@@ -198,31 +218,35 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	var oSessionItem = document.getElementById('currentRow');
 	var oCurrentRow;
 	var oReq;
-	var aCheckedRows = fControlCheckboxes(true);
-	if (aCheckedRows.length > 0) {
-	  fDeleteFirstItem();
+	if ($("#tiles").size() > 0) {
+
+	} else {
+		var aCheckedRows = fControlCheckboxes(true);
+		if (aCheckedRows.length > 0) {
+			fDeleteFirstItem();
+		}
 	}
 }
 
 function showPane3IfNecessary(oEvent) {
 	if (oEvent) {
-	  if ($(oEvent.target).attr("type") == "checkbox") {
-		  return;
-	  }
+		if ($(oEvent.target).attr("type") == "checkbox") {
+			return;
+		}
 	}
 	var jqButt = $(top.document).find("#pane3butt")
 	if (!jqButt.hasClass("selected")) {
 		jqButt.click();
 		if (!jqButt.hasClass("REPORT")) {
-		  $(top.document).find("#pane2butt").click();
+			$(top.document).find("#pane2butt").click();
 		}
-	  // For forms, show full screen
-	  //if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
-	  //	var jqPane1Butt = $(top.document).find("#pane1butt");
-	  //	if (jqPane1Butt.hasClass("selected")) {
-	  //		jqPane1Butt.click();
-	  //	}
-	  //}
+		// For forms, show full screen
+		// if($(parent.pane_3.document).find(".form_tabber").size() > 0) {
+		// var jqPane1Butt = $(top.document).find("#pane1butt");
+		// if (jqPane1Butt.hasClass("selected")) {
+		// jqPane1Butt.click();
+		// }
+		// }
 	}
 }
 
@@ -263,60 +287,65 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
 	var templateName = url.replace(/^.*return=/, '');
 	templateName = templateName.replace(/\&.*$/, '');
 	replacedTemplateUrl = url.replace('return=' + templateName, 'return=blank');
-	// ? means non greedy, after the escaped ?, i.e. replace everything up to and including the first question mark
-	var params = replacedTemplateUrl.replace(/^.*?\?/,'');
+	// ? means non greedy, after the escaped ?, i.e. replace everything up to and
+	// including the first question mark
+	var params = replacedTemplateUrl.replace(/^.*?\?/, '');
 	var paramsObj = $.deparam(params);
 	paramsObj['abCache'] = new Date().getTime();
-	var baseUrl = replacedTemplateUrl.replace(/\?.*$/,'');
-	$.post(baseUrl, paramsObj, function(data) {
-		// Refresh frame 3
-		if (typeof (parent.pane_3) != "undefined") {
-			// If user is loading a new report, it may have
-			// different privileges to the last one.
-			// If so, reload the whole of pane 3 to refresh the tab
-			// list, otherwise just refresh the current tab
-			if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
-				// something in pane 3 but not a tabset
-			  // Elaine
-				//console.log("1) parent.pane_3.document.location = " + url);
-				parent.pane_3.document.location = url;
-			} else if (document.location.href.match('set_module') || document.location.href.match('gui/reports_and_tables/report_data')) {
-				// means we must be viewing a report
-				if ((numberOfTabsExpected == null)
-						|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
-								.getNumberOfTabs())) {
-					// if pane 3 has the right number of tabs,
-					// we can just refresh the one tab
-					try {
-					  // Elaine
-					  //console.log("2) parent.pane_3.pane3TabInterface.refresh(" + rowId + ")");
-						parent.pane_3.pane3TabInterface
-								.refresh(rowId);
-					} catch (err) {
-						// Fast refresh failed, falling back to
-						// slow - don't worry about this
-					  // Elaine
-						//console.log("3) parent.pane_3.document.location = " + url);
+	var baseUrl = replacedTemplateUrl.replace(/\?.*$/, '');
+	$.post(baseUrl, paramsObj,
+			function(data) {
+				// Refresh frame 3
+				if (typeof (parent.pane_3) != "undefined") {
+					// If user is loading a new report, it may have
+					// different privileges to the last one.
+					// If so, reload the whole of pane 3 to refresh the tab
+					// list, otherwise just refresh the current tab
+					if (typeof (parent.pane_3.pane3TabInterface) == "undefined") {
+						// something in pane 3 but not a tabset
+						// Elaine
+						// console.log("1) parent.pane_3.document.location = " + url);
+						parent.pane_3.document.location = url;
+					} else if (document.location.href.match('set_module')
+							|| document.location.href
+									.match('gui/reports_and_tables/report_data')) {
+						// means we must be viewing a report
+						if ((numberOfTabsExpected == null)
+								|| (numberOfTabsExpected == parent.pane_3.pane3TabInterface
+										.getNumberOfTabs())) {
+							// if pane 3 has the right number of tabs,
+							// we can just refresh the one tab
+							try {
+								// Elaine
+								// console.log("2) parent.pane_3.pane3TabInterface.refresh(" +
+								// rowId + ")");
+								parent.pane_3.pane3TabInterface.refresh(rowId);
+							} catch (err) {
+								// Fast refresh failed, falling back to
+								// slow - don't worry about this
+								// Elaine
+								// console.log("3) parent.pane_3.document.location = " + url);
+								parent.pane_3.document.location = url;
+							}
+						} else {
+							// if it doesn't have the right number of tabs, we
+							// need to refresh the whole frame to reload the tabset
+							// Elaine
+							// console.log("4) parent.pane_3.document.location = " + url);
+							parent.pane_3.document.location = url;
+						}
+					} else {
+						// fallback after everything else: simple
+						// refresh of pane 3
+						// Elaine
+						// console.log("5) parent.pane_3.document.location = " + url);
 						parent.pane_3.document.location = url;
 					}
-				} else {
-					// if it doesn't have the right number of tabs, we
-					// need to refresh the whole frame to reload the tabset
-				  // Elaine
-					//console.log("4) parent.pane_3.document.location = " + url);
-					parent.pane_3.document.location = url;
 				}
-			} else {
-				// fallback after everything else: simple
-				// refresh of pane 3
-				// Elaine
-				//console.log("5) parent.pane_3.document.location = " + url);
-				parent.pane_3.document.location = url;
-			}
-		}
-		var internalTableName = $("table#reportData").attr("data-internaltablename");
-		parent.pane_1.appSelect(internalTableName, rowId, false);
-	});
+				var internalTableName = $("table#reportData").attr(
+						"data-internaltablename");
+				parent.pane_1.appSelect(internalTableName, rowId, false);
+			});
 }
 
 /*
@@ -355,21 +384,20 @@ function clearFilters() {
 	var oReportBody = document.getElementById('reportBody');
 	$("input[is_filter=true]").val("");
 	$("input[is_filter=true]").attr("disabled", "true");
-	$.post("AppController.servlet",
-		{
-		  'return': 'gui/reports_and_tables/report_data_only',
-		  'clear_all_report_filter_values': true,
-		  'clear_custom_variable': 'filtering_on',
-		  abCache: new Date().getTime()
-	  }, function(sResponseText) {
-	  	$("input[is_filter=true]").removeAttr("disabled");
-		  fLoadReport(sResponseText, oReportBody, null);
+	$.post("AppController.servlet", {
+		'return' : 'gui/reports_and_tables/report_data_only',
+		'clear_all_report_filter_values' : true,
+		'clear_custom_variable' : 'filtering_on',
+		abCache : new Date().getTime()
+	}, function(sResponseText) {
+		$("input[is_filter=true]").removeAttr("disabled");
+		fLoadReport(sResponseText, oReportBody, null);
 	});
 }
 
 function launchDateFilterControls(event, inputObj) {
-  	$(inputObj).addClass("waitingForFilterControls");
-  	setTimeout(dateFilterControls, 1000, event, inputObj);
+	$(inputObj).addClass("waitingForFilterControls");
+	setTimeout(dateFilterControls, 1000, event, inputObj);
 }
 
 function dateFilterControls(event, inputObj) {
@@ -380,7 +408,7 @@ function dateFilterControls(event, inputObj) {
 	}
 	var resolution = parseInt($(inputObj).attr("data-resolution"));
 	if (resolution < 5) {
-	  // Filter is a year or month resolution date, can't use filter
+		// Filter is a year or month resolution date, can't use filter
 		$("#fieldFilterControls").fadeOut();
 		return;
 	}
@@ -405,118 +433,145 @@ function dateFilterControls(event, inputObj) {
 	}
 	// reset to clear previous actions
 	$("#dateControlWrapper").children().remove();
-	$("#dateControlWrapperTemplate").clone().children().appendTo($("#dateControlWrapper"));
+	$("#dateControlWrapperTemplate").clone().children().appendTo(
+			$("#dateControlWrapper"));
 	$("#fieldFilterControls").show();
-	$("#dateControlWrapper").load("AppController.servlet?return=gui/pane2/filter_controls", function() {
-		$("#dateControlWrapper .close").click(function() {
-			$("#fieldFilterControls").fadeOut();
-		});
-		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-		// individual date
-		$("#individualDateSelector").calendarPicker({
-			years: 3,
-			months: 6,
-			days: 12,
-			callback: function(cal) {
-			  $(".calElement").click(function() {
-			  	if ($(this).closest(".calDay").size() > 0) {
-			  	  $("#fieldFilterControls").attr("data-day_selected","true");
-			  	} else {
-			  	  $("#fieldFilterControls").removeAttr("data-day_selected");
-			  	}
-			  });
-				if (firstCallback) {
-					firstCallback = false;
-				} else {
-				  var selected = cal.currentDate;
-				  var selectedString = selected.getDate() + " " + months[selected.getMonth()] + " " + selected.getFullYear();
-				  $(inputObj).val(selectedString);
-				  $(inputObj).keyup();
-				  if($("#fieldFilterControls").attr("data-day_selected") == "true") {
-						$("#fieldFilterControls").fadeOut();				  
-				  }
-				}
-			}
-		});
-		// date range
-		var today = new Date();
-		var maxDate = today;
-		maxDate.setDate(today.getDate() + 60);
-		var minDate = new Date();
-		minDate.setDate(maxDate.getDate() - 730);
-		var rangeStart = new Date();
-		rangeStart.setMonth(today.getMonth() - 6);
-		rangeStart.setDate(1);
-		$("#dateRangeSelector").dateRangeSlider({
-			arrows: false,
-			bounds: {max: maxDate, min: minDate},
-			defaultValues: {max: new Date(), min: rangeStart},
-			formatter: function(val) {
-	      var days = val.getDate();
-	      var month = months[val.getMonth()];
-	      var year = val.getFullYear();
-	      return days + " " + month + " " + year;
-			}
-	  });
-		$("#dateRangeSelector").bind("valuesChanged", function(e, data) {
-			if (firstRangeCallback) {
-				firstRangeCallback = false;
-			} else {
-				var minDate = data.values.min;
-				var maxDate = data.values.max;
-				var minString = minDate.getDate() + " " + months[minDate.getMonth()] + " " + minDate.getFullYear();
-				var maxString = maxDate.getDate() + " " + months[maxDate.getMonth()] + " " + maxDate.getFullYear();
-				/*
-				$("#rangeStart").val(minString);
-				$("#rangeEnd").val(maxString);
-				*/
-				$(inputObj).val(">" + minString + " and <" + maxString);
-				$(inputObj).keyup();
-			}
-		});
-		$("#dateRangePresets button").click(function() {
-			var range = $(this).text();
-			if (range == "all") {
-				range = "";
-			}
-			$(inputObj).val(range);
-			$(inputObj).keyup();
-			$("#fieldFilterControls").fadeOut();
-		});
-		$("#rangeWrapper .zoom").click(function() {
-			var bounds = $("#dateRangeSelector").dateRangeSlider("option", "bounds");
-			var now = new Date();
-			var minRange = (now.getTime() - bounds.min.getTime());
-			var maxRange = (now.getTime() - bounds.max.getTime());
-			if ($(this).hasClass("in")) {
-				minRange = minRange / 2;
-				maxRange = maxRange / 2;
-				zoomLevel += 1;
-			} else {
-				minRange = minRange * 2;
-				maxRange = maxRange * 2;
-				zoomLevel -= 1;
-			}
-			$("#dateRangeSelector").dateRangeSlider("option", "bounds", {max: new Date(now - maxRange), min: new Date(now - minRange)});
-			/*
-			 * Zoom level options seem to cause Firefox to hang
-			if (zoomLevel < -3) {
-				$("#dateRangeSelector").dateRangeSlider("option","step", {months: 1});
-			} else if (zoomLevel < -1) {
-				$("#dateRangeSelector").dateRangeSlider("option","step", {weeks: 1});
-			} else {
-				$("#dateRangeSelector").dateRangeSlider("option","step", {days: 1});
-			}
-			*/
-		});
-/*		$("#rangeStart,#rangeEnd").keyup(function() {
-			var minString = $("#rangeStart").val();
-			var maxString = $("#rangeEnd").val();
-			if ((minString != "") && (maxString != "")) {
-				$(inputObj).val(">" + minString + " and <" + maxString);
-				$(inputObj).keyup();
-			}
-		});
-		*/
-	}); // end of load function
+	$("#dateControlWrapper")
+			.load(
+					"AppController.servlet?return=gui/pane2/filter_controls",
+					function() {
+						$("#dateControlWrapper .close").click(function() {
+							$("#fieldFilterControls").fadeOut();
+						});
+						var months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
+								'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+						// individual date
+						$("#individualDateSelector")
+								.calendarPicker(
+										{
+											years : 3,
+											months : 6,
+											days : 12,
+											callback : function(cal) {
+												$(".calElement").click(
+														function() {
+															if ($(this).closest(".calDay").size() > 0) {
+																$("#fieldFilterControls").attr(
+																		"data-day_selected", "true");
+															} else {
+																$("#fieldFilterControls").removeAttr(
+																		"data-day_selected");
+															}
+														});
+												if (firstCallback) {
+													firstCallback = false;
+												} else {
+													var selected = cal.currentDate;
+													var selectedString = selected.getDate() + " "
+															+ months[selected.getMonth()] + " "
+															+ selected.getFullYear();
+													$(inputObj).val(selectedString);
+													$(inputObj).keyup();
+													if ($("#fieldFilterControls").attr(
+															"data-day_selected") == "true") {
+														$("#fieldFilterControls").fadeOut();
+													}
+												}
+											}
+										});
+						// date range
+						var today = new Date();
+						var maxDate = today;
+						maxDate.setDate(today.getDate() + 60);
+						var minDate = new Date();
+						minDate.setDate(maxDate.getDate() - 730);
+						var rangeStart = new Date();
+						rangeStart.setMonth(today.getMonth() - 6);
+						rangeStart.setDate(1);
+						$("#dateRangeSelector").dateRangeSlider({
+							arrows : false,
+							bounds : {
+								max : maxDate,
+								min : minDate
+							},
+							defaultValues : {
+								max : new Date(),
+								min : rangeStart
+							},
+							formatter : function(val) {
+								var days = val.getDate();
+								var month = months[val.getMonth()];
+								var year = val.getFullYear();
+								return days + " " + month + " " + year;
+							}
+						});
+						$("#dateRangeSelector").bind(
+								"valuesChanged",
+								function(e, data) {
+									if (firstRangeCallback) {
+										firstRangeCallback = false;
+									} else {
+										var minDate = data.values.min;
+										var maxDate = data.values.max;
+										var minString = minDate.getDate() + " "
+												+ months[minDate.getMonth()] + " "
+												+ minDate.getFullYear();
+										var maxString = maxDate.getDate() + " "
+												+ months[maxDate.getMonth()] + " "
+												+ maxDate.getFullYear();
+										/*
+										 * $("#rangeStart").val(minString);
+										 * $("#rangeEnd").val(maxString);
+										 */
+										$(inputObj).val(">" + minString + " and <" + maxString);
+										$(inputObj).keyup();
+									}
+								});
+						$("#dateRangePresets button").click(function() {
+							var range = $(this).text();
+							if (range == "all") {
+								range = "";
+							}
+							$(inputObj).val(range);
+							$(inputObj).keyup();
+							$("#fieldFilterControls").fadeOut();
+						});
+						$("#rangeWrapper .zoom").click(
+								function() {
+									var bounds = $("#dateRangeSelector").dateRangeSlider(
+											"option", "bounds");
+									var now = new Date();
+									var minRange = (now.getTime() - bounds.min.getTime());
+									var maxRange = (now.getTime() - bounds.max.getTime());
+									if ($(this).hasClass("in")) {
+										minRange = minRange / 2;
+										maxRange = maxRange / 2;
+										zoomLevel += 1;
+									} else {
+										minRange = minRange * 2;
+										maxRange = maxRange * 2;
+										zoomLevel -= 1;
+									}
+									$("#dateRangeSelector").dateRangeSlider("option", "bounds", {
+										max : new Date(now - maxRange),
+										min : new Date(now - minRange)
+									});
+									/*
+									 * Zoom level options seem to cause Firefox to hang if
+									 * (zoomLevel < -3) {
+									 * $("#dateRangeSelector").dateRangeSlider("option","step",
+									 * {months: 1}); } else if (zoomLevel < -1) {
+									 * $("#dateRangeSelector").dateRangeSlider("option","step",
+									 * {weeks: 1}); } else {
+									 * $("#dateRangeSelector").dateRangeSlider("option","step",
+									 * {days: 1}); }
+									 */
+								});
+						/*
+						 * $("#rangeStart,#rangeEnd").keyup(function() { var minString =
+						 * $("#rangeStart").val(); var maxString = $("#rangeEnd").val(); if
+						 * ((minString != "") && (maxString != "")) { $(inputObj).val(">" +
+						 * minString + " and <" + maxString); $(inputObj).keyup(); } });
+						 */
+					}); // end of load function
 }

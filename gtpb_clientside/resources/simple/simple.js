@@ -153,6 +153,7 @@ function dataStreamFocus() {
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
+	$(".sideAction.removeRecord").removeClass("expanded");
 	$(".sideAction.backHome").addClass("expanded");
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
@@ -261,6 +262,7 @@ function reportRowClicks() {
 								$(".content").removeAttr("style");
 								editTabFunctions();
 								$(".sideAction.backToView").addClass("expanded");
+								$(".sideAction.removeRecord").addClass("expanded");
 							});
 				}
 			});
