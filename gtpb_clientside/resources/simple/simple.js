@@ -80,6 +80,20 @@ function commonTileEvents() {
 	$(".sideAction.backToView").click(function() {
 		tileLoaded($(".tile.expanded"));
 	});
+	$(".sideAction.newRecord").click(function() {
+		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
+				$(".tile.expanded").find(".content").css("opacity", "0.25").load(
+						"AppController.servlet", {
+							"return" : "gui/reports_and_tables/tabs/edit",
+							save_new_record: true,
+							set_table : internalTableName
+						}, function() {
+							// remove opacity
+							$(".content").removeAttr("style");
+							editTabFunctions();
+							$(".sideAction.backToView").addClass("expanded");
+						});
+			});
 }
 
 /** Data stream tile specific events */
@@ -146,6 +160,7 @@ function tileLoaded(tile) {
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").addClass("notfocus");
 	if (tile.attr("data-internalreportname")) {
+		$(".sideAction.newRecord").addClass("expanded");
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
 		var internalTileName = tile.attr("data-internaltilename");
@@ -161,13 +176,13 @@ function tileLoaded(tile) {
 					// remove opacity
 					tile.find(".content").removeAttr("style");
 					$(".sideAction.backToView").removeClass("expanded");
-				  var hoverIntentConfig = {    
-			         over: showTooltip,
-			         out: hideTooltip,
-			         interval: 400
-				  };
-				  $("#filterhelp").hoverIntent(hoverIntentConfig);
-				  $(".ab_field_title").hoverIntent(hoverIntentConfig);
+					var hoverIntentConfig = {
+						over : showTooltip,
+						out : hideTooltip,
+						interval : 400
+					};
+					$("#filterhelp").hoverIntent(hoverIntentConfig);
+					$(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
 				});
 	}
@@ -311,7 +326,6 @@ function backHome() {
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
 	$('.tile .tile_icon i').removeClass("notfocus");
-
 }
 
 /**

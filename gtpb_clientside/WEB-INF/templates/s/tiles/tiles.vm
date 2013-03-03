@@ -53,3 +53,4 @@
 <div class="sideAction backHome" title="home"><i class="icon-chevron-left"></i></div>
 <div class="sideAction removeTile" title="remove tile"><i class="icon-remove-sign"></i></div>
 <div class="sideAction backToView" title="finish changes"><i class="icon-ok-sign"></i></div>
+<div class="sideAction newRecord" title="add new item"><i class="icon-plus-sign"></i></div>
