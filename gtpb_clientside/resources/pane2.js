@@ -124,12 +124,17 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		sResponse = sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
 		if (sResponse == 'ok') { // the action was successfully processed by
 			// the server
-			if (oCurrentRow == oSessionItem)
-				bRemovedSessionItem = true;
-			var oRowParent = oCurrentRow.parentNode;
-			var iRowIndex = oRowParent.tagName == 'TABLE' ? oCurrentRow.rowIndex
-					: oCurrentRow.sectionRowIndex;
-			oRowParent.deleteRow(iRowIndex);
+			if ($("#tiles").size() > 0) {
+				// Back to the view
+				tileLoaded($(".tile.expanded"));
+			} else {
+				if (oCurrentRow == oSessionItem)
+					bRemovedSessionItem = true;
+				var oRowParent = oCurrentRow.parentNode;
+				var iRowIndex = oRowParent.tagName == 'TABLE' ? oCurrentRow.rowIndex
+						: oCurrentRow.sectionRowIndex;
+				oRowParent.deleteRow(iRowIndex);
+			}
 		} else {
 			bFailedDeletions = true;
 			sException = sResponseXML.getElementsByTagName('exception')[0]
