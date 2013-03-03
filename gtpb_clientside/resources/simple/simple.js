@@ -94,6 +94,9 @@ function commonTileEvents() {
 							$(".sideAction.backToView").addClass("expanded");
 						});
 			});
+	$(".sideAction.removeRecord").click(function() {
+		fDeleteObj("remove_record", "rowid");
+	}
 }
 
 /** Data stream tile specific events */
