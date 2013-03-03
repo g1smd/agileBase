@@ -95,7 +95,9 @@ function commonTileEvents() {
 						});
 			});
 	$(".sideAction.removeRecord").click(function() {
-		fDeleteObj("remove_record", "rowid");
+		if (confirm("Delete this record?")) {
+			fDeleteObj("remove_record", "rowid");
+		}
 	});
 }
 
