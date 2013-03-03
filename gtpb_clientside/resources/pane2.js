@@ -219,7 +219,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 	var oCurrentRow;
 	var oReq;
 	if ($("#tiles").size() > 0) {
-
+		fDeleteFirstItem();
 	} else {
 		var aCheckedRows = fControlCheckboxes(true);
 		if (aCheckedRows.length > 0) {
