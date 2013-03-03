@@ -476,6 +476,11 @@ table.reportData td {
   left: 0.25em;
 }
 
+.sideAction.removeRecord {
+  top: 7em;
+  left: 0.25em;
+}
+
 .sideAction.removeTile {
   top: 0;
   right: 0.25em;
