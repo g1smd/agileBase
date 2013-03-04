@@ -283,8 +283,7 @@ function loadEdit(container, internalTableName, rowId) {
 		params["rowId"] = rowId;
 	}
 	container.css("opacity", "0.25").load(
-			"AppController.servlet", params
-			}, function() {
+			"AppController.servlet", params, function() {
 				// remove opacity
 				container.removeAttr("style");
 				editTabFunctions();
