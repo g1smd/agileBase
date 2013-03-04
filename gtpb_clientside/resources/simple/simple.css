@@ -157,6 +157,7 @@ body {
   position: absolute;
   top: 0;
   right: 0.75em;
+  opacity: 0.5;
 }
 
 .tile .condensed {
