@@ -198,7 +198,11 @@ body {
 }
 
 /* Large desktop */
-@media (min-width: 1200px) and (ma) { ... }
+@media (min-height: 1400px) {
+  .tile.expanded {
+    height: 1100px;
+  }
+}
 
 .notfocus {
   opacity: 0;
