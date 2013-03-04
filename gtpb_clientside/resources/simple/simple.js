@@ -81,7 +81,7 @@ function commonTileEvents() {
 	});
 	$(".tile.large .add").click(function() {
 		var internalTableName = $(this).attr("data-internaltablename");
-		expandTile(tile);
+		expandTile($(this));
 		newRecord(internalTableName);
 		stopPropagation();
 	});
