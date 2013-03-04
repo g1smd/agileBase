@@ -59,20 +59,11 @@ function commonTileEvents() {
 		if (tile.hasClass("expanded")) {
 			return;
 		}
-		$(".tile").not(tile).addClass("notfocus");
-		var title = tile.attr("title");
-		$("#title").find("h1").text(title);
-		var colour = tile.attr("data-colour");
-		var allColours = abTileColours.join(" ");
-		$("body").removeClass(allColours).addClass(colour);
-		tile.addClass("expanded");
-		$(".header.row").addClass("expanded");
-		tile.find(".tile_icon").addClass("notfocus");
-		tile.find(".title").addClass("notfocus");
-		if(tile.hasClass("large")) {
-			tile.find("input[type=search]").addClass("notfocus");
-			tile.find(".foot_fade").addClass("notfocus");
-		}
+		expandTile(tile);
+		//if(tile.hasClass("large")) {
+			//tile.find("input[type=search]").addClass("notfocus");
+			//tile.find(".foot_fade").addClass("notfocus");
+		//}
 		var template = "s/tiles/" + tile.attr("data-type");
 		tile.find(".content").load("AppController.servlet", {
 			"return" : template
@@ -90,13 +81,28 @@ function commonTileEvents() {
 	});
 	$(".tile.large .add").click(function() {
 		var internalTableName = $(this).attr("data-internaltablename");
+		expandTile(tile);
 		newRecord(internalTableName);
+		stopPropagation();
 	});
 	$(".sideAction.removeRecord").click(function() {
 		if (confirm("Delete this record?")) {
 			fDeleteObj("remove_record", "rowid");
 		}
 	});
+}
+
+function expandTile(tile) {
+	$(".tile").not(tile).addClass("notfocus");
+	var title = tile.attr("title");
+	$("#title").find("h1").text(title);
+	var colour = tile.attr("data-colour");
+	var allColours = abTileColours.join(" ");
+	$("body").removeClass(allColours).addClass(colour);
+	tile.addClass("expanded");
+	$(".header.row").addClass("expanded");
+	tile.find(".tile_icon").addClass("notfocus");
+	tile.find(".title").addClass("notfocus");
 }
 
 /** Data stream tile specific events */
