@@ -197,6 +197,9 @@ body {
   height: 550px;
 }
 
+/* Large desktop */
+@media (min-width: 1200px) and (ma) { ... }
+
 .notfocus {
   opacity: 0;
   width: 0!important; 

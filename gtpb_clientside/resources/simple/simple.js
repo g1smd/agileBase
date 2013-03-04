@@ -69,6 +69,10 @@ function commonTileEvents() {
 		$(".header.row").addClass("expanded");
 		tile.find(".tile_icon").addClass("notfocus");
 		tile.find(".title").addClass("notfocus");
+		if(tile.hasClass("large")) {
+			tile.find("input[type=search]").addClass("notfocus");
+			tile.find(".foot_fade").addClass("notfocus");
+		}
 		var template = "s/tiles/" + tile.attr("data-type");
 		tile.find(".content").load("AppController.servlet", {
 			"return" : template
@@ -333,6 +337,12 @@ function backHome() {
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
 	$('.tile .tile_icon i').removeClass("notfocus");
+	var dataStreamTile = $(".tile.data_stream");
+	dataStreamTile.find("input[type=search]").removeClass("notfocus");
+	dataStreamTile.find(".foot_fade").removeClass("notfocus");
+	if (dataStreamTile.find("table.reportData").size() > 0) {
+		// Remove big view format, load reduced format again
+	}
 }
 
 /**
