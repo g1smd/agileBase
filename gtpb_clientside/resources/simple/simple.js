@@ -86,18 +86,12 @@ function commonTileEvents() {
 	});
 	$(".sideAction.newRecord").click(function() {
 		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
-				$(".tile.expanded").find(".content").css("opacity", "0.25").load(
-						"AppController.servlet", {
-							"return" : "gui/reports_and_tables/tabs/edit",
-							save_new_record: true,
-							set_table : internalTableName
-						}, function() {
-							// remove opacity
-							$(".content").removeAttr("style");
-							editTabFunctions();
-							$(".sideAction.backToView").addClass("expanded");
-						});
-			});
+		newRecord(internalTableName);
+	});
+	$(".tile.large .add").click(function() {
+		var internalTableName = $(this).attr("data-internaltablename");
+		newRecord(internalTableName);
+	});
 	$(".sideAction.removeRecord").click(function() {
 		if (confirm("Delete this record?")) {
 			fDeleteObj("remove_record", "rowid");
@@ -266,6 +260,20 @@ function reportRowClicks() {
 			});
 }
 
+
+function newRecord(internalTableName) {
+	$(".tile.expanded").find(".content").css("opacity", "0.25").load(
+			"AppController.servlet", {
+				"return" : "gui/reports_and_tables/tabs/edit",
+				save_new_record: true,
+				set_table : internalTableName
+			}, function() {
+				// remove opacity
+				$(".content").removeAttr("style");
+				editTabFunctions();
+				$(".sideAction.backToView").addClass("expanded");
+			});
+}
 /**
  * @param container	A jquery object that the content should be loaded into
  * @param internalTableName
