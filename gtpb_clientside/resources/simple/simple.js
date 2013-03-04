@@ -86,6 +86,7 @@ function commonTileEvents() {
 		expandTile(tile);
 		console.log(internalTableName);
 		newRecord(internalTableName);
+		
 	});
 	$(".sideAction.removeRecord").click(function() {
 		if (confirm("Delete this record?")) {
