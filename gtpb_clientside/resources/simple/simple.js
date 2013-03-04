@@ -79,11 +79,11 @@ function commonTileEvents() {
 		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
 		newRecord(internalTableName);
 	});
-	$(".tile.large .add").click(function() {
+	$(".tile.large .add").click(function(event) {
+		event.stopPropagation();
 		var internalTableName = $(this).attr("data-internaltablename");
 		expandTile($(this));
 		newRecord(internalTableName);
-		stopPropagation();
 	});
 	$(".sideAction.removeRecord").click(function() {
 		if (confirm("Delete this record?")) {
