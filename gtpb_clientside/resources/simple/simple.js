@@ -261,19 +261,35 @@ function reportRowClicks() {
 					var rowId = row.attr("name");
 					var internalTableName = row.closest(".tile").attr(
 							"data-internaltablename");
-					row.closest(".content").css("opacity", "0.25").load(
-							"AppController.servlet", {
-								"return" : "gui/reports_and_tables/tabs/edit",
-								set_table : internalTableName,
-								set_row_id : rowId,
-							}, function() {
-								// remove opacity
-								$(".content").removeAttr("style");
-								editTabFunctions();
-								$(".sideAction.backToView").addClass("expanded");
-								$(".sideAction.removeRecord").addClass("expanded");
-							});
+					loadEdit(row.closest(".content"), internalTableName, rowId);
 				}
+			});
+}
+
+/**
+ * @param container	A jquery object that the content should be loaded into
+ * @param internalTableName
+ * @param rowId
+ */
+function loadEdit(container, internalTableName, rowId) {
+	var params = {
+			"return": "gui/reports_and_tables/tabs/edit",
+			cacheBust: (new Date()).getTime()
+	}
+	if (internalTableName) {
+		params["internalTableName"] = internalTableName;
+	}
+	if (rowId) {
+		params["rowId"] = rowId;
+	}
+	container.css("opacity", "0.25").load(
+			"AppController.servlet", params
+			}, function() {
+				// remove opacity
+				container.removeAttr("style");
+				editTabFunctions();
+				$(".sideAction.backToView").addClass("expanded");
+				$(".sideAction.removeRecord").addClass("expanded");
 			});
 }
 
