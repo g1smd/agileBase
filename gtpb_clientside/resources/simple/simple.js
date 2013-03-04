@@ -360,7 +360,7 @@ function backHome() {
 		dataStreamTile.find(".content").load("AppController.servlet", {
 			"return": "s/tiles/data_stream"
 		}, function() {
-			dataStreamTile.find(".content").removeClass("notFocus");
+			dataStreamTile.find(".content").removeClass("notfocus");
 		});
 	}
 }
