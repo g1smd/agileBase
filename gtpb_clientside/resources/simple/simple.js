@@ -353,8 +353,8 @@ function backHome() {
 	$(".tile.expanded").find(".content").addClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
 	var dataStreamTile = $(".tile.data_stream");
-	dataStreamTile.find("input[type=search]").removeClass("notfocus");
-	dataStreamTile.find(".foot_fade").removeClass("notfocus");
+	//dataStreamTile.find("input[type=search]").removeClass("notfocus");
+	//dataStreamTile.find(".foot_fade").removeClass("notfocus");
 	if (dataStreamTile.find("table.reportData").size() > 0) {
 		// Remove big view format, load reduced format again
 		dataStreamTile.find(".content").load("AppController.servlet", {

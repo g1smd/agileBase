@@ -33,8 +33,9 @@
     #set($template = $viewTools.cleanString($tileType.toString()))
     #if($template == "data_stream")
       #set($filter = $sessionData.getGlobalFilterString($tile.getReport()))
-      <input type="search" placeholder="$tile search" #if($filter) value="$filter" #end/>
-      <div class="foot_fade"></div> 
+      <input type="search condensed" placeholder="$tile search" #if($filter) value="$filter" #end/>
+      <div class="add"><I class="icon-plus-sign"></i></div>
+      <div class="foot_fade condensed"></div> 
     #else
       <div class="title">$tile</div>
     #end

@@ -149,6 +149,28 @@ body {
   transition-duration: 0.5s;
 }
 
+.tile.data_stream .add {
+  /* like .sideAction */
+  color: white;
+  cursor: pointer;
+  font-size: 30pt;
+}
+
+.tile .condensed {
+  opacity: 1;
+}
+
+/* Hide stuff which should only be shown in condensed tiles. Like .notfocus */
+.tile.expanded .condensed {
+  height: 0;
+  width: 0;
+  opacity: 0;
+  margin-right: 0;
+  padding: 0;
+  overflow: hidden;
+  transition-duration: 0.5s; /* stop placement 'jump' at end of transition - hide faster than expand */
+}
+
 .tile.adder .content {
   overflow: hidden;
 }
