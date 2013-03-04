@@ -84,9 +84,7 @@ function commonTileEvents() {
 		var tile = $(this).closest(".tile");
 		var internalTableName = tile.attr("data-internaltablename");
 		expandTile(tile);
-		console.log(internalTableName);
-		newRecord(internalTableName);
-		
+		newRecord(internalTableName);		
 	});
 	$(".sideAction.removeRecord").click(function() {
 		if (confirm("Delete this record?")) {
