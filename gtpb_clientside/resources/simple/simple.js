@@ -342,8 +342,6 @@ function removeItem(array, item) {
  * Contract the expanded tile, go back to the main screen
  */
 function backHome() {
-	$(".tile.expanded").find(".content").addClass("notfocus");
-	$(".tile.expanded").removeClass("expanded");
 	$(".tile.notfocus").removeClass("notfocus");
 	var allColours = abTileColours.join(" ");
 	$("body").removeClass(allColours);
@@ -351,12 +349,19 @@ function backHome() {
 	$(".sideAction").removeClass("expanded");
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
-	$('.tile .tile_icon i').removeClass("notfocus");
+	$(".tile .tile_icon i").removeClass("notfocus");
+	$(".tile.expanded").find(".content").addClass("notfocus");
+	$(".tile.expanded").removeClass("expanded");
 	var dataStreamTile = $(".tile.data_stream");
 	dataStreamTile.find("input[type=search]").removeClass("notfocus");
 	dataStreamTile.find(".foot_fade").removeClass("notfocus");
 	if (dataStreamTile.find("table.reportData").size() > 0) {
 		// Remove big view format, load reduced format again
+		dataStreamTile.find(".content").load("AppController.servlet", {
+			"return": "s/tiles/data_stream"
+		}, function() {
+			dataStreamTile.find(".content").removeClass("notFocus");
+		});
 	}
 }
 
