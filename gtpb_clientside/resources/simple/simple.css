@@ -154,6 +154,9 @@ body {
   color: white;
   cursor: pointer;
   font-size: 30pt;
+  position: absolute;
+  top: 0;
+  right: 0.75em;
 }
 
 .tile .condensed {
