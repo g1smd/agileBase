@@ -288,10 +288,10 @@ function loadEdit(container, internalTableName, rowId) {
 			cacheBust: (new Date()).getTime()
 	}
 	if (internalTableName) {
-		params["internalTableName"] = internalTableName;
+		params["set_table"] = internalTableName;
 	}
 	if (rowId) {
-		params["rowId"] = rowId;
+		params["set_row_id"] = rowId;
 	}
 	container.css("opacity", "0.25").load(
 			"AppController.servlet", params, function() {
