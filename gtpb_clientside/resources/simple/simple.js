@@ -60,10 +60,6 @@ function commonTileEvents() {
 			return;
 		}
 		expandTile(tile);
-		//if(tile.hasClass("large")) {
-			//tile.find("input[type=search]").addClass("notfocus");
-			//tile.find(".foot_fade").addClass("notfocus");
-		//}
 		var template = "s/tiles/" + tile.attr("data-type");
 		tile.find(".content").load("AppController.servlet", {
 			"return" : template
