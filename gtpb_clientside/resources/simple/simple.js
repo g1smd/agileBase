@@ -315,6 +315,7 @@ function loadEdit(container, internalTableName, rowId) {
 				$(".sideAction.backToView").addClass("expanded");
 				$(".sideAction.removeRecord").addClass("expanded");
 			}, function() {
+				console.log("expanded is " + expanded);
 				if (!expanded) {
 					tileLoaded(tile);
 				}
