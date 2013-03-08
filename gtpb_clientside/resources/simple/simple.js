@@ -371,6 +371,7 @@ function backHome() {
 			"return": "s/tiles/data_stream"
 		}, function() {
 			dataStreamTile.find(".content").removeClass("notfocus");
+			dataStreamFocus();
 		});
 	}
 }
