@@ -80,7 +80,7 @@ function commonTileEvents() {
 		var tile = $(this).closest(".tile");
 		var internalTableName = tile.attr("data-internaltablename");
 		expandTile(tile);
-		newRecord(internalTableName);		
+		newRecord(internalTableName);
 	});
 	$(".sideAction.removeRecord").click(function() {
 		if (confirm("Delete this record?")) {
@@ -130,14 +130,16 @@ function dataStreamEvents() {
 			dataStreamFocus();
 		});
 	});
-	$(".tile.data_stream .report_data_row").click(function(event) {
-		event.stopPropagation();
-		var container = $(this).closest(".content");
-		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
-		var rowId = $(this).attr("data-rowid");
-		console.log("Editing row " + rowId);
-		loadEdit(container, internalTableName, rowId);
-	});
+	$(".tile.data_stream .report_data_row").click(
+			function(event) {
+				event.stopPropagation();
+				var container = $(this).closest(".content");
+				var internalTableName = $(this).closest(".tile").attr(
+						"data-internaltablename");
+				var rowId = $(this).attr("data-rowid");
+				console.log("Editing row " + rowId);
+				loadEdit(container, internalTableName, rowId);
+			});
 }
 
 function dataStreamFocus() {
@@ -167,7 +169,13 @@ function dataStreamFocus() {
  */
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
-	$(".sideAction.removeRecord").removeClass("expanded");
+	var editing = (tile.find("#reportData").size() == 0)
+	if (editing) {
+		$(".sideAction.newRecord").addClass("expanded");
+		$(".sideAction.removeRecord").addClass("expanded");
+	} else {
+		$(".sideAction.removeRecord").removeClass("expanded");
+	}
 	$(".sideAction.backHome").addClass("expanded");
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
@@ -175,7 +183,7 @@ function tileLoaded(tile) {
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").addClass("notfocus");
 	// Tile has a report but is not in the edit screen
-	if (tile.attr("data-internalreportname") && (tile.find("#reportData").size() == 0)) {
+	if (tile.attr("data-internalreportname") && (!editing)) {
 		$(".sideAction.newRecord").addClass("expanded");
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
@@ -272,12 +280,11 @@ function reportRowClicks() {
 			});
 }
 
-
 function newRecord(internalTableName) {
 	$(".tile.expanded").find(".content").css("opacity", "0.25").load(
 			"AppController.servlet", {
 				"return" : "gui/reports_and_tables/tabs/edit",
-				save_new_record: true,
+				save_new_record : true,
 				set_table : internalTableName
 			}, function() {
 				// remove opacity
@@ -287,7 +294,8 @@ function newRecord(internalTableName) {
 			});
 }
 /**
- * @param container	A jquery object that the content should be loaded into
+ * @param container
+ *          A jquery object that the content should be loaded into
  * @param internalTableName
  * @param rowId
  */
@@ -300,8 +308,8 @@ function loadEdit(container, internalTableName, rowId) {
 		expandTile(tile);
 	}
 	var params = {
-			"return": "gui/reports_and_tables/tabs/edit",
-			cacheBust: (new Date()).getTime()
+		"return" : "gui/reports_and_tables/tabs/edit",
+		cacheBust : (new Date()).getTime()
 	}
 	if (internalTableName) {
 		params["set_table"] = internalTableName;
@@ -309,8 +317,8 @@ function loadEdit(container, internalTableName, rowId) {
 	if (rowId) {
 		params["set_row_id"] = rowId;
 	}
-	container.css("opacity", "0.25").load(
-			"AppController.servlet", params, function() {
+	container.css("opacity", "0.25").load("AppController.servlet", params,
+			function() {
 				// remove opacity
 				container.removeAttr("style");
 				editTabFunctions();
@@ -384,10 +392,11 @@ function backHome() {
 	$(".tile.expanded").removeClass("expanded");
 	var dataStreamTile = $(".tile.data_stream");
 	// If contains report or edit screen
-	if ((dataStreamTile.find("table.reportData").size() > 0) || (dataStreamTile.find("#reportData").size() > 0)) {
+	if ((dataStreamTile.find("table.reportData").size() > 0)
+			|| (dataStreamTile.find("#reportData").size() > 0)) {
 		// Remove big view format, load reduced format again
 		dataStreamTile.find(".content").load("AppController.servlet", {
-			"return": "s/tiles/data_stream"
+			"return" : "s/tiles/data_stream"
 		}, function() {
 			dataStreamTile.find(".content").removeClass("notfocus");
 			dataStreamFocus();
