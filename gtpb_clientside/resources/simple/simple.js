@@ -54,7 +54,7 @@ function commonTileEvents() {
 	$("#fieldFilters input").click(function(event) {
 		event.stopPropagation();
 	});
-	$('.tile').click(function() {
+	$(".tile").click(function() {
 		var tile = $(this);
 		if (tile.hasClass("expanded") || tile.hasClass("focus")) {
 			return;
@@ -290,6 +290,13 @@ function newRecord(internalTableName) {
  * @param rowId
  */
 function loadEdit(container, internalTableName, rowId) {
+	var tile = container.closest(".tile");
+	var expanded = false;
+	if (tile.hasClass("expanded")) {
+		expanded = true;
+	} else {
+		expandTile(tile);
+	}
 	var params = {
 			"return": "gui/reports_and_tables/tabs/edit",
 			cacheBust: (new Date()).getTime()
@@ -307,6 +314,10 @@ function loadEdit(container, internalTableName, rowId) {
 				editTabFunctions();
 				$(".sideAction.backToView").addClass("expanded");
 				$(".sideAction.removeRecord").addClass("expanded");
+			}, function() {
+				if (!expanded) {
+					tileLoaded(tile);
+				}
 			});
 }
 
