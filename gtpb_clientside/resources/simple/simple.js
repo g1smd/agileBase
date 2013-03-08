@@ -64,12 +64,12 @@ function commonTileEvents() {
 		tile.find(".content").load("AppController.servlet", {
 			"return" : template
 		}, function() {
-			tileLoaded(tile);
+			tileLoaded(tile, false);
 		});
 		tile.find(".content").removeClass("notfocus");
 	});
 	$(".sideAction.backToView").click(function() {
-		tileLoaded($(".tile.expanded"));
+		tileLoaded($(".tile.expanded"), false);
 	});
 	$(".sideAction.newRecord").click(function() {
 		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
@@ -166,9 +166,8 @@ function dataStreamFocus() {
 /**
  * This function runs when a tile is clicked to expand it and content has loaded
  */
-function tileLoaded(tile) {
+function tileLoaded(tile, editing) {
 	var tileType = tile.attr("data-type");
-	var editing = (tile.find("#reportData").size() > 0)
 	$(".sideAction.backHome").addClass("expanded");
 	if (editing) {
 		$(".sideAction.newRecord").addClass("expanded");
@@ -325,7 +324,7 @@ function loadEdit(container, internalTableName, rowId) {
 				$(".sideAction.backToView").addClass("expanded");
 				$(".sideAction.removeRecord").addClass("expanded");
 				if (!expanded) {
-					tileLoaded(tile);
+					tileLoaded(tile, true);
 				}
 			});
 }
