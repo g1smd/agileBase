@@ -137,7 +137,6 @@ function dataStreamEvents() {
 				var internalTableName = $(this).closest(".tile").attr(
 						"data-internaltablename");
 				var rowId = $(this).attr("data-rowid");
-				console.log("Editing row " + rowId);
 				loadEdit(container, internalTableName, rowId);
 			});
 }
