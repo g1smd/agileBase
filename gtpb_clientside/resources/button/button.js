@@ -167,20 +167,8 @@ function fFullScreen() {
 	});
 }
 
-function fAppLauncher() {
-	var launcherDiv = $("#launcher");
-	$(".searchbox").hide();
-	launcherDiv.fadeIn();
-	if (launcherDiv.find("#apps").size() == 0) {
-	  launcherDiv.load("AppController.servlet", {
-		  "return": "gui/preview/app_launcher"
-	  }, function() {
-		  appLauncherIntegrated();
-	  });
-	}
-	// Clear out old stuff from appspace
-	var appspace = $(document.getElementById('oViewPane').contentWindow.pane_1.document).find("#appspace");
-	appspace.children().remove();
+function fTiles() {
+  document.location = "/agileBase/AppController.servlet?return=s/agilebase";
 }
 
 function closePreview() {

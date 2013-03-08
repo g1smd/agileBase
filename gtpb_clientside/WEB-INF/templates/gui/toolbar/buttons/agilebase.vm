@@ -16,10 +16,10 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #set($button_img='resources/toolbar/agilebase.png')
-#set($click="fAppLauncher()")
-#set($id='app_launcher')
-#set($caption='App Launcher')
+#set($click="fTiles()")
+#set($id='tiles')
+#set($caption='Tiles view')
 ##set($params='selected=false')
 ##set($classes='selected toggleButton')
-#set($tooltip='Show all apps')
+#set($tooltip='Switch to tiles view')
 #parse('gui/resources/button.vm')

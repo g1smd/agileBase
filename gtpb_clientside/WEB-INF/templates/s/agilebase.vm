@@ -37,7 +37,7 @@
 <body>
   <div class="header row transition">
     <div class="span4 spaced">
-      <a href="#"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+      <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
     </div>
   </div> ## end row
   <div id="title"><h1></h1></div>

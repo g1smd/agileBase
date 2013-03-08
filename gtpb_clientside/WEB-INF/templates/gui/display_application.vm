@@ -46,7 +46,6 @@
     </head>
 	<body> ##if($viewTools.getAppUrl().contains("backup")) class="localhost" #end
     <div id="preview"></div>
-    <div id="launcher"></div>
     #set($noCaption = true)
     <div id="toolbarDiv">
       #parse("properties.vm") ## sets logo variable
