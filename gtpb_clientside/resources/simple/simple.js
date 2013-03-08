@@ -174,7 +174,8 @@ function tileLoaded(tile) {
 	}
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").addClass("notfocus");
-	if (tile.attr("data-internalreportname")) {
+	// Tile has a report but is not in the edit screen
+	if (tile.attr("data-internalreportname") && (tile.find("#reportData").size() == 0)) {
 		$(".sideAction.newRecord").addClass("expanded");
 		var internalReportName = tile.attr("data-internalreportname");
 		var internalTableName = tile.attr("data-internaltablename");
