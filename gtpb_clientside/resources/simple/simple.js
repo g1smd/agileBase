@@ -170,13 +170,14 @@ function dataStreamFocus() {
 function tileLoaded(tile) {
 	var tileType = tile.attr("data-type");
 	var editing = (tile.find("#reportData").size() == 0)
+	$(".sideAction.backHome").addClass("expanded");
 	if (editing) {
 		$(".sideAction.newRecord").addClass("expanded");
 		$(".sideAction.removeRecord").addClass("expanded");
+		$(".sideAction.backToView").removeClass("expanded");
 	} else {
 		$(".sideAction.removeRecord").removeClass("expanded");
 	}
-	$(".sideAction.backHome").addClass("expanded");
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
 	}
