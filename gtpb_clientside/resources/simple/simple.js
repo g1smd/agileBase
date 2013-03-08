@@ -56,7 +56,7 @@ function commonTileEvents() {
 	});
 	$('.tile').click(function() {
 		var tile = $(this);
-		if (tile.hasClass("expanded")) {
+		if (tile.hasClass("expanded") || tile.hasClass("focus")) {
 			return;
 		}
 		expandTile(tile);
@@ -104,7 +104,7 @@ function expandTile(tile) {
 
 /** Data stream tile specific events */
 function dataStreamEvents() {
-	var searchBox = $(".tile.large input[type=search]");
+	var searchBox = $(".tile.data_stream input[type=search]");
 	searchBox.click(function(event) {
 		event.stopPropagation();
 	});
@@ -129,6 +129,13 @@ function dataStreamEvents() {
 			$(this).removeClass("changed");
 			dataStreamFocus();
 		});
+	});
+	$(".tile.data_stream .report_data_row").click(function(event) {
+		event.stopPropagation();
+		var container = $(this).closest(".content");
+		var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
+		var rowId = $(this).attr("data-rowid");
+		loadEdit(container, internalTableName, rowId);
 	});
 }
 
