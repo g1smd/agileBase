@@ -71,7 +71,7 @@
 		      #if($field.getInternalFieldName() && (!$profilePhoto))
 		        #parse("gui/pane2/filter_input.vm")
 		      #elseif($fields.size() == $foreach.count)
-		        <span onclick="clearFilters();">clear</span>
+		        ##<span onclick="clearFilters();">clear</span>
 		      #end
 		    </div></td>
         #end
