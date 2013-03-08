@@ -303,6 +303,9 @@ public final class AppController extends VelocityViewServlet {
 				case SET_TILE:
 					ServletSessionMethods.setTile(sessionData, databaseDefn, request, sessionActionParam);
 					break;
+				case CLEAR_TILE:
+					ServletSessionMethods.setTile(sessionData, databaseDefn, request, null);
+					break;
 				case LOGOUT:
 					logout(request);
 					break;
