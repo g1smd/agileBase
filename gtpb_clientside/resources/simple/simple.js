@@ -61,8 +61,10 @@ function commonTileEvents() {
 		}
 		expandTile(tile);
 		var template = "s/tiles/" + tile.attr("data-type");
+		var internalTileName = tile.attr("data-internaltilename");
 		tile.find(".content").load("AppController.servlet", {
-			"return" : template
+			"return" : template,
+			set_tile: internalTileName 
 		}, function() {
 			tileLoaded(tile, false);
 		});
@@ -306,8 +308,10 @@ function loadEdit(container, internalTableName, rowId) {
 	} else {
 		expandTile(tile);
 	}
+	var internalTileName = tile.attr("data-internaltilename");
 	var params = {
 		"return" : "gui/reports_and_tables/tabs/edit",
+		set_tile: internalTileName,
 		cacheBust : (new Date()).getTime()
 	}
 	if (internalTableName) {

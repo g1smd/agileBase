@@ -187,9 +187,6 @@ body {
   left: 1em;
   right: 1em;
   height: 5em;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #009FE3));
-  background-image: -webkit-linear-gradient(top, transparent 0%, #009FE3 100%);
-  background-image: linear-gradient(to bottom, transparent 0%, #009FE3 100%);
 }
 
 #tiles .tile .tile_icon {
@@ -584,4 +581,46 @@ table.reportData td {
 
 .turquoise_fs {
   color: #009d90!important;
+}
+
+.blue .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #009FE3));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #009FE3 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #009FE3 100%);
+}
+
+.pink .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #EC00BC));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #EC00BC 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #EC00BC 100%);
+}
+
+.green .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #8DC63F));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #8DC63F 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #8DC63F 100%);
+}
+
+.yellow .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #f5bd26));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #f5bd26 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #f5bd26 100%);
+}
+
+.purple .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #5c2969));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #5c2969 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #5c2969 100%);
+}
+
+.turquoise .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #009d90));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #009d90 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #009d90 100%);
+}
+
+.turquoise .foot_fade {
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #009d90));
+  background-image: -webkit-linear-gradient(top, transparent 0%, #009d90 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, #009d90 100%);
 }
