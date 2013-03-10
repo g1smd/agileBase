@@ -464,8 +464,13 @@ function fSetSort(oColHeader) {
 			fRemoveWait();
 			return;
 		}
-		// TODO --> find a way to make this more generic
-		var oReportBody = document.getElementById('reportBody');
+		var oReportBody;
+		if($("#tiles").size() > 0) {
+			oReportBody = $(".tile.expanded").find("table.reportData").find("tbody")[0];
+		} else {
+			// TODO --> find a way to make this more generic
+			oReportBody = document.getElementById('reportBody');
+		}
 
 		// currently agileBase doesn't return over XML but the option was developed
 		// for GTtT 4.0 where records in p2 load incrementally
