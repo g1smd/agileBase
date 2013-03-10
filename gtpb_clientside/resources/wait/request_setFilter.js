@@ -314,8 +314,13 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 			return;
 		var bIsXMLRequest = (oObj.getAttribute('gtpb_returntype') == 'xml');
 		var keyupBug = (oObj.getAttribute('keyup_bug'));
-		// TODO --> find a way to make this more generic
-		var oReportBody = document.getElementById('reportBody');
+		var oReportBody;
+		if($("#tiles").size() > 0) {
+			oReportBody = $(".tile.expanded").find("table.reportData").find("tbody")[0];
+		} else {
+			// TODO --> find a way to make this more generic
+			oReportBody = document.getElementById('reportBody');
+		}
 
 		//var vCurrentValue = (fIsBooleanType(oObj) ? oFormObject.checked
 		//		: oFormObject.value);
