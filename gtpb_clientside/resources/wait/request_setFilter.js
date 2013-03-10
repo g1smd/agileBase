@@ -132,7 +132,6 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait){
  */
 
 function fLoadReport(sResponseText, oElement, fCallback) {
-	console.log("fLoadReport into " + oElement.tagName);
 	if(!navigator.userAgent.match(/Konqueror/i)) {
 	  if (!$.browser.msie) {
 			// Everything but IE can use innerHTML for this

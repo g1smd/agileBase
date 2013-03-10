@@ -206,7 +206,7 @@ function tileLoaded(tile, editing) {
 						out : hideTooltip,
 						interval : 400
 					};
-					$("#filterhelp").hoverIntent(hoverIntentConfig);
+					tile.find("#filterhelp").hoverIntent(hoverIntentConfig);
 					$(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
 				});
