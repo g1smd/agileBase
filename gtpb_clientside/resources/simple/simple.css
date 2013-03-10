@@ -91,6 +91,11 @@ body {
   height: auto;
 }
 
+.tile textarea {
+  /* match other inputs */
+  min-width: 296px;
+}
+
 .header.row.expanded {
   opacity: 0.5;
 }

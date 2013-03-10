@@ -207,11 +207,14 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 			if(fCallback) fCallback()
 		}
 	}
-
 	fRenderRows();
 }
 
 function fSetupAppPreview() {
+	if ($("#tiles").size() > 0) {
+		// not relevant to tiles
+		return;
+	}
 	var cells = $("td.leading").next("td");
 	if (typeof cells.hoverIntent != 'function') {
 		// This function only needs to work when called from pane 2, not the relation picker in pane 3 where hoverIntent is not defined
