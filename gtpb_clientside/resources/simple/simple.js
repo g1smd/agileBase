@@ -77,6 +77,10 @@ function commonTileEvents() {
 		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
 		newRecord(internalTableName);
 	});
+	$(".sideAction.cloneRecord").click(function() {
+		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
+		cloneRecord(internalTableName);
+	});
 	$(".tile.large .add").click(function(event) {
 		event.stopPropagation();
 		var tile = $(this).closest(".tile");
@@ -173,6 +177,7 @@ function tileLoaded(tile, editing) {
 	$(".sideAction.backHome").addClass("expanded");
 	if (editing) {
 		$(".sideAction.newRecord").addClass("expanded");
+		$(".sideAction.cloneRecord").addClass("expanded");
 		$(".sideAction.removeRecord").addClass("expanded");
 		$(".sideAction.backToView").removeClass("expanded");
 	} else {
@@ -292,8 +297,27 @@ function newRecord(internalTableName) {
 				$(".content").removeAttr("style");
 				editTabFunctions();
 				$(".sideAction.backToView").addClass("expanded");
+				$(".sideAction.newRecord").addClass("expanded");
+				$(".sideAction.cloneRecord").addClass("expanded");
 			});
 }
+
+function cloneRecord(internalTableName) {
+	$(".tile.expanded").find(".content").css("opacity", "0.25").load(
+			"AppController.servlet", {
+				"return" : "gui/reports_and_tables/tabs/edit",
+				clone_record : true,
+				set_table : internalTableName
+			}, function() {
+				// remove opacity
+				$(".content").removeAttr("style");
+				editTabFunctions();
+				$(".sideAction.backToView").addClass("expanded");
+				$(".sideAction.newRecord").addClass("expanded");
+				$(".sideAction.cloneRecord").addClass("expanded");
+			});
+}
+
 /**
  * @param container
  *          A jquery object that the content should be loaded into

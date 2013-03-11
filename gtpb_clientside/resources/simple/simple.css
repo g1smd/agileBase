@@ -511,8 +511,13 @@ table.reportData td {
   left: 0.25em;
 }
 
-.sideAction.removeRecord {
+.sideAction.cloneRecord {
   top: 7em;
+  left: 0.25em;
+}
+
+.sideAction.removeRecord {
+  top: 9em;
   left: 0.25em;
 }
 
