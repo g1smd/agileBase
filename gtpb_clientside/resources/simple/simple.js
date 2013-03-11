@@ -176,12 +176,11 @@ function tileLoaded(tile, editing) {
 	var tileType = tile.attr("data-type");
 	$(".sideAction.backHome").addClass("expanded");
 	if (editing) {
-		$(".sideAction.newRecord").addClass("expanded");
-		$(".sideAction.cloneRecord").addClass("expanded");
-		$(".sideAction.removeRecord").addClass("expanded");
+		showEditControls();
 		$(".sideAction.backToView").removeClass("expanded");
 	} else {
 		$(".sideAction.removeRecord").removeClass("expanded");
+		$(".sideAction.cloneRecord").removeClass("expanded");
 	}
 	if (tileType != "adder") {
 		$(".sideAction.removeTile").addClass("expanded");
@@ -349,12 +348,18 @@ function loadEdit(container, internalTableName, rowId) {
 				// remove opacity
 				container.removeAttr("style");
 				editTabFunctions();
-				$(".sideAction.backToView").addClass("expanded");
-				$(".sideAction.removeRecord").addClass("expanded");
+				showEditControls();
 				if (!expanded) {
 					tileLoaded(tile, true);
 				}
 			});
+}
+
+function showEditControls() {
+	$(".sideAction.backToView").addClass("expanded");
+	$(".sideAction.newRecord").addClass("expanded");
+	$(".sideAction.cloneRecord").addClass("expanded");
+	$(".sideAction.removeRecord").addClass("expanded");
 }
 
 function addDataTile(selectedApp, colour, internalReportName, icon) {
