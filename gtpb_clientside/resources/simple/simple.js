@@ -39,14 +39,13 @@ function tileSuggestions() {
 						"return" : "blank",
 						add_tile : true,
 						colour : abTileColours[tileCount % abTileColours.length],
-						internaltablename: internalTableName,
+						internaltablename : internalTableName,
 						internalreportname : internalReportName,
 						tiletype : tileType
 					},
 					success : function(data) {
-						$("#added").append(
-								"<h1 class='transition notfocus'>" + reportName + "</h1>");
-						$("#added h1").removeClass("notfocus");
+						var h1 = $("#added h1");
+						h1.text(h1.text() + ".");
 					}
 				});
 				tileCount++;
@@ -55,10 +54,10 @@ function tileSuggestions() {
 		url : "AppController.servlet",
 		data : {
 			"return" : "gui/s/tiles/tiles",
-			success : function(data) {
-				$("#tiles").html(data);
-				tileEvents();
-			}
+		},
+		success : function(data) {
+			$("#tiles").html(data);
+			tileEvents();
 		}
 	});
 }
