@@ -612,21 +612,15 @@ table.reportData td {
 }
 
 .yellow .foot_fade {
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #f5bd26));
-  background-image: -webkit-linear-gradient(top, transparent 0%, #f5bd26 100%);
-  background-image: linear-gradient(to bottom, transparent 0%, #f5bd26 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(245,189,38,0)), color-stop(1, #f5bd26));
+  background-image: -webkit-linear-gradient(top, rgba(245,189,38,0) 0%, #f5bd26 100%);
+  background-image: linear-gradient(to bottom, rgba(245,189,38,0) 0%, #f5bd26 100%);
 }
 
 .purple .foot_fade {
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #5c2969));
   background-image: -webkit-linear-gradient(top, transparent 0%, #5c2969 100%);
   background-image: linear-gradient(to bottom, transparent 0%, #5c2969 100%);
-}
-
-.turquoise .foot_fade {
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, transparent), color-stop(1, #009d90));
-  background-image: -webkit-linear-gradient(top, transparent 0%, #009d90 100%);
-  background-image: linear-gradient(to bottom, transparent 0%, #009d90 100%);
 }
 
 .turquoise .foot_fade {
