@@ -35,6 +35,7 @@ function tileSuggestions() {
 				var reportName = $(this).text();
 				$.ajaxq("tile_suggestions", {
 					url : "AppController.servlet",
+					type: "POST",
 					data : {
 						"return" : "blank",
 						add_tile : true,
@@ -52,8 +53,9 @@ function tileSuggestions() {
 			});
 	$.ajaxq("tile_suggestions", {
 		url : "AppController.servlet",
+		type: "POST",
 		data : {
-			"return" : "gui/s/tiles/tiles",
+			"return" : "s/tiles/tiles",
 		},
 		success : function(data) {
 			$("#tiles").html(data);
