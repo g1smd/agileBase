@@ -493,8 +493,9 @@ function removeTile() {
 		internaltilename : internalTileName
 	}, function(data) {
 		$("#tiles").html(data);
-		console.log("Tile suggestions found: " + $(data).find("#tile_suggestions").size());
-		if($(data).find("#tile_suggestions").size() > 0) {
+		console.log(data);
+		console.log("Tile suggestions found: " + $(data).find("#added").size());
+		if($(data).find("#added").size() > 0) {
 			$("#adder h1").text("All apps removed");
 			$("#adder").append("<h1><a href='AppController.servlet?return=s/agilebase'>Load most frequently used apps</a></h1>");
 		} else {
