@@ -1,0 +1,4 @@
+## Reports which have the same parent table and same module as the tile report
+#set($tile = $sessionData.getTile())
+#set($table = $tile.getReport().getParentTable())
+#set($module = $tile.getReport().getModule())
