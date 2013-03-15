@@ -30,13 +30,16 @@ function tileSuggestions() {
 					// The most popular report will have a large tile
 					tileType = "data_stream";
 				}
-				var internalReportName = $(this).text();
+				var internalReportName = $(this).attr("data-internalreportname");
+				var internalTableName = $(this).attr("data-internaltablename");
+				var reportName = $(this).text();
 				$.ajaxq("tile_suggestions", {
 					url : "AppController.servlet",
 					data : {
 						"return" : "blank",
 						add_tile : true,
 						colour : abTileColours[tileCount % abTileColours.length],
+						internaltablename: internalTableName,
 						internalreportname : internalReportName,
 						tiletype : tileType
 					},

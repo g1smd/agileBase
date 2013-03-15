@@ -5,7 +5,7 @@
   #foreach($report in $mostPopularReports)
     #set($table = $report.getParentTable())
     #if(!($usedTables.contains($table)))
-      <span data-internaltablename="$report.getParentTable().getInternalTableName()">$report.getInternalReportName()</span>
+      <span data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()">$report</span>
       #set($success = $usedTables.add($table))
     #end
   #end
