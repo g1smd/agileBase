@@ -11,6 +11,12 @@
   #end
 </div>
 <div class="tile expanded" id="added">
-  <h1>Just a sec...</h1>
-  </ul>
+  #set($lastAppAction = $sessionData.getLastAppAction())
+  #if($lastAppAction == "REMOVE_TILE")
+    <h1>Last tile removed</h1>
+    <h1><a href="AppController.servlet?return=s/agilebase">Add most frequently used apps</a></h1>
+  #else
+    <h1>Just a sec...</h1>
+  #end  
+</ul>
 </div>
