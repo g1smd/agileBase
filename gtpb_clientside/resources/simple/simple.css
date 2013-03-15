@@ -184,6 +184,10 @@ body {
   overflow: hidden;
 }
 
+#added h1 {
+  color: #656766;
+}
+
 .foot_fade {
   /* Allow mouse clicks through */
   pointer-events: none;
