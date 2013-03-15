@@ -1,8 +1,8 @@
 ## See which reports the user most often uses and suggest these as tiles. The client may then auto-create or suggest them
 #set($mostPopularReports = $view.getMostPopularReports(5))
-Most popular reports are $mostPopularReports<p>
 #set($usedTables = [])
 <div id="tile_suggestions">
+  Most popular reports are $mostPopularReports<p>
   #foreach($report in $mostPopularReports)
     #set($table = $report.getTable())
     #if(!($usedTables.contains($table)))
