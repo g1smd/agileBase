@@ -51,7 +51,6 @@ function tileSuggestions() {
 				});
 				tileCount++;
 			});
-	return;
 	$.ajaxq("tile_suggestions", {
 		url : "AppController.servlet",
 		type: "POST",
