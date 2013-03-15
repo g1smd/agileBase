@@ -449,4 +449,10 @@ public interface DataManagementInfo {
 	 */
 	public BaseReportInfo getMostPopularReport(HttpServletRequest request, DatabaseInfo databaseDefn,
 			AppUserInfo user) throws SQLException, CodingErrorException;
+	
+	/**
+	 * Return a set of the most popular reports, with ordering (e.g. as a LinkedHashSet), so the most popular will be first in the collection
+	 */
+	public Set<BaseReportInfo> getMostPopularReports(HttpServletRequest request, DatabaseInfo databaseDefn,
+			AppUserInfo user, int numReports) throws SQLException, CodingErrorException;
 }

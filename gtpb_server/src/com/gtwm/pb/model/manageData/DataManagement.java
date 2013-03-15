@@ -3472,9 +3472,21 @@ public final class DataManagement implements DataManagementInfo {
 		if (mostPopularReport != null) {
 			return mostPopularReport;
 		}
-		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '2 months'::interval) GROUP BY report ORDER BY count(*) DESC LIMIT 50";
+		List<BaseReportInfo> reportList = new LinkedList<BaseReportInfo>(this.getMostPopularReports(request, databaseDefn, user, 1));
+		if (reportList.size() > 0) {
+			mostPopularReport = reportList.get(0);
+			this.userMostPopularReportCache.put(user, mostPopularReport);
+			return mostPopularReport;
+		}
+		return null;
+	}
+	
+	public LinkedHashSet<BaseReportInfo> getMostPopularReports(HttpServletRequest request, DatabaseInfo databaseDefn,
+			AppUserInfo user, int numReports) throws SQLException, CodingErrorException {
+		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '2 months'::interval) GROUP BY report ORDER BY count(*) DESC LIMIT " + numReports;
 		Connection conn = null;
 		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
+		LinkedHashSet<BaseReportInfo> mostPopularReports = new LinkedHashSet<BaseReportInfo>(numReports);
 		try {
 			conn = this.dataSource.getConnection();
 			conn.setAutoCommit(false);
@@ -3488,10 +3500,7 @@ public final class DataManagement implements DataManagementInfo {
 					BaseReportInfo report = table.getReport(internalReportName);
 					if (!report.equals(table.getDefaultReport())) {
 						if (authenticator.loggedInUserAllowedToViewReport(request, report)) {
-							results.close();
-							statement.close();
-							this.userMostPopularReportCache.put(user, report);
-							return report;
+							mostPopularReports.add(report);
 						}
 					}
 				} catch (ObjectNotFoundException onfex) {
@@ -3503,14 +3512,12 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			results.close();
 			statement.close();
-		} catch (SQLException sqlex) {
-			logger.error("Unable to get most popular report from logs: " + sqlex);
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
 		}
-		return null;
+		return mostPopularReports;
 	}
 
 	public String toString() {

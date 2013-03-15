@@ -569,6 +569,11 @@ public interface ViewMethodsInfo {
 			throws CodingErrorException;
 
 	/**
+	 * Return a set of the most popular reports for the currently logged in user, most frequently used first
+	 */
+	public Set<BaseReportInfo> getMostPopularReports(int numReports) throws SQLException, CodingErrorException, DisallowedException, ObjectNotFoundException;
+	
+	/**
 	 * @param tableID
 	 *            The internal table name of the table, or it's public facing
 	 *            name. Using the public facing name is more expensive, so the
