@@ -19,6 +19,9 @@ public class DataLinkTile extends AbstractTile implements TileDataLinkInfo {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
 		super.setTileType(TileType.DATA_LINK);
+		if (icon == null) {
+			icon = report.getModule().getIconPath();
+		}
 		super.setIcon(icon);
 		this.setReport(report);
 	}

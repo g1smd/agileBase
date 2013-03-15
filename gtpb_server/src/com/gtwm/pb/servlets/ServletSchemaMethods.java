@@ -2832,9 +2832,6 @@ public final class ServletSchemaMethods {
 		case DATA_LINK:
 			BaseReportInfo report = ServletUtilMethods.getReportForRequest(sessionData, request,
 					databaseDefn, false);
-			if (icon == null) {
-				throw new MissingParametersException("icon needed to add a data_link tile");
-			}
 			tile = new DataLinkTile(colour, report, icon);
 			break;
 		case DATA_STREAM:
