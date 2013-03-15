@@ -3,7 +3,7 @@
 #set($usedTables = [])
 <div id="tile_suggestions">
   #foreach($report in $mostPopularReports)
-    #set($table = $report.getTable())
+    #set($table = $report.getParentTable())
     $usedTables are now $usedTables. Contains $table? $usedTables.contains($table)<p>
     #if(!($usedTables.contains($table)))
       <span data-internaltablename="$report.getParentTable().getInternalTableName()">$report.getInternalReportName()</span>
