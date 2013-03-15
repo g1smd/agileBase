@@ -3,12 +3,12 @@
 #set($usedTables = [])
 <div id="tile_suggestions">
   Most popular reports are $mostPopularReports<p>
-  #foreach($report in $mostPopularReports)
-    #set($table = $report.getTable())
-    #if(!($usedTables.contains($table)))
-      <span data-internaltablename="$report.getParentTable().getInternalTableName()">$report.getInternalReportName()</span>
-      #set($success = $usedTables.add($table))
-    #end
-  #end
+##  #foreach($report in $mostPopularReports)
+ ##   #set($table = $report.getTable())
+##    #if(!($usedTables.contains($table)))
+##      <span data-internaltablename="$report.getParentTable().getInternalTableName()">$report.getInternalReportName()</span>
+##    #end
+##      #set($success = $usedTables.add($table))
+##  #end
 </div>
   
