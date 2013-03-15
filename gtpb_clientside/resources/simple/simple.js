@@ -57,7 +57,7 @@ function tileSuggestions() {
 			"return" : "gui/s/tiles/tiles",
 			success : function(data) {
 				$("#tiles").html(data);
-				$tileEvents();
+				tileEvents();
 			}
 		}
 	});
