@@ -4,6 +4,8 @@
 $(document).ready(function() {
 	if ($("#infovis").size() > 0) {
 		loadTreemap();
+	} else if ($("#tile_suggestions").size() > 0) {
+		tileSuggestions();
 	} else {
 		tileEvents();
 		// Focus on first record
@@ -17,6 +19,45 @@ function tileEvents() {
 	commonTileEvents();
 	dataStreamEvents();
 	focusEvents();
+}
+
+function tileSuggestions() {
+	var tileCount = 0;
+	$("#tile_suggestions span").each(
+			function() {
+				var tileType = "data_link"; // The default tile type
+				if (tileCount == 0) {
+					// The most popular report will have a large tile
+					tileType = "data_stream";
+				}
+				var internalReportName = $(this).text();
+				$.ajaxq("tile_suggestions", {
+					url : "AppController.servlet",
+					data : {
+						"return" : "blank",
+						add_tile : true,
+						colour : abTileColours[tileCount % abTileColours.length],
+						internalreportname : internalReportName,
+						tiletype : tileType
+					},
+					success : function(data) {
+						$("#added").append(
+								"<h1 class='transition notfocus'>" + reportName + "</h1>");
+						$("#added h1").removeClass("notfocus");
+					}
+				});
+				tileCount++;
+			});
+	$.ajaxq("tile_suggestions", {
+		url : "AppController.servlet",
+		data : {
+			"return" : "gui/s/tiles/tiles",
+			success : function(data) {
+				$("#tiles").html(data);
+				$tileEvents();
+			}
+		}
+	});
 }
 
 function focusEvents() {
@@ -64,7 +105,7 @@ function commonTileEvents() {
 		var internalTileName = tile.attr("data-internaltilename");
 		tile.find(".content").load("AppController.servlet", {
 			"return" : template,
-			set_tile: internalTileName 
+			set_tile : internalTileName
 		}, function() {
 			tileLoaded(tile, false);
 		});
@@ -334,7 +375,7 @@ function loadEdit(container, internalTableName, rowId) {
 	var internalTileName = tile.attr("data-internaltilename");
 	var params = {
 		"return" : "gui/reports_and_tables/tabs/edit",
-		set_tile: internalTileName,
+		set_tile : internalTileName,
 		cacheBust : (new Date()).getTime()
 	}
 	if (internalTableName) {

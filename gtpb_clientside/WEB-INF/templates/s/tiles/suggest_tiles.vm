@@ -1,7 +1,7 @@
 ## See which reports the user most often uses and suggest these as tiles. The client may then auto-create or suggest them
 #set($mostPopularReports = $view.getMostPopularReports(6))
 #set($usedTables = $viewTools.getNewStringSet())
-<div id="tile_suggestions">
+<div id="tile_suggestions" style="display:none">
   #foreach($report in $mostPopularReports)
     #set($table = $report.getParentTable())
     #if(!($usedTables.contains($table)))
@@ -10,4 +10,8 @@
     #end
   #end
 </div>
+<div class="white tile expanded" id="added">
+  <h1>Setting up a few apps for you, please hold on a sec...</h1>
   
+  </ul>
+</div>
