@@ -43,10 +43,6 @@ function tileSuggestions() {
 						internaltablename : internalTableName,
 						internalreportname : internalReportName,
 						tiletype : tileType
-					},
-					success : function(data) {
-						var h1 = $("#added h1");
-						h1.text(h1.text() + ".");
 					}
 				});
 				tileCount++;
