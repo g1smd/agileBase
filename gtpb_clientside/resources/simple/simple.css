@@ -96,6 +96,13 @@ body {
   min-width: 296px;
 }
 
+.tile .gtpb_url {
+  display: inline-block;
+  /* override pane3_amalgam.css */
+  float: none;
+  top: 0;
+}
+
 .header.row.expanded {
   opacity: 0.5;
 }

@@ -29,7 +29,11 @@
       #set($success = $titleFields.add($field))
     #end
     #if(($category == "TEXT") && (100 > $field.getContentSize()) && (!$field.usesLookup()))
-      #set($success = $titleFields.add($field))
+      #if(($category == "FILE") && ($field.getAttachmentType() == "DOCUMENT"))
+        #set($success = $titleFields.add($field))
+      #else
+        #set($success = $titleFields.add($field))
+      #end
     #end
   #end
 #end ## end title fields finding
