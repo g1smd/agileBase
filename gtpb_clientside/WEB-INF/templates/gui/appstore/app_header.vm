@@ -36,7 +36,7 @@
   #end
   #if($apps.contains("calendar"))
     #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
+    <div class="bare_button" style="left: ${left}px;">
       <a href="?return=gui/calendar/calendar">
         <i class="icon-calendar"></i><br>calendar
       </a>
