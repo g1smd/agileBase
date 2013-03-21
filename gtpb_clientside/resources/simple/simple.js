@@ -10,6 +10,10 @@ $(document).ready(function() {
 		tileEvents();
 		// Focus on first record
 		$(".tile.large .report_data_row:first-child").mouseenter();
+		// If only one tile, expand it
+		if ($(".tile").not(".large").size() == 1) {
+			$(".tile").not(".large").click();
+		}
 	}
 });
 
