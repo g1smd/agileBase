@@ -16,13 +16,13 @@
       #set($databaseReturn = "gui/display_application")     
     #end
     <a href="?return=$databaseReturn">
-      <i class="icon-reorder"></a><br>database
+      <i class="icon-reorder"></i><br>database
     </a>
   </div>
   <div class="bare_button" style="left: ${left}px;">
     #set($databaseReturn = "s/treemap")     
     <a href="?return=$databaseReturn">
-      <i class="icon-th-large"></a><br>tiles
+      <i class="icon-th-large"></i><br>tiles
     </a>
   </div>
   #if($apps.contains("dashboard"))
