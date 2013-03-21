@@ -4,7 +4,7 @@
   #set($left = 0)
   #if($current_app == "calendar")
     <div id="new_record" class="bare_button" style="left: ${left}px;">
-      <img id="new_record" src="resources/toolbar/new.png" /><br>New
+      <i class="icon-plus-sign"></a><br>New
     </div>
     #set($left = $left + 100)
   #end
@@ -56,7 +56,7 @@
   #set($headlineNotices = $dashboard.getHeadlineNotices())
   #foreach($headlineNotice in $headlineNotices)
     #set($firstWord = $headlineNotice.replaceAll(" .*",""))
-    #if($firstWord.length() > 1) ##ÊIgnore really small numbers
+    #if($firstWord.length() > 1) ##ï¿½Ignore really small numbers
       #set($rest = $headlineNotice.replaceAll("^.*? ",""))
       <div class="headline"><span class="firstword">$firstWord</span> $rest</div>
     #end
