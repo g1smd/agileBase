@@ -20,7 +20,7 @@
     </a>
   </div>
   <div class="bare_button" style="left: ${left}px;">
-    #set($databaseReturn = "s/treemap")     
+    #set($databaseReturn = "s/agilebase")     
     <a href="?return=$databaseReturn">
       <i class="icon-th-large"></i><br>tiles
     </a>
