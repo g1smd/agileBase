@@ -4,26 +4,33 @@
   #set($left = 0)
   #if($current_app == "calendar")
     <div id="new_record" class="bare_button" style="left: ${left}px;">
-      <i class="icon-plus-sign"></i><br>New
+      <i class="icon-plus-sign"></i><br>add
     </div>
     #set($left = $left + 100)
   #end
-  <div class="button" style="left: ${left}px;">
+  <div class="bare_button" style="left: ${left}px;">
+    #set($left = $left + 100)
     #if($mobile_device)
       #set($databaseReturn = "gui/pane1")
     #else
       #set($databaseReturn = "gui/display_application")     
     #end
     <a href="?return=$databaseReturn">
-      <img src="customisations/common/dashboard/panes.png" /><br>Database
+      <i class="icon-reorder"></a><br>database
+    </a>
+  </div>
+  <div class="bare_button" style="left: ${left}px;">
+    #set($databaseReturn = "s/treemap")     
+    <a href="?return=$databaseReturn">
+      <i class="icon-th-large"></a><br>tiles
     </a>
   </div>
   #if($apps.contains("dashboard"))
     #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
-      #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")     
+    <div class="bare_button" style="left: ${left}px;">
+      #set($databaseReturn = "s/treemap")     
       <a href="?return=$databaseReturn">
-        <img src="resources/toolbar/dashboard.png" /><br>Dashboard
+        <i class="icon-dashboard"></i><br>dashboard
       </a>
     </div>
   #end
@@ -31,23 +38,15 @@
     #set($left = $left + 100)
     <div class="button" style="left: ${left}px;">
       <a href="?return=gui/calendar/calendar">
-        <img src="resources/toolbar/calendar.png" /><br>Calendar
+        <i class="icon-calendar"></i><br>calendar
       </a>
     </div>
   #end
   #if($apps.contains("mkis"))
     #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
+    <div class="bare_button" style="left: ${left}px;">
       <a href="?return=gui/customisations/common/mkis/mkis">
-        <img src="resources/toolbar/mkis.png" /><br>Marketing
-      </a>
-    </div>
-  #end
-  #if($apps.contains("forms"))
-    #set($left = $left + 100)
-    <div class="button" style="left: ${left}px;">
-      <a href="?return=gui/edit_nav/edit_nav">
-        <img src="resources/toolbar/contact-new.png" /><br>Cards
+        <i class="icon-bar-chart"></i><br>marketing
       </a>
     </div>
   #end
@@ -56,7 +55,7 @@
   #set($headlineNotices = $dashboard.getHeadlineNotices())
   #foreach($headlineNotice in $headlineNotices)
     #set($firstWord = $headlineNotice.replaceAll(" .*",""))
-    #if($firstWord.length() > 1) ##�Ignore really small numbers
+    #if($firstWord.length() > 1) ## Ignore really small numbers
       #set($rest = $headlineNotice.replaceAll("^.*? ",""))
       <div class="headline"><span class="firstword">$firstWord</span> $rest</div>
     #end
