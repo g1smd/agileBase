@@ -4,7 +4,7 @@
   #set($left = 0)
   #if($current_app == "calendar")
     <div id="new_record" class="bare_button" style="left: ${left}px;">
-      <i class="icon-plus-sign"></a><br>New
+      <i class="icon-plus-sign"></i><br>New
     </div>
     #set($left = $left + 100)
   #end
