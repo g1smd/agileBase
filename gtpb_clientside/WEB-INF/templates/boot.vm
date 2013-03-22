@@ -23,7 +23,7 @@
   #set($customTemplate = "gui/customisations/$companyId/index.vm")
   #parse($customTemplate)
 #elseif($appUser.getUsesAppLauncher())
-  #parse("gui/preview/app_launcher_standalone.vm")
+  #parse("s/agilebase.vm")
 #else
   #parse("gui/display_application.vm")
 #end
