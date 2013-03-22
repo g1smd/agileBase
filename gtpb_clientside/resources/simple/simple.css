@@ -10,21 +10,6 @@
 [class^="icon-"], [class*=" icon-"]{
   background: none;
 }
-
-#infovis {
-  position: relative;
-  font-size: 8pt;
-  font-family: Verdana, Geneva, Arial, sans-serif;
-  height: 600px;
-  width: 100%; /* match bootstrap container */
-  color: #656766;
-}
-
-#infovis div {  
-    position:absolute;  
-    overflow:hidden;  
-}
-
 body {
   transition-duration: 1s;
   transition-property: background-color;
@@ -231,16 +216,48 @@ body {
   cursor: auto;
 }
 
+/* override .tile.adder */
 .tile.adder.expanded {
   width: 100%;
   height: 550px;
 }
 
-/* Large desktop */
-@media (min-height: 1400px) {
-  .tile.expanded {
-    height: 1100px;
-  }
+/* Different size screens */
+
+@media (min-height: 730px) and (max-height: 779px) {
+  .tile.expanded { height: 630px; }
+}
+
+@media (min-height: 780px) and (max-height: 829px) {
+  .tile.expanded { height: 680px; }
+}
+
+@media (min-height: 830px) and (max-height: 879px) {
+  .tile.expanded { height: 730px; }
+}
+
+@media (min-height: 880px) and (max-height: 929px) {
+  .tile.expanded { height: 780px; }
+}
+
+@media (min-height: 930px) and (max-height: 979px) {
+  .tile.expanded { height: 830px; }
+}
+
+@media (min-height: 980px) and (max-height: 1029px) {
+  .tile.expanded { height: 880px; }
+}
+
+@media (min-height: 1030px) and (max-height: 1229px) {
+  .tile.expanded { height: 930px; }
+}
+
+@media (min-height: 1330px) and (max-height: 1429px) {
+  .tile.expanded { height: 1100px; }
+}
+
+@media (min-height: 1430px){
+  .tile.expanded { height: 1200px; }
 }
 
 .notfocus {
@@ -549,6 +566,22 @@ table.reportData td {
 
 .relative {
   position: relative;
+}
+
+/* Treemap */
+
+#infovis {
+  position: relative;
+  font-size: 8pt;
+  font-family: Verdana, Geneva, Arial, sans-serif;
+  height: 600px;
+  width: 100%; /* match bootstrap container */
+  color: #656766;
+}
+
+#infovis div {  
+    position:absolute;  
+    overflow:hidden;  
 }
 
 /* Colours */
