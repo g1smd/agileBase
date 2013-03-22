@@ -181,19 +181,10 @@ function dataStreamEvents() {
 			dataStreamFocus();
 		});
 	});
-	$(".tile.data_stream .report_data_row").click(
-			function(event) {
-				event.stopPropagation();
-				var container = $(this).closest(".content");
-				var internalTableName = $(this).closest(".tile").attr(
-						"data-internaltablename");
-				var rowId = $(this).attr("data-rowid");
-				loadEdit(container, internalTableName, rowId);
-			});
 }
 
 function dataStreamFocus() {
-	$(".tile.large .report_data_row").mouseenter(
+	$(".tile.data_stream .report_data_row").mouseenter(
 			function() {
 				var row = $(this);
 				var focusTile = $(".tile[data-type=focus]");
@@ -211,6 +202,15 @@ function dataStreamFocus() {
 					focusTile.find(".title").text(rowTitle);
 					focusEvents();
 				});
+			});
+	$(".tile.data_stream .report_data_row").click(
+			function(event) {
+				event.stopPropagation();
+				var container = $(this).closest(".content");
+				var internalTableName = $(this).closest(".tile").attr(
+						"data-internaltablename");
+				var rowId = $(this).attr("data-rowid");
+				loadEdit(container, internalTableName, rowId);
 			});
 }
 
