@@ -2584,7 +2584,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			moduleCount++;
 			moduleName = baseModuleName + " " + String.valueOf(moduleCount);
 		}
-		ModuleInfo newModule = new Module(moduleName, "actions/go-home.png", indexNumber);
+		ModuleInfo newModule = new Module(moduleName, "icon-asterisk", indexNumber);
 		newModule.setColour("blue");
 		HibernateUtil.currentSession().save(newModule);
 		HibernateUtil.activateObject(company);
