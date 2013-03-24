@@ -44,7 +44,7 @@
       #if($lastDigit == "1") #set($suffix = "st")
       #elseif($lastDigit == "2")  #set($suffix = "nd")
       #elseif($lastDigit == "3")  #set($suffix = "rd")
-      #else  #set($suffix = "st")
+      #else  #set($suffix = "th")
       #end
       $dayString<sup>$suffix</sup>
     </div>

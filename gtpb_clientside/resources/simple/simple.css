@@ -97,10 +97,12 @@ body {
   float: left;
   font-size: 30pt;
   line-height: 1em;
+  font-weight: 300;
 }
 
 sup {
   font-size: 50%;
+  top: -0.75em
 }
 
 .header.row.expanded {
