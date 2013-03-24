@@ -39,7 +39,8 @@
   <div class="event">
     <div class="day">
       #set($dayString = "$day")
-      #set($lastDigit = $dayString.substring($dayString.length() - 1))
+      #set($lastCharPos = $dayString.length() - 1)
+      #set($lastDigit = $dayString.substring($lastCharPos))
       <sup>
         #if(($lastDigit == "0") || ($lastDigit > "3")) th 
         #elseif($lastDigit == "1") st
