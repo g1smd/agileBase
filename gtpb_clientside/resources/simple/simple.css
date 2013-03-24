@@ -88,6 +88,10 @@ body {
   top: 0;
 }
 
+.tile.calendar .event {
+  clear: left;
+}
+
 .tile.calendar .day {
   font-size: 18pt;
   float: left;
