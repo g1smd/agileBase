@@ -191,7 +191,6 @@ function loadCalendar(calendarElement) {
     },
     minTime: 6
   });
-  )
 }
 
 function expandTile(tile) {
