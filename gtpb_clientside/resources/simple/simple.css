@@ -579,6 +579,37 @@ table.reportData td {
   font-size: 18pt;
 }
 
+.report_selection {
+  width: 100%;
+  -moz-column-count: 4;
+  -webkit-column-count: 4;
+  -ms-column-count: 4;
+  column-count: 4;
+  /* display: none; */
+  background-color: #E7F5F9;
+  padding-top: 0.3em;
+}
+
+.report_selection ul {
+  margin: 0;
+  padding: 0;
+}
+
+.report_selection h2 {
+  font-size: 11pt;
+  margin: 0px;
+}
+
+.report_selection h2 span img {
+  vertical-align: middle;
+}
+  
+.report_selection_header {
+  background-color: #E7F5F9;
+  cursor: pointer;
+  padding: 0.2em;
+}
+
 /* Side actions */
 
 .sideAction {
