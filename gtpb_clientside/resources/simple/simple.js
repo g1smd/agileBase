@@ -523,8 +523,10 @@ function backHome() {
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
 	$(".tile .tile_icon i").removeClass("notfocus");
-	$(".tile.expanded").find(".content").addClass("notfocus");
+	$(".tile.expanded").not(".calendar").find(".content").addClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
+	$("#calendar").addClass("notfocus");
+	$("#agenda").removeClass("notfocus");
 	var dataStreamTile = $(".tile.data_stream");
 	// If contains report or edit screen
 	if ((dataStreamTile.find("table.reportData").size() > 0)
