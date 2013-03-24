@@ -20,17 +20,16 @@
 #set($events = $viewTools.getNewSortedCalendarRowSet())
 #set($maxEvents = 10)
 #foreach($report in $savedReports)
-  #if($events.size() > $maxEvents) #break #end
   #if($report.getCalendarStartField())
     #set($calendarStartField = $report.getCalendarStartField())
     #set($filter = $viewTools.getReportFilterMap())
     #set($success = $filter.put($calendarStartField.getBaseField(), ">now and <7 days hence"))
+    About to get rows for $report with filter $filter<br>
     #set($reportDataRows = $view.getReportDataRows($report, 50, $filter, false))
     #foreach($reportDataRow in $reportDataRows)
       #set($rowId = $reportDataRow.getRowId())
       #set($event = $viewTools.getNewCalendarRow($report, $reportDataRow))
       #set($success = $events.add($event))
-      #if($events.size() > $maxEvents) #break #end
     #end
   #end
 #end
@@ -38,4 +37,5 @@
   <div class="event">
     $event
   </div>
+  #if($foreach.count > 20) #break #end
 #end
