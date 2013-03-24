@@ -193,7 +193,7 @@ function loadCalendar(calendarElement) {
     },
     minTime: 6
   });
-	setTimeout(function() {calendarElement.windowResize()}, 1000);
+	setTimeout(function() {$(window).resize()}, 1000);
 }
 
 function expandTile(tile) {
