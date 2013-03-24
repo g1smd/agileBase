@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -48,11 +49,16 @@ import java.math.MathContext;
 import java.nio.charset.Charset;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.gtwm.pb.model.interfaces.BaseReportInfo;
+import com.gtwm.pb.model.interfaces.CalendarRowInfo;
+import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.ViewToolsInfo;
 import com.gtwm.pb.model.interfaces.FilterTypeDescriptorInfo;
 import com.gtwm.pb.model.manageSchema.FilterTypeDescriptor;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.FilterType;
 import com.gtwm.pb.util.Enumerations.Browsers;
 import com.gtwm.pb.util.Helpers;
@@ -1540,10 +1546,6 @@ public final class ViewTools implements ViewToolsInfo {
 		return detectedVersion;
 	}
 
-	public Map<BaseField, String> getNewBaseFieldStringMap() {
-		return this.getNewFilterMap();
-	}
-
 	public SortedMap<String, Object> getNewSortedStringObjectMap() {
 		return new TreeMap<String, Object>();
 	}
@@ -1566,6 +1568,14 @@ public final class ViewTools implements ViewToolsInfo {
 
 	public Set<TableInfo> getNewTableSet() {
 		return new TreeSet<TableInfo>();
+	}
+	
+	public SortedSet<CalendarRowInfo> getNewSortedCalendarRowSet() {
+		return new TreeSet<CalendarRowInfo>();
+	}
+	
+	public CalendarRowInfo getNewCalendarRow(BaseReportInfo report, DataRowInfo reportDataRow) throws CodingErrorException, CantDoThatException {
+		return new  CalendarRow(report, reportDataRow);
 	}
 
 	public void reverseList(List list) {

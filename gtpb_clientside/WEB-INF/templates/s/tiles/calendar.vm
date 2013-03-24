@@ -1,0 +1,41 @@
+##
+##  Copyright 2013 GT webMarque Ltd
+## 
+##  This file is part of agileBase.
+##
+##  agileBase is free software: you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation, either version 3 of the License, or
+##  (at your option) any later version.
+##  agileBase is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
+##
+#set($user = $view.getLoggedInUser())
+#set($savedReports = $user.getOperationalDashboardReports())
+#set($events = $viewTools.getNewSortedCalendarRowSet())
+#set($maxEvents = 10)
+#foreach($report in $savedReports)
+  #if($events.size() > $maxEvents) #break #end
+  #if($report.getCalendarStartField())
+    #set($calendarStartField = $report.getCalendarStartField())
+    #set($filter = $viewTools.getReportFilterMap())
+    #set($success = $filter.put($calendarStartField.getBaseField(), ">now and <7 days hence"))
+    #set($reportDataRows = $view.getReportDataRows($report, 50, $filter, false))
+    #foreach($reportDataRow in $reportDataRows)
+      #set($rowId = $reportDataRow.getRowId())
+      #set($event = $viewTools.getNewCalendarRow($report, $reportDataRow))
+      #set($success = $events.add($event))
+      #if($events.size() > $maxEvents) #break #end
+    #end
+  #end
+#end
+#foreach($event in $events)
+  <div class="event">
+    $event
+  </div>
+#end

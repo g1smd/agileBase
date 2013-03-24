@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.io.File;
 import java.io.IOException;
 
@@ -30,6 +31,7 @@ import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
 import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
+import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Enumerations.Browsers;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.ObjectNotFoundException;
@@ -251,15 +253,6 @@ public interface ViewToolsInfo {
 	public String getRandomString();
 
 	/**
-	 * Return an empty map of BaseField to String objects - useful for creating
-	 * report filters in templates
-	 * 
-	 * @deprecated
-	 * @see #getNewFilterMap() Replaced by getNewFilterMap()
-	 */
-	public Map<BaseField, String> getNewBaseFieldStringMap();
-
-	/**
 	 * The map returned can be used for creating report filters in templates.
 	 * use something like:
 	 * 
@@ -281,6 +274,10 @@ public interface ViewToolsInfo {
 	public SortedMap<String, Object> getNewSortedStringObjectMap();
 
 	public SortedMap<ModuleInfo, Object> getNewSortedModuleObjectMap();
+	
+	public SortedSet<CalendarRowInfo> getNewSortedCalendarRowSet();
+	
+	public CalendarRowInfo getNewCalendarRow(BaseReportInfo report, DataRowInfo reportDataRow) throws CodingErrorException, CantDoThatException;
 
 	/**
 	 * Return an empty set of strings
