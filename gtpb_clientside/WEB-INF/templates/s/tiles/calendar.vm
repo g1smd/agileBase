@@ -36,12 +36,12 @@
 #set($DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH")) 
 #foreach($event in $events)
   #set($day = $event.getDate().get($DAY_OF_MONTH))
-  Date is $event.getDate(), day is $day, const is $DAY_OF_MONTH<br>
   <div class="event">
     <div class="day">
       #set($dayString = "$day")
       #set($lastCharPos = $dayString.length() - 1)
       #set($lastDigit = $dayString.substring($lastCharPos))
+      Last digit is $lastDigit, last char pos is $lastCharPos<br>
       $dayString
       <sup>
         #if(($lastDigit == "0") || ($lastDigit > "3")) th 
