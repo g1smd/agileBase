@@ -28,8 +28,8 @@ import org.apache.commons.lang.WordUtils;
 public class Enumerations {
 
 	public enum TileType {
-		COMMENT_STREAM("Recent comments", "Stream of comments made by everyone in the organisation", true), DATA_STREAM("Big data tile", "Show and search your most often used data", true), FOCUS("People focus", "If your data stream relates to people, show their tweets, contact info and other information", false), DATA_LINK(
-				"Little data tile", "Search and edit a set of data", false), FILES("Files", "Upload and present images and other files", false), CALENDAR("Calendar", "Show any date-related data on a calendar and integrate with other calendaring systems", false), VISUALISATION("Visualisation", "Show visualisations like charts, maps or word clouds", false), CHAT("Chat", "View and post messages to other staff members", false), CUSTOM("Custom", "A custom app", false);
+		COMMENT_STREAM("Recent comments", "Stream of comments made by everyone in the organisation", true), DATA_STREAM("Big data tile", "Show and search your most often used data", true), FOCUS("People focus", "If your data stream relates to people, show their tweets, contact info and other information", false), CALENDAR("Calendar", "Show any date-related data on a calendar and integrate with other calendaring systems", false), DATA_LINK(
+				"Little data tile", "Search and edit a set of data", false), FILES("Files", "Upload and present images and other files", false), VISUALISATION("Visualisation", "Show visualisations like charts, maps or word clouds", false), CHAT("Chat", "View and post messages to other staff members", false), CUSTOM("Custom", "A custom app", false);
 
 		private String appName;
 
