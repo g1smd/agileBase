@@ -105,7 +105,9 @@ function commonTileEvents() {
 		}
 		expandTile(tile);
 		if (tile.hasClass("calendar")) {
-			loadCalendar(tile.find(".content"));
+			$("#calendar").removeClass("notfocus");
+			$("#agenda").addClass("notfocus");
+			loadCalendar($("#calendar"));
 			tileLoaded(tile, false);
 		} else {
 			var template = "s/tiles/" + tile.attr("data-type");

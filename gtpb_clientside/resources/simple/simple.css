@@ -205,6 +205,10 @@ sup {
   color: #656766;
 }
 
+h2 {
+  font-weight: 300;
+}
+
 .foot_fade {
   /* Allow mouse clicks through */
   pointer-events: none;
@@ -532,6 +536,35 @@ table.reportData td {
   background-color: white;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
+}
+
+/* override fullcalendar */
+#calendar .fc-state-default, #calendar .fc-state-default .fc-button-inner {
+  background-color: white;
+  border-color: #E8E7E3;
+}
+
+#calendar .fc-state-active, #calendar .fc-state-active .fc-button-inner {
+  background-color: #009FE3;
+  border-color: #009FE3;
+}
+
+#calendar .fc-state-highlight {
+  background-color: #E7F5F9;
+}
+
+#calendar .fc-border-separate tr.fc-last th {
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+#calendar .fc-grid th {
+  text-align: left;
+}
+
+#calendar .fc-widget-header, #calendar .fc-widget-content {
+  border-color: #E8E7E3;
 }
 
 /* Side actions */

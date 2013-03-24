@@ -15,6 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<div id="calendar" class="notfocus"></div>
+<div id="agenda">
 #if(!$tile)
   #set($tile = $sessionData.getTile())
 #end
@@ -56,3 +58,4 @@
   </div>
   #if($foreach.count > 20) #break #end
 #end
+</div> ## end of agenda
