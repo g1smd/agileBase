@@ -27,33 +27,32 @@ function tileEvents() {
 
 function tileSuggestions() {
 	var tileCount = 0;
-	$("#tile_suggestions span").each(
-			function() {
-				var tileType = "data_link"; // The default tile type
-				if (tileCount == 0) {
-					// The most popular report will have a large tile
-					tileType = "data_stream";
-				}
-				var internalReportName = $(this).attr("data-internalreportname");
-				var internalTableName = $(this).attr("data-internaltablename");
-				var reportName = $(this).text();
-				$.ajaxq("tile_suggestions", {
-					url : "AppController.servlet",
-					type: "POST",
-					data : {
-						"return" : "blank",
-						add_tile : true,
-						colour : abTileColours[tileCount % abTileColours.length],
-						internaltablename : internalTableName,
-						internalreportname : internalReportName,
-						tiletype : tileType
-					}
-				});
-				tileCount++;
-			});
+	$("#tile_suggestions span").each(function() {
+		var tileType = "data_link"; // The default tile type
+		if (tileCount == 0) {
+			// The most popular report will have a large tile
+			tileType = "data_stream";
+		}
+		var internalReportName = $(this).attr("data-internalreportname");
+		var internalTableName = $(this).attr("data-internaltablename");
+		var reportName = $(this).text();
+		$.ajaxq("tile_suggestions", {
+			url : "AppController.servlet",
+			type : "POST",
+			data : {
+				"return" : "blank",
+				add_tile : true,
+				colour : abTileColours[tileCount % abTileColours.length],
+				internaltablename : internalTableName,
+				internalreportname : internalReportName,
+				tiletype : tileType
+			}
+		});
+		tileCount++;
+	});
 	$.ajaxq("tile_suggestions", {
 		url : "AppController.servlet",
-		type: "POST",
+		type : "POST",
 		data : {
 			"return" : "s/tiles/tiles",
 		},
@@ -105,14 +104,19 @@ function commonTileEvents() {
 			return;
 		}
 		expandTile(tile);
-		var template = "s/tiles/" + tile.attr("data-type");
-		var internalTileName = tile.attr("data-internaltilename");
-		tile.find(".content").load("AppController.servlet", {
-			"return" : template,
-			set_tile : internalTileName
-		}, function() {
+		if (tile.hasClass("calendar")) {
+			loadCalendar(tile.find(".content"));
 			tileLoaded(tile, false);
-		});
+		} else {
+			var template = "s/tiles/" + tile.attr("data-type");
+			var internalTileName = tile.attr("data-internaltilename");
+			tile.find(".content").load("AppController.servlet", {
+				"return" : template,
+				set_tile : internalTileName
+			}, function() {
+				tileLoaded(tile, false);
+			});
+		}
 		tile.find(".content").removeClass("notfocus");
 	});
 	$(".sideAction.backToView").click(function() {
@@ -138,6 +142,56 @@ function commonTileEvents() {
 			fDeleteObj("remove_record", "rowid");
 		}
 	});
+}
+
+function loadCalendar(calendarElement) {
+	calendarElement.fullCalendar({
+    header: {
+      left:   'title',
+      center: 'month,agendaWeek,agendaDay',
+      right:  'today prev,next'
+	  },
+    editable: true,
+    eventRender: function(event, jqElement, view) {
+	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
+        jqElement.height(15);
+      }
+    },
+    eventClick: function(calEvent, jsEvent, view) {
+      var eventId = calEvent.id;
+      if(fMobileDevice()) {
+      	document.location = "AppController.servlet?return=gui/mobile/calendar_wizard&set_custom_string=true&key=calendar_wizard_template&value=edit_event&set_table=" + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId;
+      } else {
+        fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok','width=90%; height=95%');
+      }
+    },
+    eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
+      var eventDate = event.start;
+      var options = {
+        'return': 'blank',
+        'update_record': 'true',
+        'set_table': event.internalTableName,
+        'set_row_id': event.rowId,
+        abCache: new Date().getTime()
+      }
+      // the new event date
+      options[event.dateFieldInternalName + '_years'] = eventDate.getFullYear();
+      options[event.dateFieldInternalName + '_months'] = eventDate.getMonth() + 1;
+      options[event.dateFieldInternalName + '_days'] = eventDate.getDate();
+      if (event.allDay) {
+        options[event.dateFieldInternalName + '_hours'] = 0;
+        options[event.dateFieldInternalName + '_minutes'] = 0;
+      } else {
+        options[event.dateFieldInternalName + '_hours'] = eventDate.getHours();
+        options[event.dateFieldInternalName + '_minutes'] = eventDate.getMinutes();
+      }
+      // TODO: visually change the event element while saving: add then remove a
+			// CSS class
+      $.post("AppController.servlet", options);
+    },
+    minTime: 6
+  });
+  )
 }
 
 function expandTile(tile) {
@@ -276,7 +330,8 @@ function tileLoaded(tile, editing) {
 									$(this).find("ul.reports").show().removeClass("notfocus");
 								});
 					}
-					if (selectedApp == "chat" || selectedApp == "comment_stream" || selectedApp == "calendar") {
+					if (selectedApp == "chat" || selectedApp == "comment_stream"
+							|| selectedApp == "calendar") {
 						// These types add a tile immediately without further configuration
 						// Choose a colour
 						backHome();
@@ -487,19 +542,25 @@ function backHome() {
 function removeTile() {
 	var internalTileName = $(".tile.expanded").attr("data-internaltilename");
 	backHome();
-	$.post("AppController.servlet", {
-		"return" : "s/tiles/tiles",
-		remove_tile : true,
-		internaltilename : internalTileName
-	}, function(data) {
-		$("#tiles").html(data);
-		if($(data).find("#added").size() > 0) {
-			$("#added h1").text("All apps removed");
-			$("#added").append("<h1><a href='AppController.servlet?return=s/agilebase'>Load most frequently used apps</a></h1>");
-		} else {
-			tileEvents();
-		}
-	});
+	$
+			.post(
+					"AppController.servlet",
+					{
+						"return" : "s/tiles/tiles",
+						remove_tile : true,
+						internaltilename : internalTileName
+					},
+					function(data) {
+						$("#tiles").html(data);
+						if ($(data).find("#added").size() > 0) {
+							$("#added h1").text("All apps removed");
+							$("#added")
+									.append(
+											"<h1><a href='AppController.servlet?return=s/agilebase'>Load most frequently used apps</a></h1>");
+						} else {
+							tileEvents();
+						}
+					});
 }
 
 function loadTreemap() {

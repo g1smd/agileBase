@@ -10,6 +10,7 @@
 [class^="icon-"], [class*=" icon-"]{
   background: none;
 }
+
 body {
   transition-duration: 1s;
   transition-property: background-color;

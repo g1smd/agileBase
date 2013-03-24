@@ -16,6 +16,8 @@ cat /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.cs
 cat /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.css /var/lib/tomcat7/webapps/agileBase/styles/report.css /var/lib/tomcat7/webapps/agileBase/resources/tabs/tabs.css /var/lib/tomcat7/webapps/agileBase/resources/jquery.autocomplete.css /var/lib/tomcat7/webapps/agileBase/resources/datePicker.css /var/lib/tomcat7/webapps/agileBase/resources/jquery.tweet.css /var/lib/tomcat7/webapps/agileBase/resources/button/button.css > /var/lib/tomcat7/webapps/agileBase/resources/pane3_amalgam.css
 # display application
 cat /var/lib/tomcat7/webapps/agileBase/resources/module-colours.css /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.css /var/lib/tomcat7/webapps/agileBase/resources/display_application.css /var/lib/tomcat7/webapps/agileBase/resources/button/button.css /var/lib/tomcat7/webapps/agileBase/resources/preview/edit_nav.css > /var/lib/tomcat7/webapps/agileBase/resources/display_application_amalgam.css
+# tiles
+cat /var/lib/tomcat7/webapps/agileBase/resources/bootstrap/css/bootstrap.css /var/lib/tomcat7/webapps/agileBase/resources/bootstrap/css/bootstrap-responsive.css /var/lib/tomcat7/webapps/agileBase/resources/fontawesome/css/font-awesome.css /var/lib/tomcat7/webapps/agileBase/resources/pane2_amalgam.css /var/lib/tomcat7/webapps/agileBase/resources/pane3_amalgam.css /var/lib/tomcat7/webapps/agileBase/resources/simple/simple.css > /var/lib/tomcat7/webapps/agileBase/resources/simple_amalgam.css
 # JS
 # pane 1
 cat /var/lib/tomcat7/webapps/agileBase/resources/tree/tree.js /var/lib/tomcat7/webapps/agileBase/resources/mobile/module_actions.js > /var/lib/tomcat7/webapps/agileBase/resources/mobile/pane1_amalgam.js
