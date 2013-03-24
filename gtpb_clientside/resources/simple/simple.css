@@ -566,6 +566,7 @@ table.reportData td {
 
 #calendar .fc-grid th {
   text-align: left;
+  font-weight: normal;
 }
 
 #calendar .fc-widget-header, #calendar .fc-widget-content {
