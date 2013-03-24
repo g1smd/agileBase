@@ -47,11 +47,13 @@ public class CalendarRow implements CalendarRowInfo {
 			try {
 				dateFormat = Helpers.generateJavaDateFormat(Calendar.DAY_OF_MONTH);
 			} catch (CantDoThatException cdtex) {
-				logger.debug("Error formatting date " + this.date + ": " + cdtex);
+				logger.debug("Error generating date format: " + cdtex);
 				return null;
 			}
-			SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
-			return dateFormatter.format(this.date);
+			logger.debug("Date format for " + Calendar.DAY_OF_MONTH + " is " + dateFormat);
+			return String.format(dateFormat, this.getDate());
+			//SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
+			//return dateFormatter.format(this.date);
 	}
 	
 	/**
