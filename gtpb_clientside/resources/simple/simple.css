@@ -539,6 +539,11 @@ table.reportData td {
 }
 
 /* override fullcalendar */
+
+#calendar {
+  background-color: rgba(255,255,255, 0.5);  
+}
+
 #calendar .fc-state-default, #calendar .fc-state-default .fc-button-inner {
   background-color: white;
   border-color: #E8E7E3;
@@ -565,6 +570,10 @@ table.reportData td {
 
 #calendar .fc-widget-header, #calendar .fc-widget-content {
   border-color: #E8E7E3;
+}
+
+#calendar h2 {
+  background-color: transparent;
 }
 
 /* Side actions */

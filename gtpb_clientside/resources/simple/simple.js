@@ -193,7 +193,8 @@ function loadCalendar(calendarElement) {
     },
     minTime: 6
   });
-	setTimeout(function() {$(window).resize()}, 1000);
+	// Re-render calendar once expand animation has completed
+	setTimeout(function() {$(window).resize()}, 500);
 }
 
 function expandTile(tile) {
