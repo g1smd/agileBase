@@ -276,7 +276,7 @@ function tileLoaded(tile, editing) {
 									$(this).find("ul.reports").show().removeClass("notfocus");
 								});
 					}
-					if (selectedApp == "chat" || selectedApp == "comment_stream") {
+					if (selectedApp == "chat" || selectedApp == "comment_stream" || selectedApp == "calendar") {
 						// These types add a tile immediately without further configuration
 						// Choose a colour
 						backHome();
