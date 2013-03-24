@@ -546,16 +546,16 @@ table.reportData td {
 
 #calendar .fc-state-default, #calendar .fc-state-default .fc-button-inner {
   background-color: white;
-  border-color: #E8E7E3;
+  border-color: white;
 }
 
 #calendar .fc-state-active, #calendar .fc-state-active .fc-button-inner {
-  background-color: #009FE3;
-  border-color: #009FE3;
+  background-color: transparent;
+  border-color: white;
 }
 
 #calendar .fc-state-highlight {
-  background-color: #E7F5F9;
+  background-color: white;
 }
 
 #calendar .fc-border-separate tr.fc-last th {
@@ -569,7 +569,7 @@ table.reportData td {
 }
 
 #calendar .fc-widget-header, #calendar .fc-widget-content {
-  border-color: #E8E7E3;
+  border-color: white;
 }
 
 #calendar h2 {
