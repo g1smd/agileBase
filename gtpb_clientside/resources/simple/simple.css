@@ -91,6 +91,8 @@ body {
 .tile.calendar .event {
   clear: left;
   margin-bottom: 1em;
+  height: 4.5em;
+  overflow: hidden;
 }
 
 .tile.calendar .day {
