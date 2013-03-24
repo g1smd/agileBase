@@ -90,6 +90,7 @@ body {
 
 .tile.calendar .event {
   clear: left;
+  margin-bottom: 0.5em;
 }
 
 .tile.calendar .day {
@@ -100,6 +101,8 @@ body {
   font-weight: 300;
   background-color: white;
   border-radius: 0.25em;
+  padding: 0.1em;
+  margin-right: 0.25em;
 }
 
 sup {
