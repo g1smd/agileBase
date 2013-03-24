@@ -98,6 +98,8 @@ body {
   font-size: 30pt;
   line-height: 1em;
   font-weight: 300;
+  background-color: white;
+  border-radius: 0.5em;
 }
 
 sup {

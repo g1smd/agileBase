@@ -34,10 +34,11 @@
   #end
 #end
 #set($DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH")) 
+#set($colour = $tile.getColour())
 #foreach($event in $events)
   #set($day = $event.getDate().get($DAY_OF_MONTH))
   <div class="event">
-    <div class="day">
+    <div class="day $colour">
       #set($dayString = "$day")
       #set($lastCharPos = $dayString.length() - 1)
       #set($lastDigit = $dayString.substring($lastCharPos))
