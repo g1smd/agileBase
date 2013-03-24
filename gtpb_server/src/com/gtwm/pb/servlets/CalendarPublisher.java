@@ -229,7 +229,7 @@ public final class CalendarPublisher extends HttpServlet {
 			java.util.Calendar eventCalendar = java.util.Calendar.getInstance();
 			TimeZone timeZone = java.util.Calendar.getInstance().getTimeZone();
 			for (DataRowInfo reportDataRow : reportDataRows) {
-				String eventTitle = Helpers.buildEventTitle(report, reportDataRow, false);
+				String eventTitle = Helpers.buildEventTitle(report, reportDataRow, false, true);
 				DataRowFieldInfo eventStartInfo = reportDataRow.getValue(eventStartField);
 				long eventEpochTime = Long.valueOf(eventStartInfo.getKeyValue());
 				eventCalendar.setTimeInMillis(eventEpochTime);

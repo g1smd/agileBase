@@ -289,7 +289,7 @@ public final class DataManagement implements DataManagementInfo {
 			return;
 		}
 		DataRowInfo row = rows.get(0);
-		body += "'" + Helpers.buildEventTitle(report, row, true) + "'\n";
+		body += "'" + Helpers.buildEventTitle(report, row, true, true) + "'\n";
 		try {
 			String subject = "Comment for " + table.getSingularName();
 			boolean rowIdentifierFound = false;
@@ -2062,7 +2062,7 @@ public final class DataManagement implements DataManagementInfo {
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			eventWriter.add(eventFactory.createStartElement("", "", "item"));
 			eventWriter.add(end);
-			this.createNode(eventWriter, "title", Helpers.buildEventTitle(report, reportDataRow, false));
+			this.createNode(eventWriter, "title", Helpers.buildEventTitle(report, reportDataRow, false, true));
 			this.createNode(eventWriter, "description", reportDataRow.toString());
 			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
 			this.createNode(eventWriter, "link", rowLink);
@@ -2125,7 +2125,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeStringField("postcode", postcodeDataRowField.getKeyValue());
 				jg.writeNumberField("latitude", postcodeDataRowField.getLatitude());
 				jg.writeNumberField("longitude", postcodeDataRowField.getLongitude());
-				jg.writeStringField("title", Helpers.buildEventTitle(report, reportDataRow, true));
+				jg.writeStringField("title", Helpers.buildEventTitle(report, reportDataRow, true, true));
 				if (colourField != null) {
 					String colourValue = reportDataRow.getValue(colourField).getKeyValue();
 					jg.writeStringField("colourValue", colourValue);
@@ -2258,14 +2258,14 @@ public final class DataManagement implements DataManagementInfo {
 					// Date(eventDateEpoch));
 					jg.writeStringField("start", "new Date(" + eventDateEpoch + ")");
 					String eventTitle = eventDateValue.getDisplayValue() + ": "
-							+ Helpers.buildEventTitle(report, reportDataRow, false);
+							+ Helpers.buildEventTitle(report, reportDataRow, false, true);
 					jg.writeStringField("caption", eventTitle);
 					jg.writeStringField("description", eventTitle);
 					// TODO: build short title from long title, don't rebuild
 					// from
 					// scratch. Just cut off everything after the 5th comma for
 					// example
-					String shortTitle = Helpers.buildEventTitle(report, reportDataRow, true);
+					String shortTitle = Helpers.buildEventTitle(report, reportDataRow, true, true);
 					jg.writeStringField("classname", className);
 					jg.writeEndObject();
 				}
@@ -2409,7 +2409,7 @@ public final class DataManagement implements DataManagementInfo {
 				// TODO: check if classname is used in UI, remove if not
 				jg.writeStringField("classname", "report_" + internalReportName);
 				jg.writeStringField("dateFieldInternalName", dateFieldInternalName);
-				String eventTitle = Helpers.buildEventTitle(report, reportDataRow, false);
+				String eventTitle = Helpers.buildEventTitle(report, reportDataRow, false, true);
 				jg.writeStringField("title", eventTitle);
 				jg.writeEndObject();
 			}

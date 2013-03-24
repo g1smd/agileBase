@@ -80,7 +80,7 @@ public final class Helpers {
 		Transport.send(message);
 		logger.info("Sent message '" + subject + "' to " + recipients);
 	}
-	
+
 	public static String getAppUrl(HttpServletRequest request) {
 		String appUrl = "";
 		if (request.isSecure()) {
@@ -97,7 +97,7 @@ public final class Helpers {
 		appUrl += request.getContextPath() + request.getServletPath();
 		return appUrl;
 	}
-	
+
 	public static String readFile(String fileName) throws IOException {
 		StringBuilder fileContents = new StringBuilder("");
 		FileReader fileReader = new FileReader(fileName);
@@ -125,9 +125,9 @@ public final class Helpers {
 
 	/**
 	 * Perform a liberal check of boolean representation. Any string that starts
-	 * with 't', 'y' or '1', case-insensitively, will return true - anything
-	 * else, false, including null. Compared to Boolean.valueOf(),
-	 * it is less stringent and will never throw an Exception
+	 * with 't', 'y' or '1', case-insensitively, will return true - anything else,
+	 * false, including null. Compared to Boolean.valueOf(), it is less stringent
+	 * and will never throw an Exception
 	 */
 	public static boolean valueRepresentsBooleanTrue(String value) {
 		if (value == null) {
@@ -147,7 +147,7 @@ public final class Helpers {
 		}
 		String extension = fileName.replaceAll("^.*\\.", "").toLowerCase().trim();
 		if (extension.equals("jpg") || extension.equals("png") || extension.equals("gif")
-				|| extension.equals("jpeg")	|| extension.equals("tif")	|| extension.equals("tiff")) {
+				|| extension.equals("jpeg") || extension.equals("tif") || extension.equals("tiff")) {
 			return true;
 		}
 		return false;
@@ -155,11 +155,11 @@ public final class Helpers {
 
 	/**
 	 * Given a date resolution that is a Calendar value, e.g. Calendar.MONTH,
-	 * return a string that can be used by Java's String.format() method to
-	 * format a date value
+	 * return a string that can be used by Java's String.format() method to format
+	 * a date value
 	 * 
 	 * @throws CantDoThatException
-	 *             if the dateResolution isn't a valid Calendar value
+	 *           if the dateResolution isn't a valid Calendar value
 	 * @see String#format(java.lang.String, java.lang.Object[])
 	 * @see java.util.Calendar
 	 */
@@ -178,8 +178,7 @@ public final class Helpers {
 		case Calendar.SECOND:
 			return "%1$td %1$tb %1$tY %1$tH:%1$tM:%1$tS";
 		default:
-			throw new CantDoThatException("Unable to use unrecognised date resolution: "
-					+ dateResolution);
+			throw new CantDoThatException("Unable to use unrecognised date resolution: " + dateResolution);
 		}
 	}
 
@@ -205,7 +204,7 @@ public final class Helpers {
 	 * NB this method is database specific
 	 * 
 	 * @throws CantDoThatException
-	 *             if the dateResolution isn't a valid Calendar value
+	 *           if the dateResolution isn't a valid Calendar value
 	 * @see java.util.Calendar
 	 */
 	public static String generateDbDateFormat(int dateResolution) throws CantDoThatException {
@@ -223,20 +222,19 @@ public final class Helpers {
 		case Calendar.SECOND:
 			return "DD Mon YYYY HH24:MI:SS";
 		default:
-			throw new CantDoThatException("Unable to use unrecognised date resolution: "
-					+ dateResolution);
+			throw new CantDoThatException("Unable to use unrecognised date resolution: " + dateResolution);
 		}
 	}
 
 	/**
-	 * Given a Integer/String map, return the integer key for a given value,
-	 * i.e. invert the key/value mapping
+	 * Given a Integer/String map, return the integer key for a given value, i.e.
+	 * invert the key/value mapping
 	 * 
 	 * @param requireExactMatch
-	 *            Require that the exact value is found. If false and there's no
-	 *            exact match, try to find a close match, e.g. a substring match
+	 *          Require that the exact value is found. If false and there's no
+	 *          exact match, try to find a close match, e.g. a substring match
 	 * @throws CantDoThatException
-	 *             If the value occurs more than once in the map, or not at all
+	 *           If the value occurs more than once in the map, or not at all
 	 */
 	public static Integer getKeyForValue(Map<Integer, String> map, String value,
 			boolean requireExactMatch) throws CantDoThatException {
@@ -245,8 +243,8 @@ public final class Helpers {
 		Collection<String> mapValues = map.values();
 		int numOccurences = Collections.frequency(mapValues, value);
 		if (numOccurences > 1) {
-			throw new CantDoThatException("To look up the relation there should be only one '"
-					+ value + "' but there are actually " + numOccurences);
+			throw new CantDoThatException("To look up the relation there should be only one '" + value
+					+ "' but there are actually " + numOccurences);
 		} else if ((numOccurences == 0) && requireExactMatch) {
 			throw new CantDoThatException("No '" + value + "' items were found");
 		}
@@ -298,10 +296,13 @@ public final class Helpers {
 		// remove the last space(s)
 		return rinsedStringBuilder.toString().trim();
 	}
-	
+
 	/**
 	 * Replace all non-word characters apart from the allowed characters
-	 * @param escapedAllowedCharacters Special characters must be double escaped. E.g. to allow slashes, pass in "\\/"
+	 * 
+	 * @param escapedAllowedCharacters
+	 *          Special characters must be double escaped. E.g. to allow slashes,
+	 *          pass in "\\/"
 	 */
 	public static String rinseString(String stringToRinse, String escapedAllowedChars) {
 		if (stringToRinse == null) {
@@ -311,9 +312,9 @@ public final class Helpers {
 	}
 
 	/**
-	 * Parameterization should be and is used for protection against SQL
-	 * injection attacks where possible. This method is a fallback which can be
-	 * used when it isn't possible to use prepared statements with parameters.
+	 * Parameterization should be and is used for protection against SQL injection
+	 * attacks where possible. This method is a fallback which can be used when it
+	 * isn't possible to use prepared statements with parameters.
 	 * 
 	 * Downsides are a) protection may not be 100% b) legitimate input may be
 	 * replaced
@@ -321,7 +322,7 @@ public final class Helpers {
 	 * PostgreSQL specific.
 	 * 
 	 * @throws CantDoThatException
-	 *             if the input string contains stuff which shouldn't be there
+	 *           if the input string contains stuff which shouldn't be there
 	 */
 	public static void checkForSQLInjection(String stringToProtect) throws CantDoThatException {
 		String cleanedString = stringToProtect;
@@ -364,8 +365,8 @@ public final class Helpers {
 	 * Useful when generating error messages
 	 * 
 	 * @param report
-	 *            Internal names of all objects in this report or related to it
-	 *            will be found and replaced
+	 *          Internal names of all objects in this report or related to it will
+	 *          be found and replaced
 	 */
 	public static String replaceInternalNames(String inputString, SimpleReportInfo report)
 			throws CodingErrorException {
@@ -375,8 +376,7 @@ public final class Helpers {
 			String internalTableName = table.getInternalTableName();
 			resultString = resultString.replaceAll(internalTableName, table.toString());
 			for (BaseField field : table.getFields()) {
-				resultString = resultString.replaceAll(field.getInternalFieldName(),
-						field.toString());
+				resultString = resultString.replaceAll(field.getInternalFieldName(), field.toString());
 			}
 			for (BaseReportInfo tableReport : table.getReports()) {
 				resultString = resultString.replaceAll(tableReport.getInternalReportName(),
@@ -416,7 +416,7 @@ public final class Helpers {
 	 *          If true, return only the first part of the title
 	 */
 	public static String buildEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
-			boolean shortTitle) {
+			boolean shortTitle, boolean includeNumbers) {
 		// ignore any date fields other than the one used for specifying
 		// the event date
 		// ignore any blank fields
@@ -427,14 +427,12 @@ public final class Helpers {
 			BaseField baseField = reportField.getBaseField();
 			DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
 			String displayValue = dataRowField.getDisplayValue();
-			if (displayValue.equals("")) {
-				continue REPORT_FIELD_LOOP;
-			}
-			if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
+			DatabaseFieldType dbType = baseField.getDbType();
+			if (displayValue.equals("") || dbType.equals(DatabaseFieldType.TIMESTAMP)
 					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {
 				continue REPORT_FIELD_LOOP;
 			}
-			switch (baseField.getDbType()) {
+			switch (dbType) {
 			case BOOLEAN:
 				boolean reportFieldTrue = valueRepresentsBooleanTrue(dataRowField.getKeyValue());
 				if (reportFieldTrue) {
@@ -444,14 +442,18 @@ public final class Helpers {
 				break;
 			case INTEGER:
 			case FLOAT:
-				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(displayValue + ", ");
-				fieldCount++;
+				if (includeNumbers) {
+					eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+							.append(displayValue + ", ");
+					fieldCount++;
+				}
 				break;
 			case SERIAL:
-				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(dataRowField.getKeyValue() + ", ");
-				fieldCount++;
+				if (includeNumbers) {
+					eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+							.append(dataRowField.getKeyValue() + ", ");
+					fieldCount++;
+				}
 				break;
 			default:
 				eventTitleBuilder.append(displayValue + ", ");
@@ -468,7 +470,7 @@ public final class Helpers {
 		String eventTitle = eventTitleBuilder.toString();
 		return eventTitle;
 	}
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(Helpers.class);
 
 }

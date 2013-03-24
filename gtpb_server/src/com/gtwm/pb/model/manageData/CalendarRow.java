@@ -40,7 +40,7 @@ public class CalendarRow implements CalendarRowInfo {
 	}
 	
 	public String getTitle() {
-		return Helpers.buildEventTitle(this.getReport(), this.getDataRow(), true);
+		return Helpers.buildEventTitle(this.getReport(), this.getDataRow(), true, false);
 	}
 	
 	public String toString() {
