@@ -95,6 +95,11 @@ body {
 .tile.calendar .day {
   font-size: 18pt;
   float: left;
+  font-size: 30pt;
+}
+
+sup {
+  font-size: 50%;
 }
 
 .header.row.expanded {
