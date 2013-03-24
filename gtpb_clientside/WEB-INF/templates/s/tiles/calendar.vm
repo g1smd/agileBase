@@ -33,9 +33,21 @@
     #end
   #end
 #end
+#set($DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH")) 
 #foreach($event in $events)
+  #set($day = $event.getDate().get($DAY_OF_MONTH))
   <div class="event">
-    $event
+    <div class="day">
+      #set($dayString = "$day")
+      #set($lastDigit = $dayString.substring($dayString.length() - 1))
+      <sup>
+        #if(($lastDigit == "0") || ($lastDigit > "3")) th 
+        #elseif($lastDigit == "1") st
+        #elseif($lastDigit == "2") nd
+        #elseif($lastDigit == "3") rd          
+        #end
+      </sup>
+    </div>
   </div>
   #if($foreach.count > 20) #break #end
 #end

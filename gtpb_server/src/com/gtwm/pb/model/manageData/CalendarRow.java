@@ -1,10 +1,7 @@
 package com.gtwm.pb.model.manageData;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import org.grlea.log.SimpleLogger;
-
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.CalendarRowInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
