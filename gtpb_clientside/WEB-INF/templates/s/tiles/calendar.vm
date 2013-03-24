@@ -38,7 +38,7 @@
 #foreach($event in $events)
   #set($day = $event.getDate().get($DAY_OF_MONTH))
   <div class="event">
-    <div class="day $colour">
+    <div class="day ${colour}_fg">
       #set($dayString = "$day")
       #set($lastCharPos = $dayString.length() - 1)
       #set($lastDigit = $dayString.substring($lastCharPos))
