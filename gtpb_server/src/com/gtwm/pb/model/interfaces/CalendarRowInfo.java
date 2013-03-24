@@ -16,4 +16,9 @@ public interface CalendarRowInfo extends Comparable<CalendarRowInfo> {
 	 */
 	public DataRowInfo getDataRow();
 	
+	/**
+	 * Build and return a title for the event, taking data from the report data row
+	 */
+	public String getTitle();
+	
 }

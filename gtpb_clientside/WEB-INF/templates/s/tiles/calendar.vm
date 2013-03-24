@@ -48,6 +48,7 @@
       #end
       $dayString<sup>$suffix</sup>
     </div>
+    $event.getTitle()
   </div>
   #if($foreach.count > 20) #break #end
 #end

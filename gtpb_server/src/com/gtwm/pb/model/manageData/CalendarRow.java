@@ -39,6 +39,10 @@ public class CalendarRow implements CalendarRowInfo {
 		return this.reportDataRow;
 	}
 	
+	public String getTitle() {
+		return Helpers.buildEventTitle(this.getReport(), this.getDataRow(), true);
+	}
+	
 	public String toString() {
 			String dateFormat;
 			try {

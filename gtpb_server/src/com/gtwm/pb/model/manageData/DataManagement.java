@@ -289,7 +289,7 @@ public final class DataManagement implements DataManagementInfo {
 			return;
 		}
 		DataRowInfo row = rows.get(0);
-		body += "'" + buildEventTitle(report, row, true) + "'\n";
+		body += "'" + Helpers.buildEventTitle(report, row, true) + "'\n";
 		try {
 			String subject = "Comment for " + table.getSingularName();
 			boolean rowIdentifierFound = false;
@@ -2062,7 +2062,7 @@ public final class DataManagement implements DataManagementInfo {
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			eventWriter.add(eventFactory.createStartElement("", "", "item"));
 			eventWriter.add(end);
-			this.createNode(eventWriter, "title", buildEventTitle(report, reportDataRow, false));
+			this.createNode(eventWriter, "title", Helpers.buildEventTitle(report, reportDataRow, false));
 			this.createNode(eventWriter, "description", reportDataRow.toString());
 			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
 			this.createNode(eventWriter, "link", rowLink);
@@ -2125,7 +2125,7 @@ public final class DataManagement implements DataManagementInfo {
 				jg.writeStringField("postcode", postcodeDataRowField.getKeyValue());
 				jg.writeNumberField("latitude", postcodeDataRowField.getLatitude());
 				jg.writeNumberField("longitude", postcodeDataRowField.getLongitude());
-				jg.writeStringField("title", buildEventTitle(report, reportDataRow, true));
+				jg.writeStringField("title", Helpers.buildEventTitle(report, reportDataRow, true));
 				if (colourField != null) {
 					String colourValue = reportDataRow.getValue(colourField).getKeyValue();
 					jg.writeStringField("colourValue", colourValue);
@@ -2258,14 +2258,14 @@ public final class DataManagement implements DataManagementInfo {
 					// Date(eventDateEpoch));
 					jg.writeStringField("start", "new Date(" + eventDateEpoch + ")");
 					String eventTitle = eventDateValue.getDisplayValue() + ": "
-							+ buildEventTitle(report, reportDataRow, false);
+							+ Helpers.buildEventTitle(report, reportDataRow, false);
 					jg.writeStringField("caption", eventTitle);
 					jg.writeStringField("description", eventTitle);
 					// TODO: build short title from long title, don't rebuild
 					// from
 					// scratch. Just cut off everything after the 5th comma for
 					// example
-					String shortTitle = buildEventTitle(report, reportDataRow, true);
+					String shortTitle = Helpers.buildEventTitle(report, reportDataRow, true);
 					jg.writeStringField("classname", className);
 					jg.writeEndObject();
 				}
@@ -2409,7 +2409,7 @@ public final class DataManagement implements DataManagementInfo {
 				// TODO: check if classname is used in UI, remove if not
 				jg.writeStringField("classname", "report_" + internalReportName);
 				jg.writeStringField("dateFieldInternalName", dateFieldInternalName);
-				String eventTitle = buildEventTitle(report, reportDataRow, false);
+				String eventTitle = Helpers.buildEventTitle(report, reportDataRow, false);
 				jg.writeStringField("title", eventTitle);
 				jg.writeEndObject();
 			}
@@ -2432,66 +2432,6 @@ public final class DataManagement implements DataManagementInfo {
 			this.calendarJsonCacheMisses.set(0);
 		}
 		return json;
-	}
-
-	/**
-	 * TODO: perhaps move this static method to a more appropriate class
-	 * 
-	 * @param shortTitle
-	 *          If true, return only the first part of the title
-	 */
-	public static String buildEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
-			boolean shortTitle) {
-		// ignore any date fields other than the one used for specifying
-		// the event date
-		// ignore any blank fields
-		// for numeric and boolean fields, include the field title
-		StringBuilder eventTitleBuilder = new StringBuilder();
-		int fieldCount = 0;
-		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
-			BaseField baseField = reportField.getBaseField();
-			DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
-			String displayValue = dataRowField.getDisplayValue();
-			if (displayValue.equals("")) {
-				continue REPORT_FIELD_LOOP;
-			}
-			if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
-					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {
-				continue REPORT_FIELD_LOOP;
-			}
-			switch (baseField.getDbType()) {
-			case BOOLEAN:
-				boolean reportFieldTrue = Helpers.valueRepresentsBooleanTrue(dataRowField.getKeyValue());
-				if (reportFieldTrue) {
-					eventTitleBuilder.append(reportField.getFieldName() + ", ");
-					fieldCount++;
-				}
-				break;
-			case INTEGER:
-			case FLOAT:
-				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(displayValue + ", ");
-				fieldCount++;
-				break;
-			case SERIAL:
-				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
-						.append(dataRowField.getKeyValue() + ", ");
-				fieldCount++;
-				break;
-			default:
-				eventTitleBuilder.append(displayValue + ", ");
-				fieldCount++;
-			}
-			if (shortTitle && (fieldCount > 3)) {
-				break REPORT_FIELD_LOOP;
-			}
-		}
-		int titleLength = eventTitleBuilder.length();
-		if (titleLength > 1) {
-			eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
-		}
-		String eventTitle = eventTitleBuilder.toString();
-		return eventTitle;
 	}
 
 	public List<DataRowInfo> getReportDataRows(AppUserInfo user, BaseReportInfo reportDefn,

@@ -48,11 +48,11 @@ import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.DateField;
-import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.util.AgileBaseException;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
+import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.util.Enumerations.QuickFilterType;
@@ -229,7 +229,7 @@ public final class CalendarPublisher extends HttpServlet {
 			java.util.Calendar eventCalendar = java.util.Calendar.getInstance();
 			TimeZone timeZone = java.util.Calendar.getInstance().getTimeZone();
 			for (DataRowInfo reportDataRow : reportDataRows) {
-				String eventTitle = DataManagement.buildEventTitle(report, reportDataRow, false);
+				String eventTitle = Helpers.buildEventTitle(report, reportDataRow, false);
 				DataRowFieldInfo eventStartInfo = reportDataRow.getValue(eventStartField);
 				long eventEpochTime = Long.valueOf(eventStartInfo.getKeyValue());
 				eventCalendar.setTimeInMillis(eventEpochTime);

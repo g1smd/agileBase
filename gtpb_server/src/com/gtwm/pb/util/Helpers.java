@@ -45,9 +45,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
+import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
+import com.gtwm.pb.model.interfaces.DataRowInfo;
+import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
 /**
  * Methods that are sometimes useful but aren't provided by the Java language
@@ -407,5 +411,64 @@ public final class Helpers {
 		return replaced;
 	}
 
+	/**
+	 * @param shortTitle
+	 *          If true, return only the first part of the title
+	 */
+	public static String buildEventTitle(BaseReportInfo report, DataRowInfo reportDataRow,
+			boolean shortTitle) {
+		// ignore any date fields other than the one used for specifying
+		// the event date
+		// ignore any blank fields
+		// for numeric and boolean fields, include the field title
+		StringBuilder eventTitleBuilder = new StringBuilder();
+		int fieldCount = 0;
+		REPORT_FIELD_LOOP: for (ReportFieldInfo reportField : report.getReportFields()) {
+			BaseField baseField = reportField.getBaseField();
+			DataRowFieldInfo dataRowField = reportDataRow.getValue(baseField);
+			String displayValue = dataRowField.getDisplayValue();
+			if (displayValue.equals("")) {
+				continue REPORT_FIELD_LOOP;
+			}
+			if (baseField.getDbType().equals(DatabaseFieldType.TIMESTAMP)
+					|| baseField.equals(baseField.getTableContainingField().getPrimaryKey())) {
+				continue REPORT_FIELD_LOOP;
+			}
+			switch (baseField.getDbType()) {
+			case BOOLEAN:
+				boolean reportFieldTrue = valueRepresentsBooleanTrue(dataRowField.getKeyValue());
+				if (reportFieldTrue) {
+					eventTitleBuilder.append(reportField.getFieldName() + ", ");
+					fieldCount++;
+				}
+				break;
+			case INTEGER:
+			case FLOAT:
+				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+						.append(displayValue + ", ");
+				fieldCount++;
+				break;
+			case SERIAL:
+				eventTitleBuilder.append(reportField.getFieldName()).append(" = ")
+						.append(dataRowField.getKeyValue() + ", ");
+				fieldCount++;
+				break;
+			default:
+				eventTitleBuilder.append(displayValue + ", ");
+				fieldCount++;
+			}
+			if (shortTitle && (fieldCount > 3)) {
+				break REPORT_FIELD_LOOP;
+			}
+		}
+		int titleLength = eventTitleBuilder.length();
+		if (titleLength > 1) {
+			eventTitleBuilder.delete(eventTitleBuilder.length() - 2, eventTitleBuilder.length());
+		}
+		String eventTitle = eventTitleBuilder.toString();
+		return eventTitle;
+	}
+	
 	private static final SimpleLogger logger = new SimpleLogger(Helpers.class);
+
 }
