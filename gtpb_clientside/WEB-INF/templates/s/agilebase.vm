@@ -20,25 +20,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+  #set($hasCalendar = false)
+  #foreach($tile in $tiles)
+    #if($tile.getTileType() == "CALENDAR")
+      #set($hasCalendar = true)
+      #break
+    #end
+  #end
 	<link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
   <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
   <link href="resources/simple/simple_amalgam.css" type="text/css" rel="stylesheet" />
+  #if($hasCalendar)
+    <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />    
+  #end
 	<title>Agilebase</title>
 	<script src="resources/jquery.js" language="JavaScript"></script>
   <script language="JavaScript" src="resources/jquery.scrollTo.js"></script>
   <script language="JavaScript" src="resources/simple/simple.js"></script>
   <script language="JavaScript" src="resources/pane2_amalgam.js"></script>
   <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
-  #foreach($tile in $tiles)
-    #if($tile.getTileType() == "CALENDAR")
-      <script language="JavaScript" src="resources/fullcalendar/fullcalendar.js"></script>
-      #break
-    #end
-  #end
   #if($tiles.size() == 0)
     ## Used for tile auto-add
     <script language="JavaScript" src="resources/jquery.ajaxq.js"></script>
+  #end
+  #if($hasCalendar)
+    <script language="JavaScript" src="resources/fullcalendar/fullcalendar.js"></script>
   #end
 </head>
 <body>
