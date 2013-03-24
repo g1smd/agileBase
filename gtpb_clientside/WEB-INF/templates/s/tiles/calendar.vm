@@ -41,13 +41,12 @@
       #set($dayString = "$day")
       #set($lastCharPos = $dayString.length() - 1)
       #set($lastDigit = $dayString.substring($lastCharPos))
-      Last digit is $lastDigit, last char pos is $lastCharPos<br>
       $dayString
       <sup>
-        #if(($lastDigit == "0") || ($lastDigit > "3")) th 
-        #elseif($lastDigit == "1") st
+        #if($lastDigit == "1") st
         #elseif($lastDigit == "2") nd
         #elseif($lastDigit == "3") rd          
+        #else th
         #end
       </sup>
     </div>
