@@ -29,7 +29,7 @@
   #end
 	<link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-  <link href="resources/simple/simple_amalgam.css" type="text/css" rel="stylesheet" />
+  <link href="resources/simple_amalgam.css" type="text/css" rel="stylesheet" />
   <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
   #if($hasCalendar)
     <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />    
