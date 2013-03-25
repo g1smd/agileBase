@@ -108,7 +108,10 @@ function commonTileEvents() {
 			$("#calendar").removeClass("notfocus");
 			$("#agenda").addClass("notfocus");
 			$("#report_selection_header").removeClass("notfocus");
-			$("#report_selection").removeClass("notfocus");
+			#if($("#report_selection input:checked").size() == 0) {
+				// Show calendar report chooser if no reports chosen
+			  $("#report_selection").removeClass("notfocus");
+			}
 			loadCalendar($("#calendar"));
 			tileLoaded(tile, false);
 		} else {
