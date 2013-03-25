@@ -616,6 +616,10 @@ table.reportData td {
   padding: 0.2em;
 }
 
+.legend_report {
+  padding: 0.5em;
+}
+
 /* Side actions */
 
 .sideAction {
