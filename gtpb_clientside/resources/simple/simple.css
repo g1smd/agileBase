@@ -586,13 +586,13 @@ table.reportData td {
   -ms-column-count: 4;
   column-count: 4;
   /* display: none; */
-  background-color: #E7F5F9;
   padding-top: 0.3em;
 }
 
-.report_selection ul {
+#report_selection ul {
   margin: 0;
   padding: 0;
+  background-color: transparent;
 }
 
 .report_selection h2 {
