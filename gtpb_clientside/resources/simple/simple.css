@@ -593,7 +593,6 @@ table.reportData td {
   -webkit-column-count: 4;
   -ms-column-count: 4;
   column-count: 4;
-  /* display: none; */
   padding-top: 0.3em;
 }
 
@@ -615,7 +614,6 @@ table.reportData td {
 .report_selection_header {
   cursor: pointer;
   padding: 0.2em;
-  display: none;
 }
 
 /* Side actions */
