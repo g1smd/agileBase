@@ -615,6 +615,7 @@ table.reportData td {
 .report_selection_header {
   cursor: pointer;
   padding: 0.2em;
+  display: none;
 }
 
 /* Side actions */
