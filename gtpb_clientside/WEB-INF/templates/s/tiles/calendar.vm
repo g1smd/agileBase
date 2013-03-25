@@ -16,8 +16,8 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #parse("gui/calendar/calendar_selection.vm")
-<div id="calendar" class="notfocus"></div>
-<div id="agenda">
+<div id="calendar" class="transition notfocus"></div>
+<div id="agenda" class="transition">
 #if(!$tile)
   #set($tile = $sessionData.getTile())
 #end

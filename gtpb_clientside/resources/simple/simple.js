@@ -107,6 +107,8 @@ function commonTileEvents() {
 		if (tile.hasClass("calendar")) {
 			$("#calendar").removeClass("notfocus");
 			$("#agenda").addClass("notfocus");
+			$("#report_selection_header").removeClass("notfocus");
+			$("#report_selection").removeClass("notfocus");
 			loadCalendar($("#calendar"));
 			tileLoaded(tile, false);
 		} else {
@@ -147,54 +149,101 @@ function commonTileEvents() {
 }
 
 function loadCalendar(calendarElement) {
-	calendarElement.fullCalendar({
-    header: {
-      left:   'title',
-      center: 'month,agendaWeek,agendaDay',
-      right:  'today prev,next'
-	  },
-    editable: true,
-    eventRender: function(event, jqElement, view) {
-	  if ((view.name == 'month') || ((view.name == 'agendaWeek') && event.allDay)) {
-        jqElement.height(15);
-      }
-    },
-    eventClick: function(calEvent, jsEvent, view) {
-      var eventId = calEvent.id;
-      if(fMobileDevice()) {
-      	document.location = "AppController.servlet?return=gui/mobile/calendar_wizard&set_custom_string=true&key=calendar_wizard_template&value=edit_event&set_table=" + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId;
-      } else {
-        fShowModalDialog('gui/calendar/edit_event&set_table=' + calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,'edit event',fEditEventOK,'ok','width=90%; height=95%');
-      }
-    },
-    eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
-      var eventDate = event.start;
-      var options = {
-        'return': 'blank',
-        'update_record': 'true',
-        'set_table': event.internalTableName,
-        'set_row_id': event.rowId,
-        abCache: new Date().getTime()
-      }
-      // the new event date
-      options[event.dateFieldInternalName + '_years'] = eventDate.getFullYear();
-      options[event.dateFieldInternalName + '_months'] = eventDate.getMonth() + 1;
-      options[event.dateFieldInternalName + '_days'] = eventDate.getDate();
-      if (event.allDay) {
-        options[event.dateFieldInternalName + '_hours'] = 0;
-        options[event.dateFieldInternalName + '_minutes'] = 0;
-      } else {
-        options[event.dateFieldInternalName + '_hours'] = eventDate.getHours();
-        options[event.dateFieldInternalName + '_minutes'] = eventDate.getMinutes();
-      }
-      // TODO: visually change the event element while saving: add then remove a
-			// CSS class
-      $.post("AppController.servlet", options);
-    },
-    minTime: 6
-  });
+	calendarElement
+			.fullCalendar({
+				header : {
+					left : 'title',
+					center : 'month,agendaWeek,agendaDay',
+					right : 'today prev,next'
+				},
+				editable : true,
+				eventRender : function(event, jqElement, view) {
+					if ((view.name == 'month')
+							|| ((view.name == 'agendaWeek') && event.allDay)) {
+						jqElement.height(15);
+					}
+				},
+				eventClick : function(calEvent, jsEvent, view) {
+					var eventId = calEvent.id;
+					if (fMobileDevice()) {
+						document.location = "AppController.servlet?return=gui/mobile/calendar_wizard&set_custom_string=true&key=calendar_wizard_template&value=edit_event&set_table="
+								+ calEvent.internalTableName + '&set_row_id=' + calEvent.rowId;
+					} else {
+						fShowModalDialog('gui/calendar/edit_event&set_table='
+								+ calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,
+								'edit event', fEditEventOK, 'ok', 'width=90%; height=95%');
+					}
+				},
+				eventDrop : function(event, dayDelta, minuteDelta, allDay, revertFunc,
+						jsEvent, ui, view) {
+					var eventDate = event.start;
+					var options = {
+						'return' : 'blank',
+						'update_record' : 'true',
+						'set_table' : event.internalTableName,
+						'set_row_id' : event.rowId,
+						abCache : new Date().getTime()
+					}
+					// the new event date
+					options[event.dateFieldInternalName + '_years'] = eventDate
+							.getFullYear();
+					options[event.dateFieldInternalName + '_months'] = eventDate
+							.getMonth() + 1;
+					options[event.dateFieldInternalName + '_days'] = eventDate.getDate();
+					if (event.allDay) {
+						options[event.dateFieldInternalName + '_hours'] = 0;
+						options[event.dateFieldInternalName + '_minutes'] = 0;
+					} else {
+						options[event.dateFieldInternalName + '_hours'] = eventDate
+								.getHours();
+						options[event.dateFieldInternalName + '_minutes'] = eventDate
+								.getMinutes();
+					}
+					// TODO: visually change the event element while saving: add then
+					// remove a
+					// CSS class
+					$.post("AppController.servlet", options);
+				},
+				minTime : 6
+			});
+	// Show initial calendars
+	$("#report_selection input:checked").each(function() {
+		addRemoveCalendar(this);
+	});
 	// Re-render calendar once expand animation has completed
-	setTimeout(function() {$(window).resize()}, 500);
+	setTimeout(function() {
+		$(window).resize()
+	}, 500);
+}
+
+// Add remove a JSON calendar feed
+// checkboxElement is the checkbox to select/deselect a report
+function addRemoveCalendar(checkboxElement) {
+	var jqCheckbox = $(checkboxElement);
+	var internalTableName = jqCheckbox.attr("internaltablename");
+	var internalReportName = jqCheckbox.attr("internalreportname");
+	var reportName = jqCheckbox.parent().text();
+	var reportTooltip = jqCheckbox.parent().attr("title");
+	var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename="
+			+ internalTableName + "&internalreportname=" + internalReportName;
+	var eventColour = jqCheckbox.siblings("span").css('background-color');
+	var textColour = jqCheckbox.siblings("span").css('color');
+	if (jqCheckbox.is(":checked")) {
+		var eventSource = {
+			url : feedUrl,
+			color : eventColour,
+			textColor : textColour,
+		}
+		$("#calendar").fullCalendar('addEventSource', eventSource);
+		var legendElement = $("<span class='legend_report report_"
+				+ internalReportName + "' id='legend_" + internalReportName
+				+ "' title='" + reportTooltip + "'>" + reportName + "</span>");
+		$("#report_selection_header").append(legendElement);
+	} else {
+		$("#calendar").fullCalendar('removeEventSource', feedUrl);
+		var legendId = "legend_" + internalReportName;
+		$("#" + legendId).remove();
+	}
 }
 
 function expandTile(tile) {
@@ -525,8 +574,12 @@ function backHome() {
 	$(".tile .tile_icon i").removeClass("notfocus");
 	$(".tile.expanded").not(".calendar").find(".content").addClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
+	/* calendar */
 	$("#calendar").addClass("notfocus");
+	$("#report_selection_header").addClass("notfocus");
+	$("#report_selection").addClass("notfocus");
 	$("#agenda").removeClass("notfocus");
+	/* end of calendar */
 	var dataStreamTile = $(".tile.data_stream");
 	// If contains report or edit screen
 	if ((dataStreamTile.find("table.reportData").size() > 0)

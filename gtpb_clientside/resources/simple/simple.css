@@ -593,7 +593,7 @@ table.reportData td {
   -webkit-column-count: 4;
   -ms-column-count: 4;
   column-count: 4;
-  display: none;
+  /* display: none; */
   padding-top: 0.3em;
 }
 
