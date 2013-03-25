@@ -573,7 +573,7 @@ table.reportData td {
   border-color: rgba(255,255,255,0.5);
 }
 
-#calendar h2 {
+#calendar h2, #report_selection h2 {
   background-color: transparent;
   margin-left: 0.5em;
   font-size: 18pt;
