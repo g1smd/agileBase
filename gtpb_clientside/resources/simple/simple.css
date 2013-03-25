@@ -618,8 +618,10 @@ table.reportData td {
 
 .legend_report {
   padding: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em
   margin-right: 0.5em;
-  border-radius: 1em;
+  border-radius: 0.75em;
 }
 
 /* Side actions */
