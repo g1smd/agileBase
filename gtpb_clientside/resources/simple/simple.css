@@ -613,11 +613,13 @@ table.reportData td {
   
 .report_selection_header {
   cursor: pointer;
-  padding: 0.2em;
+  padding: 0.3em;
 }
 
 .legend_report {
-  padding: 0.5em;
+  padding: 0.25em;
+  margin-right: 0.5em;
+  border-radius: 1em;
 }
 
 /* Side actions */
