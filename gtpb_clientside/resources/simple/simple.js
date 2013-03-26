@@ -87,7 +87,6 @@ function focusEvents() {
 	});
 }
 
-/** Common tile events */
 function commonTileEvents() {
 	$(".backHome").click(function() {
 		backHome();
@@ -513,6 +512,7 @@ function loadEdit(container, internalTableName, rowId) {
 }
 
 function showEditControls() {
+	$(".sideAction.backHome").addClass("expanded");
 	$(".sideAction.backToView").addClass("expanded");
 	$(".sideAction.newRecord").addClass("expanded");
 	$(".sideAction.cloneRecord").addClass("expanded");
