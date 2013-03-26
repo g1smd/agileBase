@@ -451,9 +451,7 @@ function newRecord(internalTableName) {
 				// remove opacity
 				$(".content").removeAttr("style");
 				editTabFunctions();
-				$(".sideAction.backToView").addClass("expanded");
-				$(".sideAction.newRecord").addClass("expanded");
-				$(".sideAction.cloneRecord").addClass("expanded");
+				showEditControls();
 			});
 }
 
@@ -467,9 +465,7 @@ function cloneRecord(internalTableName) {
 				// remove opacity
 				$(".content").removeAttr("style");
 				editTabFunctions();
-				$(".sideAction.backToView").addClass("expanded");
-				$(".sideAction.newRecord").addClass("expanded");
-				$(".sideAction.cloneRecord").addClass("expanded");
+				showEditControls();
 			});
 }
 
