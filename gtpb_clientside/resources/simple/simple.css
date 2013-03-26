@@ -35,9 +35,9 @@ body {
 
 @media (min-width: 1200px) {
   #tiles.container {
-    width: 1180px; /* add another 10px to bootstrap-responsive to fit another tile in */
-    padding-right: 2em;
-    padding-left: 2em;
+    /* width: 1180px; */ /* add another 10px to bootstrap-responsive to fit another tile in */
+    padding-right: 1.5em;
+    padding-left: 1.5em;
   }
 }
 
