@@ -260,6 +260,8 @@ function expandTile(tile) {
 	$(".header.row").addClass("expanded");
 	tile.find(".tile_icon").addClass("notfocus");
 	tile.find(".title").addClass("notfocus");
+	/* leave some space for controls on left and right */
+	$("#tiles").addClass("padded");
 }
 
 /** Data stream tile specific events */
@@ -577,6 +579,7 @@ function backHome() {
 	$(".tile .tile_icon i").removeClass("notfocus");
 	$(".tile.expanded").not(".calendar").find(".content").addClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
+	$("#tiles").removeClass("padded");
 	/* calendar */
 	$("#calendar").addClass("notfocus");
 	$("#report_selection_header").addClass("notfocus");
