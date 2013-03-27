@@ -17,6 +17,8 @@
  */
 package com.gtwm.pb.model.interfaces.fields;
 
+import java.util.SortedSet;
+
 /**
  * Stores a text value and contains methods to test whether the value is of a particular type, e.g. URL, email
  * address or postcode
@@ -24,6 +26,8 @@ package com.gtwm.pb.model.interfaces.fields;
 public interface TextValue extends BaseValue {
 
 	public String toXmlString();
+	
+	public SortedSet<String> toTags();
 
 	public boolean isEmailAddress();
 

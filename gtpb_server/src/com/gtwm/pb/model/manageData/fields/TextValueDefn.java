@@ -17,6 +17,10 @@
  */
 package com.gtwm.pb.model.manageData.fields;
 
+import java.util.Arrays;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.grlea.log.SimpleLogger;
 import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.util.Helpers;
@@ -46,6 +50,15 @@ public class TextValueDefn implements TextValue {
 		} else {
 			return Naming.makeValidXML(this.textValue);
 		}
+	}
+	
+	public SortedSet<String> toTags() {
+		SortedSet<String> tags = new TreeSet<String>();
+		if (this.textValue == null) {
+			return tags;
+		}
+		tags.addAll(Arrays.asList(this.textValue.split(", ")));
+		return tags;
 	}
 
 	public boolean isNull() {
