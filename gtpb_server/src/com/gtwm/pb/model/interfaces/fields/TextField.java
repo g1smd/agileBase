@@ -19,6 +19,7 @@ package com.gtwm.pb.model.interfaces.fields;
 
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.util.CantDoThatException;
@@ -93,11 +94,19 @@ public interface TextField extends BaseField {
 	 *             can't use lookups
 	 */
 	public void setUsesLookup(Boolean usesLookup) throws CantDoThatException;
+	
+	public boolean usesTags();
+	
+	/**
+	 * If tags are used, a CSV of items is stored in the field. Tags are used when a user wants to store more than one value in a field
+	 */
+	public void setUsesTags(Boolean usesTags) throws CantDoThatException;
+	
+	public void addTags(Set<String> tags) throws CantDoThatException;
 
 	/**
 	 * Returns a set of distinct values that are stored for this field in the
-	 * field's parent table. Useful for displaying a lookup / combo box of
-	 * values for entry
+	 * field's parent table. Useful for displaying a lookup / combo box or set of tags for entry
 	 * 
 	 * TODO: also include any values returned by getDefault() if that returns a
 	 * comma separated list

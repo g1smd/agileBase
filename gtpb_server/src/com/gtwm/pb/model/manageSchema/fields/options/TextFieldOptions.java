@@ -5,7 +5,7 @@ import com.gtwm.pb.util.Enumerations.TextCase;
 public class TextFieldOptions extends BasicFieldOptions {
 	
 	public String getDefaultValue() {
-		return defaultValue;
+		return this.defaultValue;
 	}
 
 	public void setDefaultValue(String defaultValue) {
@@ -13,7 +13,7 @@ public class TextFieldOptions extends BasicFieldOptions {
 	}
 
 	public boolean isNotApplicable() {
-		return notApplicable;
+		return this.notApplicable;
 	}
 
 	public void setNotApplicable(boolean notApplicable) {
@@ -29,7 +29,7 @@ public class TextFieldOptions extends BasicFieldOptions {
 	}
 
 	public String getNotApplicableValue() {
-		return notApplicableValue;
+		return this.notApplicableValue;
 	}
 
 	public void setNotApplicableValue(String notApplicableValue) {
@@ -37,11 +37,19 @@ public class TextFieldOptions extends BasicFieldOptions {
 	}
 
 	public boolean isUsesLookup() {
-		return usesLookup;
+		return this.usesLookup;
 	}
 
 	public void setUsesLookup(boolean usesLookup) {
 		this.usesLookup = usesLookup;
+	}
+	
+	public boolean isUsesTags() {
+		return this.usesTags;
+	}
+	
+	public void setUsesTags(boolean usesTags) {
+		this.usesTags = usesTags;
 	}
 
 	public boolean isTieDownLookup() {
@@ -53,7 +61,7 @@ public class TextFieldOptions extends BasicFieldOptions {
 	}
 
 	public Integer getTextContentSize() {
-		return textContentSize;
+		return this.textContentSize;
 	}
 
 	/**
@@ -64,7 +72,7 @@ public class TextFieldOptions extends BasicFieldOptions {
 	}
 
 	public TextCase getTextCase() {
-		return textCase;
+		return this.textCase;
 	}
 
 	public void setTextCase(TextCase textCase) {
@@ -80,6 +88,8 @@ public class TextFieldOptions extends BasicFieldOptions {
 	private String notApplicableValue = null;
 	
 	private boolean usesLookup = false;
+	
+	private boolean usesTags = false;
 	
 	private boolean tieDownLookup = false;
 	

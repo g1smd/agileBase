@@ -71,6 +71,11 @@ public class AppProperties {
 	 * in milliseconds
 	 */
 	public static final int lookupCacheTime = 1000 * 10;
+	
+	/**
+	 * Cache tags for a lot longer because tag additions are added to the cache as they happen
+	 */
+	public static final int tagsCacheTime = 1000 * 60 * 60 * 48;
 
 	/**
 	 * An hour of the day when agileBase is expected to have low activity and

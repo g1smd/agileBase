@@ -1351,6 +1351,8 @@ public final class DatabaseDefn implements DatabaseInfo {
 				PossibleBooleanOptions.USELOOKUP.getFormInputName());
 		boolean tieDownLookup = HttpRequestUtil.getBooleanValue(request,
 				PossibleBooleanOptions.TIEDOWNLOOKUP.getFormInputName());
+		boolean usesTags = HttpRequestUtil.getBooleanValue(request,
+				PossibleBooleanOptions.USETAGS.getFormInputName());
 		int textContentSize = Integer.valueOf(request.getParameter(PossibleListOptions.TEXTCONTENTSIZE
 				.getFormInputName()));
 		TextCase textCase = TextCase.valueOf(request.getParameter(
@@ -1367,6 +1369,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		textOptions.setTieDownLookup(tieDownLookup);
 		textOptions.setUnique(basicOptions.getUnique());
 		textOptions.setUsesLookup(usesLookup);
+		textOptions.setUsesTags(usesTags);
 		field = new TextFieldDefn(this.relationalDataSource, table, fieldName,
 				fieldDesc, !TextField.HIDDEN, textOptions);
 		return field;

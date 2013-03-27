@@ -58,6 +58,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -71,10 +72,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	protected TextFieldDefn() {
 	}
 
-	public TextFieldDefn(DataSource dataSource, TableInfo tableContainingField,
-		  String fieldName, String fieldDesc, 
-			boolean hidden, TextFieldOptions fieldOptions) throws CantDoThatException {
-		checkOptionsConsistency(fieldOptions.getTextContentSize(), fieldOptions.isUsesLookup(), fieldOptions.getUnique());
+	public TextFieldDefn(DataSource dataSource, TableInfo tableContainingField, String fieldName,
+			String fieldDesc, boolean hidden, TextFieldOptions fieldOptions) throws CantDoThatException {
+		checkOptionsConsistency(fieldOptions.getTextContentSize(), fieldOptions.isUsesLookup()
+				|| fieldOptions.isUsesTags(), fieldOptions.getUnique());
 		this.setDataSource(dataSource);
 		super.setTableContainingField(tableContainingField);
 		super.setInternalFieldName(RandomString.generate());
@@ -90,6 +91,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 		this.setUsesLookup(fieldOptions.isUsesLookup());
 		this.setTieDownLookup(fieldOptions.isTieDownLookup());
+		this.setUsesTags(fieldOptions.isUsesTags());
 		super.setHidden(hidden);
 		super.setPrintoutSetting(fieldOptions.getPrintoutSetting());
 	}
@@ -158,27 +160,25 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCONTENTSIZE,
 					String.valueOf(this.getContentSize()));
 			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.UNIQUE, super.getUnique());
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY,
-					super.getNotNull());
-			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USELOOKUP,
-					this.usesLookup());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.MANDATORY, super.getNotNull());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USELOOKUP, this.usesLookup());
+			fieldDescriptor.setBooleanOptionState(PossibleBooleanOptions.USETAGS, this.usesTags());
 			if (this.hasDefault()) {
 				if (this.usesLookup()) {
-					fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
-							this.getDefaultCSV());
+					fieldDescriptor
+							.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, this.getDefaultCSV());
 				} else {
-					fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE,
-							this.getDefault());
+					fieldDescriptor.setTextOptionValue(PossibleTextOptions.DEFAULTVALUE, this.getDefault());
 				}
 			}
 			TextCase textCase = this.getTextCase();
 			if (textCase == null) {
 				textCase = TextCase.ANY;
 			}
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCASE,
-					textCase.toString());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.TEXTCASE, textCase.toString());
 			FieldPrintoutSetting printoutSetting = this.getPrintoutSetting();
-			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT, printoutSetting.name());
+			fieldDescriptor.setListOptionSelectedItem(PossibleListOptions.PRINTFORMAT,
+					printoutSetting.name());
 			return fieldDescriptor;
 		} catch (ObjectNotFoundException onfex) {
 			throw new CantDoThatException("Internal error setting up " + this.getClass()
@@ -237,13 +237,14 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		this.defaultValue = defaultValue;
 	}
 
-	@Column(length=10000)
+	@Column(length = 10000)
 	private String getDefaultDirect() {
 		return this.defaultValue;
 	}
 
 	public synchronized void setContentSize(Integer maxChars) throws CantDoThatException {
-		checkOptionsConsistency(maxChars, this.getUsesLookupDirect(), this.getUnique());
+		checkOptionsConsistency(maxChars, this.getUsesLookupDirect() || this.getUsesTagsDirect(),
+				this.getUnique());
 		this.setContentSizeDirect(maxChars);
 	}
 
@@ -259,9 +260,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	private Integer getContentSizeDirect() {
 		return this.contentSize;
 	}
-	
+
 	public void setUsesLookup(Boolean usesLookup) throws CantDoThatException {
-		checkOptionsConsistency(this.getContentSize(), usesLookup, this.getUnique());
+		checkOptionsConsistency(this.getContentSize(), usesLookup || this.getUsesTagsDirect(),
+				this.getUnique());
 		this.setUsesLookupDirect(usesLookup);
 	}
 
@@ -277,17 +279,37 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public boolean usesLookup() {
 		return this.getUsesLookupDirect();
 	}
-	
+
 	public boolean getTieDownLookup() {
 		return this.tieDownLookup;
 	}
-	
+
 	public void setTieDownLookup(boolean tieDownLookup) {
 		this.tieDownLookup = tieDownLookup;
 	}
 
+	public void setUsesTags(Boolean usesTags) throws CantDoThatException {
+		checkOptionsConsistency(this.getContentSize(), usesTags || this.getUsesLookupDirect(),
+				this.getUnique());
+		this.setUsesTagsDirect(usesTags);
+	}
+
+	private void setUsesTagsDirect(Boolean usesTags) {
+		this.usesTags = usesTags;
+	}
+
+	private Boolean getUsesTagsDirect() {
+		return this.usesTags;
+	}
+
+	@Transient
+	public boolean usesTags() {
+		return this.getUsesTagsDirect();
+	}
+
 	public void setUnique(Boolean fieldUnique) throws CantDoThatException {
-		checkOptionsConsistency(this.getContentSize(), this.getUsesLookupDirect(), fieldUnique);
+		checkOptionsConsistency(this.getContentSize(),
+				this.getUsesLookupDirect() || this.getUsesTagsDirect(), fieldUnique);
 		super.setUnique(fieldUnique);
 	}
 
@@ -306,7 +328,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	 */
 	private void logFilteredItemsCacheStats() {
 		int filteredItemsCacheViews = this.filteredItemsCacheHits + this.filteredItemsCacheMisses;
-		if (filteredItemsCacheViews > 500	) {
+		if (filteredItemsCacheViews > 500) {
 			logger.info(this.toString() + " lookup filtered items cache hits = "
 					+ this.filteredItemsCacheHits + ", misses = " + this.filteredItemsCacheMisses);
 			this.filteredItemsCacheHits = 0;
@@ -318,13 +340,20 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public SortedSet<String> getItemsCached() throws CantDoThatException {
 		return allItemsCache;
 	}
-	
+
 	@Transient
 	public SortedSet<String> getItems() throws SQLException, CantDoThatException,
 			CodingErrorException {
 		long cacheAge = System.currentTimeMillis() - this.allItemsLastCacheTime;
-		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(this.getTableContainingField());
-		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
+		long lastChangeAge = System.currentTimeMillis()
+				- DataManagement.getLastTableDataChangeTime(this.getTableContainingField());
+		long cacheTime = 0;
+		if (this.usesTags()) {
+			cacheTime = AppProperties.tagsCacheTime;
+		} else {
+			cacheTime = AppProperties.lookupCacheTime;
+		}
+		if (cacheAge < (lastChangeAge + cacheTime)) {
 			if (this.allItemsCache.size() > 0) {
 				this.allItemsCacheHits += 1;
 				this.logAllItemsCacheStats();
@@ -350,9 +379,16 @@ public class TextFieldDefn extends AbstractField implements TextField {
 				}
 			}
 		}
-		String sqlRepresentation = textCase.getSqlRepresentation();
-		String SQLCode = "SELECT DISTINCT " + sqlRepresentation + "(" + this.getInternalFieldName()
-				+ ") FROM " + this.getTableContainingField().getInternalTableName();
+		String textCaseSql = textCase.getSqlRepresentation();
+		String SQLCode;
+		if (this.usesTags()) {
+			SQLCode = "SELECT DISTINCT " + textCaseSql + "(trim(both ' ' FROM regexp_split_to_table("
+					+ this.getInternalFieldName() + ", ','))) FROM "
+					+ this.getTableContainingField().getInternalTableName();
+		} else {
+			SQLCode = "SELECT DISTINCT " + textCaseSql + "(" + this.getInternalFieldName() + ") FROM "
+					+ this.getTableContainingField().getInternalTableName();
+		}
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -387,8 +423,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			filterId += filterValueEntry.getValue();
 		}
 		long cacheAge = System.currentTimeMillis() - this.filteredItemsLastCacheTime;
-		// TODO: report last change age should really depend on all tables referenced by the report, not just the parent table
-		long lastChangeAge = System.currentTimeMillis() - DataManagement.getLastTableDataChangeTime(report.getParentTable());
+		// TODO: report last change age should really depend on all tables
+		// referenced by the report, not just the parent table
+		long lastChangeAge = System.currentTimeMillis()
+				- DataManagement.getLastTableDataChangeTime(report.getParentTable());
 		if (cacheAge < (lastChangeAge + AppProperties.lookupCacheTime)) {
 			SortedSet<String> filteredItems = this.filteredItemsCache.get(filterId);
 			if (filteredItems != null) {
@@ -422,8 +460,8 @@ public class TextFieldDefn extends AbstractField implements TextField {
 			// Generates a SELECT DISTINCT on this field including filterValues
 			// in the WHERE clause
 			Map<BaseField, Boolean> emptySorts = new HashMap<BaseField, Boolean>();
-			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn,
-					filterValues, false, emptySorts, -1, this, QuickFilterType.AND, false);
+			PreparedStatement statement = reportData.getReportSqlPreparedStatement(conn, filterValues,
+					false, emptySorts, -1, this, QuickFilterType.AND, false);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				String item = results.getString(1);
@@ -457,24 +495,29 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		return items;
 	}
 
+	public void addTags(Set<String> tags) throws CantDoThatException {
+		if (!this.usesTags()) {
+			throw new CantDoThatException("Field " + this + " doesn't use tags");
+		}
+		this.allItemsCache.addAll(tags);
+	}
+	
 	/**
-	 * Don't use in code. Only to be used from the DatabaseDefn constructor,
-	 * hence not in interface
+	 * Don't use in code. Only to be used from the DatabaseDefn constructor, hence
+	 * not in interface
 	 */
 	public void setDataSource(DataSource dataSource) throws CantDoThatException {
 		if (dataSource == null) {
-			throw new CantDoThatException(
-					"Can't set the data source to null, that's not very useful");
+			throw new CantDoThatException("Can't set the data source to null, that's not very useful");
 		}
 		this.dataSource = dataSource;
 	}
 
 	/**
-	 * Check that field options make sense, e.g. a unique field can't use a
-	 * lookup
+	 * Check that field options make sense, e.g. a unique field can't use a lookup
 	 * 
 	 * @throws CantDoThatException
-	 *             if options aren't consistent with each other
+	 *           if options aren't consistent with each other
 	 */
 	private static void checkOptionsConsistency(int contentSize, boolean usesLookup, boolean unique)
 			throws CantDoThatException {
@@ -512,10 +555,13 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	private String notApplicableValue = "NOT APPLICABLE";
 
 	private Boolean usesLookup = false;
-	
+
 	private Boolean tieDownLookup = false;
 
-	private SortedSet<String> allItemsCache = Collections.synchronizedSortedSet(new TreeSet<String>(String.CASE_INSENSITIVE_ORDER));
+	private Boolean usesTags = false;
+
+	private SortedSet<String> allItemsCache = Collections.synchronizedSortedSet(new TreeSet<String>(
+			String.CASE_INSENSITIVE_ORDER));
 
 	private Map<String, SortedSet<String>> filteredItemsCache = new ConcurrentHashMap<String, SortedSet<String>>();
 

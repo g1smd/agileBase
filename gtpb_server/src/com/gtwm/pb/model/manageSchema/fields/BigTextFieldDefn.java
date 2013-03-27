@@ -19,6 +19,7 @@ package com.gtwm.pb.model.manageSchema.fields;
 
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -202,6 +203,24 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 	}
 
 	public void setTieDownLookup(boolean tieDownLookup) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean usesTags() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setUsesTags(Boolean usesTags) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addTags(Set<String> tags) {
 		// TODO Auto-generated method stub
 		
 	}

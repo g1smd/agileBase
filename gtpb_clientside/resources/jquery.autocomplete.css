@@ -4,7 +4,7 @@
 
 .ac_results {
 	padding: 0px;
-	border: 1px solid black;
+	border: 1px solid #656766;
 	background-color: white;
 	overflow: hidden;
 	z-index: 99999;
@@ -17,6 +17,7 @@
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	border-radius: 0;
 }
 
 .ac_results li {
@@ -29,8 +30,7 @@
 	when scroll mode will be used
 	*/
 	/*width: 100%;*/
-  font-family: Verdana,Geneva,sans-serif;
-	font-size: 8pt;
+	font-size: 9pt;
 	/* 
 	it is very important, if line-height not setted or setted 
 	in relative units scroll will be broken in firefox
@@ -56,7 +56,7 @@
 }
 
 .ac_over {
-	background-color: #407ad8;
+	background-color: #009FE3;
 	color: white;
 }
 

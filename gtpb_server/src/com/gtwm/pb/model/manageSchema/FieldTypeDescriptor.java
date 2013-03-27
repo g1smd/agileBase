@@ -46,6 +46,7 @@ public class FieldTypeDescriptor implements FieldTypeDescriptorInfo {
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.UNIQUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.MANDATORY));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USELOOKUP));
+			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.USETAGS));
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
 			this.options.add(new BooleanFieldDescriptorOption(PossibleBooleanOptions.TIEDOWNLOOKUP));
 			this.options.add(new ListFieldDescriptorOption(PossibleListOptions.TEXTCONTENTSIZE));
