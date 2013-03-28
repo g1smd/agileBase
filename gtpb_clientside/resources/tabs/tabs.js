@@ -263,7 +263,7 @@ function fTags() {
 		fSetupTagRemove($(this).closest(".tag"));
 	})
 	$("input.add_tag").not(".setup_complete").inlineComplete();
-	$("input.add_tag").not(".setup_complete").keyPress(function(event) {
+	$("input.add_tag").not(".setup_complete").keypress(function(event) {
 		if(event.which == 13) {
 		  $(this).closest(".tags").find("input.add_tag_button").click();
 		}
