@@ -586,6 +586,12 @@ public final class ServletSessionMethods {
 				fieldValueString = textCase.transform(fieldValueString);
 			}
 			TextValue textValue = new TextValueDefn(fieldValueString);
+			if (field instanceof TextField) {
+				if (((TextField) field).usesTags()) {
+					String tagsCsv = Helpers.joinWith(textValue.toTags(), ", ");
+					textValue = new TextValueDefn(tagsCsv);
+				}
+			}
 			// Phone numbers
 			if (textValue.isPhoneNumber()) {
 				// GB phone numbers

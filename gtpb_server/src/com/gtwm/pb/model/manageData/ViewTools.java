@@ -1417,15 +1417,8 @@ public final class ViewTools implements ViewToolsInfo {
 		return encoded;
 	}
 
-	public String joinWith(Collection<Object> collection, String joiner) {
-		String result = "";
-		for (Object obj : collection) {
-			result = result + obj + joiner;
-		}
-		if (result.length() > joiner.length()) {
-			result = result.substring(0, result.length() - joiner.length());
-		}
-		return result;
+	public String joinWith(Collection collection, String joiner) {
+		return Helpers.joinWith(collection, joiner);
 	}
 
 	public MathTool getMathTool() {

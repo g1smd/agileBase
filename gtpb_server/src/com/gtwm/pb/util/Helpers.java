@@ -62,6 +62,18 @@ public final class Helpers {
 	private Helpers() {
 	}
 
+	public static String joinWith(Collection collection, String joiner) {
+		String result = "";
+		for (Object obj : collection) {
+			result = result + obj + joiner;
+		}
+		if (result.length() > joiner.length()) {
+			result = result.substring(0, result.length() - joiner.length());
+		}
+		return result;
+	}
+	
+	
 	public static void sendEmail(Set<String> recipients, String body, String subject)
 			throws MessagingException {
 		Properties props = new Properties();
