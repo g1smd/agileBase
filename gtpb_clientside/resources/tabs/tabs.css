@@ -248,12 +248,17 @@ textarea {
 	display: none;
 }
 
+.saved_tags {
+  margin-bottom: 0.75em;
+  margin-top: 0.25em;
+  font-size: 9.5pt;
+}
+
 .saved_tags .tag {
   border-radius: 0.75em;
   background-color: #009FE3;
   color: white;
   padding: 0.5em;
-  font-size: 9.5pt;
 }
 
 .saved_tags .tag.saving {
