@@ -258,7 +258,10 @@ function fTags() {
 			return;
 		}
 	  $(this).closest(".tags").find(".saved_tags").each(function() {
-	  	tagsCsv += $(this).text() + ", ";
+	  	var tagText = $(this).text();
+	  	if (tagText != "") {
+	  	  tagsCsv += tagText + ", ";
+	  	}
 	  });
 	  tagsCsv += tagInput.val();
 	  var options = {

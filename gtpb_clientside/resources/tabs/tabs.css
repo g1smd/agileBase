@@ -259,6 +259,7 @@ textarea {
   background-color: #009FE3;
   color: white;
   padding: 0.5em;
+  margin-right: 0.5em;
 }
 
 .saved_tags .tag.saving {
