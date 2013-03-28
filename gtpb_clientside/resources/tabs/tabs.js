@@ -251,6 +251,11 @@ function fUnlockButton() {
 
 function fTags() {
 	$("input.add_tag").not(".setup_complete").inlineComplete();
+	$("input.add_tag").not(".setup_complete").keyPress(function(event) {
+		if(event.which == 13) {
+		  $(this).closest(".tags").find("input.add_tag_button").click();
+		}
+	})
 	$("input.add_tag").addClass("setup_complete");
 	var tagsCsv = "";
 	$("input.add_tag_button").not(".setup_complete").click(function() {
