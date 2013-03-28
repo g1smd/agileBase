@@ -282,7 +282,7 @@ function fTags() {
 	    tagsCsv += tagInput.val();
 		} else {
 			console.log("tagsCsv was " + tagsCsv);
-			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 1);
+			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
 			console.log("tagsCsv is now " + tagsCsv);
 		}
 	  var options = {
