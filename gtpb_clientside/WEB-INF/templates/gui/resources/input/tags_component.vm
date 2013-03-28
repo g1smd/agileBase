@@ -21,6 +21,7 @@
 #else
   <div class="tags">
     #set($fieldValue = $fieldValue.trim())
+    Field value object is $fieldValueObject<br>
     #set($tags = $fieldValueObject.asTags())
     <div class="saved_tags">
         #foreach($tag in $tags)
