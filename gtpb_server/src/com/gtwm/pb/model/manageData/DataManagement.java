@@ -838,6 +838,12 @@ public final class DataManagement implements DataManagementInfo {
 					if (fieldValue instanceof TextValue) {
 						String textValue = ((TextValue) fieldValue).toXmlString();
 						statement.setString(fieldNumber, textValue);
+						if (field instanceof TextField) {
+							TextField textField = (TextField) field;
+							if (textField.usesTags()) {
+								textField.addTags(((TextValue) fieldValue).toTags());
+							}
+						}
 					} else if (fieldValue instanceof IntegerValue) {
 						// if no related value, set relation field to null
 						if (field instanceof RelationField
@@ -2062,7 +2068,8 @@ public final class DataManagement implements DataManagementInfo {
 		for (DataRowInfo reportDataRow : reportDataRows) {
 			eventWriter.add(eventFactory.createStartElement("", "", "item"));
 			eventWriter.add(end);
-			this.createNode(eventWriter, "title", Helpers.buildEventTitle(report, reportDataRow, false, true));
+			this.createNode(eventWriter, "title",
+					Helpers.buildEventTitle(report, reportDataRow, false, true));
 			this.createNode(eventWriter, "description", reportDataRow.toString());
 			String rowLink = reportLink + "&set_row_id=" + reportDataRow.getRowId();
 			this.createNode(eventWriter, "link", rowLink);
@@ -2437,16 +2444,18 @@ public final class DataManagement implements DataManagementInfo {
 	public List<DataRowInfo> getReportDataRows(AppUserInfo user, BaseReportInfo reportDefn,
 			Map<BaseField, String> filterValues, boolean exactFilters,
 			Map<BaseField, Boolean> sessionSorts, int rowLimit, QuickFilterType filterType,
-			boolean lookupPostcodeLatLong, HttpServletRequest request) throws SQLException, CodingErrorException,
-			CantDoThatException, ObjectNotFoundException {
+			boolean lookupPostcodeLatLong, HttpServletRequest request) throws SQLException,
+			CodingErrorException, CantDoThatException, ObjectNotFoundException {
 		Connection conn = null;
 		List<DataRowInfo> reportDataRows = null;
 		CompanyInfo company = null;
 		boolean enforceCustomUserFilter = true;
 		if ((user != null) && (request != null)) {
 			company = user.getCompany();
-			if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
-				// Administrators are allowed to fall back to getting the unfiltered report if there is no Created By column in the report
+			if (this.authManager.getAuthenticator().loggedInUserAllowedTo(request,
+					PrivilegeType.ADMINISTRATE)) {
+				// Administrators are allowed to fall back to getting the unfiltered
+				// report if there is no Created By column in the report
 				enforceCustomUserFilter = false;
 			}
 		}
@@ -3412,7 +3421,8 @@ public final class DataManagement implements DataManagementInfo {
 		if (mostPopularReport != null) {
 			return mostPopularReport;
 		}
-		List<BaseReportInfo> reportList = new LinkedList<BaseReportInfo>(this.getMostPopularReports(request, databaseDefn, user, 1));
+		List<BaseReportInfo> reportList = new LinkedList<BaseReportInfo>(this.getMostPopularReports(
+				request, databaseDefn, user, 1));
 		if (reportList.size() > 0) {
 			mostPopularReport = reportList.get(0);
 			this.userMostPopularReportCache.put(user, mostPopularReport);
@@ -3420,10 +3430,12 @@ public final class DataManagement implements DataManagementInfo {
 		}
 		return null;
 	}
-	
-	public LinkedHashSet<BaseReportInfo> getMostPopularReports(HttpServletRequest request, DatabaseInfo databaseDefn,
-			AppUserInfo user, int numReports) throws SQLException, CodingErrorException {
-		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '2 months'::interval) GROUP BY report ORDER BY count(*) DESC LIMIT " + numReports;
+
+	public LinkedHashSet<BaseReportInfo> getMostPopularReports(HttpServletRequest request,
+			DatabaseInfo databaseDefn, AppUserInfo user, int numReports) throws SQLException,
+			CodingErrorException {
+		String SQLCode = "SELECT report FROM dbint_log_report_view WHERE app_user=? AND app_timestamp > (now() - '2 months'::interval) GROUP BY report ORDER BY count(*) DESC LIMIT "
+				+ numReports;
 		Connection conn = null;
 		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
 		LinkedHashSet<BaseReportInfo> mostPopularReports = new LinkedHashSet<BaseReportInfo>(numReports);

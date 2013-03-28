@@ -1661,6 +1661,10 @@ public final class DatabaseDefn implements DatabaseInfo {
 						Boolean useLookup = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						textField.setUsesLookup(useLookup);
 					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
+							+ PossibleBooleanOptions.USETAGS.getFormInputName())) {
+						Boolean usesTags = Helpers.valueRepresentsBooleanTrue(formInputValue);
+						textField.setUsesTags(usesTags);
+					} else if (formInputName.equals("updateoption" + field.getInternalFieldName()
 							+ PossibleBooleanOptions.UNIQUE.getFormInputName())) {
 						Boolean unique = Helpers.valueRepresentsBooleanTrue(formInputValue);
 						textField.setUnique(unique);

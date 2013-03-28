@@ -1387,6 +1387,7 @@ public final class ServletSchemaMethods {
 		// store current values that may be overwritten by
 		// DatabaseDefn.updateFieldOption so they can be rolled back
 		Boolean textFieldUsesLookup = null;
+		Boolean textFieldUsesTags = null;
 		Integer textFieldContentSize = null;
 		Boolean dateFieldDefaultToNow = null;
 		Integer dateFieldResolution = null;
@@ -1401,16 +1402,20 @@ public final class ServletSchemaMethods {
 		Integer maxYear = null;
 		boolean tieDownLookup = false;
 		if (field instanceof TextField) {
-			textFieldUsesLookup = ((TextField) field).usesLookup();
-			textFieldContentSize = ((TextField) field).getContentSize();
-			textFieldDefault = ((TextField) field).getDefault();
-			textCase = ((TextField) field).getTextCase();
-			tieDownLookup = ((TextField) field).getTieDownLookup();
+			TextField textField = (TextField) field;
+			textFieldUsesLookup = textField.usesLookup();
+			textFieldUsesTags = textField.usesTags();
+			textFieldUsesTags = textField.usesTags();
+			textFieldContentSize = textField.getContentSize();
+			textFieldDefault = textField.getDefault();
+			textCase = textField.getTextCase();
+			tieDownLookup = textField.getTieDownLookup();
 		} else if (field instanceof DateField) {
-			dateFieldDefaultToNow = ((DateField) field).getDefaultToNow();
-			dateFieldResolution = ((DateField) field).getDateResolution();
-			minYear = ((DateField) field).getMinAgeYears();
-			maxYear = ((DateField) field).getMaxAgeYears();
+			DateField dateField = (DateField) field;
+			dateFieldDefaultToNow =dateField.getDefaultToNow();
+			dateFieldResolution = dateField.getDateResolution();
+			minYear = dateField.getMinAgeYears();
+			maxYear = dateField.getMaxAgeYears();
 		} else if (field instanceof DecimalField) {
 			decimalFieldPrecision = ((DecimalField) field).getPrecision();
 			decimalFieldDefault = ((DecimalField) field).getDefault();
@@ -1428,19 +1433,19 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
-			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
+			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException abex) {
 			rollbackConnections(conn);
-			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
+			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed: " + abex.getMessage(), abex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(conn);
-			restoreFieldOptions(field, textFieldUsesLookup, tieDownLookup, textFieldContentSize,
+			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup, textFieldContentSize,
 					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
 					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", sqlex);
@@ -1455,7 +1460,7 @@ public final class ServletSchemaMethods {
 	 * 
 	 * TODO: refactor to use a properties object rather than masses of parameters
 	 */
-	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
+	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup, Boolean textFieldUsesTags,
 			boolean tieDownLookup, Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
 			Integer dateFieldResolution, Integer minYear, Integer maxYear, Integer decimalFieldPrecision,
 			String textFieldDefault, Double decimalFieldDefault, Integer integerFieldDefault,
@@ -1464,6 +1469,7 @@ public final class ServletSchemaMethods {
 		field.setNotNull(notNull);
 		if (field instanceof TextField) {
 			((TextField) field).setUsesLookup(textFieldUsesLookup);
+			((TextField) field).setUsesTags(textFieldUsesTags);
 			((TextField) field).setContentSize(textFieldContentSize);
 			((TextField) field).setDefault(textFieldDefault);
 			((TextField) field).setTextCase(textCase);
