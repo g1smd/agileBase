@@ -278,12 +278,11 @@ function fTags() {
 	  	  tagsCsv += tagText + ", ";
 	  	}
 	  });
-	  alert("val is " + tagInput.val());
-		if (tagInput.val() == null || tagInput.val() == "") {
-			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
-			alert(tagsCsv);
-		} else {
+		var newTag = !(tagInput.val() == null || tagInput.val() == "");
+		if (newTag) {
 	    tagsCsv += tagInput.val();
+		} else {
+			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
 		}
 	  var options = {
 		  "return": "gui/administration/xmlreturn_fieldchange",
@@ -292,8 +291,10 @@ function fTags() {
 		  rowid: tagInput.attr("data-internalrowid")
 		};
 	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
-	  tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + "</span>");
-	  fSetupTagRemove(tagInput.closest(".tags").find(".tag.saving"));
+	  if (newTag) {
+	    tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + "</span>");
+	    fSetupTagRemove(tagInput.closest(".tags").find(".tag.saving"));
+	  }
 	  $.post("AppController.servlet", options, function(data) {
 	  	if($(data).find("response").text() == "ok") {
 	  	  tagInput.closest(".tags").find(".saved_tags").find(".tag.saving").removeClass("saving").addClass("saved");
