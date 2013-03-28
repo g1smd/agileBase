@@ -250,7 +250,7 @@ function fUnlockButton() {
 }
 
 function fTags() {
-	$("input.add_tag").inlineComplete();
+	//$("input.add_tag").inlineComplete();
 	var tagsCsv = "";
 	$("input.add_tag_button").click(function() {
 		var tagInput = $(this).siblings("input.add_tag");
