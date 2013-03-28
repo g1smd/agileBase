@@ -251,6 +251,32 @@ function fUnlockButton() {
 
 function fTags() {
 	$("input.add_tag").inlineComplete();
+	var tagsCsv = "";
+	$("input.add_tag_button").click(function() {
+		var tagInput = $(this);
+		if (tagInput.val() == "") {
+			return;
+		}
+	  $(this).closest(".tags").find(".saved_tags").each(function() {
+	  	tagsCsv += $(this).text() + ", ";
+	  });
+	  tagsCsv += tagInput.val();
+	  var options = {
+		  "return": "gui/administration/xmlreturn_fieldchange",
+		  "update_record": true,
+		  internaltablename: $(this).attr("data-internaltablename"),
+		  rowid: tagInput.attr("data-internalrowid")
+		};
+	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
+	  tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + "</span>");
+	  $.post("AppController.servlet", options, function(data) {
+	  	if(data.find("response").text() == "ok") {
+	  	  tagInput.closest(".tags").find(".saved_tags").find(".tag.saving").removeClass("saving").addClass("saved");
+	  	} else {
+	  		alert(data.find("exception").text());
+	  	}
+	  });
+	});
 }
 
 function fComboComponents() {

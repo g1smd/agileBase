@@ -19,24 +19,24 @@
   #set($fieldValue = "")
   Global editing of tags not yet supported
 #else
-  #set($fieldValue = $fieldValue.trim())
-  #set($tags = $fieldValue.asTags())
-  #if($tags.size() > 0)
-    <div class="tags">
-      #foreach($tag in $tags)
-        <span class="tag">$tag</span>
-      #end
+  <div class="tags">
+    #set($fieldValue = $fieldValue.trim())
+    #set($tags = $fieldValue.asTags())
+    <div class="saved_tags">
+        #foreach($tag in $tags)
+          <span class="tag">$tag</span>
+        #end
     </div>
-  #end
-  #set($allTags = $field.getItems())
-  #set($tagsData = $viewTools.joinWith($allTags,"|"))
-  <input type="text" class="add_tag" data-terms="list:$tagsData" />
-  #if($allTags.size() < 20)
-    <div class="all_tags">
-      #foreach($tag in $allTags)
-        $tag,
-      #end
-    </div>
-  #end
+    #set($allTags = $field.getItems())
+    #set($tagsData = $viewTools.joinWith($allTags,"|"))
+      <input type="text"  data-internalfieldname="$field.getInternalFieldName()" data-internaltablename="$sessionTable.getInternalFieldName()" data-rowid="$sessionRowId" class="add_tag" data-terms="list:$tagsData" placeholder="add tag" /><input type="button" value="add" class="add_tag_button" />
+    #if($allTags.size() < 20)
+      <div class="all_tags">
+        #foreach($tag in $allTags)
+          $tag,
+        #end
+      </div>
+    #end
+  </div>
 #end
 
