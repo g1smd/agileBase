@@ -278,6 +278,7 @@ function fTags() {
 	  	  tagsCsv += tagText + ", ";
 	  	}
 	  });
+	  alert(tagInput.val());
 		if (tagInput.val() == null) {
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
 			console.log(tagsCsv);
