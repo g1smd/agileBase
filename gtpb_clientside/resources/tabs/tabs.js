@@ -281,7 +281,7 @@ function fTags() {
 	  alert("val is " + tagInput.val());
 		if (tagInput.val() == null || tagInput.val() == "") {
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
-			console.log(tagsCsv);
+			alert(tagsCsv);
 		} else {
 	    tagsCsv += tagInput.val();
 		}
