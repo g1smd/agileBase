@@ -264,6 +264,7 @@ function fTags() {
 	})
 	$("input.add_tag").not(".setup_complete").inlineComplete();
 	$("input.add_tag").not(".setup_complete").keypress(function(event) {
+		console.log(event.which);
 		if(event.which == 13) {
 		  $(this).closest(".tags").find("input.add_tag_button").click();
 		}
