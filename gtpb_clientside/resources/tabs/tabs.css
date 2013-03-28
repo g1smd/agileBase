@@ -266,7 +266,7 @@ textarea {
 }
 
 .saved_tags .remove {
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 .saved_tags .tag.saving {
