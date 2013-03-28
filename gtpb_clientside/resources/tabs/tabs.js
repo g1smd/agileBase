@@ -249,6 +249,10 @@ function fUnlockButton() {
 	}
 }
 
+function fTags() {
+	$("input.add_tag").inlineComplete();
+}
+
 function fComboComponents() {
 	// ComboComponent object
 	function fComboComponent(elem) {
@@ -1639,6 +1643,7 @@ pane3Scripts.functionList.push(fFormStyle);
 
 function editTabFunctions() {
 	fComboComponents();
+	fTags();
 	fRelationPickers();
 	fDatePickers();
 	fSexyUpload();
