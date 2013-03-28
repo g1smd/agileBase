@@ -290,7 +290,7 @@ function fTags() {
 		};
 	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
 	  if (newTag) {
-	    tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + "</span>");
+	    tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + " <span class='remove'><i class='icon-remove'></i></span></span>");
 	    fSetupTagRemove(tagInput.closest(".tags").find(".tag.saving"));
 	  }
 	  $.post("AppController.servlet", options, function(data) {
