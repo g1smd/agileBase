@@ -251,8 +251,8 @@ function fUnlockButton() {
 
 function fSetupTagRemove(tag) {
 	tag.find(".remove").click(function() {
-		tag.remove();
 		tag.closest("tags").find("input.add_tag_button").click();
+		tag.remove();
 	});
 }
 
