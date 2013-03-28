@@ -17,7 +17,7 @@
 ##
 #if($globalEdit)
   #set($fieldValue = "")
-  Global editing of tags not yet supported
+  Global editing of tags not yet supported 
 #else
   <div class="tags">
     #set($fieldValue = $fieldValue.trim())
