@@ -250,9 +250,10 @@ function fUnlockButton() {
 }
 
 function fTags() {
-	$("input.add_tag").inlineComplete();
+	$("input.add_tag").not(".setup_complete").inlineComplete();
+	$("input.add_tag").addClass("setup_complete");
 	var tagsCsv = "";
-	$("input.add_tag_button").click(function() {
+	$("input.add_tag_button").not(".setup_complete").click(function() {
 		var tagInput = $(this).siblings("input.add_tag");
 		if (tagInput.val() == "") {
 			return;
@@ -281,6 +282,7 @@ function fTags() {
 	  	}
 	  });
 	});
+	$("input.add_tag_button").addClass("setup_complete");
 }
 
 function fComboComponents() {
