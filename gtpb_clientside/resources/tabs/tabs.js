@@ -253,7 +253,7 @@ function fTags() {
 	$("input.add_tag").inlineComplete();
 	var tagsCsv = "";
 	$("input.add_tag_button").click(function() {
-		var tagInput = $(this);
+		var tagInput = $(this).siblings("input.add_tag");
 		if (tagInput.val() == "") {
 			return;
 		}
@@ -270,10 +270,10 @@ function fTags() {
 	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
 	  tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + "</span>");
 	  $.post("AppController.servlet", options, function(data) {
-	  	if(data.find("response").text() == "ok") {
+	  	if($(data).find("response").text() == "ok") {
 	  	  tagInput.closest(".tags").find(".saved_tags").find(".tag.saving").removeClass("saving").addClass("saved");
 	  	} else {
-	  		alert(data.find("exception").text());
+	  		alert($(data).find("exception").text());
 	  	}
 	  });
 	});
