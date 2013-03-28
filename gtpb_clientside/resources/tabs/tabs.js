@@ -273,12 +273,12 @@ function fTags() {
 	$("input.add_tag_button").not(".setup_complete").click(function() {
 		var tagInput = $(this).siblings("input.add_tag");
 	  $(this).closest(".tags").find(".saved_tags").find(".tag").each(function() {
-	  	var tagText = $(this).text();
+	  	var tagText = $(this).text().trim();
 	  	if (tagText != "") {
 	  	  tagsCsv += tagText + ", ";
 	  	}
 	  });
-		if (tagInput.val() == "") {
+		if (tagInput.val() == null) {
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
 		} else {
 	    tagsCsv += tagInput.val();
