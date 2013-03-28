@@ -281,9 +281,9 @@ function fTags() {
 		if (newTag) {
 	    tagsCsv += tagInput.val();
 		} else {
-			console.log("tagsCsv was " + tagsCsv);
+			console.log("tagsCsv was " + tagsCsv + ".");
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
-			console.log("tagsCsv is now " + tagsCsv);
+			console.log("tagsCsv is now " + tagsCsv + ".");
 		}
 	  var options = {
 		  "return": "gui/administration/xmlreturn_fieldchange",
