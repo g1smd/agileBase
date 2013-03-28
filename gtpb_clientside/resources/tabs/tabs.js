@@ -252,7 +252,7 @@ function fUnlockButton() {
 function fSetupTagRemove(tag) {
 	tag.find(".remove").click(function() {
 		// Get tag button before tag.remove otherwise we won't be able to find it
-		var tagButton = tag.closest("tags").find("input.add_tag_button");
+		var tagButton = tag.closest(".tags").find("input.add_tag_button");
 		tag.remove();
 		tagButton.click();
 	});
