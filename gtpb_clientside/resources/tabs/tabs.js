@@ -262,11 +262,8 @@ function fTags() {
 	$(".saved_tags .tag .remove").each(function() {
 		fSetupTagRemove($(this).closest(".tag"));
 	});
-	$("input.add_tag").not(".setup_complete").keypress(function(event) {
-		console.log(event.which);
-		if(event.which == 13) {
-		  $(this).closest(".tags").find("input.add_tag_button").click();
-		}
+	$("input.add_tag").not(".setup_complete").blur(function() {
+		$(this).closest(".tags").find("input.add_tag_button").click();
 	});
 	$("input.add_tag").not(".setup_complete").inlineComplete();
 	$("input.add_tag").addClass("setup_complete");
