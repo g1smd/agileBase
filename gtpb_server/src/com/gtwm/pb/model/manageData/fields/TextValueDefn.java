@@ -18,6 +18,7 @@
 package com.gtwm.pb.model.manageData.fields;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -57,7 +58,10 @@ public class TextValueDefn implements TextValue {
 		if (this.textValue == null) {
 			return tags;
 		}
-		tags.addAll(Arrays.asList(this.textValue.split(", ")));
+		List<String> tagsList = Arrays.asList(this.textValue.split(", "));
+		for (String tag : tagsList) {
+			tags.add(tag.trim());
+		}
 		return tags;
 	}
 
