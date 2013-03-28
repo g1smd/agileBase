@@ -257,7 +257,7 @@ function fTags() {
 		if (tagInput.val() == "") {
 			return;
 		}
-	  $(this).closest(".tags").find(".saved_tags").each(function() {
+	  $(this).closest(".tags").find(".saved_tags").find(".tag").each(function() {
 	  	var tagText = $(this).text();
 	  	if (tagText != "") {
 	  	  tagsCsv += tagText + ", ";
