@@ -589,10 +589,9 @@ public final class ServletSessionMethods {
 			if (field instanceof TextField) {
 				if (((TextField) field).usesTags()) {
 					String tagsCsv = Helpers.joinWith(textValue.toTags(), ", ");
-					textValue = new TextValueDefn(tagsCsv);
+					return new TextValueDefn(tagsCsv);
 				}
 			}
-			// Phone numbers
 			if (textValue.isPhoneNumber()) {
 				// GB phone numbers
 				if (textValue.isPhoneNumberGB()) {
