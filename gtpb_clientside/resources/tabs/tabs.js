@@ -272,7 +272,6 @@ function fTags() {
 		var tagInput = $(this).siblings("input.add_tag");
 	  $(this).closest(".tags").find(".saved_tags").find(".tag").each(function() {
 	  	var tagText = $(this).text().trim();
-	  	console.log(tagText);
 	  	if (tagText != "") {
 	  	  tagsCsv += tagText + ", ";
 	  	}
@@ -281,9 +280,7 @@ function fTags() {
 		if (newTag) {
 	    tagsCsv += tagInput.val();
 		} else {
-			console.log("tagsCsv was " + tagsCsv + ".");
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
-			console.log("tagsCsv is now " + tagsCsv + ".");
 		}
 	  var options = {
 		  "return": "gui/administration/xmlreturn_fieldchange",
