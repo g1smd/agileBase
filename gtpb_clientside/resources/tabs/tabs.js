@@ -249,7 +249,17 @@ function fUnlockButton() {
 	}
 }
 
+function fSetupTagRemove(tag) {
+	tag.find(".remove").click(function() {
+		tag.remove();
+		tag.closest("tags").find("input.add_tag_button").click();
+	});
+}
+
 function fTags() {
+	$(".saved_tags .tag .remove").each(function() {
+		fSetupTagRemove($(this).closest(".tag"));
+	})
 	$("input.add_tag").not(".setup_complete").inlineComplete();
 	$("input.add_tag").not(".setup_complete").keyPress(function(event) {
 		if(event.which == 13) {
@@ -260,16 +270,17 @@ function fTags() {
 	var tagsCsv = "";
 	$("input.add_tag_button").not(".setup_complete").click(function() {
 		var tagInput = $(this).siblings("input.add_tag");
-		if (tagInput.val() == "") {
-			return;
-		}
 	  $(this).closest(".tags").find(".saved_tags").find(".tag").each(function() {
 	  	var tagText = $(this).text();
 	  	if (tagText != "") {
 	  	  tagsCsv += tagText + ", ";
 	  	}
 	  });
-	  tagsCsv += tagInput.val();
+		if (tagInput.val() == "") {
+			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
+		} else {
+	    tagsCsv += tagInput.val();
+		}
 	  var options = {
 		  "return": "gui/administration/xmlreturn_fieldchange",
 		  "update_record": true,
@@ -278,6 +289,7 @@ function fTags() {
 		};
 	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
 	  tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + "</span>");
+	  fSetupTagRemove(tagInput.closest(".tags").find(".tag.saving"));
 	  $.post("AppController.servlet", options, function(data) {
 	  	if($(data).find("response").text() == "ok") {
 	  	  tagInput.closest(".tags").find(".saved_tags").find(".tag.saving").removeClass("saving").addClass("saved");

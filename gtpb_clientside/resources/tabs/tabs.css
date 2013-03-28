@@ -260,6 +260,13 @@ textarea {
   color: white;
   padding: 0.5em;
   margin-right: 0.5em;
+  white-space: nowrap;
+  display: inline-block;
+  margin-bottom: 0.25em;
+}
+
+.saved_tags .remove {
+  cursor: pointer;
 }
 
 .saved_tags .tag.saving {
@@ -270,7 +277,6 @@ textarea {
 
 .saved_tags .tag.saved {
   background-color: #8DC63F;
-  display: inline;
 }
 
 #reportData .input_saved {
