@@ -272,6 +272,7 @@ function fTags() {
 	  $.post("AppController.servlet", options, function(data) {
 	  	if($(data).find("response").text() == "ok") {
 	  	  tagInput.closest(".tags").find(".saved_tags").find(".tag.saving").removeClass("saving").addClass("saved");
+	  	  tagInput.val("");
 	  	} else {
 	  		alert($(data).find("exception").text());
 	  	}

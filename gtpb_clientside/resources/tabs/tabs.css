@@ -248,6 +248,25 @@ textarea {
 	display: none;
 }
 
+.saved_tags .tag {
+  border-radius: 0.75em;
+  background-color: #009FE3;
+  color: white;
+  padding: 0.5em;
+  font-size: 9.5pt;
+}
+
+.saved_tags .tag.saving {
+  background-color: white;
+  color: #656766;
+  border: 1px dashed #656766;
+}
+
+.saved_tags .tag.saved {
+  background-color: #8DC63F;
+  display: inline;
+}
+
 #reportData .input_saved {
   box-shadow: 0 0 0 0.5em #8DC63F;
 }
