@@ -278,8 +278,8 @@ function fTags() {
 	  	  tagsCsv += tagText + ", ";
 	  	}
 	  });
-	  alert(tagInput.val());
-		if (tagInput.val() == null) {
+	  alert("val is " + tagInput.val());
+		if (tagInput.val() == null || tagInput.val() == "") {
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
 			console.log(tagsCsv);
 		} else {
