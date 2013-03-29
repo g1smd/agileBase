@@ -288,6 +288,10 @@ textarea {
   background-color: #8DC63F;
 }
 
+input.add_tag {
+  margin-bottom: 0; /* override bootstrap */
+}
+
 #reportData .input_saved {
   box-shadow: 0 0 0 0.5em #8DC63F;
 }
