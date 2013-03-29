@@ -248,6 +248,14 @@ textarea {
 	display: none;
 }
 
+.tags {
+  /* avoid column break inside - https://bugzilla.mozilla.org/show_bug.cgi?id=549114 */
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  column-break-inside: avoid;
+  display: table;
+}
+
 .saved_tags {
   margin-bottom: 0.75em;
   margin-top: 0.25em;
