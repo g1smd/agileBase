@@ -370,7 +370,8 @@ function tileLoaded(tile, editing) {
 					reportRowClicks();
 				});
 	}
-	if (tileType == "adder") {
+	if ((tileType == "adder") && (!tile.hasClass("has_been_set_up"))) {
+		tile.addClass("has_been_set_up");
 		$("label.tiletype").click(
 				function(event) {
 					event.stopPropagation(); // stop the .tile click being called
@@ -385,8 +386,7 @@ function tileLoaded(tile, editing) {
 											"notfocus");
 									$(this).find("ul.reports").show().removeClass("notfocus");
 								});
-					}
-					if (selectedApp == "chat" || selectedApp == "comment_stream"
+					} else if (selectedApp == "chat" || selectedApp == "comment_stream"
 							|| selectedApp == "calendar") {
 						// These types add a tile immediately without further configuration
 						// Choose a colour

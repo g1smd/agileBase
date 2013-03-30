@@ -353,12 +353,10 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		} else {
 			cacheTime = AppProperties.lookupCacheTime;
 		}
-		if (cacheAge < (lastChangeAge + cacheTime)) {
-			if (this.allItemsCache.size() > 0) {
-				this.allItemsCacheHits += 1;
-				this.logAllItemsCacheStats();
-				return this.allItemsCache;
-			}
+		if ((cacheAge < (lastChangeAge + cacheTime)) && (this.allItemsCache.size() > 0)) {
+			this.allItemsCacheHits += 1;
+			this.logAllItemsCacheStats();
+			return this.allItemsCache;
 		} else {
 			this.allItemsCache.clear();
 		}
@@ -501,7 +499,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 		}
 		this.allItemsCache.addAll(tags);
 	}
-	
+
 	/**
 	 * Don't use in code. Only to be used from the DatabaseDefn constructor, hence
 	 * not in interface
