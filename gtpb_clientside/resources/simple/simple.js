@@ -375,11 +375,11 @@ function tileLoaded(tile, editing) {
 		console.log("registering label click");
 		$("label.tiletype").click(
 				function(event) {
-					console.log("label clicked, x = " + event.pageX + ", y = " + event.pageY);
 					event.stopPropagation(); // stop the .tile click being called
-					$("label.tiletype").not($(this)).addClass("notfocus");
+					console.log("label clicked, x = " + event.pageX + ", y = " + event.pageY);
 					var selectedApp = $(this).attr("data-tiletype");
 					if (selectedApp == "data_stream" || selectedApp == "data_link") {
+						$("label.tiletype").not($(this)).addClass("notfocus");
 						$(this).find("p").text("Which data would you like to use?");
 						$(".adder .reportSelector").show().removeClass("notfocus");
 						$(".adder .reportSelector li.module").click(
