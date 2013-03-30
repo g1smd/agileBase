@@ -2824,6 +2824,13 @@ public final class ServletSchemaMethods {
 			throw new MissingParametersException("tiletype and colour needed to add an app");
 		}
 		TileType tileType = TileType.valueOf(tileTypeString.toUpperCase());
+		if (!tileType.allowsMultiple()) {
+			for (TileInfo tile : user.getTiles()) {
+				if (tile.getTileType().equals(tileType)) {
+					throw new CantDoThatException("User " + user + " already has a " + tileType + " tile, a second can't be added");
+				}
+			}
+		}
 		TileInfo tile;
 		switch (tileType) {
 		case CALENDAR:
