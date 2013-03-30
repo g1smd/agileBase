@@ -399,8 +399,8 @@ function tileLoaded(tile, editing) {
 							tiletype : selectedApp,
 							colour : colour
 						}, function(data) {
-							$("#tiles").html(data);
-							tileEvents();
+							//$("#tiles").html(data);
+							//tileEvents();
 						});
 					}
 				}); /* end of label.tiletype.click */
