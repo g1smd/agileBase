@@ -12,8 +12,8 @@ $(document).ready(function() {
 		// Focus on first record
 		$(".tile.large .report_data_row:first-child").mouseenter();
 		// If only one tile, expand it
-		if ($(".tile").not(".large").not(".adder").size() == 1) {
-			$(".tile").not(".large").not(".adder").click();
+		if ($(".tile").not(".large").not(".adder").not(".focus").size() == 1) {
+			$(".tile").not(".large").not(".adder").not(".focus").click();
 		}
 	}
 });
@@ -371,13 +371,12 @@ function tileLoaded(tile, editing) {
 					reportRowClicks();
 				});
 	}
-	if ((tileType == "adder") && (!tile.hasClass("has_been_set_up"))) {
-		tile.addClass("has_been_set_up");
-		console.log("adder set up");
+	if ((tileType == "adder")) {
+		console.log("registering label click");
 		$("label.tiletype").click(
 				function(event) {
-					console.log("label clicked");
-					//event.stopPropagation(); // stop the .tile click being called
+					console.log("label clicked, x = " + event.pageX + ", y = " + event.pageY);
+					event.stopPropagation(); // stop the .tile click being called
 					$("label.tiletype").not($(this)).addClass("notfocus");
 					var selectedApp = $(this).attr("data-tiletype");
 					if (selectedApp == "data_stream" || selectedApp == "data_link") {
