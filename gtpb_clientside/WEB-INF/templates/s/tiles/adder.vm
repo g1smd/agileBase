@@ -32,6 +32,7 @@
       #end
       #if(!$alreadyAdded)
         <label for="$tileTypeId" class="tiletype transition" data-tiletype="$tileTypeId">
+          ## No input actually necessary: http://stackoverflow.com/questions/15724406/jquery-click-fires-twice-but-only-registered-once/
           ##<input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
           <h1>$tileType.getTileName()</h1>
           <p>$tileType.getDescription()</p>

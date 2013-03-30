@@ -391,7 +391,6 @@ function tileLoaded(tile, editing) {
 					} else if (selectedApp == "chat" || selectedApp == "comment_stream"
 							|| selectedApp == "calendar") {
 						// These types add a tile immediately without further configuration
-						/*
 						backHome();
 						var colour = nextColour();
 						$.post("AppController.servlet", {
@@ -402,7 +401,7 @@ function tileLoaded(tile, editing) {
 						}, function(data) {
 							$("#tiles").html(data);
 							tileEvents();
-						});*/
+						});
 					}
 				}); /* end of label.tiletype.click */
 		$(".adder .reportSelector ul.reports li").click(function(event) {

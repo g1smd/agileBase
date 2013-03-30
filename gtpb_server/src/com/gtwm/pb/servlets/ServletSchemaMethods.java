@@ -2827,7 +2827,7 @@ public final class ServletSchemaMethods {
 		if (!tileType.allowsMultiple()) {
 			for (TileInfo tile : user.getTiles()) {
 				if (tile.getTileType().equals(tileType)) {
-					throw new CantDoThatException("User " + user + " already has a " + tileType + " tile, a second can't be added");
+					throw new CantDoThatException("User " + user + " already has a " + tileType + " tile, another can't be added");
 				}
 			}
 		}
