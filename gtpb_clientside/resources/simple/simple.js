@@ -375,6 +375,7 @@ function tileLoaded(tile, editing) {
 		console.log("adder set up");
 		$("label.tiletype").click(
 				function(event) {
+					console.log("label clicked");
 					event.stopPropagation(); // stop the .tile click being called
 					$("label.tiletype").not($(this)).addClass("notfocus");
 					var selectedApp = $(this).attr("data-tiletype");
