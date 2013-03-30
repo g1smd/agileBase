@@ -373,7 +373,7 @@ function tileLoaded(tile, editing) {
 	}
 	if ((tileType == "adder")) {
 		console.log("registering label click");
-		$("label.tiletype").unbind("click").click(
+		$("label.tiletype").click(
 				function(event) {
 					event.stopPropagation(); // stop the .tile click being called
 					console.log("label clicked, x = " + event.pageX + ", y = " + event.pageY);
