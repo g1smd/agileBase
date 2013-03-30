@@ -391,8 +391,6 @@ function tileLoaded(tile, editing) {
 					} else if (selectedApp == "chat" || selectedApp == "comment_stream"
 							|| selectedApp == "calendar") {
 						// These types add a tile immediately without further configuration
-						// Choose a colour
-						console.log("adding cal, chat or comment stream");
 						backHome();
 						var colour = nextColour();
 						$.post("AppController.servlet", {
