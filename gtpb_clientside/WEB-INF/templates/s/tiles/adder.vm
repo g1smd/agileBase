@@ -32,7 +32,7 @@
       #end
       #if(!$alreadyAdded)
         <label for="$tileTypeId" class="tiletype transition" data-tiletype="$tileTypeId">
-          <input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
+          ##<input type="radio" name="apptype" value="$tileTypeId" id="$tileTypeId" />
           <h1>$tileType.getTileName()</h1>
           <p>$tileType.getDescription()</p>
         </label>
