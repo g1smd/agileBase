@@ -2,6 +2,7 @@
  * JS used for the simple interface
  */
 $(document).ready(function() {
+	console.log("document.ready");
 	if ($("#infovis").size() > 0) {
 		loadTreemap();
 	} else if ($("#tile_suggestions").size() > 0) {
