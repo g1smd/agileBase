@@ -372,6 +372,7 @@ function tileLoaded(tile, editing) {
 	}
 	if ((tileType == "adder") && (!tile.hasClass("has_been_set_up"))) {
 		tile.addClass("has_been_set_up");
+		console.log("adder set up");
 		$("label.tiletype").click(
 				function(event) {
 					event.stopPropagation(); // stop the .tile click being called
@@ -390,6 +391,7 @@ function tileLoaded(tile, editing) {
 							|| selectedApp == "calendar") {
 						// These types add a tile immediately without further configuration
 						// Choose a colour
+						console.log("adding cal, chat or comment stream");
 						backHome();
 						var colour = nextColour();
 						$.post("AppController.servlet", {
