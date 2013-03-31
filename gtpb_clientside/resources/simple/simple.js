@@ -249,10 +249,36 @@ function loadCalendar() {
 		addRemoveCalendar(this);
 	});
   $(".report_selection_header").click(function() {
-  	var reportSelection = $("#report_selection");
-    reportSelection.toggleClass("notfocus");
+  	$("#report_selection").toggleClass("notfocus");
   });
-	// Re-render calendar once expand animation has completed
+  $(".report_selection input").change(function() {
+    var jqCheckbox = $(this);
+    if (jqCheckbox.parent().hasClass("has_calendar")) {
+      addRemoveCalendar(this);
+    } else {
+      addRemovePanel(this);
+    }
+    var internalTableName = jqCheckbox.attr("internaltablename");
+    var internalReportName = jqCheckbox.attr("internalreportname");
+    if (jqCheckbox.is(":checked")) {
+    	var addReportOptions = {
+	  		'return': 'blank',
+        'add_operational_dashboard_report': 'true',
+        'internaltablename': internalTableName,
+        'internalreportname': internalReportName
+	    }
+      $.post("AppController.servlet", addReportOptions);
+    } else {
+		  var removeReportOptions = {
+	        'return': 'blank',
+	        'remove_operational_dashboard_report': 'true',
+	        'internaltablename': internalTableName,
+	        'internalreportname': internalReportName
+		  }
+      $.post("AppController.servlet", removeReportOptions);
+    }
+  });	
+  // Re-render calendar once expand animation has completed
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
