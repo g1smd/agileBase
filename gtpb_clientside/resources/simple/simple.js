@@ -152,7 +152,7 @@ function commonTileEvents() {
 
 function loadCalendar(calendarElement) {
 	$(".sideAction.backToView").unbind("click").click(function() {
-		console.log(calendarElement[0].tagName);
+		console.log(calendarElement.attr("class"));
 		var parent = calendarElement.parent();
 		calendarElement.remove();
 		parent.append("<div class='content transition'></div>");
