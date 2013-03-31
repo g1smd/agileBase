@@ -126,6 +126,7 @@ body {
   border-radius: 1em;
   position: relative;
   z-index: 100;
+  border: 1px solid white;
 }
 
 .calendar .addEvents .addEvent {
