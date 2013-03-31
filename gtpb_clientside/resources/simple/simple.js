@@ -595,6 +595,7 @@ function backHome() {
 	$("#report_selection").addClass("notfocus");
 	$("#agenda").removeClass("notfocus");
 	var internalTileName = $(".tile.calendar").attr("data-internaltilename");
+	alert("internalTileName " + internalTileName);
 	$(".tile.calendar").find(".content").load("AppController.servlet", {
 		"return": "s/tiles/calendar",
 		set_tile: internalTileName
