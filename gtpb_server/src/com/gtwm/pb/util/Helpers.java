@@ -51,6 +51,8 @@ import com.gtwm.pb.model.interfaces.ReportFieldInfo;
 import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
+import com.gtwm.pb.model.interfaces.fields.FileField;
+import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
 /**
@@ -72,8 +74,7 @@ public final class Helpers {
 		}
 		return result;
 	}
-	
-	
+
 	public static void sendEmail(Set<String> recipients, String body, String subject)
 			throws MessagingException {
 		Properties props = new Properties();
@@ -468,8 +469,15 @@ public final class Helpers {
 				}
 				break;
 			default:
-				eventTitleBuilder.append(displayValue + ", ");
-				fieldCount++;
+				if (baseField instanceof FileField) {
+					if(((FileField) baseField).getAttachmentType().equals(AttachmentType.DOCUMENT)) {
+						eventTitleBuilder.append(displayValue + ", ");
+						fieldCount++;
+					}
+				} else {
+					eventTitleBuilder.append(displayValue + ", ");
+					fieldCount++;
+				}
 			}
 			if (shortTitle && (fieldCount > 3)) {
 				break REPORT_FIELD_LOOP;
