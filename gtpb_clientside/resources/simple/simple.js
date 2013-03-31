@@ -22,6 +22,7 @@ var abTileColours = [ "blue", "yellow", "green", "purple", "pink", "turquoise" ]
 function tileEvents() {
 	commonTileEvents();
 	dataStreamEvents();
+	calendarFocus();
 	focusEvents();
 }
 
@@ -327,6 +328,26 @@ function dataStreamEvents() {
 		}, function() {
 			$(this).removeClass("changed");
 			dataStreamFocus();
+		});
+	});
+}
+
+function calendarFocus() {
+	$(".tile.calendar #agenda .event").mouseenter(function() {
+		var event = $(this);
+		var focusTile = $(".tile[data-type=focus]");
+		var internalTableName = event.attr("data-internaltablename");
+		var rowId = event.attr("data-rowid");
+		focusTile.find(".content").load("AppController.servlet", {
+			"return" : "s/tiles/focus/focus",
+			set_table : internalTableName,
+			set_custom_integer : true,
+			integerkey : "focus_row_id",
+			customintegervalue : rowId
+		}, function() {
+			var rowTitle = event.text();
+			focusTile.find(".title").text(rowTitle);
+			focusEvents();
 		});
 	});
 }

@@ -42,7 +42,7 @@
 #set($colour = $tile.getColour())
 #foreach($event in $events)
   #set($day = $event.getDate().get($DAY_OF_MONTH))
-  <div class="event">
+  <div class="event" data-internaltablename="$event.getReport().getParentTable().getInternalTableName()" data-rowid="$event.getDataRow().getRowId()">
     <div class="day ${colour}_fg">
       #set($dayString = "$day")
       #set($lastCharPos = $dayString.length() - 1)
