@@ -646,6 +646,7 @@ function backHome() {
 		"return": "s/tiles/calendar",
 		set_tile: internalTileName
 	});
+	calendarFocus();
 	/* end of calendar */
 	var dataStreamTile = $(".tile.data_stream");
 	// If contains report or edit screen
