@@ -211,7 +211,7 @@ function loadCalendar(calendarElement) {
 					$("#report_selection_header span").each(function() {
 						
 					});
-				}
+				},
 				minTime : 6
 			});
 	// Show initial calendars
