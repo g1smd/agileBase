@@ -333,7 +333,6 @@ function dataStreamEvents() {
 }
 
 function calendarFocus() {
-	console.log("calendarFocus");
 	$(".tile.calendar #agenda .event").mouseenter(function() {
 		var event = $(this);
 		var focusTile = $(".tile[data-type=focus]");
@@ -646,8 +645,9 @@ function backHome() {
 	$(".tile.calendar").find(".content").load("AppController.servlet", {
 		"return": "s/tiles/calendar",
 		set_tile: internalTileName
+	}, function() {
+		calendarFocus();
 	});
-	calendarFocus();
 	/* end of calendar */
 	var dataStreamTile = $(".tile.data_stream");
 	// If contains report or edit screen
