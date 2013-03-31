@@ -133,6 +133,7 @@ body {
   padding: 0.25em;
   margin: 0.25em;
   width: 100%;
+  border: 1px solid #656766;
   border-radius: 1em;
   cursor: pointer;
   display: block;
