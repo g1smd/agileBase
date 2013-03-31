@@ -145,7 +145,9 @@ function commonTileEvents() {
 function loadOrCreateCalendar() {
 	var tile = $(".tile.calendar");
 	var internalTileName = tile.attr("data-internaltilename");
-	if (tile.find("#calendar").size() == 0) {
+	if (tile.find("#calendar").size() > 0) {
+		loadCalendar();
+	} else {
 		tile.find(".content").css("opacity","0.25").load("AppController.servlet", {
 			"return": "s/tiles/calendar",
 			set_tile: internalTileName
