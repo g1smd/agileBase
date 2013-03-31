@@ -207,9 +207,10 @@ function loadCalendar(calendarElement) {
 				},
 				dayClick: function(date, allDay, jsEvent, view) {
 					var dayElement = $(this);
-					dayElement.append("<div class='addEvent'></div>");
+					var addEventElement = dayElement.append("<div class='addEvent'></div>");
+					var addEventElement = dayElement.find(".addEvent");
 					$("#report_selection_header span").each(function() {
-						
+						addEventElement.append("<button>add " + $(this).attr("data-singulartablename") + "</button>");
 					});
 				},
 				minTime : 6
