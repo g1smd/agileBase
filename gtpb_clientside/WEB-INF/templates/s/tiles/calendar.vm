@@ -41,7 +41,8 @@
 #set($DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH")) 
 #set($colour = $tile.getColour())
 #foreach($event in $events)
-  #set($day = $event.getDate().get($DAY_OF_MONTH))
+  #set($date = $event.getDate())
+  #set($day = $date.get($DAY_OF_MONTH))
   <div class="event" data-internaltablename="$event.getReport().getParentTable().getInternalTableName()" data-rowid="$event.getDataRow().getRowId()">
     <div class="day ${colour}_fg">
       #set($dayString = "$day")
@@ -54,6 +55,17 @@
       #end
       $dayString<sup>$suffix</sup>
     </div>
+    #set($calendarStartField = $event.getReport().getCalendarStartField())
+    #if($calendarStartField.getDateResolution() > $DAY_OF_MONTH)
+      #set($HOUR_OF_DAY = $viewTools.getCalendarConstant("HOUR_OF_DAY")) 
+      #set($MINUTE = $viewTools.getCalendarConstant("MINUTE")) 
+      #set($hour = $date.get($HOUR_OF_DAY))
+      #set($minute = $date.get($MINUTE))
+      #if(($hour != 0) || ($minute != 0))
+        #if("$minute".length() == 1) #set($minute = "0$minute") #end
+        <b>$hour:$minute</b>
+      #end
+    #end
     $event.getTitle()
   </div>
   #if($foreach.count > 20) #break #end
