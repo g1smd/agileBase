@@ -209,12 +209,16 @@ function loadCalendar(calendarElement) {
 					var dayElement = $(this);
 					var colour = dayElement.closest(".tile").attr("data-colour");
 					$(".addEvents").remove();
-					var addEventElement = dayElement.append("<div class='addEvents transition notfocus'></div>");
-					var addEventElement = dayElement.find(".addEvents");
+					var addEventsElement = dayElement.append("<div class='addEvents transition notfocus'></div>");
+					var addEventsElement = dayElement.find(".addEvents");
 					$("#report_selection_header span").each(function() {
-						addEventElement.append("<span class='addEvent white " + colour + "_fg'>add " + $(this).attr("data-singulartablename") + "</span>");
+						var internalTableName = $(this).attr("data-internaltablename");
+						addEventsElement.append("<span class='addEvent white " + colour + "_fg' data-internaltablename='" + internalTableName + "'>add " + $(this).attr("data-singulartablename") + "</span>");
 					});
-					addEventElement.removeClass("notfocus");
+					addEventsElement.removeClass("notfocus");
+					addEventsElement.find(".addEvent").click(function(event) {
+						newRecord($(this).attr("data-internaltablename"));
+					});
 				},
 				minTime : 6
 			});
@@ -250,7 +254,7 @@ function addRemoveCalendar(checkboxElement) {
 		$("#calendar").fullCalendar('addEventSource', eventSource);
 		var legendElement = $("<span class='legend_report report_"
 				+ internalReportName + "' id='legend_" + internalReportName
-				+ "' title='" + reportTooltip + "' data-singulartablename='" + singularTableName + "'>" + reportName + "</span>");
+				+ "' title='" + reportTooltip + "' data-singulartablename='" + singularTableName + "' data-internaltablename='" + internalTableName + "'>" + reportName + "</span>");
 		$("#report_selection_header").append(legendElement);
 	} else {
 		$("#calendar").fullCalendar('removeEventSource', feedUrl);
