@@ -238,6 +238,7 @@ function loadCalendar(calendarElement) {
 		$(window).resize()
 	}, 500);
 	$(".sideAction.backToView").unbind("click").click(function() {
+		alert("back to cal");
 		loadCalendar(calendarElement);
 	});
 }
