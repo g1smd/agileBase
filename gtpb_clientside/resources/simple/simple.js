@@ -206,6 +206,7 @@ function loadCalendar(calendarElement) {
 					$.post("AppController.servlet", options);
 				},
 				dayClick: function(date, allDay, jsEvent, view) {
+					alert("day click");
 					var dayElement = $(this);
 					var addEventElement = dayElement.append("<div class='addEvent'></div>");
 					var addEventElement = dayElement.find(".addEvent");
