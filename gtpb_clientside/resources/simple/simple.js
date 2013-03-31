@@ -235,7 +235,6 @@ function addRemoveCalendar(checkboxElement) {
 	var reportName = jqCheckbox.parent().text();
 	var reportTooltip = jqCheckbox.parent().attr("title");
 	var singularTableName = jqCheckbox.parent().attr("data-singulartablename");
-	alert(singularTableName);
 	var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename="
 			+ internalTableName + "&internalreportname=" + internalReportName;
 	var eventColour = jqCheckbox.siblings("span").css('background-color');
