@@ -126,9 +126,13 @@ body {
 .calendar .addEvents .addEvent {
   padding: 0.5em;
   background-color: white;
-  border: 1px solid 656766;
-  font-size: 10pt;
+  border: 1px solid #656766;
   border-radius: 1em;
+  cursor: pointer;
+  display: block;
+  color: #565766;
+  width: 100%;
+  text-align: center;
 }
 
 sup {
