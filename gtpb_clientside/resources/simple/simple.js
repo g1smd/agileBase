@@ -208,10 +208,10 @@ function loadCalendar(calendarElement) {
 				dayClick: function(date, allDay, jsEvent, view) {
 					alert("day click");
 					var dayElement = $(this);
-					var addEventElement = dayElement.append("<div class='addEvent' class='transition notfocus'></div>");
-					var addEventElement = dayElement.find(".addEvent");
+					var addEventElement = dayElement.append("<div class='addEvents' class='transition notfocus'></div>");
+					var addEventElement = dayElement.find(".addEvents");
 					$("#report_selection_header span").each(function() {
-						addEventElement.append("<button>add " + $(this).attr("data-singulartablename") + "</button>");
+						addEventElement.append("<span class='addEvent'>add " + $(this).attr("data-singulartablename") + "</span>");
 					});
 					addEventElement.removeClass("notfocus");
 				},
