@@ -154,7 +154,7 @@ function loadCalendar(calendarElement) {
 	$(".sideAction.backToView").unbind("click").click(function() {
 		console.log(calendarElement.attr("class"));
 		var content = $(".tile.calendar").find(".content");
-		content.find("#calendar").remove();
+		content.children().remove();
 		content.append("<div id='calendar'></div>");
 		loadCalendar(content.find("#calendar"));
 	});
