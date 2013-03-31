@@ -217,7 +217,13 @@ function loadCalendar(calendarElement) {
 					});
 					addEventsElement.removeClass("notfocus");
 					addEventsElement.find(".addEvent").click(function(event) {
-						newRecord($(this).attr("data-internaltablename"));
+						var internalTableName = $(this).attr("data-internaltablename");
+						var internalFieldName = $(this).attr("data-internalfieldname");
+						var params = {};
+						params[internalFieldName + "_years"] = date.getFullYear();
+						params[internalFieldName + "_months"] = date.getMonth() + 1;
+						params[internalFieldName + "_days"] = date.getDate();
+						newRecord(internalTableName, params);
 					});
 				},
 				minTime : 6
@@ -238,6 +244,7 @@ function addRemoveCalendar(checkboxElement) {
 	var jqCheckbox = $(checkboxElement);
 	var internalTableName = jqCheckbox.attr("internaltablename");
 	var internalReportName = jqCheckbox.attr("internalreportname");
+	var internalFieldName = jqCheckbox.attr("internalfieldname"); // The date field
 	var reportName = jqCheckbox.parent().text();
 	var reportTooltip = jqCheckbox.parent().attr("title");
 	var singularTableName = jqCheckbox.parent().attr("data-singulartablename");
@@ -254,7 +261,7 @@ function addRemoveCalendar(checkboxElement) {
 		$("#calendar").fullCalendar('addEventSource', eventSource);
 		var legendElement = $("<span class='legend_report report_"
 				+ internalReportName + "' id='legend_" + internalReportName
-				+ "' title='" + reportTooltip + "' data-singulartablename='" + singularTableName + "' data-internaltablename='" + internalTableName + "'>" + reportName + "</span>");
+				+ "' title='" + reportTooltip + "' data-singulartablename='" + singularTableName + "' data-internaltablename='" + internalTableName + "' data-internalfieldname='" + internalFieldName + "'>" + reportName + "</span>");
 		$("#report_selection_header").append(legendElement);
 	} else {
 		$("#calendar").fullCalendar('removeEventSource', feedUrl);
@@ -454,13 +461,16 @@ function reportRowClicks() {
 			});
 }
 
-function newRecord(internalTableName) {
+function newRecord(internalTableName, params) {
+	var postParams = {
+			"return" : "gui/reports_and_tables/tabs/edit",
+			save_new_record : true,
+			set_table : internalTableName
+	};
+	// Merge params into postParams
+	$.extent(postParams, params);
 	$(".tile.expanded").find(".content").css("opacity", "0.25").load(
-			"AppController.servlet", {
-				"return" : "gui/reports_and_tables/tabs/edit",
-				save_new_record : true,
-				set_table : internalTableName
-			}, function() {
+			"AppController.servlet", postParams, function() {
 				// remove opacity
 				$(".content").removeAttr("style");
 				editTabFunctions();
