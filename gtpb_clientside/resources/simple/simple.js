@@ -2,7 +2,6 @@
  * JS used for the simple interface
  */
 $(document).ready(function() {
-	console.log("document.ready");
 	if ($("#infovis").size() > 0) {
 		loadTreemap();
 	} else if ($("#tile_suggestions").size() > 0) {
@@ -203,10 +202,16 @@ function loadCalendar(calendarElement) {
 								.getMinutes();
 					}
 					// TODO: visually change the event element while saving: add then
-					// remove a
-					// CSS class
+					// remove a CSS class
 					$.post("AppController.servlet", options);
 				},
+				dayClick: function(date, allDay, jsEvent, view) {
+					var dayElement = $(this);
+					dayElement.append("<div class='addEvent'></div>");
+					$("#report_selection_header span").each(function() {
+						
+					});
+				}
 				minTime : 6
 			});
 	// Show initial calendars
@@ -227,6 +232,8 @@ function addRemoveCalendar(checkboxElement) {
 	var internalReportName = jqCheckbox.attr("internalreportname");
 	var reportName = jqCheckbox.parent().text();
 	var reportTooltip = jqCheckbox.parent().attr("title");
+	var singularTableName = jqCheckbox.parent().attr("data-singulartablename");
+	alert(singularTableName);
 	var feedUrl = "AppController.servlet?return=gui/calendar/feed&internaltablename="
 			+ internalTableName + "&internalreportname=" + internalReportName;
 	var eventColour = jqCheckbox.siblings("span").css('background-color');
@@ -240,7 +247,7 @@ function addRemoveCalendar(checkboxElement) {
 		$("#calendar").fullCalendar('addEventSource', eventSource);
 		var legendElement = $("<span class='legend_report report_"
 				+ internalReportName + "' id='legend_" + internalReportName
-				+ "' title='" + reportTooltip + "'>" + reportName + "</span>");
+				+ "' title='" + reportTooltip + "' data-singulartablename='" + singularTableName + "'>" + reportName + "</span>");
 		$("#report_selection_header").append(legendElement);
 	} else {
 		$("#calendar").fullCalendar('removeEventSource', feedUrl);
@@ -372,11 +379,9 @@ function tileLoaded(tile, editing) {
 				});
 	}
 	if ((tileType == "adder")) {
-		console.log("registering label click");
 		$("label.tiletype").click(
 				function(event) {
 					event.stopPropagation(); // stop the .tile click being called
-					console.log("label clicked, x = " + event.pageX + ", y = " + event.pageY);
 					var selectedApp = $(this).attr("data-tiletype");
 					if (selectedApp == "data_stream" || selectedApp == "data_link") {
 						$("label.tiletype").not($(this)).addClass("notfocus");

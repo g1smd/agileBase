@@ -113,6 +113,10 @@ body {
   margin-right: 0.25em;
 }
 
+.tile.calendar .fc-event {
+  line-height: 1.1em;
+} 
+
 sup {
   font-size: 50%;
   top: -0.75em
