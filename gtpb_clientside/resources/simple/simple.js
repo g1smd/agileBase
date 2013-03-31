@@ -333,6 +333,7 @@ function dataStreamEvents() {
 }
 
 function calendarFocus() {
+	console.log("calendarFocus");
 	$(".tile.calendar #agenda .event").mouseenter(function() {
 		var event = $(this);
 		var focusTile = $(".tile[data-type=focus]");
