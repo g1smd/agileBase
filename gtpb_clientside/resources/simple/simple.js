@@ -237,6 +237,9 @@ function loadCalendar(calendarElement) {
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
+	$(".sideAction.backToView").unbind("click").click(function() {
+		loadCalendar(calendarElement);
+	});
 }
 
 // Add remove a JSON calendar feed
