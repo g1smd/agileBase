@@ -115,7 +115,20 @@ body {
 
 .tile.calendar .fc-event {
   line-height: 1.1em;
-} 
+}
+
+.calendar .addEvent {
+  background-color: white;
+  padding: 0.5em;
+}
+
+.calendar .addEvent button {
+  padding: 0.5em;
+  background-color: white;
+  border: 1px solid 656766;
+  font-size: 10pt;
+  border-radius: 1em;
+}
 
 sup {
   font-size: 50%;
