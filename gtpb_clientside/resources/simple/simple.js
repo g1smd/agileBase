@@ -213,7 +213,8 @@ function loadCalendar(calendarElement) {
 					var addEventsElement = dayElement.find(".addEvents");
 					$("#report_selection_header span").each(function() {
 						var internalTableName = $(this).attr("data-internaltablename");
-						addEventsElement.append("<span class='addEvent white' data-internaltablename='" + internalTableName + "'>add " + $(this).attr("data-singulartablename") + "</span>");
+						var internalFieldName = $(this).attr("data-internalfieldname");
+						addEventsElement.append("<span class='addEvent white' data-internaltablename='" + internalTableName + "' data-internalfieldname='" + internalFieldName + "'>add " + $(this).attr("data-singulartablename") + "</span>");
 					});
 					addEventsElement.removeClass("notfocus");
 					addEventsElement.find(".addEvent").click(function(event) {
