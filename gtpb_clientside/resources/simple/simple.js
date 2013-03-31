@@ -238,9 +238,11 @@ function loadCalendar(calendarElement) {
 		$(window).resize()
 	}, 500);
 	$(".sideAction.backToView").unbind("click").click(function() {
-		alert("back to calendar");
-		calendarElement.children().remove();
-		loadCalendar(calendarElement);
+		console.log("back to calendar");
+		var parent = calendarElement.parent();
+		calendarElement.remove();
+		parent.append("<div class='content transition'></div>");
+		loadCalendar(parent.find(".content"));
 	});
 }
 
