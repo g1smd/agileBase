@@ -213,7 +213,7 @@ function loadCalendar(calendarElement) {
 					$("#report_selection_header span").each(function() {
 						addEventElement.append("<span class='addEvent " + colour + "'>add " + $(this).attr("data-singulartablename") + "</span>");
 					});
-					addEventElement.removeClass("notfocus");
+					setTimeout(addEventElement.removeClass("notfocus"), 100);
 				},
 				minTime : 6
 			});
