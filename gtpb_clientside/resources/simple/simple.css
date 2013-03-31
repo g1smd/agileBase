@@ -120,11 +120,14 @@ body {
 .calendar .addEvents {
   background-color: white;
   padding: 0.5em;
+  padding-right: 1em;
   width: 100%;
 }
 
 .calendar .addEvents .addEvent {
-  padding: 0.5em;
+  padding: 0.25em;
+  margin: 0.25em;
+  width: 100%;
   background-color: white;
   border: 1px solid #656766;
   border-radius: 1em;
