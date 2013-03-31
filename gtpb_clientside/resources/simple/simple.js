@@ -249,7 +249,8 @@ function loadCalendar() {
 		addRemoveCalendar(this);
 	});
   $(".report_selection_header").click(function() {
-    $(this).next(".report_selection").toggle('normal');
+  	var reportSelection = $("#report_selection");
+    reportSelection.toggleClass("notfocus");
   });
 	// Re-render calendar once expand animation has completed
 	setTimeout(function() {
