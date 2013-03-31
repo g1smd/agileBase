@@ -594,6 +594,9 @@ function backHome() {
 	$("#report_selection_header").addClass("notfocus");
 	$("#report_selection").addClass("notfocus");
 	$("#agenda").removeClass("notfocus");
+	$(".tile.calendar").find(".content").load("AppController.servlet", {
+		"return": "s/tiles/calendar"
+	});
 	/* end of calendar */
 	var dataStreamTile = $(".tile.data_stream");
 	// If contains report or edit screen
