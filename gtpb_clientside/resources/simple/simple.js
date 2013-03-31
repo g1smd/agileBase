@@ -104,15 +104,7 @@ function commonTileEvents() {
 		}
 		expandTile(tile);
 		if (tile.hasClass("calendar")) {
-			$("#calendar").removeClass("notfocus");
-			$("#agenda").addClass("notfocus");
-			$("#report_selection_header").removeClass("notfocus");
-			if($("#report_selection input:checked").size() == 0) {
-				// Show calendar report chooser if no reports chosen
-			  $("#report_selection").removeClass("notfocus");
-			}
-			loadCalendar($("#calendar"));
-			tileLoaded(tile, false);
+			loadOrCreateCalendar();
 		} else {
 			var template = "s/tiles/" + tile.attr("data-type");
 			var internalTileName = tile.attr("data-internaltilename");
@@ -150,13 +142,32 @@ function commonTileEvents() {
 	});
 }
 
-function loadCalendar(calendarElement) {
+function loadOrCreateCalendar() {
+	var tile = $(".tile.calendar");
+	var internalTileName = tile.attr("data-internaltilename");
+	if (tile.find("#calendar").size() == 0) {
+		tile.find(".content").css("opacity","0.25").load("AppController.servlet", {
+			"return": "s/tiles/calendar",
+			set_tile: internalTileName
+		}, function() {
+			loadCalendar();
+			tile.find(".content").removeAttr("style");
+		});
+	}
+}
+
+function loadCalendar() {
+	var tile = $(".tile.calendar");
+	var calendarElement = $("#calendar");
+	calendarElement.removeClass("notfocus");
+	$("#agenda").addClass("notfocus");
+	$("#report_selection_header").removeClass("notfocus");
+	if($("#report_selection input:checked").size() == 0) {
+		// Show calendar report chooser if no reports chosen
+	  $("#report_selection").removeClass("notfocus");
+	}
 	$(".sideAction.backToView").unbind("click").click(function() {
-		console.log(calendarElement.attr("class"));
-		var content = $(".tile.calendar").find(".content");
-		content.children().remove();
-		content.append("<div id='calendar'></div>");
-		loadCalendar(content.find("#calendar"));
+		loadOrCreateCalendar();
 	});
 	calendarElement
 			.fullCalendar({
@@ -244,6 +255,7 @@ function loadCalendar(calendarElement) {
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
+	tileLoaded(tile, false);
 }
 
 // Add remove a JSON calendar feed
