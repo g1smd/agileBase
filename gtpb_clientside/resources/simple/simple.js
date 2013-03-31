@@ -248,6 +248,9 @@ function loadCalendar() {
 	$("#report_selection input:checked").each(function() {
 		addRemoveCalendar(this);
 	});
+  $(".report_selection_header").click(function() {
+    $(this).next(".report_selection").toggle('normal');
+  });
 	// Re-render calendar once expand animation has completed
 	setTimeout(function() {
 		$(window).resize()
