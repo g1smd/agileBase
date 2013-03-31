@@ -188,14 +188,7 @@ function loadCalendar() {
 				},
 				eventClick : function(calEvent, jsEvent, view) {
 					var eventId = calEvent.id;
-					if (fMobileDevice()) {
-						document.location = "AppController.servlet?return=gui/mobile/calendar_wizard&set_custom_string=true&key=calendar_wizard_template&value=edit_event&set_table="
-								+ calEvent.internalTableName + '&set_row_id=' + calEvent.rowId;
-					} else {
-						fShowModalDialog('gui/calendar/edit_event&set_table='
-								+ calEvent.internalTableName + '&set_row_id=' + calEvent.rowId,
-								'edit event', fEditEventOK, 'ok', 'width=90%; height=95%');
-					}
+					loadEdit(calendarElement.closest(".content"), calEvent.internalTableName, calEvent.rowId);
 				},
 				eventDrop : function(event, dayDelta, minuteDelta, allDay, revertFunc,
 						jsEvent, ui, view) {
