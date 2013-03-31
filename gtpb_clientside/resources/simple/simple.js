@@ -367,10 +367,12 @@ function calendarFocus() {
 		var event = $(this);
 		var focusTile = $(".tile[data-type=focus]");
 		var internalTableName = event.attr("data-internaltablename");
+		var internalReportName = event.attr("data-internalreportname");
 		var rowId = event.attr("data-rowid");
 		focusTile.find(".content").load("AppController.servlet", {
 			"return" : "s/tiles/focus/focus",
 			set_table : internalTableName,
+			set_report: internalReportName,
 			set_custom_integer : true,
 			integerkey : "focus_row_id",
 			customintegervalue : rowId
@@ -387,12 +389,13 @@ function dataStreamFocus() {
 			function() {
 				var row = $(this);
 				var focusTile = $(".tile[data-type=focus]");
-				var internalTableName = $(this).closest(".tile").attr(
-						"data-internaltablename");
+				var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
+				var internalReportName = $(this).closest(".tile").attr("data-internalreportname");
 				var rowId = $(this).attr("data-rowid");
 				focusTile.find(".content").load("AppController.servlet", {
 					"return" : "s/tiles/focus/focus",
 					set_table : internalTableName,
+					set_report: internalReportName,
 					set_custom_integer : true,
 					integerkey : "focus_row_id",
 					customintegervalue : rowId

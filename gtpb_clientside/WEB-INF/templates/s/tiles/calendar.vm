@@ -43,7 +43,8 @@
 #foreach($event in $events)
   #set($date = $event.getDate())
   #set($day = $date.get($DAY_OF_MONTH))
-  <div class="event" data-internaltablename="$event.getReport().getParentTable().getInternalTableName()" data-rowid="$event.getDataRow().getRowId()">
+  #set($report = $event.getReport())
+  <div class="event" data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()" data-rowid="$event.getDataRow().getRowId()">
     <div class="day ${colour}_fg">
       #set($dayString = "$day")
       #set($lastCharPos = $dayString.length() - 1)
@@ -55,7 +56,7 @@
       #end
       $dayString<sup>$suffix</sup>
     </div>
-    #set($calendarStartField = $event.getReport().getCalendarStartField())
+    #set($calendarStartField = $report.getCalendarStartField())
     #if($calendarStartField.getBaseField().getDateResolution() > $DAY_OF_MONTH)
       #set($HOUR_OF_DAY = $viewTools.getCalendarConstant("HOUR_OF_DAY")) 
       #set($MINUTE = $viewTools.getCalendarConstant("MINUTE")) 
