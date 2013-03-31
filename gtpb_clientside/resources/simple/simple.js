@@ -152,6 +152,7 @@ function loadOrCreateCalendar() {
 			"return": "s/tiles/calendar",
 			set_tile: internalTileName
 		}, function() {
+			$(".sideAction.backToView").removeClass("expanded");
 			loadCalendar();
 			tile.find(".content").removeAttr("style");
 		});
