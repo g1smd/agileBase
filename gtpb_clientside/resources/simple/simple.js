@@ -151,6 +151,13 @@ function commonTileEvents() {
 }
 
 function loadCalendar(calendarElement) {
+	$(".sideAction.backToView").unbind("click").click(function() {
+		console.log(calendarElement[0].tagName);
+		var parent = calendarElement.parent();
+		calendarElement.remove();
+		parent.append("<div class='content transition'></div>");
+		loadCalendar(parent.find(".content"));
+	});
 	calendarElement
 			.fullCalendar({
 				header : {
@@ -237,13 +244,6 @@ function loadCalendar(calendarElement) {
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
-	$(".sideAction.backToView").unbind("click").click(function() {
-		console.log("back to calendar");
-		var parent = calendarElement.parent();
-		calendarElement.remove();
-		parent.append("<div class='content transition'></div>");
-		loadCalendar(parent.find(".content"));
-	});
 }
 
 // Add remove a JSON calendar feed
