@@ -62,7 +62,8 @@
       #set($hour = $date.get($HOUR_OF_DAY))
       #set($minute = $date.get($MINUTE))
       #if(($hour != 0) || ($minute != 0))
-        #if("$minute".length() == 1) #set($minute = "0$minute") #end
+        #set($minute = "$minute")
+        #if($minute.length() == 1) #set($minute = "0$minute") #end
         <b>$hour:$minute</b>
       #end
     #end
