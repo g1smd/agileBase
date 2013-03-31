@@ -117,9 +117,10 @@ body {
   line-height: 1.1em;
 }
 
-.calendar .addEvent {
+.calendar .addEvents {
   background-color: white;
   padding: 0.5em;
+  width: 100%;
 }
 
 .calendar .addEvents .addEvent {
