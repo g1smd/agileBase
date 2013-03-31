@@ -594,9 +594,10 @@ function backHome() {
 	$("#report_selection_header").addClass("notfocus");
 	$("#report_selection").addClass("notfocus");
 	$("#agenda").removeClass("notfocus");
+	var internalTileName = $(".tile.calendar").attr("data-internaltilename");
 	$(".tile.calendar").find(".content").load("AppController.servlet", {
 		"return": "s/tiles/calendar",
-		set_tile: $(this).closest(".tile").attr("data-internaltilename")
+		set_tile: internalTileName
 	});
 	/* end of calendar */
 	var dataStreamTile = $(".tile.data_stream");
