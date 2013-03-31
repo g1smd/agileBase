@@ -56,8 +56,8 @@
       $dayString<sup>$suffix</sup>
     </div>
     #set($calendarStartField = $event.getReport().getCalendarStartField())
-    $calendarStartField $calendarStartField.getDateResolution()<br>
-    #if($calendarStartField.getDateResolution() > $DAY_OF_MONTH)
+    $calendarStartField $calendarStartField.getBaseField().getDateResolution()<br>
+    #if($calendarStartField.getBaseField().getDateResolution() > $DAY_OF_MONTH)
       Greater than $DAY_OF_MONTH<br>
       #set($HOUR_OF_DAY = $viewTools.getCalendarConstant("HOUR_OF_DAY")) 
       #set($MINUTE = $viewTools.getCalendarConstant("MINUTE")) 
