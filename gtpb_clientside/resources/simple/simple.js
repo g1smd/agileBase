@@ -468,7 +468,7 @@ function newRecord(internalTableName, params) {
 			set_table : internalTableName
 	};
 	// Merge params into postParams
-	$.extent(postParams, params);
+	$.extend(postParams, params);
 	$(".tile.expanded").find(".content").css("opacity", "0.25").load(
 			"AppController.servlet", postParams, function() {
 				// remove opacity
