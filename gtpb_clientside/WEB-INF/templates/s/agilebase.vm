@@ -53,6 +53,7 @@
     <script language="JavaScript" src="resources/jquery.ajaxq.js"></script>
   #end
   #if($hasCalendar)
+    <script language="JavaScript" src="resources/fullcalendar/jquery-ui-custom.js"></script>
     <script language="JavaScript" src="resources/fullcalendar/fullcalendar.js"></script>
   #end
 </head>
