@@ -239,9 +239,8 @@ function loadCalendar() {
 						params[internalFieldName + "_years"] = date.getFullYear();
 						params[internalFieldName + "_months"] = date.getMonth() + 1;
 						params[internalFieldName + "_days"] = date.getDate();
-						console.log(date.getHours() + ":" + date.getMinutes());
-						params[internalFieldName + "_hours"] = "0";
-						params[internalFieldName + "_minutes"] = "0";
+						params[internalFieldName + "_hours"] = date.getHours();
+						params[internalFieldName + "_minutes"] = date.getMinutes();
 						newRecord(internalTableName, params);
 					});
 				},
