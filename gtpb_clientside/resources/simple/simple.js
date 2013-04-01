@@ -107,7 +107,7 @@ function commonTileEvents() {
 		if (tile.hasClass("calendar")) {
 			loadOrCreateCalendar();
 		} else {
-			var template = "s/agilebase/" + tile.attr("data-type");
+			var template = "s/tiles/" + tile.attr("data-type");
 			var internalTileName = tile.attr("data-internaltilename");
 			tile.find(".content").load("AppController.servlet", {
 				"return" : template,
@@ -499,7 +499,7 @@ function tileLoaded(tile, editing) {
 						}, function(data) {
 							if (selectedApp == "calendar") {
 								// Reload page for calendar to include calendar JS in head
-								document.location = "AppController.servlet?return=s/tiles&cacheBust=" + (new Date()).getTime();
+								document.location = "AppController.servlet?return=s/agilebase&cacheBust=" + (new Date()).getTime();
 							} else {
 							  $("#tiles").html(data);
 							  tileEvents();
