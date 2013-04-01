@@ -259,6 +259,9 @@ function fSetupTagRemove(tag) {
 }
 
 function fTags() {
+	if (typeof $.inlineComplete != "function") {
+		return;
+	}
 	$(".saved_tags .tag .remove").each(function() {
 		fSetupTagRemove($(this).closest(".tag"));
 	});
