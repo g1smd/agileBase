@@ -254,6 +254,7 @@ textarea {
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
   display: table;
+  width: 100%;
 }
 
 .saved_tags {
