@@ -260,6 +260,7 @@ function fSetupTagRemove(tag) {
 
 function fTags() {
 	if (typeof $.inlineComplete != "function") {
+		// For some reason, the first time fTags is called, the inlineComplete plugin isn't present/initialised
 		return;
 	}
 	$(".saved_tags .tag .remove").each(function() {
