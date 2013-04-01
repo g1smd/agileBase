@@ -107,7 +107,7 @@ function commonTileEvents() {
 		if (tile.hasClass("calendar")) {
 			loadOrCreateCalendar();
 		} else {
-			var template = "s/agilebase" + tile.attr("data-type");
+			var template = "s/agilebase/" + tile.attr("data-type");
 			var internalTileName = tile.attr("data-internaltilename");
 			tile.find(".content").load("AppController.servlet", {
 				"return" : template,
