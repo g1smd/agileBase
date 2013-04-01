@@ -250,13 +250,6 @@ function loadCalendar() {
 	$("#report_selection input:checked").each(function() {
 		addRemoveCalendar(this);
 	});
-	if($("#report_selection input:checked").size() == 0) {
-		// If no calendar reports at all selected, select the first three
-		$("#report_selection input").slice(0,3).each(function() {
-			addRemoveCalendar(this);
-		});
-  	$("#report_selection").addClass("notfocus");
-	}
   $(".report_selection_header").click(function() {
   	$("#report_selection").toggleClass("notfocus");
   });
@@ -287,6 +280,12 @@ function loadCalendar() {
       $.post("AppController.servlet", removeReportOptions);
     }
   });	
+	// If no calendar reports at all selected, select the first three
+	if($("#report_selection input:checked").size() == 0) {
+		$("#report_selection input").slice(0,3).each(function() {
+			$(this).click();
+		});
+	}
   // Re-render calendar once expand animation has completed
 	setTimeout(function() {
 		$(window).resize()
