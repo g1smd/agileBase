@@ -107,7 +107,7 @@ function commonTileEvents() {
 		if (tile.hasClass("calendar")) {
 			loadOrCreateCalendar();
 		} else {
-			var template = "s/tiles/" + tile.attr("data-type");
+			var template = "s/agilebase" + tile.attr("data-type");
 			var internalTileName = tile.attr("data-internaltilename");
 			tile.find(".content").load("AppController.servlet", {
 				"return" : template,
@@ -250,7 +250,7 @@ function loadCalendar() {
 	$("#report_selection input:checked").each(function() {
 		addRemoveCalendar(this);
 	});
-	if(("#report_selection input:checked").size() == 0) {
+	if($("#report_selection input:checked").size() == 0) {
 		// If no calendar reports at all selected, select the first three
 		$("#report_selection input").slice(0,3).each(function() {
 			addRemoveCalendar(this);
