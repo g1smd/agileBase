@@ -250,6 +250,13 @@ function loadCalendar() {
 	$("#report_selection input:checked").each(function() {
 		addRemoveCalendar(this);
 	});
+	if(("#report_selection input:checked").size() == 0) {
+		// If no calendar reports at all selected, select the first three
+		$("#report_selection input").slice(0,3).each(function() {
+			addRemoveCalendar(this);
+		});
+  	$("#report_selection").addClass("notfocus");
+	}
   $(".report_selection_header").click(function() {
   	$("#report_selection").toggleClass("notfocus");
   });
@@ -490,8 +497,13 @@ function tileLoaded(tile, editing) {
 							tiletype : selectedApp,
 							colour : colour
 						}, function(data) {
-							$("#tiles").html(data);
-							tileEvents();
+							if (selectedApp == "calendar") {
+								// Reload page for calendar to include calendar JS in head
+								document.location = "AppController.servlet?return=s/tiles&cacheBust=" + (new Date()).getTime();
+							} else {
+							  $("#tiles").html(data);
+							  tileEvents();
+							}
 						});
 					}
 				}); /* end of label.tiletype.click */
