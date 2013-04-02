@@ -259,7 +259,7 @@ function fSetupTagRemove(tag) {
 }
 
 function fTags() {
-	if (typeof $.inlineComplete != "function") {
+	if (typeof $("<input></input>").inlineComplete != "function") {
 		console.log("inlineComplete not a function");
 		// For some reason, the first time fTags is called, the inlineComplete plugin isn't present/initialised
 		return;
