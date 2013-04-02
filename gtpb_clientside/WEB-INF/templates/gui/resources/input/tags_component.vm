@@ -30,7 +30,7 @@
     #set($allTags = $field.getItems())
     #set($tagsData = $viewTools.joinWith($allTags,"|"))
     #set($fieldNameLower = $field.getFieldName().toLowerCase())
-    <input type="text"  data-internalfieldname="$field.getInternalFieldName()" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId" class="add_tag" data-terms="list:$tagsData" placeholder="add $fieldNameLower" /><input type="button" value="add" class="add_tag_button" />
+    <div style="white-space:nowrap"><input type="text"  data-internalfieldname="$field.getInternalFieldName()" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId" class="add_tag" data-terms="list:$tagsData" placeholder="add $fieldNameLower" /><input type="button" value="add" class="add_tag_button" /></div>
   </div>
 #end
 
