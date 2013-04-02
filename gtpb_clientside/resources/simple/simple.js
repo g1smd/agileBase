@@ -226,10 +226,14 @@ function loadCalendar() {
 					$(".addEvents").remove();
 					var addEventsElement = dayElement.append("<div class='addEvents transition notfocus'></div>");
 					var addEventsElement = dayElement.find(".addEvents");
+					var tablesUsed = [];
 					$("#report_selection_header span").each(function() {
 						var internalTableName = $(this).attr("data-internaltablename");
 						var internalFieldName = $(this).attr("data-internalfieldname");
-						addEventsElement.append("<span class='addEvent white' data-internaltablename='" + internalTableName + "' data-internalfieldname='" + internalFieldName + "'>add " + $(this).attr("data-singulartablename") + "</span>");
+						if (tablesUsed.indexOf(internalTableName) == -1) {
+						  addEventsElement.append("<span class='addEvent white' data-internaltablename='" + internalTableName + "' data-internalfieldname='" + internalFieldName + "'>add " + $(this).attr("data-singulartablename") + "</span>");
+						}
+						tablesUsed.push(internalTableName);
 					});
 					addEventsElement.removeClass("notfocus");
 					addEventsElement.find(".addEvent").click(function(event) {
