@@ -289,7 +289,7 @@ textarea {
   background-color: #8DC63F;
 }
 
-#reportData .block input.add_tag, input.add_tag {
+#reportData .block input.add_tag {
   margin-bottom: 0; /* override bootstrap */
   float: none;
 }
