@@ -283,6 +283,7 @@ function fTags() {
 		var newTag = !(tagInput.val() == null || tagInput.val() == "");
 		if (newTag) {
 			var inputVal = tagInput.val().replace(/\s?\/\s?/g,", ").replace(/\s?,\s?/g,", ");
+			alert(inputVal);
 	    tagsCsv += tagInput.val();
 		} else {
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
