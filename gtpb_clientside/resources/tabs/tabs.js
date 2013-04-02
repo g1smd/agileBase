@@ -296,9 +296,12 @@ function fTags() {
 		};
 	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
 	  if (newTag) {
+	  	console.log(inputVal);
 	  	var tagsArray = inputVal.split(", ");
+	  	console.log(tagsArray);
 	  	for(var i = 0; i++; i < tagsArray.length) {
 	  		var tag = tagsArray[i];
+	  		console.log(tag);
 		    tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tag + " <span class='remove'><i class='icon-remove'></i></span></span>");
 	  	}
 	    fSetupTagRemove(tagInput.closest(".tags").find(".tag.saving"));
