@@ -615,6 +615,11 @@ table.reportData td {
   border-color: rgba(255,255,255,0.5);
 }
 
+.fc-day1, .fc-day2, .fc-day3, .fc-day4, .fc-day5, .fc-day6 {
+  background-color: white;
+  color: #656766;
+}
+
 #calendar h2, #report_selection h2 {
   background-color: transparent;
   margin-left: 0.5em;
