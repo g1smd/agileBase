@@ -246,6 +246,8 @@ function loadCalendar() {
 				},
 				minTime : 6
 			});
+	var colour = tile.attr("data-colour");
+	$(".fc-mon, .fc-tue, .fc-wed, .fc-thu, .fc-fri").addClass(colour + "_fg");
 	// Show initial calendars
 	$("#report_selection input:checked").each(function() {
 		addRemoveCalendar(this);
