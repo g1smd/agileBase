@@ -61,6 +61,10 @@ body {
   padding-right: 0.5em;
 }
 
+.tile table#reportData {
+  padding-top: 1em;
+}
+
 .tile .form_tabber {
   background-color: transparent;
   color: #333333; /* bootstrap grey */
@@ -583,17 +587,20 @@ table.reportData td {
 /* override fullcalendar */
 
 #calendar {
-  background-color: rgba(255,255,255, 0.5);  
+  background-color: rgba(255,255,255, 0.5); 
+  border-radius: 1em; 
 }
 
 #calendar .fc-state-default, #calendar .fc-state-default .fc-button-inner {
   background-color: white;
   border-color: white;
+  color: #656766;
 }
 
 #calendar .fc-state-active, #calendar .fc-state-active .fc-button-inner {
   background-color: transparent;
   border-color: white;
+  color: white;
 }
 
 #calendar .fc-state-highlight {
@@ -604,6 +611,7 @@ table.reportData td {
   border-top: 0;
   border-left: 0;
   border-right: 0;
+  padding-left: 0.25em;
 }
 
 #calendar .fc-grid th {
