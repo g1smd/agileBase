@@ -281,8 +281,9 @@ function fTags() {
 	  	}
 	  });
 		var newTag = !(tagInput.val() == null || tagInput.val() == "");
+		var inputVal = tagInput.val();
 		if (newTag) {
-			var inputVal = tagInput.val().replace(/\s?\/\s?/g,", ").replace(/\s?,\s?/g,", ");
+			inputVal = inputVal.replace(/\s?\/\s?/g,", ").replace(/\s?,\s?/g,", ");
 	    tagsCsv += inputVal;
 		} else {
 			tagsCsv = tagsCsv.substring(0, tagsCsv.length - 2);
@@ -295,7 +296,11 @@ function fTags() {
 		};
 	  options[tagInput.attr("data-internalfieldname")] = tagsCsv;
 	  if (newTag) {
-	    tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tagInput.val() + " <span class='remove'><i class='icon-remove'></i></span></span>");
+	  	var tagsArray = inputVal.split(", ");
+	  	for(var i = 0; i++; i < tagsArray.length) {
+	  		var tag = tagsArray[i];
+		    tagInput.closest(".tags").find(".saved_tags").append("<span class='tag saving'>" + tag + " <span class='remove'><i class='icon-remove'></i></span></span>");
+	  	}
 	    fSetupTagRemove(tagInput.closest(".tags").find(".tag.saving"));
 	  }
 	  $.post("AppController.servlet", options, function(data) {
