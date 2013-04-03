@@ -734,7 +734,7 @@ function backHome() {
 	$(".tile .title").removeClass("notfocus");
 	$(".tile .tile_icon").removeClass("notfocus");
 	$(".tile .tile_icon i").removeClass("notfocus");
-	$(".tile.expanded").not(".calendar").find(".content").addClass("notfocus");
+	$(".tile.expanded").not(".calendar").not(".focus").find(".content").addClass("notfocus");
 	$(".tile.expanded").removeClass("expanded");
 	$("#tiles").removeClass("padded");
 	/* calendar */
