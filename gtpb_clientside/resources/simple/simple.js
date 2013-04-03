@@ -110,6 +110,7 @@ function commonTileEvents() {
 					var internalTableName = tile.find("#record_identifier").attr(
 							"data-internaltablename");
 					var rowId = tile.find("#record_identifier").attr("data-rowid");
+					tile.addClass("blue");
 					expandTile(tile);
 					tileLoaded(tile, true);
 					loadEdit(tile.find(".content"), internalTableName, rowId);
