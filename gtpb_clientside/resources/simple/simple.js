@@ -110,7 +110,7 @@ function commonTileEvents() {
 					var internalTableName = tile.find("#record_identifier").attr(
 							"data-internaltablename");
 					var rowId = tile.find("#record_identifier").attr("data-rowid");
-					tile.addClass("blue");
+					tile.addClass(tile.attr("data-colour"));
 					expandTile(tile);
 					tileLoaded(tile, true);
 					loadEdit(tile.find(".content"), internalTableName, rowId);
@@ -132,7 +132,11 @@ function commonTileEvents() {
 				tile.find(".content").removeClass("notfocus");
 			});
 	$(".sideAction.backToView").click(function() {
-		tileLoaded($(".tile.expanded"), false);
+		if ($(".tile.expanded".hasClass("focus"))) {
+			backHome();
+		} else {
+		  tileLoaded($(".tile.expanded"), false);
+		}
 	});
 	$(".sideAction.newRecord").click(function() {
 		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
@@ -724,6 +728,7 @@ function backHome() {
 	$(".tile.notfocus").removeClass("notfocus");
 	var allColours = abTileColours.join(" ");
 	$("body").removeClass(allColours);
+	$(".tile.focus").removeClass(allColours);
 	$(".header.row").removeClass("expanded");
 	$(".sideAction").removeClass("expanded");
 	$(".tile .title").removeClass("notfocus");
