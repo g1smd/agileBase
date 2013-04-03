@@ -18,6 +18,7 @@
 #set($table = $sessionData.getTable())
 #set($report = $sessionData.getReport())
 #set($rowId = $sessionData.getCustomInteger("focus_row_id"))
+<div style="display:none" data-internaltablename="$table.getInternalTableName()" data-rowid="$rowId" id="record_identifier"></div>
 #set($rrd_rowId = $rowId)
 #set($tableDataRow = $view.getTableDataRow($table, $rowId))
 #set($allComments = [])

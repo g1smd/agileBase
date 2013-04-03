@@ -98,26 +98,38 @@ function commonTileEvents() {
 	$("#fieldFilters input").click(function(event) {
 		event.stopPropagation();
 	});
-	$(".tile").click(function() {
-		var tile = $(this);
-		if (tile.hasClass("expanded") || tile.hasClass("focus")) {
-			return;
-		}
-		expandTile(tile);
-		if (tile.hasClass("calendar")) {
-			loadOrCreateCalendar();
-		} else {
-			var template = "s/tiles/" + tile.attr("data-type");
-			var internalTileName = tile.attr("data-internaltilename");
-			tile.find(".content").load("AppController.servlet", {
-				"return" : template,
-				set_tile : internalTileName
-			}, function() {
-				tileLoaded(tile, false);
-			});
-		}
-		tile.find(".content").removeClass("notfocus");
+	$(".tile.focus a").click(function(event) {
+		event.stopPropagation();
 	});
+	$(".tile").click(
+			function(event) {
+				var tile = $(this);
+				if (tile.hasClass("expanded")) {
+					return;
+				} else if (tile.hasClass("focus")) {
+					var internalTableName = tile.find("#record_identifier").attr(
+							"data-internaltablename");
+					var rowId = tile.find("#record_identifier").attr("data-rowid");
+					expandTile(tile);
+					tileLoaded(tile, true);
+					loadEdit(tile.find(".content"), internalTableName, rowId);
+				} else {
+					expandTile(tile);
+					if (tile.hasClass("calendar")) {
+						loadOrCreateCalendar();
+					} else {
+						var template = "s/tiles/" + tile.attr("data-type");
+						var internalTileName = tile.attr("data-internaltilename");
+						tile.find(".content").load("AppController.servlet", {
+							"return" : template,
+							set_tile : internalTileName
+						}, function() {
+							tileLoaded(tile, false);
+						});
+					}
+				}
+				tile.find(".content").removeClass("notfocus");
+			});
 	$(".sideAction.backToView").click(function() {
 		tileLoaded($(".tile.expanded"), false);
 	});
@@ -149,14 +161,15 @@ function loadOrCreateCalendar() {
 	if (tile.find("#calendar").size() > 0) {
 		loadCalendar();
 	} else {
-		tile.find(".content").css("opacity","0.25").load("AppController.servlet", {
-			"return": "s/tiles/calendar",
-			set_tile: internalTileName
-		}, function() {
-			$(".sideAction.backToView").removeClass("expanded");
-			loadCalendar();
-			tile.find(".content").removeAttr("style");
-		});
+		tile.find(".content").css("opacity", "0.25").load("AppController.servlet",
+				{
+					"return" : "s/tiles/calendar",
+					set_tile : internalTileName
+				}, function() {
+					$(".sideAction.backToView").removeClass("expanded");
+					loadCalendar();
+					tile.find(".content").removeAttr("style");
+				});
 	}
 }
 
@@ -166,9 +179,9 @@ function loadCalendar() {
 	calendarElement.removeClass("notfocus");
 	$("#agenda").addClass("notfocus");
 	$("#report_selection_header").removeClass("notfocus");
-	if($("#report_selection input:checked").size() == 0) {
+	if ($("#report_selection input:checked").size() == 0) {
 		// Show calendar report chooser if no reports chosen
-	  $("#report_selection").removeClass("notfocus");
+		$("#report_selection").removeClass("notfocus");
 	}
 	$(".sideAction.backToView").unbind("click").click(function() {
 		loadOrCreateCalendar();
@@ -189,7 +202,8 @@ function loadCalendar() {
 				},
 				eventClick : function(calEvent, jsEvent, view) {
 					var eventId = calEvent.id;
-					loadEdit(calendarElement.closest(".content"), calEvent.internalTableName, calEvent.rowId);
+					loadEdit(calendarElement.closest(".content"),
+							calEvent.internalTableName, calEvent.rowId);
 				},
 				eventDrop : function(event, dayDelta, minuteDelta, allDay, revertFunc,
 						jsEvent, ui, view) {
@@ -220,21 +234,33 @@ function loadCalendar() {
 					// remove a CSS class
 					$.post("AppController.servlet", options);
 				},
-				dayClick: function(date, allDay, jsEvent, view) {
+				dayClick : function(date, allDay, jsEvent, view) {
 					var dayElement = $(this);
 					var colour = dayElement.closest(".tile").attr("data-colour");
 					$(".addEvents").remove();
-					var addEventsElement = dayElement.append("<div class='addEvents transition notfocus'></div>");
+					var addEventsElement = dayElement
+							.append("<div class='addEvents transition notfocus'></div>");
 					var addEventsElement = dayElement.find(".addEvents");
 					var tablesUsed = [];
-					$("#report_selection_header span").each(function() {
-						var internalTableName = $(this).attr("data-internaltablename");
-						var internalFieldName = $(this).attr("data-internalfieldname");
-						if (tablesUsed.indexOf(internalTableName) == -1) {
-						  addEventsElement.append("<span class='addEvent white' data-internaltablename='" + internalTableName + "' data-internalfieldname='" + internalFieldName + "'>add " + $(this).attr("data-singulartablename") + "</span>");
-						}
-						tablesUsed.push(internalTableName);
-					});
+					$("#report_selection_header span")
+							.each(
+									function() {
+										var internalTableName = $(this).attr(
+												"data-internaltablename");
+										var internalFieldName = $(this).attr(
+												"data-internalfieldname");
+										if (tablesUsed.indexOf(internalTableName) == -1) {
+											addEventsElement
+													.append("<span class='addEvent white' data-internaltablename='"
+															+ internalTableName
+															+ "' data-internalfieldname='"
+															+ internalFieldName
+															+ "'>add "
+															+ $(this).attr("data-singulartablename")
+															+ "</span>");
+										}
+										tablesUsed.push(internalTableName);
+									});
 					addEventsElement.removeClass("notfocus");
 					addEventsElement.find(".addEvent").click(function(event) {
 						var internalTableName = $(this).attr("data-internaltablename");
@@ -256,43 +282,43 @@ function loadCalendar() {
 	$("#report_selection input:checked").each(function() {
 		addRemoveCalendar(this);
 	});
-  $(".report_selection_header").click(function() {
-  	$("#report_selection").toggleClass("notfocus");
-  });
-  $(".report_selection input").change(function() {
-    var jqCheckbox = $(this);
-    if (jqCheckbox.parent().hasClass("has_calendar")) {
-      addRemoveCalendar(this);
-    } else {
-      addRemovePanel(this);
-    }
-    var internalTableName = jqCheckbox.attr("internaltablename");
-    var internalReportName = jqCheckbox.attr("internalreportname");
-    if (jqCheckbox.is(":checked")) {
-    	var addReportOptions = {
-	  		'return': 'blank',
-        'add_operational_dashboard_report': 'true',
-        'internaltablename': internalTableName,
-        'internalreportname': internalReportName
-	    }
-      $.post("AppController.servlet", addReportOptions);
-    } else {
-		  var removeReportOptions = {
-	        'return': 'blank',
-	        'remove_operational_dashboard_report': 'true',
-	        'internaltablename': internalTableName,
-	        'internalreportname': internalReportName
-		  }
-      $.post("AppController.servlet", removeReportOptions);
-    }
-  });	
+	$(".report_selection_header").click(function() {
+		$("#report_selection").toggleClass("notfocus");
+	});
+	$(".report_selection input").change(function() {
+		var jqCheckbox = $(this);
+		if (jqCheckbox.parent().hasClass("has_calendar")) {
+			addRemoveCalendar(this);
+		} else {
+			addRemovePanel(this);
+		}
+		var internalTableName = jqCheckbox.attr("internaltablename");
+		var internalReportName = jqCheckbox.attr("internalreportname");
+		if (jqCheckbox.is(":checked")) {
+			var addReportOptions = {
+				'return' : 'blank',
+				'add_operational_dashboard_report' : 'true',
+				'internaltablename' : internalTableName,
+				'internalreportname' : internalReportName
+			}
+			$.post("AppController.servlet", addReportOptions);
+		} else {
+			var removeReportOptions = {
+				'return' : 'blank',
+				'remove_operational_dashboard_report' : 'true',
+				'internaltablename' : internalTableName,
+				'internalreportname' : internalReportName
+			}
+			$.post("AppController.servlet", removeReportOptions);
+		}
+	});
 	// If no calendar reports at all selected, select the first three
-	if($("#report_selection input:checked").size() == 0) {
-		$("#report_selection input").slice(0,3).each(function() {
+	if ($("#report_selection input:checked").size() == 0) {
+		$("#report_selection input").slice(0, 3).each(function() {
 			$(this).click();
 		});
 	}
-  // Re-render calendar once expand animation has completed
+	// Re-render calendar once expand animation has completed
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
@@ -305,7 +331,8 @@ function addRemoveCalendar(checkboxElement) {
 	var jqCheckbox = $(checkboxElement);
 	var internalTableName = jqCheckbox.attr("internaltablename");
 	var internalReportName = jqCheckbox.attr("internalreportname");
-	var internalFieldName = jqCheckbox.attr("internalfieldname"); // The date field
+	var internalFieldName = jqCheckbox.attr("internalfieldname"); // The date
+																																// field
 	var reportName = jqCheckbox.parent().text();
 	var reportTooltip = jqCheckbox.parent().attr("title");
 	var singularTableName = jqCheckbox.parent().attr("data-singulartablename");
@@ -322,7 +349,10 @@ function addRemoveCalendar(checkboxElement) {
 		$("#calendar").fullCalendar('addEventSource', eventSource);
 		var legendElement = $("<span class='legend_report report_"
 				+ internalReportName + "' id='legend_" + internalReportName
-				+ "' title='" + reportTooltip + "' data-singulartablename='" + singularTableName + "' data-internaltablename='" + internalTableName + "' data-internalfieldname='" + internalFieldName + "'>" + reportName + "</span>");
+				+ "' title='" + reportTooltip + "' data-singulartablename='"
+				+ singularTableName + "' data-internaltablename='" + internalTableName
+				+ "' data-internalfieldname='" + internalFieldName + "'>" + reportName
+				+ "</span>");
 		$("#report_selection_header").append(legendElement);
 	} else {
 		$("#calendar").fullCalendar('removeEventSource', feedUrl);
@@ -386,7 +416,7 @@ function calendarFocus() {
 		focusTile.find(".content").load("AppController.servlet", {
 			"return" : "s/tiles/focus/focus",
 			set_table : internalTableName,
-			set_report: internalReportName,
+			set_report : internalReportName,
 			set_custom_integer : true,
 			integerkey : "focus_row_id",
 			customintegervalue : rowId
@@ -403,13 +433,15 @@ function dataStreamFocus() {
 			function() {
 				var row = $(this);
 				var focusTile = $(".tile[data-type=focus]");
-				var internalTableName = $(this).closest(".tile").attr("data-internaltablename");
-				var internalReportName = $(this).closest(".tile").attr("data-internalreportname");
+				var internalTableName = $(this).closest(".tile").attr(
+						"data-internaltablename");
+				var internalReportName = $(this).closest(".tile").attr(
+						"data-internalreportname");
 				var rowId = $(this).attr("data-rowid");
 				focusTile.find(".content").load("AppController.servlet", {
 					"return" : "s/tiles/focus/focus",
 					set_table : internalTableName,
-					set_report: internalReportName,
+					set_report : internalReportName,
 					set_custom_integer : true,
 					integerkey : "focus_row_id",
 					customintegervalue : rowId
@@ -477,41 +509,52 @@ function tileLoaded(tile, editing) {
 				});
 	}
 	if ((tileType == "adder")) {
-		$("label.tiletype").click(
-				function(event) {
-					event.stopPropagation(); // stop the .tile click being called
-					var selectedApp = $(this).attr("data-tiletype");
-					if (selectedApp == "data_stream" || selectedApp == "data_link") {
-						$("label.tiletype").not($(this)).addClass("notfocus");
-						$(this).find("p").text("Which data would you like to use?");
-						$(".adder .reportSelector").show().removeClass("notfocus");
-						$(".adder .reportSelector li.module").click(
-								function() {
-									$(".adder .reportSelector li.module").not($(this)).addClass(
-											"notfocus");
-									$(this).find("ul.reports").show().removeClass("notfocus");
-								});
-					} else if (selectedApp == "chat" || selectedApp == "comment_stream"
-							|| selectedApp == "calendar") {
-						// These types add a tile immediately without further configuration
-						backHome();
-						var colour = nextColour();
-						$.post("AppController.servlet", {
-							"return" : "s/tiles/tiles",
-							add_tile : true,
-							tiletype : selectedApp,
-							colour : colour
-						}, function(data) {
-							if (selectedApp == "calendar") {
-								// Reload page for calendar to include calendar JS in head
-								document.location = "AppController.servlet?return=s/agilebase&cacheBust=" + (new Date()).getTime();
-							} else {
-							  $("#tiles").html(data);
-							  tileEvents();
+		$("label.tiletype")
+				.click(
+						function(event) {
+							event.stopPropagation(); // stop the .tile click being called
+							var selectedApp = $(this).attr("data-tiletype");
+							if (selectedApp == "data_stream" || selectedApp == "data_link") {
+								$("label.tiletype").not($(this)).addClass("notfocus");
+								$(this).find("p").text("Which data would you like to use?");
+								$(".adder .reportSelector").show().removeClass("notfocus");
+								$(".adder .reportSelector li.module")
+										.click(
+												function() {
+													$(".adder .reportSelector li.module").not($(this))
+															.addClass("notfocus");
+													$(this).find("ul.reports").show().removeClass(
+															"notfocus");
+												});
+							} else if (selectedApp == "chat"
+									|| selectedApp == "comment_stream"
+									|| selectedApp == "calendar") {
+								// These types add a tile immediately without further
+								// configuration
+								backHome();
+								var colour = nextColour();
+								$
+										.post(
+												"AppController.servlet",
+												{
+													"return" : "s/tiles/tiles",
+													add_tile : true,
+													tiletype : selectedApp,
+													colour : colour
+												},
+												function(data) {
+													if (selectedApp == "calendar") {
+														// Reload page for calendar to include calendar JS
+														// in head
+														document.location = "AppController.servlet?return=s/agilebase&cacheBust="
+																+ (new Date()).getTime();
+													} else {
+														$("#tiles").html(data);
+														tileEvents();
+													}
+												});
 							}
-						});
-					}
-				}); /* end of label.tiletype.click */
+						}); /* end of label.tiletype.click */
 		$(".adder .reportSelector ul.reports li").click(function(event) {
 			event.stopPropagation();
 			var internalReportName = $(this).attr("data-internalreportname");
@@ -552,9 +595,9 @@ function reportRowClicks() {
 
 function newRecord(internalTableName, params) {
 	var postParams = {
-			"return" : "gui/reports_and_tables/tabs/edit",
-			save_new_record : true,
-			set_table : internalTableName
+		"return" : "gui/reports_and_tables/tabs/edit",
+		save_new_record : true,
+		set_table : internalTableName
 	};
 	// Merge params into postParams
 	$.extend(postParams, params);
@@ -695,8 +738,8 @@ function backHome() {
 	$("#agenda").removeClass("notfocus");
 	var internalTileName = $(".tile.calendar").attr("data-internaltilename");
 	$(".tile.calendar").find(".content").load("AppController.servlet", {
-		"return": "s/tiles/calendar",
-		set_tile: internalTileName
+		"return" : "s/tiles/calendar",
+		set_tile : internalTileName
 	}, function() {
 		calendarFocus();
 	});
