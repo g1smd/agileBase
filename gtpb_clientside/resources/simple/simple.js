@@ -773,6 +773,9 @@ function backHome() {
  * Remove the currently expanded tile
  */
 function removeTile() {
+	if (!confirm("Remove this tile from your home screen? You can add it again with the blue plus button")) {
+		return;
+	}
 	var internalTileName = $(".tile.expanded").attr("data-internaltilename");
 	backHome();
 	$
