@@ -351,11 +351,13 @@ function addRemoveCalendar(checkboxElement) {
 			+ internalTableName + "&internalreportname=" + internalReportName;
 	var eventColour = jqCheckbox.siblings("span").css('background-color');
 	var textColour = jqCheckbox.siblings("span").css('color');
+	var borderColour = jqCheckbox.siblings("span").css('border-color');
 	if (jqCheckbox.is(":checked")) {
 		var eventSource = {
 			url : feedUrl,
 			color : eventColour,
 			textColor : textColour,
+			borderColor: borderColour
 		}
 		$("#calendar").fullCalendar('addEventSource', eventSource);
 		var legendElement = $("<span class='legend_report report_"
