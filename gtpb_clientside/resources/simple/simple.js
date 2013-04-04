@@ -754,9 +754,11 @@ function backHome() {
 	// If contains report or edit screen
 	if ((dataStreamTile.find("table.reportData").size() > 0)
 			|| (dataStreamTile.find("#reportData").size() > 0)) {
+		var internalTileName = dataStreamTile.attr("data-internaltilename");
 		// Remove big view format, load reduced format again
 		dataStreamTile.find(".content").load("AppController.servlet", {
-			"return" : "s/tiles/data_stream"
+			"return": "s/tiles/data_stream",
+			set_tile: internalTileName
 		}, function() {
 			dataStreamTile.find(".content").removeClass("notfocus");
 			dataStreamEvents();
