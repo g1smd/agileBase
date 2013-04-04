@@ -353,7 +353,9 @@ function addRemoveCalendar(checkboxElement) {
 	var textColour = jqCheckbox.siblings("span").css('color');
   //Can't use just border-color with jQuery: http://stackoverflow.com/questions/9915966/jquery-cssborder-color-does-not-return-anything
 	var borderColour = jqCheckbox.siblings("span").css('border-top-color'); 
-	console.log(reportName + " background: " + eventColour + ", text: " + textColour + ", border: " + borderColour);
+	if( borderColour == "rgb(0, 0, 0)") {
+		borderColour = eventColour;
+	}
 	if (jqCheckbox.is(":checked")) {
 		var eventSource = {
 			url : feedUrl,
