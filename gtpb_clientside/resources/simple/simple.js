@@ -352,6 +352,7 @@ function addRemoveCalendar(checkboxElement) {
 	var eventColour = jqCheckbox.siblings("span").css('background-color');
 	var textColour = jqCheckbox.siblings("span").css('color');
 	var borderColour = jqCheckbox.siblings("span").css('border-color');
+	console.log(borderColour);
 	if (jqCheckbox.is(":checked")) {
 		var eventSource = {
 			url : feedUrl,
