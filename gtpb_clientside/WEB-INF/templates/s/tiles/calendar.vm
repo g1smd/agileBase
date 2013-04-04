@@ -29,7 +29,7 @@
   #if($report.getCalendarStartField())
     #set($calendarStartField = $report.getCalendarStartField())
     #set($filter = $viewTools.getNewFilterMap())
-    #set($success = $filter.put($calendarStartField.getBaseField(), ">now and <7 days hence"))
+    #set($success = $filter.put($calendarStartField.getBaseField(), ">today and <7 days hence"))
     #set($reportDataRows = $view.getReportDataRows($report, 50, $filter, false))
     #foreach($reportDataRow in $reportDataRows)
       #set($rowId = $reportDataRow.getRowId())

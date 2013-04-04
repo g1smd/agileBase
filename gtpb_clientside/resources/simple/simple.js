@@ -101,6 +101,12 @@ function commonTileEvents() {
 	$(".tile.focus a").click(function(event) {
 		event.stopPropagation();
 	});
+	$(".header.row").mouseenter(function() {
+		$(".sideAction.removeTile").addClass("expanded");
+	});
+	$(".header.row").mouseleave(function() {
+		$(".sideAction.removeTile").removeClass("expanded");
+	});	
 	$(".tile").click(
 			function(event) {
 				var tile = $(this);
@@ -479,9 +485,6 @@ function tileLoaded(tile, editing) {
 	} else {
 		$(".sideAction.removeRecord").removeClass("expanded");
 		$(".sideAction.cloneRecord").removeClass("expanded");
-	}
-	if (tileType != "adder") {
-		$(".sideAction.removeTile").addClass("expanded");
 	}
 	// Hide all icons otherwise they can be clicked
 	$(".tile_icon i").addClass("notfocus");
