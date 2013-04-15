@@ -33,7 +33,7 @@
     #set($table = $report.getParentTable())
   #end
   #set($tileTypeString = $tileType.toString().toLowerCase())
-  <div title="$tile" class="tile transition $colour $tileTypeString #if($tileType.isLarge()) large #end" #if($table) data-internaltablename="$table.getInternalTableName()" data-internalreportname="$report.getInternalReportName()" #end data-colour="$dataColour" data-type="$tileTypeString" data-internaltilename="$tile.getInternalTileName()">
+  <div data-title="$tile" class="tile transition $colour $tileTypeString #if($tileType.isLarge()) large #end" #if($table) data-internaltablename="$table.getInternalTableName()" data-internalreportname="$report.getInternalReportName()" #end data-colour="$dataColour" data-type="$tileTypeString" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
     #if($template == "data_stream")
       #set($filter = $sessionData.getGlobalFilterString($tile.getReport()))

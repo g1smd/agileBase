@@ -380,7 +380,7 @@ function addRemoveCalendar(checkboxElement) {
 
 function expandTile(tile) {
 	$(".tile").not(tile).addClass("notfocus");
-	var title = tile.attr("title");
+	var title = tile.attr("data-title");
 	$("#title").find("h1").text(title);
 	var colour = tile.attr("data-colour");
 	var allColours = abTileColours.join(" ");
