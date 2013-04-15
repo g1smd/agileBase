@@ -839,7 +839,7 @@ div#reportData {
 #reportData .block input, #reportData .block select {
   float: right;
   width: 50%;
-  border: 1px solid #E8E7E3;
+  border: 1px solid #656766;
   font-size: 9.5pt;
   padding: 0.2em;
   border-radius: 0.5em;
@@ -860,7 +860,7 @@ div#reportData {
 }
 
 #reportData .block textarea {
-  border: 1px solid #E8E7E3;
+  border: 1px solid #656766;
   width: 100%;
   font-family: Verdana,Geneva,sans-serif;
 }
@@ -898,6 +898,7 @@ div#reportData {
   width:50%;
 }
 
+/*
 #reportData .block input:hover {
   border: 1px solid #e8e7e3!important;
 }
@@ -905,6 +906,7 @@ div#reportData {
 #reportData .block input:focus {
   border: 1px solid #e8e7e3!important;
 }
+*/
 
 #reportData .block input[type=checkbox] {
   float: left!important;
@@ -934,7 +936,7 @@ div#reportData {
 	float: none;
 	width: 90%;
 	top: 0;
-	border: 1px solid #e8e7e3;
+	border: 1px solid #656766;
 	position: static; /* Workaround https://bugs.webkit.org/show_bug.cgi?id=76834 */
 }
 
