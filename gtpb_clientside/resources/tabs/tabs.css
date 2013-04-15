@@ -164,7 +164,7 @@ div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
 }
 
 table#reportData td input {
-  border: 1px solid #e8e7e3;
+  border: 1px solid #656766;
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
@@ -186,7 +186,7 @@ table#reportData td input[type='file'] {
 table#reportData td select {
   min-width: 296px;  
   border-radius: 0.5em;
-  border: 1px solid #e8e7e3;
+  border: 1px solid #656766;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
   font-size: 9pt;
@@ -220,7 +220,7 @@ input, select, textarea {
 }
 
 textarea {
-  border: 1px solid #e8e7e3;
+  border: 1px solid #656766;
   border-radius: 0.5em;
   padding: 0.3em;
   font-family: Verdana,Geneva,sans-serif;
