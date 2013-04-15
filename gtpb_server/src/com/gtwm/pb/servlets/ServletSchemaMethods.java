@@ -1316,7 +1316,19 @@ public final class ServletSchemaMethods {
 				&& (!fieldCategory.equals(FieldCategory.COMMENT_FEED))
 				&& (!fieldCategory.equals(FieldCategory.REFERENCED_REPORT_DATA))) {
 			// These types of field not included in default report
-			reportField = tableToRemoveFrom.getDefaultReport().getReportField(internalFieldName);
+			try {
+				reportField = tableToRemoveFrom.getDefaultReport().getReportField(internalFieldName);
+			} catch (ObjectNotFoundException onfex) {
+				// This represents a bug where the the default report wasn't returned to
+				// it's previous state after a previous failed delete. Still, we need to carry on
+				// and delete it this time
+				logger
+						.warn("Field "
+								+ field
+								+ " not found in default report for table "
+								+ tableToRemoveFrom
+								+ ". It should be there, there must have been a failed delete in the past which removed the field from the report but left it in the table");
+			}
 		}
 		// begin updating model and persisting changes
 		Connection conn = null;
@@ -1412,7 +1424,7 @@ public final class ServletSchemaMethods {
 			tieDownLookup = textField.getTieDownLookup();
 		} else if (field instanceof DateField) {
 			DateField dateField = (DateField) field;
-			dateFieldDefaultToNow =dateField.getDefaultToNow();
+			dateFieldDefaultToNow = dateField.getDefaultToNow();
 			dateFieldResolution = dateField.getDateResolution();
 			minYear = dateField.getMinAgeYears();
 			maxYear = dateField.getMaxAgeYears();
@@ -1433,21 +1445,24 @@ public final class ServletSchemaMethods {
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
 			rollbackConnections(conn);
-			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup, textFieldContentSize,
-					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
+			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup,
+					textFieldContentSize, dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear,
+					decimalFieldPrecision, textFieldDefault, decimalFieldDefault, integerFieldDefault,
+					unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", hex);
 		} catch (AgileBaseException abex) {
 			rollbackConnections(conn);
-			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup, textFieldContentSize,
-					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
+			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup,
+					textFieldContentSize, dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear,
+					decimalFieldPrecision, textFieldDefault, decimalFieldDefault, integerFieldDefault,
+					unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed: " + abex.getMessage(), abex);
 		} catch (SQLException sqlex) {
 			rollbackConnections(conn);
-			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup, textFieldContentSize,
-					dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear, decimalFieldPrecision,
-					textFieldDefault, decimalFieldDefault, integerFieldDefault, unique, notNull, textCase);
+			restoreFieldOptions(field, textFieldUsesLookup, textFieldUsesTags, tieDownLookup,
+					textFieldContentSize, dateFieldDefaultToNow, dateFieldResolution, minYear, maxYear,
+					decimalFieldPrecision, textFieldDefault, decimalFieldDefault, integerFieldDefault,
+					unique, notNull, textCase);
 			throw new CantDoThatException("Updating field failed", sqlex);
 		} finally {
 			HibernateUtil.closeSession();
@@ -1460,11 +1475,12 @@ public final class ServletSchemaMethods {
 	 * 
 	 * TODO: refactor to use a properties object rather than masses of parameters
 	 */
-	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup, Boolean textFieldUsesTags,
-			boolean tieDownLookup, Integer textFieldContentSize, Boolean dateFieldDefaultToNow,
-			Integer dateFieldResolution, Integer minYear, Integer maxYear, Integer decimalFieldPrecision,
-			String textFieldDefault, Double decimalFieldDefault, Integer integerFieldDefault,
-			Boolean unique, Boolean notNull, TextCase textCase) throws CantDoThatException {
+	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
+			Boolean textFieldUsesTags, boolean tieDownLookup, Integer textFieldContentSize,
+			Boolean dateFieldDefaultToNow, Integer dateFieldResolution, Integer minYear, Integer maxYear,
+			Integer decimalFieldPrecision, String textFieldDefault, Double decimalFieldDefault,
+			Integer integerFieldDefault, Boolean unique, Boolean notNull, TextCase textCase)
+			throws CantDoThatException {
 		field.setUnique(unique);
 		field.setNotNull(notNull);
 		if (field instanceof TextField) {
@@ -2827,7 +2843,8 @@ public final class ServletSchemaMethods {
 		if (!tileType.allowsMultiple()) {
 			for (TileInfo tile : user.getTiles()) {
 				if (tile.getTileType().equals(tileType)) {
-					throw new CantDoThatException("User " + user + " already has a " + tileType + " tile, another can't be added");
+					throw new CantDoThatException("User " + user + " already has a " + tileType
+							+ " tile, another can't be added");
 				}
 			}
 		}
@@ -2915,7 +2932,9 @@ public final class ServletSchemaMethods {
 		}
 	}
 
-	public synchronized static void removeTileFromUser(HttpServletRequest request, DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException, MissingParametersException, CantDoThatException {
+	public synchronized static void removeTileFromUser(HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws ObjectNotFoundException, DisallowedException,
+			MissingParametersException, CantDoThatException {
 		AppUserInfo user = null;
 		String username = request.getParameter("username");
 		if (username != null) {
@@ -2935,7 +2954,8 @@ public final class ServletSchemaMethods {
 			}
 		}
 		if (tile == null) {
-			throw new ObjectNotFoundException("Tile with internal name " + internalTileName + " not found for user " + user);
+			throw new ObjectNotFoundException("Tile with internal name " + internalTileName
+					+ " not found for user " + user);
 		}
 		try {
 			HibernateUtil.startHibernateTransaction();
