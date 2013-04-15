@@ -138,7 +138,7 @@ function commonTileEvents() {
 				tile.find(".content").removeClass("notfocus");
 			});
 	$(".sideAction.backToView").click(function() {
-		if ($(".tile.expanded".hasClass("focus"))) {
+		if ($(".tile.expanded").hasClass("focus")) {
 			backHome();
 		} else {
 		  tileLoaded($(".tile.expanded"), false);
