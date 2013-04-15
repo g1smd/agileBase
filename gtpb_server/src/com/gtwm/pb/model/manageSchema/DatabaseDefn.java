@@ -2225,7 +2225,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		if (field.getFieldCategory().savesData()) {
 			// Now try to remove the field from the table:
 			PreparedStatement statement = conn.prepareStatement("ALTER TABLE "
-					+ table.getInternalTableName() + " DROP COLUMN " + field.getInternalFieldName());
+					+ table.getInternalTableName() + " DROP COLUMN IF EXISTS " + field.getInternalFieldName());
 			statement.execute();
 			statement.close();
 		}
