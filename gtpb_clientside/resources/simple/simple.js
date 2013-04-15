@@ -380,8 +380,6 @@ function addRemoveCalendar(checkboxElement) {
 
 function expandTile(tile) {
 	$(".tile").not(tile).addClass("notfocus");
-	var title = tile.attr("data-title");
-	$("#title").find("h1").text(title);
 	var colour = tile.attr("data-colour");
 	var allColours = abTileColours.join(" ");
 	$("body").removeClass(allColours).addClass(colour);
@@ -391,6 +389,9 @@ function expandTile(tile) {
 	tile.find(".title").addClass("notfocus");
 	/* leave some space for controls on left and right */
 	$("#tiles").addClass("padded");
+  /* show tile title at top */
+	var title = tile.attr("data-title");
+	$("#title").find("h1").text(title);
 }
 
 /** Data stream tile specific events */
