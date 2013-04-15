@@ -70,6 +70,7 @@
       #else
         <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
       #end
+      $user.getForename() $user.getSurname()
     </div>
   </div> ## end row
   <div id="title"><h1></h1></div>
