@@ -62,6 +62,15 @@
     <div class="span4 spaced">
       <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
     </div>
+    <div class="span8 spaced profile">
+      #set($profileImage = false)
+      #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
+      #if($profileImage)
+        <img src="$profileImage" class="comment_author_picture" />
+      #else
+        <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+      #end
+    </div>
   </div> ## end row
   <div id="title"><h1></h1></div>
   <div class="container transition" id="tiles">

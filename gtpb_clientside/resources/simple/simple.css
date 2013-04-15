@@ -55,6 +55,10 @@ body {
   margin-left: 0px; /* override bootstrap */
 }
 
+.header .profile {
+  text-align: right;
+}
+
 .tile div#reportData {
   background-color: rgba(255,255,255,0.75);  
   padding-top: 0.5em;
