@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<div class="comment_feed">
+<div class="comment_feed input-append">
 #if(!$viewOnly)
   <input type="text" class="comment_input" placeholder="Add $field" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" />
 #end
