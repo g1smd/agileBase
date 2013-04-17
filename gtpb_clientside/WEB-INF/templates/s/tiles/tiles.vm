@@ -20,6 +20,16 @@
 #if($tiles.size() == 0)
   #parse("s/tiles/suggest_tiles.vm")
 #end
+## User profile editing
+<div class="profile_edit notfocus">
+  <b>My details</b>
+  <form>
+    <input type="text" placeholder="forename" value="$user.getForename()">
+    <input type="text" placeholder="surname" value="$user.getSurname()"><p>
+    <input type="text" placeholder="email address" value="$user.getEmail()">
+  </form>
+</div>
+## App tiles
 #foreach($tile in $tiles)
   #set($tileType = $tile.getTileType())
   #set($colour = $tile.getColour())
