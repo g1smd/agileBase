@@ -58,6 +58,9 @@ body {
 .header .profile {
   text-align: right;
   color: #009FE3;
+  position: relative;
+  z-index: 1; /* above title */
+  cursor: pointer;
 }
 
 .header.expanded .profile {
