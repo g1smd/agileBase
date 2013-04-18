@@ -137,9 +137,11 @@ function commonTileEvents() {
 				}
 				tile.find(".content").removeClass("notfocus");
 			});
-	$(".sideAction.backToView").unbind("click").click(function() {
+	$(".sideAction.backToView").click(function() {
 		if ($(".tile.expanded").hasClass("focus")) {
 			backHome();
+		} else if ($(".tile.expanded").hasClass("calendar")) {
+			loadOrCreateCalendar();
 		} else {
 		  tileLoaded($(".tile.expanded"), false);
 		}
@@ -194,9 +196,6 @@ function loadCalendar() {
 		// Show calendar report chooser if no reports chosen
 		$("#report_selection").removeClass("notfocus");
 	}
-	$(".sideAction.backToView").unbind("click").click(function() {
-		loadOrCreateCalendar();
-	});
 	calendarElement
 			.fullCalendar({
 				header : {
