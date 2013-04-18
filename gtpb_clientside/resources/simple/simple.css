@@ -60,6 +60,11 @@ body {
   color: #009FE3;
 }
 
+.header.expanded .profile {
+  /* TODO: animate opacity? */
+  display: none;
+}
+
 .header .profile img {
   float: right;
 }
@@ -180,6 +185,8 @@ sup {
   top: 0;
   right: 0;
   text-transform: lowercase;
+  min-width: 50%;
+  text-align: right;
 }
 
 .tile {
