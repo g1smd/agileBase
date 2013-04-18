@@ -137,7 +137,7 @@ function commonTileEvents() {
 				}
 				tile.find(".content").removeClass("notfocus");
 			});
-	$(".sideAction.backToView").click(function() {
+	$(".sideAction.backToView").unbind("click").click(function() {
 		if ($(".tile.expanded").hasClass("focus")) {
 			backHome();
 		} else {
