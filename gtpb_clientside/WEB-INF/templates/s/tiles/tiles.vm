@@ -22,7 +22,7 @@
 #end
 ## User profile editing
 <div class="profile_edit notfocus">
-  <b>My details</b>
+  <b>My details</b><p>
   <form>
     <input type="text" placeholder="forename" value="$user.getForename()">
     <input type="text" placeholder="surname" value="$user.getSurname()"><p>
