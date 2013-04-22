@@ -184,13 +184,18 @@
 		function fCreatePrintoutSelector(sCaption,fClick) {
       oToolbar.appendChild(document.createTextNode(sCaption + ' '));
       
+      #set($company = $view.getLoggedInUser().getCompany())
+      #set($internalCompanyName = $company.getInternalCompanyName())
+      #set($internalReportName = $report.getInternalReportName())
+      #set($customTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
+      
       ## Pane 3 printout
 		  var oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
 		  oRadio.setAttribute('name','printout_selector');
 		  oRadio.setAttribute('value','individual_record');
 			#set($reportStyle = $report.getReportStyle())
-      #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION"))
+      #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION") && ($customTemplates.size() == 0))
 		    oRadio.setAttribute('checked','true');
       #end
       $(oRadio).click(fClick);
@@ -202,7 +207,7 @@
       oRadio.setAttribute('type','radio');
       oRadio.setAttribute('name','printout_selector');
       oRadio.setAttribute('value','report_rows');
-      #if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
+      #if((($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION")) && ($customTemplates.size() == 0))
         oRadio.setAttribute('checked','true');
       #end
       $(oRadio).click(fClick);
@@ -210,10 +215,7 @@
       oToolbar.appendChild(document.createTextNode(' all report rows '));
       
       ## Custom printouts
-      #set($company = $view.getLoggedInUser().getCompany())
-      #set($internalCompanyName = $company.getInternalCompanyName())
-      #set($internalReportName = $report.getInternalReportName())
-      #foreach($template in $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
+      #foreach($template in $customTemplates)
         #set($filePath = $template.getName())
         #set($slashIndex = $filePath.lastIndexOf('/') + 1)
         #set($templateName = $filePath.substring($slashIndex))
@@ -222,6 +224,9 @@
         oRadio.setAttribute('type','radio');
         oRadio.setAttribute('name','printout_selector');
         oRadio.setAttribute('value','uploads/$internalCompanyName/$internalReportName/$templateName&cachebust=$viewTools.getRandomString()');
+        #if($foreach.count == 1)
+          oRadio.setAttribute('checked','true');
+        #end
         $(oRadio).click(fClick);
         oToolbar.appendChild(oRadio);
         oToolbar.appendChild(document.createTextNode(" $templateName.replace('_',' ') "));

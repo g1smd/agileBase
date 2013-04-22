@@ -259,7 +259,7 @@ textarea {
 
 .saved_tags {
   margin-bottom: 0.25em;
-  margin-top: 0.5em;
+  margin-top: 0;
   font-size: 9.5pt;
   display: inline-block;
 }
