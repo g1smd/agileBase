@@ -999,11 +999,11 @@ public final class DatabaseDefn implements DatabaseInfo {
 	private void updateViewDbAction(Connection conn, BaseReportInfo report, HttpServletRequest request)
 			throws SQLException, CantDoThatException, CodingErrorException, ObjectNotFoundException {
 		boolean viewExists = viewExists(conn, report);
-		boolean createOrReplaceWorked = updateViewDbActionWithCreateOrReplace(conn, report, viewExists);
+		boolean createOrReplaceWorked = this.updateViewDbActionWithCreateOrReplace(conn, report, viewExists);
 		if (viewExists && !createOrReplaceWorked) {
-			boolean dropAndCreateWorked = updateViewDbActionWithDropAndCreate(conn, report);
+			boolean dropAndCreateWorked = this.updateViewDbActionWithDropAndCreate(conn, report);
 			if (!dropAndCreateWorked) {
-				updateViewDbActionWithDropAndCreateDependencies(conn, report, request);
+				this.updateViewDbActionWithDropAndCreateDependencies(conn, report, request);
 			}
 		}
 		this.throwExceptionIfDbViewIsBroken(conn, report);

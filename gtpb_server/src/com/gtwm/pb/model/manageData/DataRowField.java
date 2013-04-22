@@ -102,6 +102,20 @@ public class DataRowField implements DataRowFieldInfo {
 		return this.standardDevHexColor;
 	}
 
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if ((obj == null) || (obj.getClass() != this.getClass())) {
+			return false;
+		}
+		return this.getKeyValue().equals(((DataRowField) obj).getKeyValue());
+	}
+	
+	public int hashCode() {
+		return this.getKeyValue().hashCode();
+	}
+	
 	public String toString() {
 		return this.getDisplayValue();
 	}

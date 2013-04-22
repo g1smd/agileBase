@@ -809,9 +809,11 @@ div#reportData {
   vertical-align: bottom;
 }
 
-#reportData .block.non_section .row {
+#reportData .block.non_section .row, #reportData .two_cols .row {
   break-inside: avoid-column;
+  column-break-inside: avoid;
   -webkit-column-break-inside: avoid;
+  page-break-inside: avoid; /* Firefox */
   min-height: 2em;
 }
 
