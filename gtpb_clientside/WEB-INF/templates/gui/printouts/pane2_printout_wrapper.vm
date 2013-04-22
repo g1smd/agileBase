@@ -249,7 +249,6 @@
       function fCreateIframe() {
         var oIframe=document.createElement('iframe');
         oIframe.setAttribute('id','wrapper');
-        $("#toolbarDiv input[type=radio]").first().click();
       	###if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
         ##  oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/records');
         ###else
@@ -261,6 +260,7 @@
       
       oToolbar=fCreateToolbar();
       oIframe=fCreateIframe();
+      $("#toolbarDiv input[type=radio]").first().click();
     </script>
   </body>
 </html>
