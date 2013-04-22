@@ -22,11 +22,16 @@
 #end
 ## User profile editing
 <div class="profile_edit notfocus">
+  <div class="controls">
+    log out
+  </div>
+  #set($internalUserName = $user.getInternalUserName())
   <b>My details</b><p>
   <form>
-    <input type="text" placeholder="forename" value="$user.getForename()">
-    <input type="text" placeholder="surname" value="$user.getSurname()"><p>
-    <input type="text" placeholder="email address" value="$user.getEmail()">
+    <input type="text" name="forename" placeholder="forename" value="$user.getForename()" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">&nbsp;
+    <input type="text" name="surname" placeholder="surname" value="$user.getSurname()" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
+    <p>
+    <input type="text" name="email" placeholder="email address" value="$user.getEmail()" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
   </form>
 </div>
 ## App tiles

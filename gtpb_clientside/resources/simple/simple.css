@@ -76,10 +76,9 @@ body {
   background-color: #009fe3;
   padding: 1em;
   color: white;
-  margin-bottom: 1em;
-  border-radius: 1em;
+  margin-bottom: 10px;
+  border-radius: 0.25em;
 }
-
 
 .profile_edit input {
   height: auto;

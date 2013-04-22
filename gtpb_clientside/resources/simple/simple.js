@@ -388,6 +388,7 @@ function expandTile(tile) {
 	tile.find(".title").addClass("notfocus");
 	/* leave some space for controls on left and right */
 	$("#tiles").addClass("padded");
+	$(".profile_edit").addClass("notfocus");
   /* show tile title at top */
 	var title = tile.attr("data-title");
 	$("#title").find("h1").text(title);
