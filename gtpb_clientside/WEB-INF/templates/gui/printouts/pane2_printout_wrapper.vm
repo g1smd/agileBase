@@ -184,10 +184,27 @@
 		function fCreatePrintoutSelector(sCaption,fClick) {
       oToolbar.appendChild(document.createTextNode(sCaption + ' '));
       
+      ## Custom printouts
       #set($company = $view.getLoggedInUser().getCompany())
       #set($internalCompanyName = $company.getInternalCompanyName())
       #set($internalReportName = $report.getInternalReportName())
       #set($customTemplates = $viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName"))
+      #foreach($template in $customTemplates)
+        #set($filePath = $template.getName())
+        #set($slashIndex = $filePath.lastIndexOf('/') + 1)
+        #set($templateName = $filePath.substring($slashIndex))
+        #set($templateName = $templateName.replace(".vm",""))
+        oRadio = document.createElement('input');
+        oRadio.setAttribute('type','radio');
+        oRadio.setAttribute('name','printout_selector');
+        oRadio.setAttribute('value','uploads/$internalCompanyName/$internalReportName/$templateName&cachebust=$viewTools.getRandomString()');
+        #if($foreach.count == 1)
+          oRadio.setAttribute('checked','true');
+        #end
+        $(oRadio).click(fClick);
+        oToolbar.appendChild(oRadio);
+        oToolbar.appendChild(document.createTextNode(" $templateName.replace('_',' ') "));
+      #end
       
       ## Pane 3 printout
 		  var oRadio = document.createElement('input');
@@ -213,24 +230,6 @@
       $(oRadio).click(fClick);
       oToolbar.appendChild(oRadio);
       oToolbar.appendChild(document.createTextNode(' all report rows '));
-      
-      ## Custom printouts
-      #foreach($template in $customTemplates)
-        #set($filePath = $template.getName())
-        #set($slashIndex = $filePath.lastIndexOf('/') + 1)
-        #set($templateName = $filePath.substring($slashIndex))
-        #set($templateName = $templateName.replace(".vm",""))
-        oRadio = document.createElement('input');
-        oRadio.setAttribute('type','radio');
-        oRadio.setAttribute('name','printout_selector');
-        oRadio.setAttribute('value','uploads/$internalCompanyName/$internalReportName/$templateName&cachebust=$viewTools.getRandomString()');
-        #if($foreach.count == 1)
-          oRadio.setAttribute('checked','true');
-        #end
-        $(oRadio).click(fClick);
-        oToolbar.appendChild(oRadio);
-        oToolbar.appendChild(document.createTextNode(" $templateName.replace('_',' ') "));
-      #end
 		}
         
         var oToolbar=document.createElement('div');
