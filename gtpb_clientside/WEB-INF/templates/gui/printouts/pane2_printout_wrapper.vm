@@ -249,11 +249,12 @@
       function fCreateIframe() {
         var oIframe=document.createElement('iframe');
         oIframe.setAttribute('id','wrapper');
-      	#if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
-          oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/records');
-        #else
-          oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/record');
-        #end
+        $("#toolbarDiv input[type=radio]").first().click();
+      	###if(($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION"))
+        ##  oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/records');
+        ###else
+        ##  oIframe.setAttribute('src','AppController.servlet?return=gui/printouts/record');
+        ###end
         document.body.appendChild(oIframe);
         return oIframe;
       }
