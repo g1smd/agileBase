@@ -640,7 +640,7 @@ table.reportData td {
 }
 
 #calendar .fc-state-highlight {
-  background-color: white;
+  background-color: rgba(255,255,255,0);
 }
 
 #calendar .fc-border-separate tr.fc-last th {
