@@ -73,12 +73,16 @@ public abstract class AbstractTile {
 	}
 	
 	/**
-	 * Compare first by app type (apps of the same type go together) then consistent with equals
+	 * Compare first by app type (apps of the same type go together) then by report, if applicable, then consistent with equals
 	 */
 	public int compareTo(TileInfo otherTile) {
 		TileType otherAppType = otherTile.getTileType();
 		if (!otherAppType.equals(this.getTileType())) {
 			return this.getTileType().compareTo(otherAppType);
+		}
+		if ((this instanceof DataLinkTile) && (otherTile instanceof DataLinkTile)) {
+			DataLinkTile thisTile = (DataLinkTile) this;
+			return thisTile.getReport().compareTo(((DataLinkTile) otherTile).getReport());
 		}
 		return this.getInternalTileName().compareTo(otherTile.getInternalTileName());
 	}
