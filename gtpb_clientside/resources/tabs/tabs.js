@@ -691,7 +691,8 @@ function fSexyUpload() {
 										 * aborted"); jqUploadInfo.text("Upload aborted"); }
 										 */
 								});
-						$("img.profile_photo")
+						// Here
+						//$("img.profile_photo")
 						jqForm.addClass("uploadEventRegistered");
 					});
 }
