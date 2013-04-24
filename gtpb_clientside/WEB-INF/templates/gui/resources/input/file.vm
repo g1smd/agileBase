@@ -68,11 +68,11 @@
   #set($attachmentType = $field.getAttachmentType().name().toLowerCase())
   #if(!$fieldValueObject.isNull())
     #if($fieldValueObject.isImage())
+      #set($extension = $fieldValueObject.getPreviewExtension())
       #if($attachmentType == "profile_photo")
         <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
       #else
         <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
-        #set($extension = $fieldValueObject.getPreviewExtension())
         <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
         </a>
       #end
