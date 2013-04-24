@@ -70,6 +70,7 @@ body {
 
 .header .profile img {
   float: right;
+  margin-left: 1em;
 }
 
 .profile_edit {
@@ -82,6 +83,14 @@ body {
 
 .profile_edit input {
   height: auto;
+}
+
+.profile_edit .controls {
+  float: right;
+}
+
+.profile_edit .controls a {
+  color: white;
 }
 
 .tile div#reportData {
