@@ -64,7 +64,7 @@
     </div>
     <div class="span8 spaced profile">
       #set($profileImage = false)
-      #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
+      #set($profileImage = $view.getUserProfileImage($user.getInternalUserName()))
       #if($profileImage)
         <img src="$profileImage" class="comment_author_picture" />
       #else
