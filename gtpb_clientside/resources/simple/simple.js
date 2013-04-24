@@ -15,6 +15,9 @@ $(document).ready(function() {
 			$(".tile").not(".adder").not(".focus").click();
 		}
 	}
+	$(".profile").click(function() {
+		$(".profile_edit").toggleClass("notfocus");
+	});
 });
 
 var abTileColours = [ "blue", "yellow", "green", "purple", "pink", "turquoise" ];
