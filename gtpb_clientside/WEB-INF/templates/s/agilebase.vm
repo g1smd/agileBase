@@ -62,7 +62,7 @@
     <div class="span4 spaced">
       <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
     </div>
-    <div class="span8 spaced profile">
+    <div class="span8 spaced profile transition">
       #set($profileImage = false)
       #set($profileImage = $view.getUserProfileImage($user.getInternalUserName()))
       #if($profileImage)
