@@ -29,12 +29,6 @@
       #set($downloadBase = "uploads/$sessionTable.getInternalTableName()/$field.getInternalFieldName()/$sessionRowId/")
 	  #end
   	#set($downloadUrl = $viewTools.escapeForURL("$downloadBase$fieldValue"))
-    #if($viewTools.getBrowser().getBrowserName() == "Konqueror")
-      ## Konqueror on LadyLodge doesn't like opening docs with OpenOffice over https
-      #set($appUrl = $viewTools.getAppUrl())
-      #set($appUrl = $appUrl.replaceAll("^https","http"))
-      #set($downloadUrl = "$appUrl/$downloadUrl")
-    #end
     ## File icon
     #if(!$fieldValueObject.isImage())
       #if(!$userCanEdit) <br style="clear: left"> #end
@@ -45,7 +39,7 @@
 			#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
       <a href="$downloadUrl"><img border="0" class="document" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/></a> 
       <a href="$downloadUrl">$fieldValue</a>
-            ## PDF preview
+      ## PDF preview
 			###if($pdf && !$sectionHasImage)
 			##	<br clear="left" />
 			##  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl"></a>
@@ -71,15 +65,21 @@
   	  #end ## !$userCanEdit
     #end ## if not image
   #end ## if !$fieldValueObject.isNull()
+  #set($attachmentType = $field.getAttachmentType().name().toLowerCase())
   #if(!$fieldValueObject.isNull())
     #if($fieldValueObject.isImage())
-    ## #if($userCanEdit)<br />#end
-      <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
-      #set($extension = $fieldValueObject.getPreviewExtension())
-      <img border="0" src="$downloadUrl.500.$extension" class="$field.getAttachmentType().name().toLowerCase() edit_image" />
-      </a>
+      #if($attachmentType == "profile_photo")
+        <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
+      #else
+        <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
+        #set($extension = $fieldValueObject.getPreviewExtension())
+        <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
+        </a>
+      #end
       #set($sectionHasImage = true)
     #end
+  #elseif($attachmentType == "profile_photo") ##field value object is null
+    <img class="$attachmentType edit_image" src="resources/icons/file_placeholders/profile_photo.png" />
   #end
   #if($userCanEdit && (!$mobile_device))
   	#if($ab_calendar_display)
@@ -100,7 +100,7 @@
         <input type="hidden" name="update_record" value="true" />
         <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()" />
         <input type="hidden" name="rowid" value="$sessionRowId" />
-        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger" #if(!$showFieldName) style="float:left" #end />
+        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger $attachmentType" #if(!$showFieldName) style="float:left" #end />
         <div class="upload_progress_container">
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>

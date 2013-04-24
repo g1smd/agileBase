@@ -691,6 +691,7 @@ function fSexyUpload() {
 										 * aborted"); jqUploadInfo.text("Upload aborted"); }
 										 */
 								});
+						$("img.profile_photo")
 						jqForm.addClass("uploadEventRegistered");
 					});
 }
@@ -703,11 +704,6 @@ function fKeyUpEvent(inputElement, e) {
 	jqWrapper.attr(sAttribute, $(inputElement).val());
 	fSetValueAtt(jqWrapper[0]);
 	var globalEdit = false;
-	// Note: why doesn't var globalEdit = (jqWrapper.attr("gtpb_global_edit") !==
-	// "undefined") work?
-	// A: see
-	// http://stackoverflow.com/questions/1318076/jquery-hasattr-checking-to-see-if-there-is-an-attribute-on-an-element
-	// A2: should be != rather than !==
 	if (jqWrapper.attr("gtpb_global_edit")) {
 		globalEdit = true;
 	}
