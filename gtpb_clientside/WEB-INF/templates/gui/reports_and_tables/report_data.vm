@@ -104,8 +104,7 @@
         #end##
         #set($success=$colours.add(""))## don't colour selector reports in tabs
       #else## not parent table
-        $viewTools.log($field.getClass().getSimpleName())
-        #if($field.getClass().getSimpleName() == "CheckboxField")##
+        #if($field.getClass().getSimpleName() == "CheckboxFieldDefn")##
           #set($success = $row.add("<input type='checkbox' name='$field.getInternalFieldName()' #if($dataRowField.getKeyValue() == 'true') checked #end />"))##
         #else##
           #set($success=$row.add($displayValue))##
