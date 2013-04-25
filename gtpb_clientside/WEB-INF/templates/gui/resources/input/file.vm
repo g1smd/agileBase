@@ -71,6 +71,7 @@
       #set($extension = $fieldValueObject.getPreviewExtension())
       #if($attachmentType == "profile_photo")
         <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
+        #set($hideChooser = true)
       #else
         <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
         <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
@@ -100,7 +101,7 @@
         <input type="hidden" name="update_record" value="true" />
         <input type="hidden" name="internaltablename" value="$sessionTable.getInternalTableName()" />
         <input type="hidden" name="rowid" value="$sessionRowId" />
-        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger $attachmentType" #if(!$showFieldName) style="float:left" #end />
+        <input type="file" name="$field.getInternalFieldName()" onchange="uploadFile(this);" class="submit-trigger $attachmentType" #if(!$showFieldName) style="float:left; #if($hideChooser) display:none #end" #end />
         <div class="upload_progress_container">
           <div class="upload_progress_bar"></div>
           <span class="upload_info" upload_speed="$view.getUploadSpeed()"></span>

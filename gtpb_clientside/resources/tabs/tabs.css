@@ -253,8 +253,9 @@ textarea {
   -webkit-column-break-inside: avoid;
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
-  display: table;
-  width: 100%;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%; /* match inputs */
 }
 
 .saved_tags {
