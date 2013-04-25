@@ -258,6 +258,10 @@ textarea {
   width: 50%; /* match inputs */
 }
 
+.tab_container.two_cols .tags {
+  float: right;
+}
+
 .saved_tags {
   margin-bottom: 0.25em;
   margin-top: 0;
