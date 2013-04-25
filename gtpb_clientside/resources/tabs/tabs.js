@@ -692,7 +692,6 @@ function fSexyUpload() {
 										 */
 								});
 						$("img.edit_image.profile_photo").click(function() {
-							alert("click");
 							// Clicking on the photo launches the file chooser
 							$(this).next("form").find("input[type=file]").click();
 						});
