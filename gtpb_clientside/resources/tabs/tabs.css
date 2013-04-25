@@ -498,6 +498,7 @@ img.edit_image {
   float:left;
   border-radius: 0.5em;
   margin-right: 1em;
+  cursor: pointer;
 }
 
 img.document {
