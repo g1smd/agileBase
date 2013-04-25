@@ -691,10 +691,11 @@ function fSexyUpload() {
 										 * aborted"); jqUploadInfo.text("Upload aborted"); }
 										 */
 								});
-						$("img.edit_image.profile_photo").click(function() {
+						$("img.edit_image.profile_photo").not(".uploadEventRegistered").click(function() {
 							// Clicking on the photo launches the file chooser
 							$(this).next("form").find("input[type=file]").click();
 						});
+						$("img.edit_image.profile_photo").addClass("uploadEventRegistered");
 						jqForm.addClass("uploadEventRegistered");
 					});
 }
