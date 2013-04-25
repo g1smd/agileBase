@@ -86,6 +86,7 @@
     #foreach($field in $fields)##
       #set($dbType = $field.getDbType().toString())
       #set($dataRowField = $dataRowFields.get($field))##
+      #set($displayValue = $dataRowField.getDisplayValue())
       #if($printout && ($field.getContentSize() > 500))##
         #set($success=$row.add($dataRowField.getKeyValue()))##
         #set($success=$colours.add("")) ## TODO: this may fix the issue in pane2_body.vm, labelled 'Workaround for intermittent index out of bounds bug'
@@ -97,13 +98,17 @@
             #set($success=$row.add("not $field.getFieldName().toLowerCase()"))##
           #end##
         #elseif($dbType == "TIMESTAMP")##
-          #set($success=$row.add("$field.getFieldName().replace(' [Auto]','') $dataRowField.getDisplayValue()"))##
+          #set($success=$row.add("$field.getFieldName().replace(' [Auto]','') $displayValue"))##
         #else##
-          #set($success=$row.add($dataRowField.getDisplayValue()))##
+          #set($success=$row.add($displayValue))##
         #end##
         #set($success=$colours.add(""))## don't colour selector reports in tabs
       #else## not parent table
-        #set($success=$row.add($dataRowField.getDisplayValue()))##
+        #if($field.getClass().getSimpleName() == "CheckboxField")##
+          #set($success = $row.add("<input type='checkbox' name='$field.getInternalFieldName()' #if($dataRowField.getKeyValue() == 'true') checked #end />"))##
+        #else##
+          #set($success=$row.add($displayValue))##
+        #end##
         #set($stdDevs = $dataRowField.getNumberOfStdDevsFromMean())##
         #if($dbType == "TIMESTAMP")##
           #set($stdDevThreshold = 2)##
@@ -124,13 +129,13 @@
       #set($locked=$view.isRecordLocked($sessionTable,$rowId))##
     #else##
       #set($locked='')##
-	  #if($mobile_device)
-		  #set($click="document.location='AppController.servlet?return=$return&set_row_id=$rowId';")
-	  #elseif($parentTable)
+	  #if($mobile_device)##
+		  #set($click="document.location='AppController.servlet?return=$return&set_row_id=$rowId';")##
+	  #elseif($parentTable)##
       #set($click="loadIntoTabTable(this, '$internalTableName', $rowId);")##
-    #elseif($table_part_only)
+    #elseif($table_part_only)##
       #set($click="loadIntoPanel('$sessionReport.getInternalReportName()', $rowId);")##
-    #else
+    #else##
       #set($click="loadIntoPane3('AppController.servlet?return=$return&set_table=$internalTableName&set_row_id=$rowId&set_custom_string=1&key=report_tabindex&value=2&$setTab', $rowId, $numberOfTabs);showPane3IfNecessary(event);")##
 	  #end##
 	#end##

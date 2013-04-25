@@ -240,11 +240,6 @@ textarea {
 .changed { text-decoration:underline; }
 .saved {
   color: #8DC63F;
-/*
-	background-image:url('/agileBase/resources/icons/tick.png');
-  background-repeat: no-repeat;
-  background-position: right top;
-*/
 	display: none;
 }
 
@@ -253,6 +248,7 @@ textarea {
   -webkit-column-break-inside: avoid;
   -moz-column-break-inside: avoid;
   column-break-inside: avoid;
+  page-break-inside: avoid;
   display: inline-block;
   vertical-align: top;
   width: 50%; /* match inputs */
