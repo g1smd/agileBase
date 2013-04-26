@@ -226,28 +226,6 @@
 	}
 	#end
 	
-	$(document).ready(function() {
-	  fSetupAppPreview();
-	  var hoverIntentConfig = {    
-         over: showTooltip,
-         out: hideTooltip,
-         interval: 400
-	  };
-	  $("#filterhelp").hoverIntent(hoverIntentConfig);
-	  $(".ab_field_title").hoverIntent(hoverIntentConfig);
-	  $("tr.sectioned_detail_row").mouseenter(function() {
-	    $("tr.sectioned_detail_heading").hide();
-	    $(this).prevAll("tr.sectioned_detail_heading").first().show();
-	  });
-	  #if($browser != "Internet Explorer")
-	    alignTableHeaderCells();
-	    setInterval("alignTableHeaderCells()", 2000);
-	    $(window).scroll(function() {
-	      var left = document.body.scrollLeft || window.pageXOffset;
-	      $("thead").css("left", -1 * left);
-	    });
-	  #end
-	});
 	</script>
     #end ## end if not mobile device
   </head>

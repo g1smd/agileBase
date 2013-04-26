@@ -15,10 +15,51 @@
  *  You should have received a copy of the GNU General Public License
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-// clear all the selected rows
-// there should only be one but will clear all if more than this.
 ;
+
+$(document).ready(function() {
+  fSetupAppPreview();
+  var hoverIntentConfig = {    
+       over: showTooltip,
+       out: hideTooltip,
+       interval: 400
+  };
+  $("#filterhelp").hoverIntent(hoverIntentConfig);
+  $(".ab_field_title").hoverIntent(hoverIntentConfig);
+  $("tr.sectioned_detail_row").mouseenter(function() {
+    $("tr.sectioned_detail_heading").hide();
+    $(this).prevAll("tr.sectioned_detail_heading").first().show();
+  });
+  // See if tbody is writable (it's not in IE)
+  // TODO: see if there is a better way than user agent sniffing
+  // http://stackoverflow.com/questions/16234410/detecting-whether-innerhtml-is-readonly
+  var userAgent = navigator.userAgent.toLowerCase();
+  if (userAgent.match(/msie/)) {
+    alignTableHeaderCells();
+    setInterval("alignTableHeaderCells()", 2000);
+    $(window).scroll(function() {
+      var left = document.body.scrollLeft || window.pageXOffset;
+      $("thead").css("left", -1 * left);
+    });
+  }
+  checkboxesSetup();
+});
+
+/**
+ * Live checkboxes allow booleans to be updated directly from the report
+ */
+function checkboxesSetup() {
+	$("#reportBody input[type=checkbox]").click(function() {
+		if ($(this).is(":checked")) {
+			$(this).closest("td").addClass("colored").css("background-color","#8DC63F");
+		} else {
+			$(this).closest("td").removeClass("colored").css("background-color","white");
+		}
+	});
+}
+
+//clear all the selected rows
+//there should only be one but will clear all if more than this.
 function fClearRowSelection() {
 	while (oSelected = document.getElementById('currentRow'))
 		oSelected.id = null;
