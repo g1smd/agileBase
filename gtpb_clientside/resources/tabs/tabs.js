@@ -1027,6 +1027,7 @@ function addComment(jqCommentInput) {
 			jqCommentInput.removeAttr("disabled");
 			jqCommentInput.next("input[type=button]").removeAttr("disabed");
 			$(".add_comment_row").hide();
+			fComments();
 		});
 	}
 }
@@ -1042,6 +1043,7 @@ function removeComment(jqComment) {
 		internaltablename: internalTableName
 	}, function(data) {
 		$("#comments_" + internalFieldName).html(data);
+		fComments();
 	});
 }
 
