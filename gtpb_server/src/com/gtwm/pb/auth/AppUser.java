@@ -260,6 +260,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	}
 	
 	public synchronized void removeTile(TileInfo tile) {
+		logger.debug("Removing tile " + tile);
 		this.getTiles().remove(tile);
 	}
 	
@@ -267,6 +268,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		for (TileInfo tile : this.getTiles()) {
 			if (tile instanceof TileDataLinkInfo) {
 				if (report.equals(((TileDataLinkInfo) tile).getReport())) {
+					logger.debug("Tile found for report " + report + " that needs removing");
 					this.removeTile(tile);
 				}
 			} else if (tile instanceof TileDataStreamInfo) {
