@@ -20,6 +20,7 @@ package com.gtwm.pb.auth;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -261,7 +262,12 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	
 	public synchronized void removeTile(TileInfo tile) {
 		logger.debug("Removing tile " + tile);
-		this.getTiles().remove(tile);
+		Iterator<TileInfo> i = this.getTiles().iterator();
+		while(i.hasNext()) {
+			if(i.next().equals(tile)) {
+				i.remove();
+			}
+		}
 	}
 	
 	public void removeTilesDependentOnReport(BaseReportInfo report) {
