@@ -49,7 +49,8 @@ $(document).ready(function() {
  * Live checkboxes allow booleans to be updated directly from the report
  */
 function checkboxesSetup() {
-	$("#reportBody input[type=checkbox]").click(function() {
+	$("#reportBody input[type=checkbox]").click(function(event) {
+		event.stopPropagation();
 		if ($(this).is(":checked")) {
 			$(this).closest("td").addClass("colored").css("background-color","#8DC63F");
 		} else {
