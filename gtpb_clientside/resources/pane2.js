@@ -51,12 +51,30 @@ $(document).ready(function() {
 function checkboxesSetup() {
 	$("#reportBody input[type=checkbox]").click(function(event) {
 		event.stopPropagation();
-		new fChange(this);
-		if ($(this).is(":checked")) {
-			$(this).closest("td").addClass("colored").css("background-color","#8DC63F");
-		} else {
-			$(this).closest("td").removeClass("colored").css("background-color","white");
-		}
+		var checkbox = $(this);
+		var value = checkbox.is(":checked");
+		var rowId = checkbox.closest("tr").attr("name");
+		var internalTableName = checkbox.closest("table").attr("data-internaltablename");
+		var internalFieldName = checkbox.attr("name");
+		var options = {
+				"return": "gui/resources/xmlreturn_rowid",
+				update_record: true,
+				rowid: rowId,
+				internaltablename: internalTableName
+		};
+		options[internalFieldName] = value;
+		$.post("AppController.servlet", options, function(data) {
+			if ($(data).find("response").text() == "ok") {
+				if (value) {
+					checkbox.closest("td").addClass("colored").css("background-color","#8DC63F");
+				} else {
+					checkbox.closest("td").removeClass("colored").css("background-color","white");
+				}
+			} else {
+				var error = $(data).find("exception").text();
+				alert("Error saving: " + error);
+			}
+		});
 	});
 }
 

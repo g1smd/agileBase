@@ -105,7 +105,7 @@
         #set($success=$colours.add(""))## don't colour selector reports in tabs
       #else## not parent table
         #if(($field.getClass().getSimpleName() == "CheckboxFieldDefn") && ($field.getTableContainingField().equals($sessionTable)))##
-          #set($success = $row.add("<input type='checkbox' name='$field.getInternalFieldName()' #if($dataRowField.getKeyValue() == 'true') checked #end gtpb_rowid='$rowId' gtpb_internaltablename='$internalTableName' gtpb_update_record='true' />"))##
+          #set($success = $row.add("<input type='checkbox' name='$field.getInternalFieldName()' #if($dataRowField.getKeyValue() == 'true') checked #end />"))##
         #else##
           #set($success=$row.add($displayValue))##
         #end##
