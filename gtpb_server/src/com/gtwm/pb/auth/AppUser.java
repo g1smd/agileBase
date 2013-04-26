@@ -262,34 +262,33 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	
 	public synchronized void removeTile(TileInfo tile) {
 		logger.debug("Removing tile " + tile);
-		Iterator<TileInfo> i = this.getTiles().iterator();
-		while(i.hasNext()) {
-			if(i.next().equals(tile)) {
-				i.remove();
-			}
-		}
+		this.getTiles().remove(tile);
 	}
 	
 	public void removeTilesDependentOnReport(BaseReportInfo report) {
-		for (TileInfo tile : this.getTiles()) {
+		Iterator<TileInfo> i = this.getTiles().iterator();
+		while(i.hasNext()) {
+			TileInfo tile = i.next();
 			if (tile instanceof TileDataLinkInfo) {
 				if (report.equals(((TileDataLinkInfo) tile).getReport())) {
 					logger.debug("Tile found for report " + report + " that needs removing");
-					this.removeTile(tile);
+					i.remove();
 				}
 			} else if (tile instanceof TileDataStreamInfo) {
 				if (report.equals(((TileDataStreamInfo) tile).getReport())) {
-					this.removeTile(tile);
+					i.remove();
 				}
 			}
 		}
 	}
 	
 	public void removeTilesDependentOnChart(ChartInfo chart) throws CantDoThatException {
-		for (TileInfo tile : this.getTiles()) {
+		Iterator<TileInfo> i = this.getTiles().iterator();
+		while(i.hasNext()) {
+			TileInfo tile = i.next();
 			if (tile instanceof TileVisualisationInfo) {
 				if (chart.equals(((TileVisualisationInfo) tile).getChart())) {
-					this.removeTile(tile);
+					i.remove();
 				}
 			}
 		}
