@@ -86,7 +86,7 @@ public final class ServletDataMethods {
 
 	public static void removeComment(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn) throws DisallowedException, SQLException,
-			MissingParametersException, ObjectNotFoundException {
+			MissingParametersException, ObjectNotFoundException, CantDoThatException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				true);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,

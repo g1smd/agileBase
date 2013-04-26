@@ -190,7 +190,7 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void removeComment(int commentId, AppUserInfo user) throws SQLException {
+	public void removeComment(int commentId, AppUserInfo user) throws SQLException, CantDoThatException {
 		CompanyInfo company = user.getCompany();
 		String SQLCode = "DELETE FROM dbint_comments_" + company.getInternalCompanyName() + " WHERE comment_id = ?";
 		Connection conn = null;
@@ -199,7 +199,10 @@ public final class DataManagement implements DataManagementInfo {
 			conn.setAutoCommit(false);
 			PreparedStatement statement = conn.prepareStatement(SQLCode);
 			statement.setInt(1, commentId);
-			statement.executeUpdate();
+			int numRemoved = statement.executeUpdate();
+			if (numRemoved != 1) {
+				throw new CantDoThatException("Expected to remove 1 comment but " + numRemoved + " removed");
+			}
 			statement.close();
 			conn.commit();
 			logger.info("Comment ID " + commentId + " removed by user " + user + ", company " + user.getCompany());

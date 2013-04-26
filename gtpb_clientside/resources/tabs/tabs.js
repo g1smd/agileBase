@@ -1046,11 +1046,11 @@ function removeComment(jqComment) {
 }
 
 function fComments() {
-	$(".comment").click(function() {
+	$(".comment").not(".removeAdded").click(function() {
 		if (confirm("Remove this comment?")) {
 			removeComment($(this));
 		}
-	});
+	}).addClass("removeAdded");
 	$("input.comment_input").each(function() {
 		var jqInput = $(this);
 		if (!jqInput.hasClass("keypressRegistered")) {

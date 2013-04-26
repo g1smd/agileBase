@@ -173,7 +173,7 @@ public interface DataManagementInfo {
 			String comment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException;
 
-	public void removeComment(int commentId, AppUserInfo user) throws SQLException;
+	public void removeComment(int commentId, AppUserInfo user) throws SQLException, CantDoThatException;
 	
 	/**
 	 * Return true if the record with the given primary key is visible in the
