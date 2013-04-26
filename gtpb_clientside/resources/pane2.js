@@ -34,7 +34,7 @@ $(document).ready(function() {
   // TODO: see if there is a better way than user agent sniffing
   // http://stackoverflow.com/questions/16234410/detecting-whether-innerhtml-is-readonly
   var userAgent = navigator.userAgent.toLowerCase();
-  if (userAgent.match(/msie/)) {
+  if (!(userAgent.match(/msie/))) {
     alignTableHeaderCells();
     setInterval("alignTableHeaderCells()", 2000);
     $(window).scroll(function() {
