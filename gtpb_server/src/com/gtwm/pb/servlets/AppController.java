@@ -352,6 +352,9 @@ public final class AppController extends VelocityViewServlet {
 				case ADD_COMMENT:
 					ServletDataMethods.addComment(sessionData, request, databaseDefn);
 					break;
+				case REMOVE_COMMENT:
+					ServletDataMethods.removeComment(sessionData, request, databaseDefn);
+					break;
 				case REMOVE_USER:
 					ServletAuthMethods.removeUser(sessionData, request, databaseDefn);
 					break;

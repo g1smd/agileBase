@@ -26,8 +26,10 @@
   #end
   #set($comments = $view.getComments($field, $sessionRowId))
 #end
+#set($internalTableName = $field.getTableContainingField().getInternalTableName())
+#set($internalFieldName = $field.getInternalFieldName())
 #foreach($comment in $comments)
-  <div class="comment">
+  <div class="comment" data-commentid="$comment.getCommentId()" data-internaltablename="$internalTableName" data-internalfieldname="$internalFieldName">
     #set($profileImage = false)
     #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
     #if($profileImage)

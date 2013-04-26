@@ -35,5 +35,7 @@ public interface CommentInfo extends Comparable<CommentInfo> {
 	 * Return the id of the record we're commenting on
 	 */
 	public int getRowId();
+	
+	public int getCommentId();
 
 }

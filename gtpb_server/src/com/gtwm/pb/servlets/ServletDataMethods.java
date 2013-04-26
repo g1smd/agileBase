@@ -72,7 +72,7 @@ public final class ServletDataMethods {
 	 * integer
 	 * 
 	 * @throws NumberFormatException
-	 *             If the parameter value isn't an integer
+	 *           If the parameter value isn't an integer
 	 */
 	public static Integer getIntegerParameterValue(HttpServletRequest request, String parameterName) {
 		String parameterValueString = request.getParameter(parameterName);
@@ -84,9 +84,28 @@ public final class ServletDataMethods {
 		return null;
 	}
 
+	public static void removeComment(SessionDataInfo sessionData, HttpServletRequest request,
+			DatabaseInfo databaseDefn) throws DisallowedException, SQLException,
+			MissingParametersException, ObjectNotFoundException {
+		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
+				true);
+		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
+				PrivilegeType.MANAGE_TABLE, table))) {
+			throw new DisallowedException(databaseDefn.getAuthManager().getLoggedInUser(request),
+					PrivilegeType.MANAGE_TABLE, table);
+		}
+		String commentIdString = request.getParameter("commentid");
+		if (commentIdString == null) {
+			throw new MissingParametersException("commentid required");
+		}
+		int commentId = Integer.valueOf(commentIdString);
+		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
+		databaseDefn.getDataManagement().removeComment(commentId, user);
+	}
+
 	public static void addComment(SessionDataInfo sessionData, HttpServletRequest request,
-			DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException,
-			SQLException, MissingParametersException, CantDoThatException, CodingErrorException {
+			DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException, SQLException,
+			MissingParametersException, CantDoThatException, CodingErrorException {
 		TableInfo table = ServletUtilMethods.getTableForRequest(sessionData, request, databaseDefn,
 				true);
 		if (!(databaseDefn.getAuthManager().getAuthenticator().loggedInUserAllowedTo(request,
@@ -109,30 +128,28 @@ public final class ServletDataMethods {
 	}
 
 	/**
-	 * Insert or update a database record. Fields passed in the request are
-	 * saved.
+	 * Insert or update a database record. Fields passed in the request are saved.
 	 * 
 	 * Null handling is as follows:
 	 * 
-	 * 1) If a field is passed to the request with an empty value, e.g. a form
-	 * is submitted containing the field but no data has been entered for it,
-	 * then the application will specifically insert a NULL into that field,
-	 * both when creating new and editing existing records.
+	 * 1) If a field is passed to the request with an empty value, e.g. a form is
+	 * submitted containing the field but no data has been entered for it, then
+	 * the application will specifically insert a NULL into that field, both when
+	 * creating new and editing existing records.
 	 * 
 	 * 2) If a field is skipped, e.g. isn't in the form in the first place or is
-	 * disabled, it will be skipped in the SQL as well, i.e. it won't be
-	 * included in the SQL INSERT or UPDATE statement. When creating records,
-	 * this will result in a null value being inserted. When editing records,
-	 * the current value will remain unchanged.
+	 * disabled, it will be skipped in the SQL as well, i.e. it won't be included
+	 * in the SQL INSERT or UPDATE statement. When creating records, this will
+	 * result in a null value being inserted. When editing records, the current
+	 * value will remain unchanged.
 	 * 
 	 * In both cases 1 and 2, if a default value property has been set for the
 	 * field, that will be used instead of inserting NULL or skipping.
 	 */
 	public static void saveRecord(SessionDataInfo sessionData, HttpServletRequest request,
 			boolean newRecord, DatabaseInfo databaseDefn, List<FileItem> multipartItems)
-			throws ObjectNotFoundException, DisallowedException, SQLException,
-			InputRecordException, CodingErrorException, CantDoThatException, FileUploadException,
-			MissingParametersException {
+			throws ObjectNotFoundException, DisallowedException, SQLException, InputRecordException,
+			CodingErrorException, CantDoThatException, FileUploadException, MissingParametersException {
 		String internalTableName = ServletUtilMethods.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
@@ -165,23 +182,22 @@ public final class ServletDataMethods {
 			}
 		}
 		sessionData.setFieldInputValues(new HashMap<BaseField, BaseValue>());
-		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn,
-				table, multipartItems);
+		ServletSessionMethods.setFieldInputValues(sessionData, request, newRecord, databaseDefn, table,
+				multipartItems);
 		databaseDefn.getDataManagement().saveRecord(request, table,
-				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
-				newRecord, rowId, sessionData, multipartItems);
+				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()), newRecord,
+				rowId, sessionData, multipartItems);
 		sessionData.setLastAppActionRowId(rowId);
 	}
 
 	/**
-	 * Clone a record excepting some fields which are uncloneable, i.e. any
-	 * unique fields or file upload fields
+	 * Clone a record excepting some fields which are uncloneable, i.e. any unique
+	 * fields or file upload fields
 	 */
 	public static void cloneRecord(SessionDataInfo sessionData, HttpServletRequest request,
-			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
-			throws ObjectNotFoundException, DisallowedException, SQLException,
-			InputRecordException, CodingErrorException, CantDoThatException,
-			MissingParametersException {
+			DatabaseInfo databaseDefn, List<FileItem> multipartItems) throws ObjectNotFoundException,
+			DisallowedException, SQLException, InputRecordException, CodingErrorException,
+			CantDoThatException, MissingParametersException {
 		String internalTableName = ServletUtilMethods.getParameter(request, "internaltablename",
 				multipartItems);
 		TableInfo table;
@@ -203,8 +219,8 @@ public final class ServletDataMethods {
 		if (rowId == -1) {
 			throw new ObjectNotFoundException("There's no record identifier in the session");
 		}
-		databaseDefn.getDataManagement().cloneRecord(request, table, rowId, sessionData,
-				multipartItems);
+		databaseDefn.getDataManagement()
+				.cloneRecord(request, table, rowId, sessionData, multipartItems);
 		// Record the *new* row ID of the cloned record
 		sessionData.setLastAppActionRowId(sessionData.getRowId());
 	}
@@ -236,8 +252,8 @@ public final class ServletDataMethods {
 		ServletSessionMethods.setFieldInputValues(sessionData, request, false, databaseDefn, table,
 				multipartItems);
 		int affectedRecords = databaseDefn.getDataManagement().globalEdit(request, table,
-				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()),
-				sessionData, multipartItems);
+				new LinkedHashMap<BaseField, BaseValue>(sessionData.getFieldInputValues()), sessionData,
+				multipartItems);
 		logDataChanges(request, databaseDefn, "globally edited " + affectedRecords + " records in "
 				+ table.getTableName() + " (" + table.getInternalTableName() + ")");
 		// clear the cached record data:
@@ -250,12 +266,11 @@ public final class ServletDataMethods {
 	 * 'rowid'="")
 	 * 
 	 * @throws ObjectNotFoundException
-	 *             If either a) table or row id object aren't in the session, b)
-	 *             there is no record with the given rowId in the table, c)
-	 *             there is more than one record with the given rowId in the
-	 *             table
+	 *           If either a) table or row id object aren't in the session, b)
+	 *           there is no record with the given rowId in the table, c) there is
+	 *           more than one record with the given rowId in the table
 	 * @throws DisallowedException
-	 *             If user doesn't have EDIT_TABLE_DATA privileges
+	 *           If user doesn't have EDIT_TABLE_DATA privileges
 	 */
 	public static void removeRecord(SessionDataInfo sessionData, HttpServletRequest request,
 			DatabaseInfo databaseDefn) throws MissingParametersException, ObjectNotFoundException,
@@ -293,8 +308,7 @@ public final class ServletDataMethods {
 		databaseDefn.getDataManagement().removeRecord(request, sessionData, databaseDefn, table,
 				iRowId, cascade);
 		ServletDataMethods.logDataChanges(request, databaseDefn, "deleted the record with rowid "
-				+ rowId + " from " + table.getTableName() + " (" + table.getInternalTableName()
-				+ ")");
+				+ rowId + " from " + table.getTableName() + " (" + table.getInternalTableName() + ")");
 		// Un-set the session record
 		sessionData.setRowId(table, -1);
 		sessionData.setLastAppActionRowId(iRowId);
@@ -316,16 +330,14 @@ public final class ServletDataMethods {
 		String generateRowIdsString = ServletUtilMethods.getParameter(request, "generate_row_ids",
 				multipartItems);
 		boolean generateRowIds = Helpers.valueRepresentsBooleanTrue(generateRowIdsString);
-		String quoteCharString = ServletUtilMethods.getParameter(request, "quote_char",
-				multipartItems);
+		String quoteCharString = ServletUtilMethods.getParameter(request, "quote_char", multipartItems);
 		if (quoteCharString == null) {
 			quoteCharString = "\"";
 		} else if (quoteCharString.equals("")) {
 			quoteCharString = "\"";
 		}
 		char quoteChar = quoteCharString.charAt(0);
-		String separatorString = ServletUtilMethods.getParameter(request, "separator",
-				multipartItems);
+		String separatorString = ServletUtilMethods.getParameter(request, "separator", multipartItems);
 		if (separatorString == null) {
 			separatorString = ",";
 		} else if (separatorString.equals("")) {
@@ -347,8 +359,7 @@ public final class ServletDataMethods {
 				.valueRepresentsBooleanTrue(useRelationDisplayValuesString);
 		String importSequenceValuesString = ServletUtilMethods.getParameter(request,
 				"import_sequence_values", multipartItems);
-		boolean importSequenceValues = Helpers
-				.valueRepresentsBooleanTrue(importSequenceValuesString);
+		boolean importSequenceValues = Helpers.valueRepresentsBooleanTrue(importSequenceValuesString);
 		String bestGuessRelationsString = ServletUtilMethods.getParameter(request,
 				"best_guess_relations", multipartItems);
 		boolean requireExactRelationValues = !(Helpers
@@ -371,10 +382,8 @@ public final class ServletDataMethods {
 						recordIdentifierField = table.getField(recordIdentifierFieldInternalName);
 						if (!recordIdentifierField.equals(table.getPrimaryKey())
 								&& !recordIdentifierField.getUnique()) {
-							throw new CantDoThatException(
-									"The record identifier field "
-											+ recordIdentifierField
-											+ " must be unique - you can turn on the unique option in the field properties");
+							throw new CantDoThatException("The record identifier field " + recordIdentifierField
+									+ " must be unique - you can turn on the unique option in the field properties");
 						}
 					}
 				}
@@ -382,15 +391,18 @@ public final class ServletDataMethods {
 		}
 		int affectedRecords = databaseDefn.getDataManagement().importCSV(request, table,
 				updateExistingRecords, recordIdentifierField, generateRowIds, separator, quoteChar,
-				numHeaderLines, useRelationDisplayValues, importSequenceValues,
-				requireExactRelationValues, trim, merge, multipartItems, csvContent);
-		logDataChanges(request, databaseDefn, "imported " + affectedRecords + " records into "
-				+ table.getTableName() + " (" + table.getInternalTableName() + ")");
+				numHeaderLines, useRelationDisplayValues, importSequenceValues, requireExactRelationValues,
+				trim, merge, multipartItems, csvContent);
+		logDataChanges(
+				request,
+				databaseDefn,
+				"imported " + affectedRecords + " records into " + table.getTableName() + " ("
+						+ table.getInternalTableName() + ")");
 	}
 
 	public static void lockRecords(SessionDataInfo sessionData, HttpServletRequest request,
-			DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException,
-			SQLException, CodingErrorException, CantDoThatException {
+			DatabaseInfo databaseDefn) throws DisallowedException, ObjectNotFoundException, SQLException,
+			CodingErrorException, CantDoThatException {
 		TableInfo table = sessionData.getReport().getParentTable();
 		if (table == null) {
 			throw new ObjectNotFoundException("There is no table in the session");
@@ -430,19 +442,17 @@ public final class ServletDataMethods {
 	}
 
 	public static void anonymiseTableData(SessionDataInfo sessionData, HttpServletRequest request,
-			DatabaseInfo databaseDefn, List<FileItem> multipartItems)
-			throws ObjectNotFoundException, DisallowedException, SQLException,
-			CodingErrorException, CantDoThatException, InputRecordException,
-			MissingParametersException {
+			DatabaseInfo databaseDefn, List<FileItem> multipartItems) throws ObjectNotFoundException,
+			DisallowedException, SQLException, CodingErrorException, CantDoThatException,
+			InputRecordException, MissingParametersException {
 		TableInfo table = sessionData.getTable();
 		if (table == null) {
 			throw new ObjectNotFoundException("There's no table in the session");
 		}
 		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		AuthenticatorInfo authenticator = databaseDefn.getAuthManager().getAuthenticator();
-		if (!(authenticator.loggedInUserAllowedTo(request,
-				PrivilegeType.MANAGE_TABLE, table))) {
-			throw new DisallowedException(user,	PrivilegeType.MANAGE_TABLE, table);
+		if (!(authenticator.loggedInUserAllowedTo(request, PrivilegeType.MANAGE_TABLE, table))) {
+			throw new DisallowedException(user, PrivilegeType.MANAGE_TABLE, table);
 		}
 		if (!authenticator.loggedInUserAllowedTo(request, PrivilegeType.ADMINISTRATE)) {
 			throw new DisallowedException(user, PrivilegeType.ADMINISTRATE);
@@ -459,8 +469,8 @@ public final class ServletDataMethods {
 				}
 			}
 		}
-		databaseDefn.getDataManagement().anonymiseData(table, request, sessionData,
-				fieldContentTypes, multipartItems);
+		databaseDefn.getDataManagement().anonymiseData(table, request, sessionData, fieldContentTypes,
+				multipartItems);
 	}
 
 	private static void logDataChanges(HttpServletRequest request, DatabaseInfo databaseDefn,
@@ -468,8 +478,7 @@ public final class ServletDataMethods {
 		AppUserInfo currentUser = databaseDefn.getAuthManager().getUserByUserName(request,
 				request.getRemoteUser());
 		String fullname = currentUser.getForename() + " " + currentUser.getSurname();
-		String timestamp = String.format(Locale.UK, "%1$td-%1$tb-%1$tY %1$tH:%1$tM:%1$tS",
-				new Date());
+		String timestamp = String.format(Locale.UK, "%1$td-%1$tb-%1$tY %1$tH:%1$tM:%1$tS", new Date());
 		logger.info(fullname + " (" + currentUser + ") " + operation + " at " + timestamp);
 	}
 

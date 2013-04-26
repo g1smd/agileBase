@@ -190,6 +190,26 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
+	public void removeComment(int commentId, AppUserInfo user) throws SQLException {
+		CompanyInfo company = user.getCompany();
+		String SQLCode = "DELETE FROM dbint_comments_" + company.getInternalCompanyName() + " WHERE comment_id = ?";
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(SQLCode);
+			statement.setInt(1, commentId);
+			statement.executeUpdate();
+			statement.close();
+			conn.commit();
+			logger.info("Comment ID " + commentId + " removed by user " + user + ", company " + user.getCompany());
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+	
 	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
 			String rawComment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException {
@@ -337,7 +357,7 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		String internalCompanyName = company.getInternalCompanyName();
-		String sqlCode = "SELECT created, author, author_internalusername, text FROM dbint_comments_"
+		String sqlCode = "SELECT comment_id, created, author, author_internalusername, text FROM dbint_comments_"
 				+ internalCompanyName;
 		sqlCode += " WHERE internalfieldname=? AND rowid=? ORDER BY created DESC LIMIT 10";
 		Connection conn = null;
@@ -350,13 +370,14 @@ public final class DataManagement implements DataManagementInfo {
 			statement.setInt(2, rowId);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
-				Timestamp createdTimestamp = results.getTimestamp(1);
+				int commentId = results.getInt(1);
+				Timestamp createdTimestamp = results.getTimestamp(2);
 				Calendar created = Calendar.getInstance();
 				created.setTimeInMillis(createdTimestamp.getTime());
-				String author = results.getString(2);
-				String authorInternalName = results.getString(3);
-				String comment = results.getString(4);
-				comments.add(new Comment(internalFieldName, rowId, author, authorInternalName, created,
+				String author = results.getString(3);
+				String authorInternalName = results.getString(4);
+				String comment = results.getString(5);
+				comments.add(new Comment(commentId, internalFieldName, rowId, author, authorInternalName, created,
 						comment));
 			}
 			results.close();

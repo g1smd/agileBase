@@ -1031,7 +1031,26 @@ function addComment(jqCommentInput) {
 	}
 }
 
+function removeComment(jqComment) {
+	var commentId = jqComment.attr("data-commentid");
+	var internalTableName = jqComment.attr("data-internaltablename");
+	var internalFieldName = jqComment.attr("data-internalfieldname");
+	$.post("AppController.servlet", {
+		"return": "gui/resources/input/comments",
+		remove_comment: true,
+		commentid: commentId,
+		internaltablename: internalTableName
+	}, function(data) {
+		$("#comments_" + internalFieldName).html(data);
+	});
+}
+
 function fComments() {
+	$(".comment").click(function() {
+		if (confirm("Remove this comment?")) {
+			removeComment($(this));
+		}
+	});
 	$("input.comment_input").each(function() {
 		var jqInput = $(this);
 		if (!jqInput.hasClass("keypressRegistered")) {
