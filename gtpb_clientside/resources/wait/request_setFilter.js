@@ -18,7 +18,7 @@
 
 // This function is never called - deletion candidate
 ;
-function fCallback(sResponseText,sResponseXML){  			 
+function fCallback(sResponseText, sResponseXML) {
 
 }
 
@@ -26,129 +26,153 @@ function fNothing() {
 	return;
 }
 
-function fRequest(sURL, aPostVars, fCallback, iShowWait){   
-  // common functions
-  function fCheckRequest(oReqObj){  
-    try {
-      if (oReqObj.readyState == 4){ 
-        if (oReqObj.status != 200){  
-          //alert('Warning - network connection problem!\n'+oReqObj.statusText);
-		  return false;
-	    }
-	    return true;
-	  }
-	} 
-	catch(e) {
-	  // this is probably that the request couldn't be sent e.g. the host isn't available
-	  // should we do some kind of alert?
-	  return false; 
-	} 
-  }
+function fRequest(sURL, aPostVars, fCallback, iShowWait) {
+	// common functions
+	function fCheckRequest(oReqObj) {
+		try {
+			if (oReqObj.readyState == 4) {
+				if (oReqObj.status != 200) {
+					// alert('Warning - network connection
+					// problem!\n'+oReqObj.statusText);
+					return false;
+				}
+				return true;
+			}
+		} catch (e) {
+			// this is probably that the request couldn't be sent e.g. the host isn't
+			// available
+			// should we do some kind of alert?
+			return false;
+		}
+	}
 
-  // the please wait object
-  function fWait(){  
-    function fInsertWaitHTML(){  
-      //if (fCheckRequest(oReq)) oHTML.insertAdjacentHTML('beforeEnd',oReq.responseText);
-	  if (fCheckRequest(oReq)){  
-	    oHTML.innerHTML=oReq.responseText;
-	    //if (sMessage) oHTML.item('oMessage').innerHTML=sMessage;
-	  }
-	}	
-			 
-	function fClose(){  
-	  //oHTML.removeNode(true);
-	  oHTML.parentNode.removeChild(oHTML);
+	// the please wait object
+	function fWait() {
+		function fInsertWaitHTML() {
+			// if (fCheckRequest(oReq))
+			// oHTML.insertAdjacentHTML('beforeEnd',oReq.responseText);
+			if (fCheckRequest(oReq)) {
+				oHTML.innerHTML = oReq.responseText;
+				// if (sMessage) oHTML.item('oMessage').innerHTML=sMessage;
+			}
+		}
+
+		function fClose() {
+			// oHTML.removeNode(true);
+			oHTML.parentNode.removeChild(oHTML);
+		}
+
+		// expose this function to the parent object
+		this.fClose = fClose;
+
+		// private variables
+		if (window.XMLHttpRequest)
+			var oReq = new XMLHttpRequest(); // the download object for Moz
+		else
+			var oReq = new ActiveXObject("Microsoft.XMLHTTP"); // the download
+		// object for IE
+		var oHTML = top.document.createElement('DIV'); // wrapper to show "please
+		// wait"
+		oHTML.id = 'oWait';
+
+		oReq.onreadystatechange = fInsertWaitHTML;
+		top.document.body.appendChild(oHTML);
+		oReq.open('GET', 'resources/wait/wait.htm', true);
+		oReq.send('');
 	}
-			 
-    // expose this function to the parent object
-	this.fClose=fClose;
-			 
-	// private variables
-	if (window.XMLHttpRequest)
-	  var oReq = new XMLHttpRequest(); // the download object for Moz
-	else
-      var oReq = new ActiveXObject("Microsoft.XMLHTTP");	 // the download object for IE
-	var oHTML = top.document.createElement('DIV');	// wrapper to show "please wait"
-	oHTML.id='oWait';
-			  
-	oReq.onreadystatechange=fInsertWaitHTML;			 
-	top.document.body.appendChild(oHTML);
-	oReq.open('GET','resources/wait/wait.htm',true);
-	oReq.send('');
-  }
-		
-  function fHTTPRequest(sURL, aPostVars, fCallback){  	 
-    function fComplete(){  
-      if (fCheckRequest(oReq)){
-        if (oWait) oWait.fClose(); // a wait window may not have been requested  
-        fCallback(oReq.responseText,oReq.responseXML);
-      }
+
+	function fHTTPRequest(sURL, aPostVars, fCallback) {
+		function fComplete() {
+			if (fCheckRequest(oReq)) {
+				if (oWait)
+					oWait.fClose(); // a wait window may not have been requested
+				fCallback(oReq.responseText, oReq.responseXML);
+			}
+		}
+
+		function fPostString() {
+			if (!aPostVars)
+				return null;
+			var sPostString = '';
+			for ( var sKey in aPostVars) {
+				if (sKey == 'containsValue')
+					continue; // this is a special case.
+				// containsValue is a prototype
+				// method. I can't think of another
+				// way to exclude it from the array :(
+				if (sKey != 'return')
+					aPostVars[sKey] = encodeURIComponent(aPostVars[sKey]); // return
+				// is a
+				// special
+				// case.
+				// Otherwise
+				// URI
+				// encode
+				// non-word
+				// chars
+				sPostString += sKey + (aPostVars[sKey] ? '=' + aPostVars[sKey] : '')
+						+ '&';
+			}
+			// remove the trailing &
+			return sPostString.slice(0, -1);
+		}
+
+		// jQuery syntax
+		// var data = fPostString();
+		// var oReq = $.ajax({
+		// type: "POST",
+		// url: sURL,
+		// data: data,
+		// success: fComplete
+		// });
+
+		if (window.XMLHttpRequest)
+			var oReq = new XMLHttpRequest(); // the download object for Moz
+		else
+			var oReq = new ActiveXObject("Microsoft.XMLHTTP");
+		oReq.onreadystatechange = fComplete;
+		oReq.open('POST', sURL, true);
+
+		if (aPostVars) {
+			oReq
+					.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		}
+		oReq.send(fPostString());
+		this.xml_http_request = oReq;
 	}
-			 
-	function fPostString(){  
-	  if (!aPostVars) return null;
-	  var sPostString='';
-	  for (var sKey in aPostVars){
-	    if(sKey=='containsValue') continue; // this is a special case.  containsValue is a prototype method.  I can't think of another way to exclude it from the array :( 	
-		if(sKey!='return') aPostVars[sKey]=encodeURIComponent(aPostVars[sKey]); // return is a special case.  Otherwise URI encode non-word chars
-		sPostString+=sKey+(aPostVars[sKey]?'='+aPostVars[sKey]:'')+'&'; 
-      }
-	  // remove the trailing &
-	  return sPostString.slice(0,-1);
-	}
-		
-	// jQuery syntax
-	//var data = fPostString();
-	//var oReq = $.ajax({
-	//  type: "POST",
-	//  url: sURL,
-	//  data: data,
-	//  success: fComplete
-	//});
-	
-	if (window.XMLHttpRequest)
-	  var oReq = new XMLHttpRequest(); // the download object for Moz
-	else
-	  var oReq = new ActiveXObject("Microsoft.XMLHTTP");
-	oReq.onreadystatechange=fComplete;
-	oReq.open('POST',sURL,true);
-			 
-	if (aPostVars) {
-	  oReq.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	}
-	oReq.send(fPostString());
-    this.xml_http_request=oReq;
-  }
-  			
-  if (iShowWait>=0) var oWait=new fWait();
-  var oHTTPRequest=new fHTTPRequest(sURL, aPostVars, fCallback);
-  
-  this.xml_http_request=oHTTPRequest.xml_http_request;
-}	
+
+	if (iShowWait >= 0)
+		var oWait = new fWait();
+	var oHTTPRequest = new fHTTPRequest(sURL, aPostVars, fCallback);
+
+	this.xml_http_request = oHTTPRequest.xml_http_request;
+}
 
 /*
- * =========================================
- * The below is originally from setFilter.js
+ * ========================================= The below is originally from
+ * setFilter.js
  */
 
 function fLoadReport(sResponseText, oElement, fCallback) {
-	if(!navigator.userAgent.match(/Konqueror/i)) {
-	  if (!$.browser.msie) {
-			// Everything but IE can use innerHTML for this
-			oElement.innerHTML = sResponseText;
-			fUpdateOtherPanes();
-			fSetupAppPreview();
-			if(fCallback) fCallback();
-			return;
-	  }
+	if (!$.browser.msie) {
+		// Everything but IE can use innerHTML for this
+		oElement.innerHTML = sResponseText;
+	}
+	fUpdateOtherPanes();
+	fSetupAppPreview();
+	fSetupCheckboxes();
+	if (fCallback)
+		fCallback();
+	if (!$.browser.msie) {
+		return;
 	}
 	/*
 	 * parsing the whole xml document is very slow and causes the application to
 	 * 'lock' unacceptably instead, the xml document is parsed 10 top level
-	 * elements at at time. These are inserted into the document and the
-	 * function calls itself again using a setTimeout. This pause allows the
-	 * application to update the screen and respond to other input at the
-	 * expense of the loading taking even longer.
+	 * elements at at time. These are inserted into the document and the function
+	 * calls itself again using a setTimeout. This pause allows the application to
+	 * update the screen and respond to other input at the expense of the loading
+	 * taking even longer.
 	 * 
 	 * However, because the user can see the data loading and still use the
 	 * application, the delay becomes far more acceptable.
@@ -170,19 +194,18 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 			parent.pane_1.fSetCurrentOption(pane1Id, numRows);
 		}
 		if (document.getElementById('pane3tab')) {
-		  var pane3tab = document.getElementById('pane3tab').innerHTML;
-		  if (pane3tab == '3') {
-			parent.pane_2
-					.loadIntoPane3(
-							'AppController.servlet?return=gui/reports_and_tables/pane3',
-							-1, null);
-		  }
+			var pane3tab = document.getElementById('pane3tab').innerHTML;
+			if (pane3tab == '3') {
+				parent.pane_2.loadIntoPane3(
+						'AppController.servlet?return=gui/reports_and_tables/pane3', -1,
+						null);
+			}
 		}
 	}
-	
+
 	function fRenderRows(begin, end) {
 		var len = aRowStrings.length;
-		if((navigator.userAgent.match(/Konqueror/i)) && (len < 4)) {
+		if ((navigator.userAgent.match(/Konqueror/i)) && (len < 4)) {
 			return;
 		}
 		var tempRenderIndex = 0;
@@ -204,7 +227,8 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 			setTimeout(fRenderRows, 0);
 		} else {
 			fUpdateOtherPanes();
-			if(fCallback) fCallback()
+			if (fCallback)
+				fCallback()
 		}
 	}
 	fRenderRows();
@@ -217,32 +241,36 @@ function fSetupAppPreview() {
 	}
 	var cells = $("td.leading").next("td");
 	if (typeof cells.hoverIntent != 'function') {
-		// This function only needs to work when called from pane 2, not the relation picker in pane 3 where hoverIntent is not defined
+		// This function only needs to work when called from pane 2, not the
+		// relation picker in pane 3 where hoverIntent is not defined
 		return;
 	}
 	var hoverIntentConfig = {
-			over: function() {
-				if($(this).closest("thead").size() > 0) {
-					return;
-				}
-				cells.removeClass("appSelected");
-				var internalTableName = $(this).closest("#reportData").attr("data-internaltablename");
-				var rowId = parseInt($(this).closest("tr").attr("name"));
-				if (rowId != Number.NaN) {
-					$(this).addClass("appSelected");
-					// true collapses modules, false leaves them alone
-					parent.pane_1.appSelect(internalTableName, rowId, false);
-				}
-			},
-			out: function() {},
-			interval: 100
+		over : function() {
+			if ($(this).closest("thead").size() > 0) {
+				return;
+			}
+			cells.removeClass("appSelected");
+			var internalTableName = $(this).closest("#reportData").attr(
+					"data-internaltablename");
+			var rowId = parseInt($(this).closest("tr").attr("name"));
+			if (rowId != Number.NaN) {
+				$(this).addClass("appSelected");
+				// true collapses modules, false leaves them alone
+				parent.pane_1.appSelect(internalTableName, rowId, false);
+			}
+		},
+		out : function() {
+		},
+		interval : 100
 	}
 	cells.hoverIntent(hoverIntentConfig);
 }
 
 /*
  * ---------------------------------------------------- Set filter function
- * ---------------------------------------------------- e = event, oObj = filter input element
+ * ---------------------------------------------------- e = event, oObj = filter
+ * input element
  */
 function fSetFilter(e, oObj, fReqCompleteOverride) {
 	/*
@@ -254,32 +282,32 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 	 * 
 	 * The object contains compatibility for text, checkbox and radio input.
 	 * 
-	 * Any expando property of the form object prefixed with 'gtpb_' will be
-	 * sent as a key value pair in the post parameters of the request. In
-	 * addition the name and calculated value of the object are sent by default
+	 * Any expando property of the form object prefixed with 'gtpb_' will be sent
+	 * as a key value pair in the post parameters of the request. In addition the
+	 * name and calculated value of the object are sent by default
 	 */
 
 	function fEnableDisable(sAction) {
 		// enable or disable the current object or object group
 
 		/*
-		 * create a collection of all the objects with the name. If this is a
-		 * single object e.g. a text box it should just be one object but if
-		 * it's a radio group or a bunch of checkboxes then we can set them all
+		 * create a collection of all the objects with the name. If this is a single
+		 * object e.g. a text box it should just be one object but if it's a radio
+		 * group or a bunch of checkboxes then we can set them all
 		 */
-		var cObjects = document.getElementsByName(oFormObject
-				.getAttribute('name'));
+		var cObjects = document.getElementsByName(oFormObject.getAttribute('name'));
 		for ( var i = 0; i < cObjects.length; i++) {
 			// if we're enabling remember to *remove* the busy attribute
 			if (sAction == 'enable') {
 				cObjects[i].removeAttribute(sBusyAttr);
-				// For IE: because style doesn't work on expando property, add/remove class as well
-				if (sBusyAttr=='changed') {
+				// For IE: because style doesn't work on expando property, add/remove
+				// class as well
+				if (sBusyAttr == 'changed') {
 					$(cObjects[i]).removeClass('changed');
 				}
 			} else {
 				cObjects[i].setAttribute(sBusyAttr, 'true');
-				if (sBusyAttr=='changed') {
+				if (sBusyAttr == 'changed') {
 					$(cObjects[i]).addClass('changed');
 				}
 			}
@@ -287,22 +315,23 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 	}
 
 	// TODO: this fn duplicated in editBuffer_editData.js
-	function fIsBooleanType(oObj) { 
-		  /* if the input field is a non-boolean type return false
-		     otherwise return true */
-		  var jqObj = $(oObj);
-		  if (oObj.tagName == "INPUT") {
+	function fIsBooleanType(oObj) {
+		/*
+		 * if the input field is a non-boolean type return false otherwise return
+		 * true
+		 */
+		var jqObj = $(oObj);
+		if (oObj.tagName == "INPUT") {
 			var type = jqObj.attr("type");
 			if (!type) {
-			  type = "text";
+				type = "text";
 			}
 			if (type.toLowerCase() == 'checkbox') {
-			  return true;
+				return true;
 			}
-		  }
-		  return false;
+		}
+		return false;
 	}
-
 
 	function fReqComplete(sResponseText, sResponseXML) {
 		if (!sResponseText)
@@ -314,15 +343,15 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		var bIsXMLRequest = (oObj.getAttribute('gtpb_returntype') == 'xml');
 		var keyupBug = (oObj.getAttribute('keyup_bug'));
 		var oReportBody;
-		if($("#tiles").size() > 0) {
+		if ($("#tiles").size() > 0) {
 			oReportBody = $(".tile.expanded").find("table.reportData").find("tbody")[0];
 		} else {
 			// TODO --> find a way to make this more generic
 			oReportBody = document.getElementById('reportBody');
 		}
 
-		//var vCurrentValue = (fIsBooleanType(oObj) ? oFormObject.checked
-		//		: oFormObject.value);
+		// var vCurrentValue = (fIsBooleanType(oObj) ? oFormObject.checked
+		// : oFormObject.value);
 		var vCurrentValue = $(oFormObject).val();
 		if ((vCurrentValue != vValue) && (!keyupBug)) {
 			$(oFormObject).css("color: red");
@@ -353,8 +382,8 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		}
 
 		/*
-		 * look at all the attributes that the DOM object has and pass all the
-		 * ones prefixed gtpb_ to the server in the post request
+		 * look at all the attributes that the DOM object has and pass all the ones
+		 * prefixed gtpb_ to the server in the post request
 		 */
 		for ( var i = 0; i < oObj.attributes.length; i++)
 			with (oObj.attributes.item(i))
@@ -371,24 +400,24 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		for ( var sKey in aPostVars) {
 			if (sKey == 'containsValue')
 				continue; // this is a special case. containsValue is a
-						  // prototype method
+			// prototype method
 			if (sKey != 'return')
 				aPostVars[sKey] = encodeURIComponent(aPostVars[sKey]); // return
-																		// is a
-																		// special
-																		// case.
-																		// Otherwise
-																		// URI
-																		// encode
-																		// non-word
-																		// chars
-			sPostString += sKey
-					+ (aPostVars[sKey] ? '=' + aPostVars[sKey] : '') + '&';
+			// is a
+			// special
+			// case.
+			// Otherwise
+			// URI
+			// encode
+			// non-word
+			// chars
+			sPostString += sKey + (aPostVars[sKey] ? '=' + aPostVars[sKey] : '')
+					+ '&';
 		}
 		// remove the trailing &
 		return sPostString.slice(0, -1);
 	}
-  
+
 	// Start of main fSetFilter body
 	$(oObj).removeClass("waitingForFilterControls");
 	// Firstly, just return if an arrow key was pressed
@@ -401,15 +430,15 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		}
 	}
 	/*
-	 * snapshot the state of the object now so that we can check if it's the
-	 * same when the server returns. The state we store depends on the type of
-	 * form object
+	 * snapshot the state of the object now so that we can check if it's the same
+	 * when the server returns. The state we store depends on the type of form
+	 * object
 	 */
 	var vValue = (fIsBooleanType(oObj) ? oObj.checked : oObj.value);
 	/*
 	 * mark the input as busy. What should be set depends on the type of form
-	 * object. NOTE: changed attribute is an expando with a style set to show
-	 * it's applied. Won't work in IE :(
+	 * object. NOTE: changed attribute is an expando with a style set to show it's
+	 * applied. Won't work in IE :(
 	 */
 	var sBusyAttr = (fIsBooleanType(oObj) ? 'disabled' : 'changed');
 	// a key value pair array of data to pass in the Post request
@@ -422,23 +451,24 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 	fEnableDisable('disable');
 	aPostVars = fSetPostVars();
 	var sPostString = fPostString(aPostVars);
-	var fReqCompleteToRun = fReqCompleteOverride ? fReqCompleteOverride : fReqComplete;
+	var fReqCompleteToRun = fReqCompleteOverride ? fReqCompleteOverride
+			: fReqComplete;
 	if (ajaxManager == null) {
 		ajaxManager = $.manageAjax.create('aB', {
-			queue: 'clear',
-			abortOld: true
+			queue : 'clear',
+			abortOld : true
 		});
 	}
 	if (fReqCompleteOverride) {
 		var oReq = new fRequest('AppController.servlet', aPostVars,
 				fReqCompleteToRun, -1);
 	} else {
-		ajaxManager.add( {
-			type :"POST",
-			url :"AppController.servlet",
-			timeout :15000,
-			data :sPostString,
-			success :fReqCompleteToRun,
+		ajaxManager.add({
+			type : "POST",
+			url : "AppController.servlet",
+			timeout : 15000,
+			data : sPostString,
+			success : fReqCompleteToRun,
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				alert('problem setting filter: ' + textStatus);
 			}
@@ -457,14 +487,14 @@ var ajaxManager = null;
 function fSetSort(oColHeader) {
 	function fReqComplete(sResponseText, sResponseXML) {
 		function fRemoveWait() {
-		  $(oColHeader).removeClass('waiting');				
+			$(oColHeader).removeClass('waiting');
 		}
-		if ((!sResponseText)||(sResponseText == null)||(sResponseText == '')) {
+		if ((!sResponseText) || (sResponseText == null) || (sResponseText == '')) {
 			fRemoveWait();
 			return;
 		}
 		var oReportBody;
-		if($("#tiles").size() > 0) {
+		if ($("#tiles").size() > 0) {
 			oReportBody = $(".tile.expanded").find("table.reportData").find("tbody")[0];
 		} else {
 			// TODO --> find a way to make this more generic
@@ -477,10 +507,10 @@ function fSetSort(oColHeader) {
 		// XML set gtpb_returntype=xml
 		// if(bIsXMLRequest) new fParseXML(sResponseXML,oReportBody);
 		// else oReportBody.innerHTML=sResponseText;
-		//oReportBody.innerHTML = sResponseText;
-		
-		//$('#reportBody')
-		
+		// oReportBody.innerHTML = sResponseText;
+
+		// $('#reportBody')
+
 		fLoadReport(sResponseText, oReportBody, fRemoveWait);
 	}
 
@@ -526,7 +556,7 @@ function fSetSort(oColHeader) {
 		aPostVars['sortdirection'] = 'true';
 		aPostVars['internalfieldname'] = oColHeader.getAttribute('internalName');
 	}
-	
+
 	$(oColHeader).addClass('waiting');
 	var oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, -1);
 }
