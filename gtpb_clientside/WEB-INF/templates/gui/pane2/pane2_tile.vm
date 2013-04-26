@@ -1,4 +1,4 @@
-<table class="reportData transition">
+<table class="reportData transition" data-internaltablename="$sessionReport.getParentTable().getInternalTableName()">
   #set($reportStyle = $sessionReport.getReportStyle())
   #if((!$isNotTable) && $reportStyle && ($reportStyle != "SPREADSHEET"))
     ## First work out heading levels
