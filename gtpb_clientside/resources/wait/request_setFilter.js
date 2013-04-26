@@ -160,7 +160,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	}
 	fUpdateOtherPanes();
 	fSetupAppPreview();
-	fSetupCheckboxes();
+	checkboxesSetup();
 	if (fCallback)
 		fCallback();
 	if (!$.browser.msie) {
