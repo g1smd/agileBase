@@ -51,6 +51,7 @@ $(document).ready(function() {
 function checkboxesSetup() {
 	$("#reportBody input[type=checkbox]").click(function(event) {
 		event.stopPropagation();
+		
 		if ($(this).is(":checked")) {
 			$(this).closest("td").addClass("colored").css("background-color","#8DC63F");
 		} else {
