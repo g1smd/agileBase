@@ -524,6 +524,7 @@ function tileLoaded(tile, editing) {
 					tile.find("#filterhelp").hoverIntent(hoverIntentConfig);
 					$(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
+					checkboxesSetup();
 				});
 	}
 	if ((tileType == "adder")) {
