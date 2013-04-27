@@ -778,6 +778,12 @@ function backHome() {
 			dataStreamEvents();
 		});
 	}
+	// Reload recent comments, in case any have been added
+	$(".tile.comment_stream .content").load("appController.servlet", {
+		"return": "s/tiles/comment_stream",
+	}, function() {
+		$(".tile.comment_stream").find(".content").removeClass("notfocus");
+	});
 }
 
 /**
