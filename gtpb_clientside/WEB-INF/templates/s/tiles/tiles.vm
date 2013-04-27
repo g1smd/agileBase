@@ -61,7 +61,7 @@
     #if($template == "data_link")
       <div class="tile_icon transition"><i class="transition $tile.getReport().getModule().getIconPath()"></i></div>
     #end
-    <div class="content transition #if(($template != 'data_stream') && ($template != 'focus') && ($template != 'calendar')) notfocus #end">
+    <div class="content transition #if(($template != 'data_stream') && ($template != 'comment_stream') && ($template != 'focus') && ($template != 'calendar')) notfocus #end">
       #parse("s/tiles/${template}.vm")
     </div>
   </div>
