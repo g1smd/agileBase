@@ -245,7 +245,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		return this.formTables;
 	}
 	
-	@OneToMany(targetEntity=AbstractTile.class, cascade = {CascadeType.ALL})
+	@OneToMany(targetEntity=AbstractTile.class, cascade = {CascadeType.ALL}, orphanRemoval=true)
 	@Sort(type = SortType.NATURAL)
 	public SortedSet<TileInfo> getTiles() {
 		return this.tiles;
