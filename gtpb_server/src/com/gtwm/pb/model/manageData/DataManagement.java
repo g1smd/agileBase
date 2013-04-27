@@ -190,9 +190,11 @@ public final class DataManagement implements DataManagementInfo {
 		this.authManager = authManager;
 	}
 
-	public void removeComment(int commentId, AppUserInfo user) throws SQLException, CantDoThatException {
+	public void removeComment(int commentId, AppUserInfo user) throws SQLException,
+			CantDoThatException {
 		CompanyInfo company = user.getCompany();
-		String SQLCode = "DELETE FROM dbint_comments_" + company.getInternalCompanyName() + " WHERE comment_id = ?";
+		String SQLCode = "DELETE FROM dbint_comments_" + company.getInternalCompanyName()
+				+ " WHERE comment_id = ?";
 		Connection conn = null;
 		try {
 			conn = this.dataSource.getConnection();
@@ -205,14 +207,15 @@ public final class DataManagement implements DataManagementInfo {
 			}
 			statement.close();
 			conn.commit();
-			logger.info("Comment ID " + commentId + " removed by user " + user + ", company " + user.getCompany());
+			logger.info("Comment ID " + commentId + " removed by user " + user + ", company "
+					+ user.getCompany());
 		} finally {
 			if (conn != null) {
 				conn.close();
 			}
 		}
 	}
-	
+
 	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
 			String rawComment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException {
@@ -341,6 +344,77 @@ public final class DataManagement implements DataManagementInfo {
 		}
 	}
 
+	public SortedSet<CommentInfo> getCompanyComments(HttpServletRequest request, AppUserInfo user,
+			int rowLimit) throws SQLException {
+		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
+		// Get all tables the user has privileges to view, so we can filter comments
+		// down to these
+		CompanyInfo company = user.getCompany();
+		Set<TableInfo> companyTables = company.getTables();
+		Set<TableInfo> viewableTables = new HashSet<TableInfo>();
+		AuthenticatorInfo authenticator = this.authManager.getAuthenticator();
+		for (TableInfo table : companyTables) {
+			if (authenticator.loggedInUserAllowedTo(request, PrivilegeType.VIEW_TABLE_DATA, table)) {
+				viewableTables.add(table);
+			}
+		}
+		// Map each internal field name to the table that the field belongs to, for
+		// repeated lookups
+		Map<String, TableInfo> fieldTableMapping = new HashMap<String, TableInfo>();
+		// TODO: order by comment_id, the primary key, when enough time has passed
+		// that all newer comments have higher IDs.
+		String sqlCode = "SELECT comment_id, created, author, author_internalusername, internalfieldname, row_id, text FROM dbint_comments_"
+				+ company.getInternalCompanyName() + " ORDER BY created DESC LIMIT " + (rowLimit * 10);
+		Connection conn = null;
+		try {
+			conn = this.dataSource.getConnection();
+			conn.setAutoCommit(false);
+			PreparedStatement statement = conn.prepareStatement(sqlCode);
+			ResultSet results = statement.executeQuery();
+			RESULTS_LOOP: while (results.next()) {
+				String internalFieldName = results.getString(5);
+				TableInfo tableFound = null;
+				if (fieldTableMapping.keySet().contains(internalFieldName)) {
+					tableFound = fieldTableMapping.get(internalFieldName);
+				} else {
+					// Not a field seen before, look up the table
+					TABLES_LOOP: for (TableInfo table : viewableTables) {
+						for (BaseField field : table.getFields()) {
+							if (field.getInternalFieldName().equals(internalFieldName)) {
+								tableFound = table;
+								break TABLES_LOOP;
+							}
+						}
+					}
+					fieldTableMapping.put(internalFieldName, tableFound);
+				}
+				if (tableFound != null) {
+					// null (not found) table means user doesn't have privileges on it
+					int commentId = results.getInt(1);
+					Timestamp createdTimestamp = results.getTimestamp(2);
+					Calendar created = Calendar.getInstance();
+					created.setTimeInMillis(createdTimestamp.getTime());
+					String author = results.getString(3);
+					String authorInternalName = results.getString(4);
+					int rowId = results.getInt(6);
+					String comment = results.getString(7);
+					comments.add(new Comment(commentId, internalFieldName, rowId, author, authorInternalName,
+							created, comment));
+					if (comments.size() >= rowLimit) {
+						break RESULTS_LOOP;
+					}
+				}
+			}
+			results.close();
+			statement.close();
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return comments;
+	}
+
 	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId)
 			throws SQLException, CantDoThatException {
 		SortedSet<CommentInfo> comments = new TreeSet<CommentInfo>();
@@ -360,6 +434,8 @@ public final class DataManagement implements DataManagementInfo {
 			}
 		}
 		String internalCompanyName = company.getInternalCompanyName();
+		// TODO: order by comment_id, the primary key, when enough time has passed
+		// that all newer comments have higher IDs.
 		String sqlCode = "SELECT comment_id, created, author, author_internalusername, text FROM dbint_comments_"
 				+ internalCompanyName;
 		sqlCode += " WHERE internalfieldname=? AND rowid=? ORDER BY created DESC LIMIT 10";
@@ -380,8 +456,8 @@ public final class DataManagement implements DataManagementInfo {
 				String author = results.getString(3);
 				String authorInternalName = results.getString(4);
 				String comment = results.getString(5);
-				comments.add(new Comment(commentId, internalFieldName, rowId, author, authorInternalName, created,
-						comment));
+				comments.add(new Comment(commentId, internalFieldName, rowId, author, authorInternalName,
+						created, comment));
 			}
 			results.close();
 			statement.close();

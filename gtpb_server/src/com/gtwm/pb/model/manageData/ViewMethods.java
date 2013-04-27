@@ -378,6 +378,11 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return unchosenRelationFields;
 	}
 
+	public SortedSet<CommentInfo> getCompanyComments(int rowLimit) throws SQLException, DisallowedException, ObjectNotFoundException {
+		AppUserInfo user = this.getLoggedInUser();
+		return this.databaseDefn.getDataManagement().getCompanyComments(this.request, user, rowLimit);
+	}
+	
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
 			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (field == null) {

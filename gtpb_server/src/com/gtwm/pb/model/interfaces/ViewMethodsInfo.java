@@ -34,6 +34,8 @@ import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.auth.PrivilegeType;
 import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
 import org.codehaus.jackson.JsonGenerationException;
 
@@ -273,6 +275,8 @@ public interface ViewMethodsInfo {
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
 			DisallowedException, ObjectNotFoundException, CantDoThatException;
 
+	public SortedSet<CommentInfo> getCompanyComments(int rowLimit) throws SQLException, DisallowedException, ObjectNotFoundException;
+	
 	/**
 	 * @return The list of field values for a particular record, so the record
 	 *         can be displayed or edited. The session will know what table and

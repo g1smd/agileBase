@@ -169,6 +169,11 @@ public interface DataManagementInfo {
 	public SortedSet<CommentInfo> getComments(CompanyInfo company, BaseField field, int rowId)
 			throws SQLException, CantDoThatException;
 
+	/**
+	 * Get all comments from all tables that the user has privileges to view
+	 */
+	public SortedSet<CommentInfo> getCompanyComments(HttpServletRequest request, AppUserInfo user, int rowLimit) throws SQLException;
+	
 	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
 			String comment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException;
