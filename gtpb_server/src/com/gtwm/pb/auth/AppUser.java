@@ -40,6 +40,7 @@ import com.gtwm.pb.model.manageSchema.tiles.AbstractTile;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
+import com.gtwm.pb.util.HibernateUtil;
 import com.gtwm.pb.util.MissingParametersException;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.InitialView;
@@ -263,6 +264,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	public synchronized void removeTile(TileInfo tile) {
 		logger.debug("Removing tile " + tile);
 		this.getTiles().remove(tile);
+		HibernateUtil.currentSession().delete(tile);
 	}
 	
 	public void removeTilesDependentOnReport(BaseReportInfo report) {
@@ -273,10 +275,12 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 				if (report.equals(((TileDataLinkInfo) tile).getReport())) {
 					logger.debug("Tile found for report " + report + " that needs removing");
 					i.remove();
+					HibernateUtil.currentSession().delete(tile);
 				}
 			} else if (tile instanceof TileDataStreamInfo) {
 				if (report.equals(((TileDataStreamInfo) tile).getReport())) {
 					i.remove();
+					HibernateUtil.currentSession().delete(tile);
 				}
 			}
 		}
