@@ -363,7 +363,7 @@ public final class DataManagement implements DataManagementInfo {
 		Map<String, TableInfo> fieldTableMapping = new HashMap<String, TableInfo>();
 		// TODO: order by comment_id, the primary key, when enough time has passed
 		// that all newer comments have higher IDs.
-		String sqlCode = "SELECT comment_id, created, author, author_internalusername, internalfieldname, row_id, text FROM dbint_comments_"
+		String sqlCode = "SELECT comment_id, created, author, author_internalusername, internalfieldname, rowid, text FROM dbint_comments_"
 				+ company.getInternalCompanyName() + " ORDER BY created DESC LIMIT " + (rowLimit * 10);
 		Connection conn = null;
 		try {
