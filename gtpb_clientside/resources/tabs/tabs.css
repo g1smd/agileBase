@@ -884,7 +884,7 @@ div#reportData {
   margin-left: 0.25em;
 }
 
-.two_cols .block .fieldname, two_cols .block .viewonlyvalue {
+.two_cols .block .fieldname, .two_cols .block .viewonlyvalue {
   position: relative;
   top: 0.4em;
 }
