@@ -160,7 +160,9 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	}
 	fUpdateOtherPanes();
 	fSetupAppPreview();
-	checkboxesSetup();
+	if (typeof checkboxesSetup == "function") {
+	  checkboxesSetup();
+	}
 	if (fCallback) {
 		fCallback();
 	}
