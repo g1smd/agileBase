@@ -17,7 +17,7 @@
   #set($tile = $sessionData.getTile())
 #end
 #set($colour = $tile.getColour())
-#set($comments = $view.getCompanyComments(50))
+#set($comments = $view.getCompanyComments(10))
 #foreach($comment in $comments)
   #set($thisUniqueId = $comment.getRowId())
   <div class="report_data_row comment" data-rowid="$thisUniqueId">

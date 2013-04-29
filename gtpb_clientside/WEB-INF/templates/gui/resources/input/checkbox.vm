@@ -62,5 +62,5 @@
     </script>
   #end
 #else
-	$fieldValue,
+	<span class="viewonlyvalue">$fieldValue</span>
 #end

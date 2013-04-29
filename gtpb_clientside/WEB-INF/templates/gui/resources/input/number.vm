@@ -39,11 +39,11 @@
 				#end
 				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
 	  #end##
-    		#if($field.allowNotApplicable())##
+    		#if($field.allowNotApplicable() && $userCanEdit)##
 		      <br><input type="checkbox" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
-      $currencySymbolBare $fieldValue,##
+      <span class="viewonlyvalue">$currencySymbolBare $fieldValue</span>##
   	#end##
 #else##  if not integer
   #if(!$globalEdit)##
@@ -59,11 +59,11 @@
 				#end
 				<div id="$field.getInternalFieldName()_warning" class="warningmessage" style="display:none"></div>
   	  #end##
-    		#if($field.allowNotApplicable())##
+    		#if($field.allowNotApplicable() && $userCanEdit)##
 		      <br><input type="checkbox" gtpb_internaltablename="$internalTableName" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
 		    #end##
   	#else##
-      $currencySymbolBare $fieldValue,##
+      <span class="viewonlyvalue">$currencySymbolBare $fieldValue</span>##
   	#end##
 #end##
 #if($globalEdit)

@@ -153,6 +153,7 @@
     #end##
 ##
 #else ## user can't edit
+  <span class="viewonlyvalue">
   #if(($field.getContentSize() <= 50) && ($fieldValue.length() <= 100))##
 	#if ($fieldValueObject.isEmailAddress())##
       <a href="mailto:$fieldValue">$fieldValue</a>##
@@ -174,4 +175,5 @@
   #else
     $viewTools.lineBreaksToParas($fieldValue)<br>##
   #end##
+  </span>
 #end

@@ -142,6 +142,6 @@
   #end
 
   #else ##read-only
-    $fieldDisplayValue,##
+    <span class="viewonlyvalue">$fieldDisplayValue</span>##
   #end ## End read only
 #end ## End not dropdown

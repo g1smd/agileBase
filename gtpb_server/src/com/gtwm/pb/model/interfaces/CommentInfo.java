@@ -32,6 +32,13 @@ public interface CommentInfo extends Comparable<CommentInfo> {
 	public String getInternalFieldName();
 	
 	/**
+	 * Return the table that this comment is in, if one has been set. 
+	 * 
+	 * Note this is only set in some cases, it can't be guaranteed that the table will be known. If unknown, null is returned
+	 */
+	public TableInfo getTable();
+	
+	/**
 	 * Return the id of the record we're commenting on
 	 */
 	public int getRowId();

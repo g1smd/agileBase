@@ -27,10 +27,12 @@
         <span class="tag">$tag <span class="remove"><i class="icon-remove"></i></span></span>
       #end
     </div>
-    #set($allTags = $field.getItems())
-    #set($tagsData = $viewTools.joinWith($allTags,"|"))
-    #set($fieldNameLower = $field.getFieldName().toLowerCase())
-    <div style="white-space:nowrap"><input type="text"  data-internalfieldname="$field.getInternalFieldName()" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId" class="add_tag" data-terms="list:$tagsData" placeholder="add $fieldNameLower" /><input type="button" value="add" class="add_tag_button" /></div>
+    #if($userCanEdit)
+      #set($allTags = $field.getItems())
+      #set($tagsData = $viewTools.joinWith($allTags,"|"))
+      #set($fieldNameLower = $field.getFieldName().toLowerCase())
+      <div style="white-space:nowrap"><input type="text"  data-internalfieldname="$field.getInternalFieldName()" data-internaltablename="$sessionTable.getInternalTableName()" data-rowid="$sessionRowId" class="add_tag" data-terms="list:$tagsData" placeholder="add $fieldNameLower" /><input type="button" value="add" class="add_tag_button" /></div>
+    #end
   </div>
 #end
 

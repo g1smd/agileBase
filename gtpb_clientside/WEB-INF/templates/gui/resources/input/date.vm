@@ -139,6 +139,6 @@
 	#end
   #end
 #else ##user can't edit
-$field.formatCalendar($fieldValue),##
+<span class="viewonlyvalue">$field.formatCalendar($fieldValue)</span>##
 #end##
 ##found date for $field.getFieldName(): $days/$months/$years
