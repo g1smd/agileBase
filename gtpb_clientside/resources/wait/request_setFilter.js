@@ -154,16 +154,17 @@ function fRequest(sURL, aPostVars, fCallback, iShowWait) {
  */
 
 function fLoadReport(sResponseText, oElement, fCallback) {
-	if (!$.browser.msie) {
+	if (!navigator.userAgent.toLowerCase().match(/msie/)) {
 		// Everything but IE can use innerHTML for this
 		oElement.innerHTML = sResponseText;
 	}
 	fUpdateOtherPanes();
 	fSetupAppPreview();
 	checkboxesSetup();
-	if (fCallback)
+	if (fCallback) {
 		fCallback();
-	if (!$.browser.msie) {
+	}
+	if (!navigator.userAgent.toLowerCase().match(/msie/)) {
 		return;
 	}
 	/*
