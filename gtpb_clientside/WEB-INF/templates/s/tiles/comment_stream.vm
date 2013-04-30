@@ -29,5 +29,9 @@
       <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
     #end
     <span class="row_title ${colour}_fg">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
+    #set($commentTable = $comment.getTable())
+    #set($report = $view.getViewableReports($commentTable).first())
+    #set($icon = $report.getModule().getIconPath())
+    <i class="comment_icon $icon"></i>
   </div>
 #end

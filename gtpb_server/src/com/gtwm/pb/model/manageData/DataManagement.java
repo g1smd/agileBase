@@ -399,7 +399,7 @@ public final class DataManagement implements DataManagementInfo {
 					int rowId = results.getInt(6);
 					String comment = results.getString(7);
 					comments.add(new Comment(commentId, internalFieldName, rowId, author, authorInternalName,
-							created, comment));
+							created, comment, tableFound));
 					if (comments.size() >= rowLimit) {
 						break RESULTS_LOOP;
 					}
@@ -457,7 +457,7 @@ public final class DataManagement implements DataManagementInfo {
 				String authorInternalName = results.getString(4);
 				String comment = results.getString(5);
 				comments.add(new Comment(commentId, internalFieldName, rowId, author, authorInternalName,
-						created, comment));
+						created, comment, null));
 			}
 			results.close();
 			statement.close();

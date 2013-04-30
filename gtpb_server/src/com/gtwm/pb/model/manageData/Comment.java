@@ -3,11 +3,15 @@ package com.gtwm.pb.model.manageData;
 import java.util.Calendar;
 
 import com.gtwm.pb.model.interfaces.CommentInfo;
+import com.gtwm.pb.model.interfaces.TableInfo;
 
 public class Comment implements CommentInfo {
 
+	/**
+	 * @param table	 Optional parameter, can be set if it's needed otherwise supply null
+	 */
 	public Comment(int commentId, String internalFieldName, int rowId, String author,
-			String authorInternalName, Calendar timestamp, String text) {
+			String authorInternalName, Calendar timestamp, String text, TableInfo table) {
 		this.commentId = commentId;
 		this.internalFieldName = internalFieldName;
 		this.rowId = rowId;
@@ -15,6 +19,7 @@ public class Comment implements CommentInfo {
 		this.authorInternalName = authorInternalName;
 		this.timestamp = timestamp;
 		this.text = text;
+		this.table = table;
 	}
 
 	public String getText() {
@@ -54,6 +59,10 @@ public class Comment implements CommentInfo {
 
 	public int getRowId() {
 		return this.rowId;
+	}
+	
+	public TableInfo getTable() {
+		return this.table;
 	}
 
 	public boolean equals(Object obj) {
@@ -111,6 +120,8 @@ public class Comment implements CommentInfo {
 	private final int rowId;
 
 	private final int commentId;
+	
+	private final TableInfo table;
 	
 	private volatile int hashCode = 0;
 }

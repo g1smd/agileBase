@@ -55,7 +55,7 @@ $(document).keypress(function(event) {
     <img src="resources/preview/zoom_out_48.png" onclick="zoom(false);">
   </div>
   #set($imgSrc = $viewTools.escapeForURL($sessionData.getCustomString("img_src")))
-  <img id="image" src="$imgSrc" class="test" />
+  <img id="image" src="$imgSrc" />
 </body>
 </html>
     
