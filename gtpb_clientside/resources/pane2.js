@@ -123,6 +123,10 @@ function fSetRowSelection(sName) {
 }
 
 function fDeleteObj(sAction, sRowIdentifier) {
+	
+	//Oliver: Disable delete temporarily
+	return;
+	
 	function fControlCheckboxes(bDisable) {
 		var aCheckedRows = new Array();
 
