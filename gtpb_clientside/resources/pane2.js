@@ -425,7 +425,7 @@ function loadIntoPane3(url, rowId, numberOfTabsExpected) {
  * to be deleted
  */
 function fSelectAll(oCheckbox) {
-	$("#reportBody").find("input:checkbox").each(function() {
+	$("#reportBody").find("input:checkbox.del").each(function() {
 		this.checked = oCheckbox.checked;
 	});
 }
