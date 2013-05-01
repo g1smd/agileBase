@@ -37,10 +37,10 @@
         #if($viewMoreAmount < 15000)
           #if($viewMoreAmount * 3 > $totalRows)
             #set($viewMoreAmount = $totalRows * 2)
-            <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
+            <a data-rows="$viewMoreAmount" href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
               all $totalRows records</a>&nbsp;
           #else
-            <a href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
+            <a data-rows="$viewMoreAmount" href="?return=gui/reports_and_tables/report_data&set_report_row_limit=$viewMoreAmount">
               $viewMoreAmount records</a>&nbsp;
           #end
           #if($viewMoreAmount > 6000) - could be slow#end&nbsp;&nbsp;

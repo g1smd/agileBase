@@ -600,7 +600,7 @@ function tileLoaded(tile, editing) {
 }
 
 function reportRowClicks() {
-	$(".reportData tr").click(
+	$(".reportData tr.rowa, .reportData tr.rowb").click(
 			function(event) {
 				var row = $(this);
 				if (row.hasClass("rowa") || row.hasClass("rowb")) {
@@ -610,6 +610,29 @@ function reportRowClicks() {
 					loadEdit(row.closest(".content"), internalTableName, rowId);
 				}
 			});
+	$("tr.seemorerows a").click(function(event) {
+		event.preventDefault();
+		var tile = $(".tile.expanded");
+		var numRows = $(this).attr("data-rows");
+		tile.find(".content").css("opacity", "0.25").load("AppController.servlet", {
+					"return" : "s/tiles/report_data",
+					set_report_row_limit : numRows,
+					cache_bust : (new Date()).getTime()
+				}, function() {
+					// remove opacity
+					tile.find(".content").removeAttr("style");
+					var hoverIntentConfig = {
+						over : showTooltip,
+						out : hideTooltip,
+						interval : 400
+					};
+					tile.find("#filterhelp").hoverIntent(hoverIntentConfig);
+					$(".ab_field_title").hoverIntent(hoverIntentConfig);
+					reportRowClicks();
+					checkboxesSetup();
+				});	
+		return false;
+	});
 }
 
 function newRecord(internalTableName, params) {
