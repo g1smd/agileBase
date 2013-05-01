@@ -125,7 +125,7 @@ function fSetRowSelection(sName) {
 function fDeleteObj(sAction, sRowIdentifier) {
 	
 	//Oliver: Disable delete temporarily
-	return;
+	//return;
 	
 	function fControlCheckboxes(bDisable) {
 		var aCheckedRows = new Array();
@@ -145,7 +145,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		// set the row checkboxes
 		var oRows = document.getElementById('reportBody').rows;
 		for ( var i = 0; i < oRows.length; i++) {
-			var jqCheckbox = $(oRows[i]).find("input:checkbox");
+			var jqCheckbox = $(oRows[i]).find("input:checkbox.del");
 			if (jqCheckbox.length == 0) {
 				continue;
 			}
