@@ -259,8 +259,8 @@ textarea {
 }
 
 .saved_tags {
-  margin-bottom: 0.25em;
-  margin-top: 0;
+  margin-bottom: 0;
+  margin-top: 0.25em;
   font-size: 9.5pt;
   display: inline-block;
 }
