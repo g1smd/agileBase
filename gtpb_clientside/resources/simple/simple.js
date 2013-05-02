@@ -93,8 +93,11 @@ function focusEvents() {
 }
 
 function commonTileEvents() {
-	$(".backHome").click(function() {
+	$(".sideAction.backHome").click(function() {
 		backHome();
+	});
+	$(".sideAction.print").click(function() {
+		fPrint();
 	});
 	$(".removeTile").click(function() {
 		removeTile();
