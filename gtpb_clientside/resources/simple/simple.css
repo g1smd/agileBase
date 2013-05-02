@@ -736,6 +736,8 @@ table.reportData td {
   font-size: 30pt;
   position: fixed;
   opacity: 0;
+  width: 0;
+  overflow: hidden;
   transition-duration: 3s;
   transition-property: opacity;
   -moz-transition-duration: 3s;
@@ -746,6 +748,7 @@ table.reportData td {
 
 .sideAction.expanded {
   opacity: 0.5;
+  width: 1em;
 }
 
 .sideAction.backHome {
@@ -753,18 +756,23 @@ table.reportData td {
   left: 0.25em;
 }
 
-.sideAction.newRecord {
+.sideAction.print {
   top: 5em;
   left: 0.25em;
 }
 
-.sideAction.cloneRecord {
+.sideAction.newRecord {
   top: 7em;
   left: 0.25em;
 }
 
-.sideAction.removeRecord {
+.sideAction.cloneRecord {
   top: 9em;
+  left: 0.25em;
+}
+
+.sideAction.removeRecord {
+  top: 11em;
   left: 0.25em;
 }
 

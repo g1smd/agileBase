@@ -37,18 +37,26 @@
 ## App tiles
 #foreach($tile in $tiles)
   #set($tileType = $tile.getTileType())
+  #set($tileTypeString = $tileType.toString().toLowerCase())
   #set($colour = $tile.getColour())
   #set($dataColour = $colour)
   #if($tileType == "FOCUS")
     #set($colour = "${colour}_fg")
   #end
   #set($table = false)
+  #set($hasPrintout = false)
   #if($tile.getReport())
     #set($report = $tile.getReport())
     #set($table = $report.getParentTable())
+    #if($tileTypeString == "data_link")
+      #set($internalCompanyName = $user.getCompany().getInternalCompanyName())
+      #set($internalReportName = $report.getInternalReportName())
+      #if($viewTools.listFiles("WEB-INF/templates/uploads/$internalCompanyName/$internalReportName").size() > 0)
+        #set($hasPrintout = true)
+      #end
+    #end
   #end
-  #set($tileTypeString = $tileType.toString().toLowerCase())
-  <div data-title="$tile" class="tile transition $colour $tileTypeString #if($tileType.isLarge()) large #end" #if($table) data-internaltablename="$table.getInternalTableName()" data-internalreportname="$report.getInternalReportName()" #end data-colour="$dataColour" data-type="$tileTypeString" data-internaltilename="$tile.getInternalTileName()">
+  <div data-title="$tile" class="tile transition $colour $tileTypeString #if($tileType.isLarge()) large #end #if($hasPrintout) printable #end" #if($table) data-internaltablename="$table.getInternalTableName()" data-internalreportname="$report.getInternalReportName()" #end data-colour="$dataColour" data-type="$tileTypeString" data-internaltilename="$tile.getInternalTileName()">
     #set($template = $viewTools.cleanString($tileType.toString()))
     #if($template == "data_stream")
       #set($filter = $sessionData.getGlobalFilterString($tile.getReport()))
@@ -74,6 +82,7 @@
   <div class="content"></div>
 </div>
 <div class="sideAction backHome" title="home"><i class="icon-chevron-left"></i></div>
+<div class="sideAction print" title="print or generate report"><i class="icon-print"></i></div>
 <div class="sideAction removeTile" title="remove tile"><i class="icon-remove-sign"></i></div>
 <div class="sideAction backToView" title="finish changes"><i class="icon-ok-sign"></i></div>
 <div class="sideAction newRecord" title="add new item"><i class="icon-plus-sign"></i></div>
