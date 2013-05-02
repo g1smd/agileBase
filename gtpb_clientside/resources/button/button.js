@@ -134,9 +134,11 @@ function fLoadFromPreview(oBlock, event) {
 }
 
 function fPrint() {
-	// Test FF full screen
-	//document.getElementById('oViewPane').contentWindow.document.getElementById('colsWrapper').mozRequestFullScreen();
-  var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+  if (typeof window.spawnWindow =="function") {
+	  var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+  } else {
+	  var oPrintWin=window.open('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+  }
 }
 
 function fInfo() {
