@@ -31,10 +31,11 @@ function tileEvents() {
 
 function tileSuggestions() {
 	var tileCount = 0;
-	$("#tile_suggestions span").each(function() {
+	var suggestions = $("#tile_suggestions span"); 
+	suggestions.each(function() {
 		var tileType = "data_link"; // The default tile type
-		if (tileCount == 0) {
-			// The most popular report will have a large tile
+		if ((tileCount == 0) && (suggestions.size() > 1)) {
+			// The most popular report will have a large tile, others will be small
 			tileType = "data_stream";
 		}
 		var internalReportName = $(this).attr("data-internalreportname");
