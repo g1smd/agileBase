@@ -13,7 +13,7 @@
 #set($usedTables = $viewTools.getNewStringSet())
 <div id="tile_suggestions" style="display:none">
   #foreach($report in $mostPopularReports)
-    #if((!$report.getReportName.contains("dbvcalc_")) && (!$report.getReportName.contains("dbvcrit_")))
+    #if((!$report.getReportName().contains("dbvcalc_")) && (!$report.getReportName().contains("dbvcrit_")))
       #set($table = $report.getParentTable())
       #if(!($usedTables.contains($table)))
         <span data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()">$report</span>
