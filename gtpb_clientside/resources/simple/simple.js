@@ -607,14 +607,18 @@ function tileLoaded(tile, editing) {
 }
 
 function reportRowClicks() {
-	$(".reportData tr.rowa, .reportData tr.rowb").click(
+	$(".reportData tr.rowa td, .reportData tr.rowb td").click(
 			function(event) {
-				var row = $(this);
-				if (row.hasClass("rowa") || row.hasClass("rowb")) {
-					var rowId = row.attr("name");
-					var internalTableName = row.closest(".tile").attr(
-							"data-internaltablename");
-					loadEdit(row.closest(".content"), internalTableName, rowId);
+				if($(this).find("input:checkbox").size() > 0) {
+					$(this).find("input:checkbox").click();
+				} else {
+					var row = $(this).closest("tr");
+					if (row.hasClass("rowa") || row.hasClass("rowb")) {
+						var rowId = row.attr("name");
+						var internalTableName = row.closest(".tile").attr(
+								"data-internaltablename");
+						loadEdit(row.closest(".content"), internalTableName, rowId);
+					}
 				}
 			});
 	$("tr.seemorerows a").click(function(event) {
