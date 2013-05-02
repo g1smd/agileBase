@@ -33,7 +33,7 @@ body {
   -webkit-transition-property: opacity, width, height, margin-right, top, left, padding;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (max-width: 1599px) {
   #tiles.container {
     width: 1180px; /* add another 10px to bootstrap-responsive to fit another tile in on a Macbook 1280px width screen */
   }
