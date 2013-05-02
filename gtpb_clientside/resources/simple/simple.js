@@ -609,9 +609,9 @@ function tileLoaded(tile, editing) {
 function reportRowClicks() {
 	$(".reportData tr.rowa td, .reportData tr.rowb td").click(
 			function(event) {
-				if($(this).find("input:checkbox").size() > 0) {
-					$(this).find("input:checkbox").click();
-				} else {
+				if($(this).find("input:checkbox").size() == 0) {
+					// Don't click if the cell has a checkbox, the user probably wanted to click the checkbox
+					// Unfortunately clicking the checkbox for them in this case doesn't seem to work so just do nothing
 					var row = $(this).closest("tr");
 					if (row.hasClass("rowa") || row.hasClass("rowb")) {
 						var rowId = row.attr("name");
