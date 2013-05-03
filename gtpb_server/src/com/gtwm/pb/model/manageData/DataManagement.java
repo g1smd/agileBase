@@ -1246,7 +1246,7 @@ public final class DataManagement implements DataManagementInfo {
 			for (FileItem item : multipartItems) {
 				// if item is a file
 				if (!item.isFormField()) {
-					if (item.getName().toLowerCase().endsWith(".xls")) {
+					if ((item.getName().toLowerCase().endsWith(".xls")) || (item.getName().toLowerCase().endsWith(".xlsx"))) {
 						throw new CantDoThatException(
 								"You need to upload as a CSV to import, Excel files can't be imported directly");
 					}

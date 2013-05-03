@@ -107,6 +107,7 @@
         #set($success=$colours.add(""))## don't colour selector reports in tabs
       #else## not parent table
         #if(($field.getClass().getSimpleName() == "CheckboxFieldDefn") && ($field.getTableContainingField().equals($sessionTable)))##
+          #set($keyValue = $dataRowField.getKeyValue())
           #set($success = $row.add("<input type='checkbox' data-value='$keyValue' name='$field.getInternalFieldName()' #if($keyValue == 'true') checked #end />"))##
         #else##
           #set($success=$row.add($displayValue))##

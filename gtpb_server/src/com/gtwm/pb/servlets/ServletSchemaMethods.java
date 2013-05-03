@@ -163,7 +163,7 @@ public final class ServletSchemaMethods {
 	public static void addCommentsTableForCompany(Connection conn, CompanyInfo company)
 			throws SQLException {
 		String sqlCode = "CREATE TABLE dbint_comments_" + company.getInternalCompanyName();
-		sqlCode += "(created timestamp, author_internalusername varchar(1000), author varchar(1000), internalfieldname varchar(1000), rowid integer, text varchar(100000))";
+		sqlCode += "(comment_id serial primary key, created timestamp, author_internalusername varchar(1000), author varchar(1000), internalfieldname varchar(1000), rowid integer, text varchar(100000))";
 		PreparedStatement statement = conn.prepareStatement(sqlCode);
 		statement.execute();
 		statement.close();
