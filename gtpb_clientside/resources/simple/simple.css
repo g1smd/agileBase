@@ -503,6 +503,7 @@ label {
   padding: 0.5em;
   color: #656766;
   min-height: 5em;
+  position: relative;
 }
 
 .report_data_row .body {
@@ -566,7 +567,11 @@ span.comment_text {
 }
 
 .comment_icon {
-  float: right;
+  position: absolute;
+  bottom: 0.25em;
+  right: 0.25em;
+  opacity: 0.5;
+  font-size: 16pt;
 }
 
 input[type=search] {
