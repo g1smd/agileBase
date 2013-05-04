@@ -565,6 +565,10 @@ span.comment_text {
   color: #EC00BC;
 }
 
+.comment_icon {
+  float: right;
+}
+
 input[type=search] {
   border-radius: 1em;
 }

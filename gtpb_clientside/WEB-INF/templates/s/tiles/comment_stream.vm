@@ -33,11 +33,11 @@
       #set($commentTable = $comment.getTable())
       #set($viewableReports = $view.getViewableReports($commentTable))
       #if($viewableReports.size() > 1)
+        ## Use the first report that isn't the default report for the icon
         #set($success = $viewableReports.remove($viewableReports.first()))
         #set($report = $viewableReports.first())
-        Report is $report
         #set($icon = $report.getModule().getIconPath())
-        <i class="comment_icon $icon"></i>
+        <i class="comment_icon ${colour}_fg $icon"></i>
       #end
     #end
   </div>
