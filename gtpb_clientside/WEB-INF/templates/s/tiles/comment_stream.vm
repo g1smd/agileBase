@@ -34,6 +34,7 @@
       #set($viewableReports = $view.getViewableReports($commentTable))
       #if($viewableReports.size() > 0)
         #set($report = $viewableReports.first())
+        Report is $report
         #set($icon = $report.getModule().getIconPath())
         <i class="comment_icon $icon"></i>
       #end
