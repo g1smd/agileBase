@@ -132,7 +132,7 @@
    					#end
    				</SELECT>
 			</TD>
-			
+
 			<TD height=20 id=filterOptionsSets>
 				#foreach($filterType in $filterTypeDescriptors)
 					<DIV id=filterOptionsSet desc="$filterType.getFilterType().getDescription()"> ##  #if($foreach.count==1)selected="true"#end
