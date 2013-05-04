@@ -40,24 +40,8 @@ public class FilterTypeDescriptor implements FilterTypeDescriptorInfo {
 	 */
 	public FilterTypeDescriptor(FilterType filterType) {
 		this.filterType = filterType;
-		switch (this.filterType) {
-		case EQUAL:
-		case NOT_EQUAL_TO:
-		case GREATER_THAN_OR_EQUAL_TO:
-		case IS_ONE_OF:
-		case LESS_THAN:
-		case NEWER_THAN_IN_DAYS:
-		case NEWER_THAN_IN_WEEKS:
-		case NEWER_THAN_IN_MONTHS:
-		case NEWER_THAN_IN_YEARS:
-		case OLDER_THAN_IN_DAYS:
-		case OLDER_THAN_IN_WEEKS:
-		case OLDER_THAN_IN_MONTHS:
-		case OLDER_THAN_IN_YEARS:
-		case STARTS_WITH:
-		case DOES_NOT_START_WITH:
+		if ((!this.filterType.equals(FilterType.IS_NOT_NULL)) && (!this.filterType.equals(FilterType.IS_NULL))) {
 			this.options.add(new TextFieldDescriptorOption(PossibleTextOptions.DEFAULTVALUE));
-			break;
 		}
 	}
 

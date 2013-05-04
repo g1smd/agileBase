@@ -162,7 +162,7 @@
 		</tbody>
 	</TABLE>
 </FORM>
-<SCRIPT language=javascript>
+<SCRIPT language="JavaScript">
   	function fSelectFilterOption(iIndex)
   	{
   	   function fEnableDisable(oFilterOptionSet)
