@@ -178,7 +178,7 @@ public class Enumerations {
 	 */
 	public enum FilterType {
 		EQUAL(false), NOT_EQUAL_TO(false), GREATER_THAN_OR_EQUAL_TO(false), LESS_THAN(false), STARTS_WITH(
-				false), DOES_NOT_START_WITH(false), NEWER_THAN_IN_DAYS(true), NEWER_THAN_IN_WEEKS(true), NEWER_THAN_IN_MONTHS(
+				false), DOES_NOT_START_WITH(false), CONTAINS(false), NEWER_THAN_IN_DAYS(true), NEWER_THAN_IN_WEEKS(true), NEWER_THAN_IN_MONTHS(
 				true), NEWER_THAN_IN_YEARS(true), OLDER_THAN_IN_DAYS(true), OLDER_THAN_IN_WEEKS(true), OLDER_THAN_IN_MONTHS(
 				true), OLDER_THAN_IN_YEARS(true), IS_NULL(false), IS_NOT_NULL(false), IS_ONE_OF(false); // ,
 		// IS_IN_SUBSELECT(false),

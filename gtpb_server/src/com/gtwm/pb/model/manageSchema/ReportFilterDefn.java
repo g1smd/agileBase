@@ -300,6 +300,8 @@ public class ReportFilterDefn implements ReportFilterInfo {
 			if (comparisonField.getDbType().equals(DatabaseFieldType.VARCHAR)) {
 				if (filterType.equals(FilterType.STARTS_WITH) || filterType.equals(FilterType.DOES_NOT_START_WITH)) {
 					filterValue = "'" + filterValue.toLowerCase(Locale.UK) + "%'";
+				} else if (filterType.equals(FilterType.CONTAINS)) {
+					filterValue = "'%" + filterValue.toLowerCase() + "%'";
 				} else if (!this.getReferencesFields()) {
 					filterValue = "'" + filterValue.toLowerCase(Locale.UK) + "'";
 				} else {
@@ -389,6 +391,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 					+ " years'::interval)";
 			break;
 		case STARTS_WITH:
+		case CONTAINS:
 			comparisonString = " LIKE " + filterValue;
 			break;
 		case DOES_NOT_START_WITH:
