@@ -32,7 +32,8 @@
     #if($comment.getTable())
       #set($commentTable = $comment.getTable())
       #set($viewableReports = $view.getViewableReports($commentTable))
-      #if($viewableReports.size() > 0)
+      #if($viewableReports.size() > 1)
+        #set($success = $viewableReports.remove($viewableReports.first()))
         #set($report = $viewableReports.first())
         Report is $report
         #set($icon = $report.getModule().getIconPath())
