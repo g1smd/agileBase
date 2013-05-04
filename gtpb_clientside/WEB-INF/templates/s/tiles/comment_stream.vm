@@ -37,7 +37,7 @@
         #set($success = $viewableReports.remove($viewableReports.first()))
         #set($report = $viewableReports.first())
         #set($icon = $report.getModule().getIconPath())
-        <i title = "$commentTable.getSingluarName()" class="comment_icon ${colour}_fg $icon"></i>
+        <i title = "$commentTable.getSingularName()" class="comment_icon ${colour}_fg $icon"></i>
       #end
     #end
   </div>
