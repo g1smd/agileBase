@@ -165,7 +165,12 @@ body {
 }
 
 .tile.calendar .fc-event {
-  line-height: 1.1em;
+  line-height: 1.2em;
+}
+
+.tile.calendar .fc-corner-right .tile.calendar .fc-event-inner {
+  border-right-width: 0;
+  border-left-width: 0;
 }
 
 .calendar .addEvents {

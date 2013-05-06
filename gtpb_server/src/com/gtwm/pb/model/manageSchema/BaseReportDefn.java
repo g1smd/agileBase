@@ -98,7 +98,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		int hash3 = Math.abs(temp.reverse().toString().hashCode());
 		int hue = hash1 % 360;
 		int saturation = (hash2 % 40) + 60;
-		int lightness = (hash3 % 45) + 55;
+		int lightness = (hash3 % 20) + 80;
 		return "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
 	}
 
