@@ -169,8 +169,8 @@ body {
 }
 
 .tile.calendar .fc-corner-right .tile.calendar .fc-event-inner {
-  border-right-width: 0;
-  border-left-width: 0;
+  border-right-color: white;
+  border-left-color: white;
 }
 
 .calendar .addEvents {
