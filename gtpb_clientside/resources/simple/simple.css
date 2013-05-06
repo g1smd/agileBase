@@ -168,9 +168,8 @@ body {
   line-height: 1.2em;
 }
 
-.tile.calendar .fc-corner-right .tile.calendar .fc-event-inner {
-  border-right-color: white;
-  border-left-color: white;
+.tile.calendar .fc-corner-left, .tile.calendar .fc-button-inner, .tile.calendar .fc-corner-left, .tile.calendar .fc-event-inner {
+  margin-left: 0;
 }
 
 .calendar .addEvents {
