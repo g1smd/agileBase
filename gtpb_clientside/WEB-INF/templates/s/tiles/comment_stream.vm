@@ -36,7 +36,6 @@
         ## Use the first report that isn't the default report for the icon
         #set($success = $viewableReports.remove($viewableReports.first()))
         #foreach($viewableReport in $viewableReports)
-          ... $viewableReport ...
           #if($viewableReport.getModule() && (!$viewableReport.getReportName().contains("dbvcrit")) && (!$viewableReport.getReportName().contains("dbvcalc")))
             #set($report = $viewableReport)
             #break
