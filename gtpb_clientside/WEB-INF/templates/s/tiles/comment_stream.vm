@@ -42,7 +42,6 @@
             #break
           #end
         #end
-        Report is $report, module $report.getModule()<br>
         #set($icon = $report.getModule().getIconPath())
         <i title = "$commentTable.getSingularName()" class="comment_icon ${colour}_fg $icon"></i>
       #end
