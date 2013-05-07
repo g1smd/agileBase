@@ -36,6 +36,7 @@
         ## Use the first report that isn't the default report for the icon
         #set($success = $viewableReports.remove($viewableReports.first()))
         #set($report = $viewableReports.first())
+        Report $report, module $report.getModule()<br>
         #set($icon = $report.getModule().getIconPath())
         <i title = "$commentTable.getSingularName()" class="comment_icon ${colour}_fg $icon"></i>
       #end
