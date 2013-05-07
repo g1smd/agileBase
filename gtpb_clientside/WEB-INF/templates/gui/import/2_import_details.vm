@@ -39,7 +39,7 @@
 #set($rowClass="rowa")
 <tr class="$rowClass">
   <td>File to import</td>
-  <td><input type="file" name="importfile"></td>
+  <td><input type="file" name="importfile" accept=".csv,.txt" /></td>
 </tr>
 #if(!$sessionData.hasTable())
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
