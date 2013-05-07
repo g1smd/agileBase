@@ -37,7 +37,7 @@
         #set($success = $viewableReports.remove($viewableReports.first()))
         #foreach($report in $viewableReports)
           ... $report ...
-          #if($report.getModule() && (!$report.getReportName.contains("dbvcrit")) && (!$report.getReportName.contains("dbvcalc")))
+          #if($report.getModule() && (!$report.getReportName().contains("dbvcrit")) && (!$report.getReportName().contains("dbvcalc")))
             #break
           #end
         #end
