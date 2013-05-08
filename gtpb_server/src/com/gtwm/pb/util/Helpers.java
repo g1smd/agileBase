@@ -412,6 +412,8 @@ public final class Helpers {
 		String unencoded = string.replace("&amp;", "&");
 		unencoded = unencoded.replace("&lt;", "<");
 		unencoded = unencoded.replace("&gt;", ">");
+		unencoded = unencoded.replace("&#x27;", "'");
+		unencoded = unencoded.replace("&quot;", "'");
 		return unencoded;
 	}
 
