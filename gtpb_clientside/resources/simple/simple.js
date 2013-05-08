@@ -108,7 +108,8 @@ function commonTileEvents() {
 	$(".tile.focus a").click(function(event) {
 		event.stopPropagation();
 	});
-	$(".header.row, .header.row *").mouseenter(function() {
+	$(".header.row").mouseover(function() {
+	  // mouseover rather than mouseenter to work on child elements too
 		$(".sideAction.removeTile").addClass("expanded");
 	});
 	$(".header.row").mouseleave(function() {
