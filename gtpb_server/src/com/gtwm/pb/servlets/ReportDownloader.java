@@ -273,6 +273,10 @@ public final class ReportDownloader extends HttpServlet {
 		customHeaderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		customHeaderStyle.setFont(customHeaderFont);
 		customHeaderStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		customHeaderStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		// Custom body
+		CellStyle customStyle = workbook.createCellStyle();
+		customStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		Row row = reportSheet.createRow(rowNum);
 		if (customFormat) {
 			row.setHeightInPoints((short) 26);
@@ -284,6 +288,7 @@ public final class ReportDownloader extends HttpServlet {
 			if (customFormat) {
 				cell.setCellValue(reportField.getFieldName().toUpperCase());
 				cell.setCellStyle(customHeaderStyle);
+				reportSheet.setColumnWidth(columnNum, 20 * 256);
 			} else {
 				cell.setCellValue(reportField.getFieldName());
 				cell.setCellStyle(boldCellStyle);
@@ -346,6 +351,9 @@ public final class ReportDownloader extends HttpServlet {
 					default:
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 						cell.setCellValue(Helpers.unencodeHtml(fieldValue));
+						if (customFormat) {
+							cell.setCellStyle(customStyle);
+						}
 						break;
 					}
 				}
