@@ -46,6 +46,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.grlea.log.SimpleLogger;
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -246,7 +249,7 @@ public final class ReportDownloader extends HttpServlet {
 			}
 		}
 		// create Excel spreadsheet
-		Workbook workbook = new SXSSFWorkbook();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		// the pane 2 report
 		String reportName = report.getReportName();
 		// Replace any invalid characters : \ / ? * [ or ]
@@ -265,12 +268,12 @@ public final class ReportDownloader extends HttpServlet {
 		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
 		// custom header
-		CellStyle customHeaderStyle = workbook.createCellStyle();
+		XSSFCellStyle customHeaderStyle = workbook.createCellStyle();
 		Font customHeaderFont = workbook.createFont();
 		customHeaderFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		customHeaderFont.setColor(IndexedColors.WHITE.getIndex());
 		customHeaderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
-		customHeaderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+		customHeaderStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(108, 108, 108)));
 		customHeaderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		customHeaderStyle.setFont(customHeaderFont);
 		customHeaderStyle.setAlignment(CellStyle.ALIGN_CENTER);
@@ -321,7 +324,6 @@ public final class ReportDownloader extends HttpServlet {
 		String fieldValue = "";
 		boolean isDefaultReport = (report.equals(report.getParentTable().getDefaultReport()));
 		float defaultRowHeight = reportSheet.getDefaultRowHeightInPoints() - 1;
-		logger.debug("Default row height is " + defaultRowHeight);
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
 			row = reportSheet.createRow(rowNum);

@@ -90,6 +90,7 @@
 				<!-- Excel spreadsheets -->
 				<pathelement location="WEB-INF/lib/poi-3.9.jar"/>
 				<pathelement location="WEB-INF/lib/poi-ooxml-3.9.jar"/>
+        <pathelement location="WEB-INF/lib/poi-ooxml-schemas-3.9.jar"/>
 				<!-- date/time parsing -->
 				<pathelement location="WEB-INF/lib/ERChronic.jar"/>
 				<pathelement location="WEB-INF/lib/joda-time-2.1.jar" />
