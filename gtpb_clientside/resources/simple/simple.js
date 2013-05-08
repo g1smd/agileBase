@@ -110,9 +110,11 @@ function commonTileEvents() {
 	});
 	$(".header.row").mouseover(function() {
 	  // mouseover rather than mouseenter to work on child elements too
+		console.log("mouseover");
 		$(".sideAction.removeTile").addClass("expanded");
 	});
 	$(".header.row").mouseleave(function() {
+		console.log("mouseleave");
 		$(".sideAction.removeTile").removeClass("expanded");
 	});	
 	$(".tile").click(
