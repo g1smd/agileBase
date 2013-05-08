@@ -113,8 +113,8 @@ function commonTileEvents() {
 		console.log("mouseover");
 		$(".sideAction.removeTile").addClass("expanded");
 	});
-	$(".header.row").mouseleave(function() {
-		console.log("mouseleave");
+	$(".header.row").mouseout(function() {
+		console.log("mouseout");
 		$(".sideAction.removeTile").removeClass("expanded");
 	});	
 	$(".tile").click(
