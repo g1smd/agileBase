@@ -368,12 +368,14 @@ public final class ReportDownloader extends HttpServlet {
 						cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
 						cell.setCellValue(Helpers.unencodeHtml(fieldValue));
 						if (customFormat) {
-							cell.setCellStyle(customStyle);
 							if (fieldValue.length() > maxChars) {
 								maxChars = fieldValue.length();
 							}
 						}
 						break;
+					}
+					if (customFormat) {
+						cell.setCellStyle(customStyle);
 					}
 				}
 				columnNum++;
