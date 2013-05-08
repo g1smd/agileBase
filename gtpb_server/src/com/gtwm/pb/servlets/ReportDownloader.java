@@ -287,7 +287,10 @@ public final class ReportDownloader extends HttpServlet {
 		customStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
 		customStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 		customStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-		customStyle.setBorderBottom(BorderFormatting.BORDER_MEDIUM);
+		customStyle.setBorderBottom(BorderFormatting.BORDER_THIN);
+		customStyle.setBorderTop(BorderFormatting.BORDER_THIN);
+		customStyle.setBorderLeft(BorderFormatting.BORDER_THIN);
+		customStyle.setBorderRight(BorderFormatting.BORDER_THIN);
 		Row row = reportSheet.createRow(rowNum);
 		if (customFormat) {
 			row.setHeightInPoints((short) 26);
