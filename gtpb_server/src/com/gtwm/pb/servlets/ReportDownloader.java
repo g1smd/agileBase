@@ -32,6 +32,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+
+import org.apache.poi.hssf.record.cf.BorderFormatting;
+import org.apache.poi.ss.usermodel.BorderStyle;
 // Java 7
 //import java.nio.charset.Charset;
 //import java.nio.file.Files;
@@ -279,6 +282,12 @@ public final class ReportDownloader extends HttpServlet {
 		CellStyle customStyle = workbook.createCellStyle();
 		customStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		customStyle.setWrapText(true);
+		customStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		customStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		customStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		customStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+		customStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+		customStyle.setBorderBottom(BorderFormatting.BORDER_MEDIUM);
 		Row row = reportSheet.createRow(rowNum);
 		if (customFormat) {
 			row.setHeightInPoints((short) 26);
