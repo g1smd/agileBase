@@ -108,15 +108,10 @@ function commonTileEvents() {
 	$(".tile.focus a").click(function(event) {
 		event.stopPropagation();
 	});
-	$(".header.row").mouseover(function() {
+	$(".header.row, .header.row *").mouseover(function() {
 	  // mouseover rather than mouseenter to work on child elements too
-		console.log("mouseover");
 		$(".sideAction.removeTile").addClass("expanded");
 	});
-	$(".header.row").mouseout(function() {
-		console.log("mouseout");
-		$(".sideAction.removeTile").removeClass("expanded");
-	});	
 	$(".tile").click(
 			function(event) {
 				var tile = $(this);
