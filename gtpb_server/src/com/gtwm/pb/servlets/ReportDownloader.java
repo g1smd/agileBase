@@ -43,6 +43,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.grlea.log.SimpleLogger;
 import java.sql.SQLException;
@@ -352,6 +353,8 @@ public final class ReportDownloader extends HttpServlet {
 			}
 			rowNum++;
 		}
+		String endColumnLetter = String.valueOf((char) (reportFields.size() + 65)).toUpperCase();
+		reportSheet.setAutoFilter(CellRangeAddress.valueOf("A1:" + endColumnLetter + "1"));
 		// Export info worksheet
 		addReportMetaDataWorksheet(user, sessionData, report, workbook);
 		// one worksheet for each of the report summaries
