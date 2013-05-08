@@ -273,6 +273,9 @@ public final class ReportDownloader extends HttpServlet {
 		customHeaderStyle.setFont(customHeaderFont);
 		customHeaderStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		Row row = reportSheet.createRow(rowNum);
+		if (customFormat) {
+			row.setHeight((short) 40);
+		}
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
 		for (ReportFieldInfo reportField : reportFields) {
