@@ -108,7 +108,7 @@ function commonTileEvents() {
 	$(".tile.focus a").click(function(event) {
 		event.stopPropagation();
 	});
-	$(".header.row").mouseenter(function() {
+	$(".header.row, .header.row *").mouseenter(function() {
 		$(".sideAction.removeTile").addClass("expanded");
 	});
 	$(".header.row").mouseleave(function() {
