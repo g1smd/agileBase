@@ -320,7 +320,8 @@ public final class ReportDownloader extends HttpServlet {
 				QuickFilterType.AND, false, null);
 		String fieldValue = "";
 		boolean isDefaultReport = (report.equals(report.getParentTable().getDefaultReport()));
-		float defaultRowHeight = reportSheet.getDefaultRowHeightInPoints();
+		float defaultRowHeight = reportSheet.getDefaultRowHeightInPoints() - 1;
+		logger.debug("Default row height is " + defaultRowHeight);
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
 			row = reportSheet.createRow(rowNum);
