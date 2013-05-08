@@ -800,6 +800,7 @@ table.reportData td {
   top: 0;
   right: 0.25em;
   font-size: 20pt;
+  z-index: 200;
 }
 
 .sideAction.backToView {
