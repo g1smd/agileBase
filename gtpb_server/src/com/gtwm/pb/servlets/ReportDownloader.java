@@ -39,6 +39,7 @@ import java.io.IOException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -119,8 +120,7 @@ public final class ReportDownloader extends HttpServlet {
 
 	private void serveTemplate(HttpServletRequest request, HttpServletResponse response,
 			BaseReportInfo report, String templateName) throws ServletException {
-		String rinsedTemplateName = templateName.replaceAll("\\..*$", "").replaceAll("\\W", "")
-				+ ".vm";
+		String rinsedTemplateName = templateName.replaceAll("\\..*$", "").replaceAll("\\W", "") + ".vm";
 		try {
 			AuthManagerInfo authManager = this.databaseDefn.getAuthManager();
 			if (!authManager.getAuthenticator().loggedInUserAllowedTo(request,
@@ -128,8 +128,7 @@ public final class ReportDownloader extends HttpServlet {
 				throw new DisallowedException(authManager.getLoggedInUser(request),
 						PrivilegeType.MANAGE_TABLE, report.getParentTable());
 			}
-			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(
-					request);
+			CompanyInfo company = this.databaseDefn.getAuthManager().getCompanyForLoggedInUser(request);
 			String pathString = this.databaseDefn.getDataManagement().getWebAppRoot()
 					+ "WEB-INF/templates/uploads/" + company.getInternalCompanyName() + "/"
 					+ report.getInternalReportName() + "/" + rinsedTemplateName;
@@ -228,13 +227,21 @@ public final class ReportDownloader extends HttpServlet {
 	/**
 	 * Write the session report as an Excel file in a temporary location
 	 * 
-	 * Synchronized to allow only one export at a time, they can be memory consuming
+	 * Synchronized to allow only one export at a time, they can be memory
+	 * consuming
 	 */
-	private synchronized File getSessionReportAsExcel(AppUserInfo user,
-			SessionDataInfo sessionData) throws AgileBaseException, IOException, SQLException {
+	private synchronized File getSessionReportAsExcel(AppUserInfo user, SessionDataInfo sessionData)
+			throws AgileBaseException, IOException, SQLException {
 		BaseReportInfo report = sessionData.getReport();
 		if (report == null) {
 			throw new ObjectNotFoundException("No report found in the session");
+		}
+		boolean customFormat = false;
+		if (report.getReportDescription() != null) {
+			// Bit of a hack for T
+			if (report.getReportDescription().contains("custom_format")) {
+				customFormat = true;
+			}
 		}
 		// create Excel spreadsheet
 		Workbook workbook = new SXSSFWorkbook();
@@ -255,13 +262,26 @@ public final class ReportDownloader extends HttpServlet {
 		Font font = workbook.createFont();
 		font.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldCellStyle.setFont(font);
+		// custom header
+		CellStyle customHeaderStyle = workbook.createCellStyle();
+		Font customHeaderFont = workbook.createFont();
+		customHeaderFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		customHeaderFont.setColor(IndexedColors.WHITE.getIndex());
+		customHeaderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+		customHeaderStyle.setFont(customHeaderFont);
+		customHeaderStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		Row row = reportSheet.createRow(rowNum);
 		int columnNum = 0;
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
 		for (ReportFieldInfo reportField : reportFields) {
 			Cell cell = row.createCell(columnNum);
-			cell.setCellValue(reportField.getFieldName());
-			cell.setCellStyle(boldCellStyle);
+			if (customFormat) {
+				cell.setCellValue(reportField.getFieldName().toUpperCase());
+				cell.setCellStyle(customHeaderStyle);
+			} else {
+				cell.setCellValue(reportField.getFieldName());
+				cell.setCellStyle(boldCellStyle);
+			}
 			BaseField field = reportField.getBaseField();
 			if (field.equals(field.getTableContainingField().getPrimaryKey())) {
 				reportSheet.setColumnHidden(columnNum, true);
@@ -352,8 +372,8 @@ public final class ReportDownloader extends HttpServlet {
 	/**
 	 * Add a sheet with export information to the workbook
 	 */
-	private static void addReportMetaDataWorksheet(AppUserInfo user,
-			SessionDataInfo sessionData, BaseReportInfo report, Workbook workbook) {
+	private static void addReportMetaDataWorksheet(AppUserInfo user, SessionDataInfo sessionData,
+			BaseReportInfo report, Workbook workbook) {
 		String title = "Export information";
 		Sheet infoSheet;
 		try {
@@ -408,8 +428,8 @@ public final class ReportDownloader extends HttpServlet {
 	 */
 	private void addSummaryWorksheet(CompanyInfo company, SessionDataInfo sessionData,
 			ChartInfo reportSummary, Workbook workbook) throws SQLException, CantDoThatException {
-		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement().getChartData(
-				company, reportSummary, sessionData.getReportFilterValues(), false);
+		ChartDataInfo reportSummaryData = this.databaseDefn.getDataManagement().getChartData(company,
+				reportSummary, sessionData.getReportFilterValues(), false);
 		if (reportSummaryData == null) {
 			return;
 		}
