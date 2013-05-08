@@ -317,6 +317,7 @@ h2 {
   left: 1em;
   right: 1em;
   height: 5em;
+  z-index: 1;
 }
 
 #tiles .tile .tile_icon {
