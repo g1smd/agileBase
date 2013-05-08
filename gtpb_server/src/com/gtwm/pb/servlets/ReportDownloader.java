@@ -32,9 +32,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.apache.poi.hssf.record.cf.BorderFormatting;
-import org.apache.poi.ss.usermodel.BorderStyle;
 // Java 7
 //import java.nio.charset.Charset;
 //import java.nio.file.Files;
@@ -300,7 +298,7 @@ public final class ReportDownloader extends HttpServlet {
 		for (ReportFieldInfo reportField : reportFields) {
 			Cell cell = row.createCell(columnNum);
 			if (customFormat) {
-				cell.setCellValue(reportField.getFieldName().toUpperCase());
+				cell.setCellValue(reportField.getFieldName().toUpperCase().replace(" [AUTO]", ""));
 				cell.setCellStyle(customHeaderStyle);
 				reportSheet.setColumnWidth(columnNum, 20 * 256);
 			} else {
@@ -377,6 +375,11 @@ public final class ReportDownloader extends HttpServlet {
 					if (customFormat) {
 						cell.setCellStyle(customStyle);
 					}
+				} else if (customFormat) {
+					// No content in cell
+					Cell cell = row.createCell(columnNum, Cell.CELL_TYPE_STRING);
+					cell.setCellValue("");
+					cell.setCellStyle(customStyle);
 				}
 				columnNum++;
 			}
@@ -384,12 +387,17 @@ public final class ReportDownloader extends HttpServlet {
 			if (maxChars > 0) {
 				int linesEstimate = maxChars / 20;
 				if (linesEstimate > 1) {
+					if (linesEstimate > 10) {
+						linesEstimate = 10;
+					}
 					row.setHeightInPoints(defaultRowHeight * linesEstimate);
 				}
 			}
 		}
-		String endColumnLetter = String.valueOf((char) (reportFields.size() + 65)).toUpperCase();
-		reportSheet.setAutoFilter(CellRangeAddress.valueOf("A1:" + endColumnLetter + "1"));
+		String endColumnLetter = String.valueOf((char) (reportFields.size() + 64)).toUpperCase();
+		if (customFormat) {
+			reportSheet.setAutoFilter(CellRangeAddress.valueOf("A1:" + endColumnLetter + "1"));
+		}
 		// Export info worksheet
 		addReportMetaDataWorksheet(user, sessionData, report, workbook);
 		// one worksheet for each of the report summaries
