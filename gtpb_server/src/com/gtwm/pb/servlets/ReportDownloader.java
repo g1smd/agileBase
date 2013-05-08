@@ -274,9 +274,11 @@ public final class ReportDownloader extends HttpServlet {
 		customHeaderStyle.setFont(customHeaderFont);
 		customHeaderStyle.setAlignment(CellStyle.ALIGN_CENTER);
 		customHeaderStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		customHeaderStyle.setWrapText(true);
 		// Custom body
 		CellStyle customStyle = workbook.createCellStyle();
 		customStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		customStyle.setWrapText(true);
 		Row row = reportSheet.createRow(rowNum);
 		if (customFormat) {
 			row.setHeightInPoints((short) 26);
@@ -308,10 +310,12 @@ public final class ReportDownloader extends HttpServlet {
 				QuickFilterType.AND, false, null);
 		String fieldValue = "";
 		boolean isDefaultReport = (report.equals(report.getParentTable().getDefaultReport()));
+		float defaultRowHeight = reportSheet.getDefaultRowHeightInPoints();
 		for (DataRowInfo dataRow : reportDataRows) {
 			Map<BaseField, DataRowFieldInfo> dataRowFieldMap = dataRow.getDataRowFields();
 			row = reportSheet.createRow(rowNum);
 			columnNum = 0;
+			int maxChars = 0;
 			for (ReportFieldInfo reportField : reportFields) {
 				BaseField field = reportField.getBaseField();
 				if (field instanceof TextField) {
@@ -353,6 +357,9 @@ public final class ReportDownloader extends HttpServlet {
 						cell.setCellValue(Helpers.unencodeHtml(fieldValue));
 						if (customFormat) {
 							cell.setCellStyle(customStyle);
+							if (fieldValue.length() > maxChars) {
+								maxChars = fieldValue.length();
+							}
 						}
 						break;
 					}
@@ -360,6 +367,12 @@ public final class ReportDownloader extends HttpServlet {
 				columnNum++;
 			}
 			rowNum++;
+			if (maxChars > 0) {
+				int linesEstimate = maxChars / 20;
+				if (linesEstimate > 1) {
+					row.setHeightInPoints(defaultRowHeight * linesEstimate);
+				}
+			}
 		}
 		String endColumnLetter = String.valueOf((char) (reportFields.size() + 65)).toUpperCase();
 		reportSheet.setAutoFilter(CellRangeAddress.valueOf("A1:" + endColumnLetter + "1"));
