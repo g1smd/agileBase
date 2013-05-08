@@ -268,6 +268,7 @@ public final class ReportDownloader extends HttpServlet {
 		customHeaderFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		customHeaderFont.setColor(IndexedColors.WHITE.getIndex());
 		customHeaderStyle.setFillBackgroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
+		customHeaderStyle.setFillForegroundColor(IndexedColors.GREY_50_PERCENT.getIndex());
 		customHeaderStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
 		customHeaderStyle.setFont(customHeaderFont);
 		customHeaderStyle.setAlignment(CellStyle.ALIGN_CENTER);
