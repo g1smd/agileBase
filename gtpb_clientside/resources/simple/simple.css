@@ -822,13 +822,14 @@ table.reportData td {
   border-radius: 0.5em;
   border: 1px solid #656766;
   background-color: white;
-  color: black;
+  color: #009fe3;
   font-weight: bold;
 }
 
 .sideAction .explainer.right {
   left: auto;
   right: 1em;
+  text-align: right;
 }
 
 .bold {
