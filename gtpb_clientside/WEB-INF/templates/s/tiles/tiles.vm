@@ -86,20 +86,25 @@
   <i class="icon-chevron-left"></i>
 </div>
 <div class="sideAction print" title="print or generate report">
+  <div class="explainer notfocus">print</div>
   <i class="icon-print"></i>
 </div>
 <div class="sideAction removeTile" title="remove tile">
   <i class="icon-remove-sign"></i>
 </div>
 <div class="sideAction backToView" title="finish changes">
+  <div class="explainer notfocus">back to report</div>
   <i class="icon-ok-sign"></i>
 </div>
 <div class="sideAction newRecord" title="add new item">
+  <div class="explainer notfocus">add new item</div>
   <i class="icon-plus-sign"></i>
 </div>
 <div class="sideAction cloneRecord" title="copy this item">
+  <div class="explainer notfocus">copy item</div>
   <i class="icon-copy"></i>
 </div>
 <div class="sideAction removeRecord" title="delete this record">
+  <div class="explainer notfocus">delete item</div>
   <i class="icon-minus-sign"></i>
 </div>
