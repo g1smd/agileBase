@@ -869,6 +869,10 @@ table.reportData td {
   text-align: right;
 }
 
+.sideAction .explainer.report {
+  width: 15em;
+}
+
 .bold {
   font-weight: bold;
 }
