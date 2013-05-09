@@ -108,3 +108,5 @@
   <div class="explainer notfocus">delete item</div>
   <i class="icon-minus-sign"></i>
 </div>
+<div id="reportSideActions">
+</div>

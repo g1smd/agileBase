@@ -614,6 +614,18 @@ function tileLoaded(tile, editing) {
 	} // end of if adder
 }
 
+/**
+ * Show side actions to load other reports based on the same table
+ */
+function alternativeReports() {
+	$("#reportSideActions").children().remove();
+	$("#reportSideActions").load("AppController.servlet", {
+		"return": "s/tiles/alternative_reports.vm"
+	}, function() {
+		
+	});
+}
+
 function reportRowClicks() {
 	$(".reportData tr.rowa td, .reportData tr.rowb td").click(
 			function(event) {

@@ -1,0 +1,17 @@
+#set($report = $sessionData.getReport())
+#set($table = $report.getParentTable())
+<div class="sideAction report report1">
+  <div class="explainer right notfocus">$report</div>
+  <i class="icon-circle"></i>
+</div>
+#set($reportNum = 1)
+#foreach($tableReport in $table.getReports())
+  #set($tableReportName = $tableReport.getReportName())
+  #if((!$tableReport.equals($report)) && (!$tableReport.equals($defaultReport)) && (!$tableReportName.contains("dbvcalc")) && (!$tableReportName.contains("dbvcrit")) )
+    #set($reportNum = $reportNum + 1)
+    <div class="sideAction report report$reportNum">
+      <div class="explainer right notfocus">$tableReportName</div>
+      <i class="icon-circle-blank"></i>
+    </div>
+  #end
+#end
