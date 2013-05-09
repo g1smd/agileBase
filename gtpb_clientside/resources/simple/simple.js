@@ -485,12 +485,19 @@ function dataStreamFocus() {
 			});
 }
 
+function sideExplainers() {
+	$(".sideAction").mouseenter(function() {
+		$(this).find(".explainer").removeClass("notfocus");
+	});
+}
+
 /**
  * This function runs when a tile is clicked to expand it and content has loaded
  */
 function tileLoaded(tile, editing) {
 	var tileType = tile.attr("data-type");
 	$(".sideAction.backHome").addClass("expanded");
+	sideExplainers();
 	if(tile.hasClass("printable")) {
 		$(".sideAction.print").addClass("expanded");
 	}
@@ -719,10 +726,6 @@ function showEditControls() {
 	$(".sideAction.newRecord").addClass("expanded");
 	$(".sideAction.cloneRecord").addClass("expanded");
 	$(".sideAction.removeRecord").addClass("expanded");
-	console.log("showEditControls");
-	$(".sideAction").mouseenter(function() {
-		$(this).find(".explainer").removeClass("notfocus");
-	});
 }
 
 function addDataTile(selectedApp, colour, internalReportName, icon) {
