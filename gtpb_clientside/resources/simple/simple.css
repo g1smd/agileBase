@@ -869,7 +869,7 @@ table.reportData td {
   text-align: right;
 }
 
-.sideAction .explainer.report {
+.sideAction.report .explainer {
   width: 15em;
 }
 
