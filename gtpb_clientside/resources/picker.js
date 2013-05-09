@@ -139,8 +139,8 @@ function fPicker(){
   // For Edudo: attach to allow the picker object to be used
   oCaller.picker=oElements.picker;
   var deviceAgent = navigator.userAgent.toLowerCase();
-  if(deviceAgent.match(/(iphone|ipod|ipad|konqueror)/)) {
-	scroll(0,0);
+  if(deviceAgent.match(/(iphone|ipod|ipad)/)) {
+	  scroll(0,0);
   }
   return false;
 }

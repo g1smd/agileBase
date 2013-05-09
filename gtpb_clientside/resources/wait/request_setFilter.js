@@ -347,7 +347,11 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 		var keyupBug = (oObj.getAttribute('keyup_bug'));
 		var oReportBody;
 		if ($("#tiles").size() > 0) {
-			oReportBody = $(".tile.expanded").find("table.reportData").find("tbody")[0];
+			if ($("#relationPicker").size() > 0) {
+				oReportBody = $("#relationPicker").find("table#reportData").find("tbody")[0];
+			} else {
+			  oReportBody = $(".tile.expanded").find("table.reportData").find("tbody")[0];
+			}
 		} else {
 			// TODO --> find a way to make this more generic
 			oReportBody = document.getElementById('reportBody');
