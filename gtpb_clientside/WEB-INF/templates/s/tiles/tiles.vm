@@ -93,7 +93,7 @@
   <i class="icon-remove-sign"></i>
 </div>
 <div class="sideAction backToView" title="finish changes">
-  <div class="explainer notfocus">back to report</div>
+  <div class="explainer right notfocus">back to list</div>
   <i class="icon-ok-sign"></i>
 </div>
 <div class="sideAction newRecord" title="add new item">

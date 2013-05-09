@@ -818,11 +818,17 @@ table.reportData td {
   height: 1.5em;
   left: 1em;
   padding: 0.5em;
+  padding-top: 0.4em;
   border-radius: 0.5em;
   border: 1px solid #656766;
   background-color: white;
   color: black;
   font-weight: bold;
+}
+
+.sideAction .explainer.right {
+  left: auto;
+  right: 1em;
 }
 
 .bold {
