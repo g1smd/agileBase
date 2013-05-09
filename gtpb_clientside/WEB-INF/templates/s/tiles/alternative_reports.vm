@@ -5,6 +5,7 @@
   <i class="icon-circle"></i>
 </div>
 #set($reportNum = 1)
+#set($defaultReport = $table.getDefaultReport())
 #foreach($tableReport in $table.getReports())
   #set($tableReportName = $tableReport.getReportName())
   #if((!$tableReport.equals($report)) && (!$tableReport.equals($defaultReport)) && (!$tableReportName.contains("dbvcalc")) && (!$tableReportName.contains("dbvcrit")) )
