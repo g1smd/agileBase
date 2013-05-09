@@ -490,7 +490,7 @@ function sideExplainers() {
 		$(this).find(".explainer").removeClass("notfocus");
 	});
 	$(".sideAction").mouseleave(function() {
-		$(".explainer").removeClass("notfocus");
+		$(".explainer").addClass("notfocus");
 	});
 }
 
