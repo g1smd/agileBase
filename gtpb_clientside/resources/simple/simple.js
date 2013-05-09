@@ -625,6 +625,14 @@ function alternativeReports() {
 	}, function() {
 		$("#reportSideActions .sideAction").addClass("expanded");
 		sideExplainers();
+		$("#reportSideActions .sideAction").click(function() {
+			var internalReportName = $(this).attr("data-internalreportname");
+			var tile = $(".tile.expanded");
+			tile.attr("data-internalreportname", internalReportName);
+			tileLoaded(tile, false);
+			$("reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank");
+			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
+		});
 	});
 }
 

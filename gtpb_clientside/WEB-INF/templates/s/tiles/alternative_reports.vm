@@ -19,7 +19,7 @@
 #foreach$tableReport in $alternativeReports)
   #set($tableReportName = $tableReport.getReportName())
   #set($reportNum = $reportNum + 1)
-  <div class="sideAction report report$reportNum">
+  <div class="sideAction report report$reportNum" data-internalreportname="$tableReport.getInternalReportName()">
     <div class="explainer right notfocus">$tableReportName</div>
     <i class="icon-circle-blank"></i>
   </div>
