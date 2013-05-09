@@ -6,13 +6,21 @@
 </div>
 #set($reportNum = 1)
 #set($defaultReport = $table.getDefaultReport())
+#set($hiddenReports = $view.getLoggedInUser().getHiddenReports())
+#set($alternativeReports = [])
 #foreach($tableReport in $table.getReports())
   #set($tableReportName = $tableReport.getReportName())
   #if((!$tableReport.equals($report)) && (!$tableReport.equals($defaultReport)) && (!$tableReportName.contains("dbvcalc")) && (!$tableReportName.contains("dbvcrit")) )
-    #set($reportNum = $reportNum + 1)
-    <div class="sideAction report report$reportNum">
-      <div class="explainer right notfocus">$tableReportName</div>
-      <i class="icon-circle-blank"></i>
-    </div>
+    #if(!$hiddenReports.contains($tableReport))
+      #set($success = $alternativeReports.add($tableReport))
+    #end
   #end
+#end
+#foreach$tableReport in $alternativeReports)
+  #set($tableReportName = $tableReport.getReportName())
+  #set($reportNum = $reportNum + 1)
+  <div class="sideAction report report$reportNum">
+    <div class="explainer right notfocus">$tableReportName</div>
+    <i class="icon-circle-blank"></i>
+  </div>
 #end
