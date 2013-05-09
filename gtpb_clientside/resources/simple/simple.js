@@ -624,6 +624,7 @@ function alternativeReports() {
 		"return": "s/tiles/alternative_reports"
 	}, function() {
 		$("#reportSideActions .sideAction").addClass("expanded");
+		sideExplainers();
 	});
 }
 
