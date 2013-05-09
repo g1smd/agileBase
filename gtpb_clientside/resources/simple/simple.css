@@ -759,6 +759,7 @@ table.reportData td {
   opacity: 0;
   width: 0;
   overflow: hidden;
+  z-index: 3; /* above .explainer */
   transition-duration: 3s;
   transition-property: opacity;
   -moz-transition-duration: 3s;
@@ -807,6 +808,11 @@ table.reportData td {
 .sideAction.backToView {
   top: 3em;
   right: 0.25em;
+}
+
+.sideAction .explainer {
+  position: relative;
+  z-indez: 2;
 }
 
 .bold {
