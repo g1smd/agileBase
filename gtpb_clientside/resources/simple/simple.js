@@ -621,7 +621,7 @@ function tileLoaded(tile, editing) {
 function alternativeReports() {
 	$("#reportSideActions").children().remove();
 	$("#reportSideActions").load("AppController.servlet", {
-		"return": "s/tiles/alternative_reports.vm"
+		"return": "s/tiles/alternative_reports"
 	}, function() {
 		
 	});
