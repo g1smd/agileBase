@@ -489,6 +489,9 @@ function sideExplainers() {
 	$(".sideAction").mouseenter(function() {
 		$(this).find(".explainer").removeClass("notfocus");
 	});
+	$(".sideAction").mouseleave(function() {
+		$(".explainer").removeClass("notfocus");
+	});
 }
 
 /**
