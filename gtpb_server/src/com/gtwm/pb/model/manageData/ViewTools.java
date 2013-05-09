@@ -818,17 +818,19 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("79", "Mobile");
 			this.areaCodes.put("800", "Freephone");
 			this.areaCodes.put("808", "Freephone");
-			this.areaCodes.put("842", "Non-geographic/special");
-			this.areaCodes.put("843", "Non-geographic/special");
-			this.areaCodes.put("844", "Non-geographic/special");
-			this.areaCodes.put("845", "Non-geographic");
-			this.areaCodes.put("870", "Non-geographic/special");
-			this.areaCodes.put("871", "Premium rate");
-			this.areaCodes.put("872", "Premium rate");
-			this.areaCodes.put("873", "Premium rate");
-			this.areaCodes.put("90", "Premium rate");
-			this.areaCodes.put("91", "Premium rate");
-			this.areaCodes.put("98", "Premium rate");
+			this.areaCodes.put("842", "Non-geographic (Service Charge up to 7p/min)");
+			this.areaCodes.put("843", "Non-geographic (Service Charge up to 7p/min)");
+			this.areaCodes.put("844", "Non-geographic (Service Charge up to 7p/min)");
+			this.areaCodes.put("845", "Non-geographic (Service Charge up to 7p/min)");
+			this.areaCodes.put("870", "Non-geographic (Service Charge up to 13p/min)");
+			this.areaCodes.put("871", "Non-geographic (Service Charge up to 13p/min)");
+			this.areaCodes.put("872", "Non-geographic (Service Charge up to 13p/min)");
+			this.areaCodes.put("873", "Non-geographic (Service Charge up to 13p/min)");
+			this.areaCodes.put("90", "Premium Rate Services (Service Charge up to £3/min)");
+			this.areaCodes.put("908", "Premium Rate Adult Services (Service Charge up to £3/min)");
+			this.areaCodes.put("909", "Premium Rate Adult Services (Service Charge up to £3/min)");
+			this.areaCodes.put("91", "Premium Rate Services (Service Charge up to £3/min)");
+			this.areaCodes.put("98", "Premium Rate Adult Services (Service Charge up to £3/min)");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
 		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0|11)\\s?|\\+)4\\s?4)?0?([1-9]\\d+)[x\\#]?.*",
