@@ -719,6 +719,9 @@ function showEditControls() {
 	$(".sideAction.newRecord").addClass("expanded");
 	$(".sideAction.cloneRecord").addClass("expanded");
 	$(".sideAction.removeRecord").addClass("expanded");
+	$(".sideAction").mouseenter(function() {
+		$(this).find(".explainer").removeClass("notfocus");
+	});
 }
 
 function addDataTile(selectedApp, colour, internalReportName, icon) {

@@ -82,7 +82,7 @@
   <div class="content"></div>
 </div>
 <div class="sideAction backHome" title="home">
-  <div class="explainer">go back to tiles</div>
+  <div class="explainer notfocus">back to tiles</div>
   <i class="icon-chevron-left"></i>
 </div>
 <div class="sideAction print" title="print or generate report">
