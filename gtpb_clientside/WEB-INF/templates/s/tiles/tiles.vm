@@ -97,7 +97,7 @@
   <i class="icon-ok-sign"></i>
 </div>
 <div class="sideAction newRecord" title="add new item">
-  <div class="explainer notfocus">add new item</div>
+  <div class="explainer notfocus">new item</div>
   <i class="icon-plus-sign"></i>
 </div>
 <div class="sideAction cloneRecord" title="copy this item">
