@@ -623,7 +623,7 @@ function alternativeReports() {
 	$("#reportSideActions").load("AppController.servlet", {
 		"return": "s/tiles/alternative_reports"
 	}, function() {
-		
+		$("#reportSideActions .sideAction").addClass("expanded");
 	});
 }
 
