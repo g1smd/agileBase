@@ -771,6 +771,7 @@ table.reportData td {
 .sideAction.expanded {
   opacity: 0.5;
   width: 1em;
+  overflow: visible;
 }
 
 .sideAction.backHome {
@@ -811,8 +812,17 @@ table.reportData td {
 }
 
 .sideAction .explainer {
-  position: relative;
+  position: absolute;
   z-indez: 2;
+  width: 8em;
+  height: 1.5em;
+  left: 1em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  border: 1px solid #656766;
+  background-color: white;
+  color: black;
+  font-weight: bold;
 }
 
 .bold {
