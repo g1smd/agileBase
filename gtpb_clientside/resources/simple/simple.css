@@ -811,6 +811,42 @@ table.reportData td {
   right: 0.25em;
 }
 
+.sideAction.report {
+  right: 0.25em;
+}
+
+.sideAction.report1 {
+  top: 5em;
+}
+
+.sideAction.report2 {
+  top: 7em;
+}
+
+.sideAction.report3 {
+  top: 9em;
+}
+
+.sideAction.report4 {
+  top: 11em;
+}
+
+.sideAction.report5 {
+  top: 13em;
+}
+
+.sideAction.report6 {
+  top: 15em;
+}
+
+.sideAction.report7 {
+  top: 17em;
+}
+
+.sideAction.report8 {
+  top: 19em;
+}
+
 .sideAction .explainer {
   position: absolute;
   z-indez: 2;
