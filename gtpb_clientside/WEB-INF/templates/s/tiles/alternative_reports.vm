@@ -17,7 +17,7 @@
   #end
 #end
 
-#foreach$tableReport in $alternativeReports)
+#foreach($tableReport in $alternativeReports)
   #set($tableReportName = $tableReport.getReportName())
   #set($reportNum = $reportNum + 1)
   <div class="sideAction report report$reportNum" data-internalreportname="$tableReport.getInternalReportName()">
