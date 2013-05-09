@@ -271,7 +271,7 @@ function fTags() {
 	});
 	$("input.add_tag").not(".setup_complete").each(function() {
 		$(this).inlineComplete();
-	}
+	});
 	$("input.add_tag").addClass("setup_complete");
 	$("input.add_tag_button").not(".setup_complete").click(function() {
 		var tagsCsv = "";
