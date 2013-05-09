@@ -540,6 +540,7 @@ function tileLoaded(tile, editing) {
 					$(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
 					checkboxesSetup();
+					alternativeReports();
 				});
 	}
 	if ((tileType == "adder")) {
