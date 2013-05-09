@@ -269,7 +269,9 @@ function fTags() {
 	$("input.add_tag").not(".setup_complete").blur(function() {
 		$(this).closest(".tags").find("input.add_tag_button").click();
 	});
-	$("input.add_tag").not(".setup_complete").inlineComplete();
+	$("input.add_tag").not(".setup_complete").each(function() {
+		$(this).inlineComplete();
+	}
 	$("input.add_tag").addClass("setup_complete");
 	$("input.add_tag_button").not(".setup_complete").click(function() {
 		var tagsCsv = "";
