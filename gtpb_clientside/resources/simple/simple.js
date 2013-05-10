@@ -123,7 +123,6 @@ function commonTileEvents() {
 					var rowId = tile.find("#record_identifier").attr("data-rowid");
 					tile.addClass(tile.attr("data-colour"));
 					expandTile(tile);
-					console.log("commonTileEvents focus");
 					tileLoaded(tile, true, false);
 					loadEdit(tile.find(".content"), internalTableName, rowId);
 				} else {
@@ -137,7 +136,6 @@ function commonTileEvents() {
 							"return" : template,
 							set_tile : internalTileName
 						}, function() {
-							console.log("commonTileEvents");
 							tileLoaded(tile, false, true);
 						});
 					}
@@ -151,7 +149,6 @@ function commonTileEvents() {
 		} else if ($(".tile.expanded").hasClass("calendar")) {
 			loadOrCreateCalendar();
 		} else {
-			console.log("backToView");
 		  tileLoaded($(".tile.expanded"), false, false);
 		}
 	});
@@ -342,7 +339,6 @@ function loadCalendar() {
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
-	console.log("loadCalendar");
 	tileLoaded(tile, false, false);
 }
 
@@ -492,6 +488,7 @@ function dataStreamFocus() {
 }
 
 function sideExplainers(colour) {
+	console.log(colour);
 	var allColours = abTileColours.join(" ");
 	$(".sideAction .explainer").removeClass(allColours).addClass(colour + "_fg");
 	$(".sideAction").mouseenter(function() {
@@ -642,7 +639,6 @@ function fAlternativeReports() {
 			var internalReportName = $(this).attr("data-internalreportname");
 			var tile = $(".tile.expanded");
 			tile.attr("data-internalreportname", internalReportName);
-			console.log("alternativeReports");
 			tileLoaded(tile, false, false);
 			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank");
 			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
@@ -754,7 +750,6 @@ function loadEdit(container, internalTableName, rowId) {
 				editTabFunctions();
 				showEditControls();
 				if (!expanded) {
-					console.log("loadEdit");
 					tileLoaded(tile, true, false);
 				}
 			});
