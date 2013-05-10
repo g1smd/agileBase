@@ -144,6 +144,7 @@ function commonTileEvents() {
 				}
 				tile.find(".content").removeClass("notfocus");
 			});
+	/*
 	$(".sideAction.backToView").click(function() {
 		if ($(".tile.expanded").hasClass("focus")) {
 			backHome();
@@ -154,6 +155,7 @@ function commonTileEvents() {
 		  tileLoaded($(".tile.expanded"), false, false);
 		}
 	});
+	*/
 	$(".sideAction.newRecord").click(function() {
 		var internalTableName = $(".tile.expanded").attr("data-internaltablename");
 		newRecord(internalTableName);
@@ -187,7 +189,7 @@ function loadOrCreateCalendar() {
 					"return" : "s/tiles/calendar",
 					set_tile : internalTileName
 				}, function() {
-					$(".sideAction.backToView").removeClass("expanded");
+					//$(".sideAction.backToView").removeClass("expanded");
 					loadCalendar();
 					tile.find(".content").removeAttr("style");
 				});
@@ -513,7 +515,7 @@ function tileLoaded(tile, editing, alternativeReports) {
 	}
 	if (editing) {
 		showEditControls();
-		$(".sideAction.backToView").removeClass("expanded");
+		//$(".sideAction.backToView").removeClass("expanded");
 	} else {
 		$(".sideAction.removeRecord").removeClass("expanded");
 		$(".sideAction.cloneRecord").removeClass("expanded");
@@ -537,7 +539,7 @@ function tileLoaded(tile, editing, alternativeReports) {
 				}, function() {
 					// remove opacity
 					tile.find(".content").removeAttr("style");
-					$(".sideAction.backToView").removeClass("expanded");
+					//$(".sideAction.backToView").removeClass("expanded");
 					var hoverIntentConfig = {
 						over : showTooltip,
 						out : hideTooltip,
@@ -758,7 +760,7 @@ function loadEdit(container, internalTableName, rowId) {
 
 function showEditControls() {
 	$(".sideAction.backHome").addClass("expanded");
-	$(".sideAction.backToView").addClass("expanded");
+	//$(".sideAction.backToView").addClass("expanded");
 	$(".sideAction.newRecord").addClass("expanded");
 	$(".sideAction.cloneRecord").addClass("expanded");
 	$(".sideAction.removeRecord").addClass("expanded");

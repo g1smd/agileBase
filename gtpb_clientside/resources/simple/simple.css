@@ -805,47 +805,27 @@ table.reportData td {
   font-size: 20pt;
   z-index: 200;
 }
-
+/*
 .sideAction.backToView {
   top: 3em;
   right: 0.25em;
 }
-
+*/
 .sideAction.report {
   right: 0.25em;
 }
 
-.sideAction.report1 {
-  top: 5em;
-}
-
-.sideAction.report2 {
-  top: 7em;
-}
-
-.sideAction.report3 {
-  top: 9em;
-}
-
-.sideAction.report4 {
-  top: 11em;
-}
-
-.sideAction.report5 {
-  top: 13em;
-}
-
-.sideAction.report6 {
-  top: 15em;
-}
-
-.sideAction.report7 {
-  top: 17em;
-}
-
-.sideAction.report8 {
-  top: 19em;
-}
+.sideAction.report1 { top: 3em; }
+.sideAction.report2 {  top: 5em;}
+.sideAction.report3 {  top: 7em;}
+.sideAction.report4 {  top: 9em;}
+.sideAction.report5 {  top: 11em;}
+.sideAction.report6 {  top: 13em;}
+.sideAction.report7 {  top: 15em;}
+.sideAction.report8 {  top: 17em;}
+.sideAction.report9 {  top: 19em;}
+.sideAction.report10 {  top: 21em;}
+.sideAction.report11 {  top: 23em;}
 
 .sideAction .explainer {
   position: absolute;
