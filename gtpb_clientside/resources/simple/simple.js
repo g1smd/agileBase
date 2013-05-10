@@ -643,7 +643,8 @@ function fAlternativeReports() {
 			console.log("alternativeReports");
 			tileLoaded(tile, false, false);
 			var colour = tile.attr("data-colour");
-			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank").addClass(colour);
+			alert(colour);
+			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank").addClass(colour + "_fg");
 			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
 		});
 	});
