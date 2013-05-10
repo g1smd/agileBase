@@ -642,7 +642,8 @@ function fAlternativeReports() {
 			tile.attr("data-internalreportname", internalReportName);
 			console.log("alternativeReports");
 			tileLoaded(tile, false, false);
-			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank");
+			var colour = tile.attr("data-colour");
+			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank").addClass(colour);
 			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
 		});
 	});

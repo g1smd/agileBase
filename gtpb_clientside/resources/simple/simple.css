@@ -769,7 +769,7 @@ table.reportData td {
 }
 
 .sideAction.expanded {
-  opacity: 0.5;
+  opacity: 0.75;
   width: 1em;
   overflow: visible;
 }
@@ -838,7 +838,7 @@ table.reportData td {
   border-radius: 0.5em;
   border: 1px solid #009fe3;
   background-color: white;
-  color: #009fe3;
+  /* color: #009fe3; */
   font-weight: bold;
   text-transform: lowercase;
 }
