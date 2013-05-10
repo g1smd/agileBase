@@ -489,7 +489,10 @@ function dataStreamFocus() {
 
 function sideExplainers(colour) {
 	console.log(colour);
-	var allColours = abTileColours.join(" ");
+	var allColours = "";
+	$.each(abTileColours, function() {
+		allColours += this + "_fg ";
+	});
 	$(".sideAction .explainer").removeClass(allColours).addClass(colour + "_fg");
 	$(".sideAction").mouseenter(function() {
 		$(this).find(".explainer").removeClass("notfocus");
