@@ -57,7 +57,7 @@
           #parse("gui/pane2/image.vm") $cell
         #elseif($attachmentType == "PROFILE_PHOTO")
           <img src="resources/icons/file_placeholders/profile_photo.png"' />
-        #else
+        #elseif(${fileValue.getIconName()} != "")
           <img src="resources/icons/filetypes/${fileValue.getIconName()}.png" />
         #end
       #end
