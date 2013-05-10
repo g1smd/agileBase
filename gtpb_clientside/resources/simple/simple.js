@@ -548,7 +548,7 @@ function tileLoaded(tile, editing, alternativeReports) {
 					reportRowClicks();
 					checkboxesSetup();
 					if (alternativeReports) {
-					  alternativeReports();
+					  fAlternativeReports();
 					}
 				});
 	}
@@ -627,7 +627,7 @@ function tileLoaded(tile, editing, alternativeReports) {
 /**
  * Show side actions to load other reports based on the same table
  */
-function alternativeReports() {
+function fAlternativeReports() {
 	$("#reportSideActions").children().remove();
 	$("#reportSideActions").load("AppController.servlet", {
 		"return": "s/tiles/alternative_reports"
