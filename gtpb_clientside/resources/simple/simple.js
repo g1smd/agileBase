@@ -488,7 +488,6 @@ function dataStreamFocus() {
 }
 
 function sideExplainers(colour) {
-	console.log(colour);
 	var allColours = "";
 	$.each(abTileColours, function() {
 		allColours += this + "_fg ";
