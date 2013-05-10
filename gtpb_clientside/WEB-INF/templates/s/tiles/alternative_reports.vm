@@ -16,7 +16,6 @@
     #end
   #end
 #end
-
 #foreach($tableReport in $alternativeReports)
   #set($tableReportName = $tableReport.getReportName())
   #set($reportNum = $reportNum + 1)
@@ -25,4 +24,3 @@
     <i class="icon-circle-blank"></i>
   </div>  
 #end
-

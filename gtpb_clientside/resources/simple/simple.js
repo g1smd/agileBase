@@ -123,7 +123,7 @@ function commonTileEvents() {
 					var rowId = tile.find("#record_identifier").attr("data-rowid");
 					tile.addClass(tile.attr("data-colour"));
 					expandTile(tile);
-					tileLoaded(tile, true);
+					tileLoaded(tile, true, false);
 					loadEdit(tile.find(".content"), internalTableName, rowId);
 				} else {
 					expandTile(tile);
@@ -136,7 +136,7 @@ function commonTileEvents() {
 							"return" : template,
 							set_tile : internalTileName
 						}, function() {
-							tileLoaded(tile, false);
+							tileLoaded(tile, false, true);
 						});
 					}
 				}
@@ -148,7 +148,7 @@ function commonTileEvents() {
 		} else if ($(".tile.expanded").hasClass("calendar")) {
 			loadOrCreateCalendar();
 		} else {
-		  tileLoaded($(".tile.expanded"), false);
+		  tileLoaded($(".tile.expanded"), false, false);
 		}
 	});
 	$(".sideAction.newRecord").click(function() {
@@ -337,7 +337,7 @@ function loadCalendar() {
 	setTimeout(function() {
 		$(window).resize()
 	}, 500);
-	tileLoaded(tile, false);
+	tileLoaded(tile, false, false);
 }
 
 // Add remove a JSON calendar feed
@@ -496,8 +496,11 @@ function sideExplainers() {
 
 /**
  * This function runs when a tile is clicked to expand it and content has loaded
+ * @param tile: The current tile element as a jQuery object
+ * @param editing: true or false, whether we're in editing mode or report viewing mode
+ * @param alternativeReports: true or false, whether to load the list of reports that can be chosen from the righthand side
  */
-function tileLoaded(tile, editing) {
+function tileLoaded(tile, editing, alternativeReports) {
 	var tileType = tile.attr("data-type");
 	$(".sideAction.backHome").addClass("expanded");
 	sideExplainers();
@@ -540,7 +543,9 @@ function tileLoaded(tile, editing) {
 					$(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
 					checkboxesSetup();
-					alternativeReports();
+					if (alternativeReports) {
+					  alternativeReports();
+					}
 				});
 	}
 	if ((tileType == "adder")) {
@@ -629,7 +634,7 @@ function alternativeReports() {
 			var internalReportName = $(this).attr("data-internalreportname");
 			var tile = $(".tile.expanded");
 			tile.attr("data-internalreportname", internalReportName);
-			tileLoaded(tile, false);
+			tileLoaded(tile, false, false);
 			$("reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank");
 			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
 		});
@@ -740,7 +745,7 @@ function loadEdit(container, internalTableName, rowId) {
 				editTabFunctions();
 				showEditControls();
 				if (!expanded) {
-					tileLoaded(tile, true);
+					tileLoaded(tile, true, false);
 				}
 			});
 }
