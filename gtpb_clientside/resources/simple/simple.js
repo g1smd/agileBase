@@ -491,7 +491,9 @@ function dataStreamFocus() {
 			});
 }
 
-function sideExplainers() {
+function sideExplainers(colour) {
+	var allColours = abTileColours.join(" ");
+	$(".sideAction .explainer").removeClass(allColours).addClass(colour + "_fg");
 	$(".sideAction").mouseenter(function() {
 		$(this).find(".explainer").removeClass("notfocus");
 	});
@@ -509,7 +511,7 @@ function sideExplainers() {
 function tileLoaded(tile, editing, alternativeReports) {
 	var tileType = tile.attr("data-type");
 	$(".sideAction.backHome").addClass("expanded");
-	sideExplainers();
+	sideExplainers(tile.attr("data-colour"));
 	if(tile.hasClass("printable")) {
 		$(".sideAction.print").addClass("expanded");
 	}
@@ -635,16 +637,14 @@ function fAlternativeReports() {
 		"return": "s/tiles/alternative_reports"
 	}, function() {
 		$("#reportSideActions .sideAction").addClass("expanded");
-		sideExplainers();
+		sideExplainers($(".tile.expanded").attr("data-colour"));
 		$("#reportSideActions .sideAction").click(function() {
 			var internalReportName = $(this).attr("data-internalreportname");
 			var tile = $(".tile.expanded");
 			tile.attr("data-internalreportname", internalReportName);
 			console.log("alternativeReports");
 			tileLoaded(tile, false, false);
-			var colour = tile.attr("data-colour");
-			alert(colour);
-			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank").addClass(colour + "_fg");
+			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank");
 			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
 		});
 	});
