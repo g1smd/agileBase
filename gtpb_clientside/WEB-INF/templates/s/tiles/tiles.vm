@@ -27,11 +27,17 @@
   </div>
   #set($internalUserName = $user.getInternalUserName())
   <b>My details</b><p>
+  #set($forename = "")
+  #if($user.getForename()) #set($forename = $user.getForename()) #end
+  #set($surname = "")
+  #if($user.getSurname()) #set($surname = $user.getSurname()) #end
+  #set($email = "")
+  #if($user.getEmail()) #set($email = $user.getEmail()) #end
   <form>
-    <input type="text" name="forename" placeholder="forename" value="$user.getForename()" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">&nbsp;
-    <input type="text" name="surname" placeholder="surname" value="$user.getSurname()" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
+    <input type="text" name="forename" placeholder="forename" value="$forename" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">&nbsp;
+    <input type="text" name="surname" placeholder="surname" value="$surname" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
     <p>
-    <input type="text" name="email" placeholder="email address" value="$user.getEmail()" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
+    <input type="text" name="email" placeholder="email address" value="$email" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
   </form>
 </div>
 ## App tiles
@@ -82,7 +88,7 @@
   <div class="content"></div>
 </div>
 <div class="sideAction backHome" title="home">
-  <div class="explainer notfocus">back to tiles</div>
+  <div class="explainer notfocus">back home</div>
   <i class="icon-chevron-left"></i>
 </div>
 <div class="sideAction print" title="print or generate report">
