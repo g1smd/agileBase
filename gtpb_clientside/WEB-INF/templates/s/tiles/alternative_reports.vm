@@ -1,6 +1,6 @@
 #set($report = $sessionData.getReport())
 #set($table = $report.getParentTable())
-<div class="sideAction report report1">
+<div class="sideAction report report1" data-internalreportname="$report.getInternalReportName()">
   <div class="explainer right notfocus">$report</div>
   <i class="icon-circle"></i>
 </div>
