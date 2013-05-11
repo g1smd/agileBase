@@ -459,6 +459,10 @@ function dataStreamFocus() {
 	$(".tile.large .report_data_row").mouseenter(
 			function() {
 				var row = $(this);
+				if(row.closest(".tile").hasClass("focusRegistered")) {
+					return;
+				}
+				row.closest(".tile").addClass("focusRegistered");
 				var focusTile = $(".tile[data-type=focus]");
 				var internalTableName = false;
 				var internalReportName = false;
@@ -490,8 +494,12 @@ function dataStreamFocus() {
 			});
 	$(".tile.large .report_data_row").click(
 			function(event) {
-				event.stopPropagation();
 				var container = $(this).closest(".content");
+				if(container.closest(".tile").hasClass("focusRegistered")) {
+					return;
+				}
+				container.closest(".tile").addClass("focusRegistered");
+				event.stopPropagation();
 				var internalTableName = false;
 				if (this.hasAttribute("data-internaltablename")) {
 					internalTableName = $(this).attr("data-internaltablename");
