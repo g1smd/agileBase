@@ -873,8 +873,10 @@ function backHome() {
 	}
 	// Reload recent comments, in case any have been added
 	console.log("Reloading comment stream");
+	var internalTileName = $(".tile.comment_stream").attr("data-internaltilename");
 	$(".tile.comment_stream .content").load("AppController.servlet", {
 		"return": "s/tiles/comment_stream",
+		set_tile: internalTileName
 	}, function() {
 		console.log("Comments reloaded");
 		$(".tile.comment_stream").find(".content").removeClass("notfocus");
