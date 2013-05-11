@@ -438,10 +438,12 @@ function calendarFocus() {
 		var internalTableName = event.attr("data-internaltablename");
 		var internalReportName = event.attr("data-internalreportname");
 		var rowId = event.attr("data-rowid");
+		var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
 		focusTile.find(".content").load("AppController.servlet", {
 			"return" : "s/tiles/focus/focus",
 			set_table : internalTableName,
 			set_report : internalReportName,
+			set_tile: internalTileName,
 			set_custom_integer : true,
 			integerkey : "focus_row_id",
 			customintegervalue : rowId
@@ -462,6 +464,7 @@ function dataStreamFocus() {
 				var internalReportName = false;
 				if (this.hasAttribute("data-internaltablename")) {
 				  internalTableName = $(this).attr("data-internaltablename");
+				  internalReportName = $(this).attr("data-internalreportname");
 				} else {
 				  internalTableName = $(this).closest(".tile").attr(
 						"data-internaltablename");
@@ -469,16 +472,16 @@ function dataStreamFocus() {
 						"data-internalreportname");
 				}
 				var rowId = $(this).attr("data-rowid");
+				var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
 				var options = {
-						"return" : "s/tiles/focus/focus",
-						set_table : internalTableName,
-						set_custom_integer : true,
-						integerkey : "focus_row_id",
-						customintegervalue : rowId
-					};
-				if (internalReportName) {
-					options["set_report"] = internalReportName;
-				}
+					"return" : "s/tiles/focus/focus",
+					set_table : internalTableName,
+					set_report: internalReportName,
+					set_tile: internalTileName,
+					set_custom_integer : true,
+					integerkey : "focus_row_id",
+					customintegervalue : rowId
+				};
 				focusTile.find(".content").load("AppController.servlet", options, function() {
 					var rowTitle = row.find(".row_title").text();
 					focusTile.find(".title").text(rowTitle);
