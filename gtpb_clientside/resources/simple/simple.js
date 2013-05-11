@@ -456,13 +456,10 @@ function calendarFocus() {
 }
 
 function dataStreamFocus() {
-	$(".tile.large .report_data_row").mouseenter(
+	$(".tile.large .report_data_row").not(".focusRegistered").mouseenter(
 			function() {
 				var row = $(this);
-				if(row.closest(".tile").hasClass("focusRegistered")) {
-					return;
-				}
-				row.closest(".tile").addClass("focusRegistered");
+				row.addClass("focusRegistered");
 				var focusTile = $(".tile[data-type=focus]");
 				var internalTableName = false;
 				var internalReportName = false;
@@ -492,12 +489,10 @@ function dataStreamFocus() {
 					focusEvents();
 				});
 			});
-	$(".tile.large .report_data_row").click(
+	$(".tile.large .report_data_row").not("focusClickRegistered").click(
 			function(event) {
+				$(this).addClass("focusClickRegistered");
 				var container = $(this).closest(".content");
-				if(container.closest(".tile").hasClass("focusRegistered")) {
-					return;
-				}
 				container.closest(".tile").addClass("focusRegistered");
 				event.stopPropagation();
 				var internalTableName = false;
