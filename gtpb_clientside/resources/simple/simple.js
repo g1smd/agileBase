@@ -872,9 +872,11 @@ function backHome() {
 		});
 	}
 	// Reload recent comments, in case any have been added
+	console.log("Reloading comment stream");
 	$(".tile.comment_stream .content").load("appController.servlet", {
 		"return": "s/tiles/comment_stream",
 	}, function() {
+		console.log("Comments reloaded");
 		$(".tile.comment_stream").find(".content").removeClass("notfocus");
 	});
 }
