@@ -488,7 +488,7 @@ function dataStreamFocus() {
 					focusEvents();
 				});
 			});
-	$(".tile.data_stream .report_data_row").click(
+	$(".tile.large .report_data_row").click(
 			function(event) {
 				event.stopPropagation();
 				var container = $(this).closest(".content");

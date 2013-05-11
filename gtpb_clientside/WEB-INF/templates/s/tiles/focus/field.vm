@@ -29,7 +29,7 @@
 #else
   #set($rowIdUse = $rowId)
 #end
-#if($tile.getTileType().name() != "COMMENT_STREAM"))
+#if($tile.getTileType().name() != "COMMENT_STREAM")
   ## Don't show comments in focus if we're alread in the comment stream tile
   #set($fieldComments = $view.getComments($field, $rowIdUse))
   #if ($fieldComments.size() > 0)
