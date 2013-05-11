@@ -492,8 +492,13 @@ function dataStreamFocus() {
 			function(event) {
 				event.stopPropagation();
 				var container = $(this).closest(".content");
-				var internalTableName = $(this).closest(".tile").attr(
-						"data-internaltablename");
+				var internalTableName = false;
+				if (this.hasAttribute("data-internaltablename")) {
+					internalTableName = $(this).attr("data-internaltablename");
+				} else {
+					internalTableName = $(this).closest(".tile").attr(
+					"data-internaltablename");
+				}
 				var rowId = $(this).attr("data-rowid");
 				loadEdit(container, internalTableName, rowId);
 			});
