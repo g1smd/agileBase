@@ -88,11 +88,11 @@
   <div class="content"></div>
 </div>
 <div class="sideAction backHome" title="home">
-  <div class="explainer notfocus">back home</div>
+  ##<div class="explainer notfocus">back home</div>
   <i class="icon-chevron-left"></i>
 </div>
 <div class="sideAction print" title="print or generate report">
-  <div class="explainer notfocus">print</div>
+  ##<div class="explainer notfocus">print</div>
   <i class="icon-print"></i>
 </div>
 <div class="sideAction removeTile" title="remove tile">
@@ -102,15 +102,15 @@
 ##  <div class="explainer right notfocus">back to list</div>
 ##  <i class="icon-ok-sign"></i>
 ##</div>
-<div class="sideAction newRecord" title="add new item">
+<div class="sideAction newRecord">
   <div class="explainer notfocus">new item</div>
   <i class="icon-plus-sign"></i>
 </div>
-<div class="sideAction cloneRecord" title="copy this item">
+<div class="sideAction cloneRecord">
   <div class="explainer notfocus">copy item</div>
   <i class="icon-copy"></i>
 </div>
-<div class="sideAction removeRecord" title="delete this record">
+<div class="sideAction removeRecord">
   <div class="explainer notfocus">delete item</div>
   <i class="icon-minus-sign"></i>
 </div>

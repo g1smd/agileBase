@@ -826,11 +826,11 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("871", "Non-geographic (Service Charge up to 13p/min)");
 			this.areaCodes.put("872", "Non-geographic (Service Charge up to 13p/min)");
 			this.areaCodes.put("873", "Non-geographic (Service Charge up to 13p/min)");
-			this.areaCodes.put("90", "Premium Rate Services (Service Charge up to £3/min)");
-			this.areaCodes.put("908", "Premium Rate Adult Services (Service Charge up to £3/min)");
-			this.areaCodes.put("909", "Premium Rate Adult Services (Service Charge up to £3/min)");
-			this.areaCodes.put("91", "Premium Rate Services (Service Charge up to £3/min)");
-			this.areaCodes.put("98", "Premium Rate Adult Services (Service Charge up to £3/min)");
+			this.areaCodes.put("90", "Premium Rate Services (Service Charge up to &pound;3/min)");
+			this.areaCodes.put("908", "Premium Rate Adult Services (Service Charge up to &pound;3/min)");
+			this.areaCodes.put("909", "Premium Rate Adult Services (Service Charge up to &pound;3/min)");
+			this.areaCodes.put("91", "Premium Rate Services (Service Charge up to &pound;3/min)");
+			this.areaCodes.put("98", "Premium Rate Adult Services (Service Charge up to &pound;3/min)");
 		}
 		phoneNumber = phoneNumber.replaceAll("[\\(\\)\\s]", "");
 		phoneNumber = phoneNumber.replaceAll("(?:(?:0(?:0|11)\\s?|\\+)4\\s?4)?0?([1-9]\\d+)[x\\#]?.*",
