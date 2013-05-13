@@ -102,7 +102,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
         #set($title = "$field")
       #elseif(($fieldCategory == "CHECKBOX") && ($field.getClass().getSimpleName() != "String"))
         ## TODO: fix the fact that $field doesn't have to be an actual field object, it can be confusing
-        #set($title = "$field")
+        #set($title = "$field.getClass().getSimpleName()")  ## $field
       #end
       #set($image = false)
       #set($attachmentType = '')
