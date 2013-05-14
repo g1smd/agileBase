@@ -27,7 +27,7 @@
 #foreach($role in $view.adminGetRoles())
   ## item to display on screen for this role - the row array is only one item long because we're only displaying one thing - role name
   #set($row=[$role.getRoleName()])
-  #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_role=$role.getInternalRoleName()'")
+  #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&amp;set_role=$role.getInternalRoleName()'")
   ## #set($click="return=$return&set_role=$role.getInternalRoleName()")
   #set($uniqueid=$role.getInternalRoleName())
   #set($success=$data.add([$row,$click,$uniqueid,'',false]))
