@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -34,54 +34,54 @@
 			-ms-box-sizing: border-box;
 			box-sizing: border-box;
 		  }
-	
-	      html, body { 
+
+	      html, body {
 	        /* font-family: "Arial", sans-serif;  */
-		    color: black; 
-		    font-size: 11pt; 
-		    margin:0; 
+		    color: black;
+		    font-size: 11pt;
+		    margin:0;
 		    padding:0;
-		    height:100% 
+		    height:100%
 		  }
-		  
+
 		  body {
 		    padding-top:75px;
 		  }
-		  
-	      #toolbarDiv { 
+
+	      #toolbarDiv {
 	        height:72px;
 	        top:0;
-	        padding-left:20px; 
-			padding-top:7px; 
+	        padding-left:20px;
+			padding-top:7px;
 			border-bottom:5px solid #009FE3;
 	        z-index:1;
-	        background-color:#E7F5F9; 
-	        position:absolute; 
-	        left:0px; 
-	        width:100%; 
-        	overflow:hidden; 
-	      }   
-								      
+	        background-color:#E7F5F9;
+	        position:absolute;
+	        left:0px;
+	        width:100%;
+        	overflow:hidden;
+	      }
+
 	      iframe#wrapper {
 	        height:100%;
 	        width:100%;
 	        border:0;
-	      } 
-	      			  
+	      }
+
 		  button.gtpb img {
 			display:block;
 		  }
 	    </style>
-	    
+
 	    <!--[if IE 7]>
 		    <style>
 				#toolbarDiv {
 					height: 57px;
 				}
-				
+
 		    </style>
 		<![endif]-->
-	
+
 	<title>$module - $report</title>
 	<script src="resources/jquery.js"></script>
     <script src="resources/wait/request_setFilter.js"></script>
@@ -94,12 +94,12 @@
         oIframe.contentWindow.markAsDraft(bMark);
         bIsDraft=bMark;
       }
-    
+
       function fCreateToolbar() {
         function fClose() {
           window.close();
         }
-        
+
 		function fSelectPrintoutType() {
 		  var printoutType = jQuery(this).val();
 		  var jqIframe = jQuery("iframe#wrapper");
@@ -111,19 +111,19 @@
         jqIframe.attr('src','AppController.servlet?return=' + printoutType);
       }
 		}
-		
+
         function fPrint() {
           function fDoPrint(sResponseText,sResponseXML) {
             try {
               // only allow changes from draft to non-draft
               if(sResponseXML.getElementsByTagName('record_lock_attempt')[0].firstChild.nodeValue=='yes') oIframe.contentWindow.markAsDraft(false);
               oIframe.contentWindow.print();
-            } 
+            }
             catch(e) {
               alert('unable to print, please try again.\n'+e);
             }
           }
-          
+
           #*
                user has manage privileges | draft status  || show print dialog
               =================================================================
@@ -132,23 +132,23 @@
                          X                |       0       ||        0
               -----------------------------------------------------------------
                          1                |       1       ||        1
-                         
+
               => show print dialog = user has manage privileges.draft status
-          
+
           *#
-		  
+
           #if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable())) ## the user has permission to lock records
             if(oIframe.contentWindow.isDraft) { //show the wizard to see if any records should be locked
               document.body.removeAttribute('printStatusSet'); // the dialog might change the print status
               fShowModalDialog('gui/printouts/pane2_printout_wizard', 'Print Wizard', fDoPrint, 'ok cancel', 'width=650px; height=500px');
-            } 
+            }
             else oIframe.contentWindow.print();
-          
+
           #else ## otherwise just print
             oIframe.contentWindow.print();
-          #end    
+          #end
         }
-        
+
     function fEmail() {
       var bodyText = "";
       var jqBody = $(oIframe.contentWindow.document.getElementsByTagName('body')[0]);
@@ -159,12 +159,12 @@
       var subject = jqTitle.text();
       document.location="mailto:?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(bodyText);
     }
-    
+
     function fManage() {
       oIframe.contentWindow.document.location = "AppController.servlet?return=gui/printouts/manage";
     }
 
-      
+
         function fCreateButton(sCaption,sImg,sTooltip,fClick) {
           var oButton=document.createElement('button');
 		  $(oButton).addClass('gtpb').addClass("captioned");
@@ -172,18 +172,18 @@
 		  $(oButton).css('float','right');
           $(oButton).click(fClick);
           $(oButton).mouseout(function() {$(oButton).blur});
-          
+
           var oButtonImg=$('<i></i>');
           oButtonImg.addClass(sImg);
           $(oButton).append(oButtonImg).append("<br />");
-          
+
           oButton.appendChild(document.createTextNode(sCaption));
-          oToolbar.appendChild(oButton);          
+          oToolbar.appendChild(oButton);
         }
-		
+
 		function fCreatePrintoutSelector(sCaption,fClick) {
       oToolbar.appendChild(document.createTextNode(sCaption + ' '));
-      
+
       ## Custom printouts
       #set($company = $view.getLoggedInUser().getCompany())
       #set($internalCompanyName = $company.getInternalCompanyName())
@@ -205,7 +205,7 @@
         oToolbar.appendChild(oRadio);
         oToolbar.appendChild(document.createTextNode(" $templateName.replace('_',' ') "));
       #end
-      
+
       ## Pane 3 printout
 		  var oRadio = document.createElement('input');
 		  oRadio.setAttribute('type','radio');
@@ -218,7 +218,7 @@
       $(oRadio).click(fClick);
 		  oToolbar.appendChild(oRadio);
 		  oToolbar.appendChild(document.createTextNode(' individual record '));
-      
+
       ## Pane 2 printout
       oRadio = document.createElement('input');
       oRadio.setAttribute('type','radio');
@@ -231,21 +231,21 @@
       oToolbar.appendChild(oRadio);
       oToolbar.appendChild(document.createTextNode(' all report rows '));
 		}
-        
+
         var oToolbar=document.createElement('div');
         oToolbar.setAttribute('id','toolbarDiv');
-        
+
         ## First button will be at the right end of the toolbar, successive moving left
         fCreateButton('Close','icon-remove','Close the print preview',fClose);
         fCreateButton('Manage','icon-wrench','Upload and delete custom templates',fManage);
         fCreateButton('Print','icon-print','Print this content',fPrint);
         fCreateButton('Email','icon-envelope','Email this content',fEmail);
         fCreatePrintoutSelector('Print out:',fSelectPrintoutType);
-		
+
         document.body.appendChild(oToolbar);
         return oToolbar;
       }
-      
+
       function fCreateIframe() {
         var oIframe=document.createElement('iframe');
         oIframe.setAttribute('id','wrapper');
@@ -257,11 +257,10 @@
         document.body.appendChild(oIframe);
         return oIframe;
       }
-      
+
       oToolbar=fCreateToolbar();
       oIframe=fCreateIframe();
       $("#toolbarDiv input[type=radio]").first().click();
     </script>
   </body>
 </html>
-  

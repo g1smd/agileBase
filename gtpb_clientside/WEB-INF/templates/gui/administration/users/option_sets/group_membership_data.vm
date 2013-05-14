@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -21,10 +21,10 @@
   <tr>
     <td>$role.getRoleName()</td>
     <td>
-      <input type=checkbox 
-       name="$role.getRoleName()" 
-       fn_checked="assign_user_to_role" 
-       fn_unchecked="remove_user_from_role" 
+      <input type=checkbox
+       name="$role.getRoleName()"
+       fn_checked="assign_user_to_role"
+       fn_unchecked="remove_user_from_role"
        #if($userRoles.contains($role))checked#end
        gtpb_internalrolename="$role.getInternalRoleName()"
        gtpb_internalusername="$sessionUser.getInternalUserName()"

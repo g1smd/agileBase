@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -27,15 +27,15 @@
 			box-sizing: border-box;
 		  }
     </style>
-	
+
 	<!--[if IE 7]>
     	<style>
       		#colsWrapper {
       			margin-top: 69px;
       		}
-    	</style>		
-	<![endif]-->	
-	
+    	</style>
+	<![endif]-->
+
   </head>
 
 ##  #if ($viewTools.getBrowser() == "Internet Explorer")

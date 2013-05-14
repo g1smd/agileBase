@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@
   <td colspan="$numCols">
     #if(($numRows == $sessionData.getReportRowLimit()) && ($totalRows > $numRows))
       $numRows records out of #if($totalRowsIsEstimate)approximately#end $totalRows are displayed.<br>
-      view 
+      view
       #set($viewMoreAmount = $sessionData.getReportRowLimit())
       ## workaround for not having a while loop in Velocity
       #foreach($tmp in [1,2,3,4,5,6,7,8,9,10])

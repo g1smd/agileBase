@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -53,13 +53,13 @@
     #if( ($headingTables.contains($table) && $field.isPrimaryKey()) || (($field.getInternalFieldName() == "sfmak3xhc4p2mczux") && ($rowCount > 2)))
       #if($cell != $lastValues.get($cellNumber))
         #set($headingLevel = $headingMap.get($table))
-        <tr name="$thisUniqueId" 
+        <tr name="$thisUniqueId"
           #if($row.size()>=6 && $row.get(5))
             #foreach($expando in $row.get(5))
               $expando.get(0)="$expando.get(1)"
             #end
-          #end 
-          onclick="$row.get(1)" 
+          #end
+          onclick="$row.get(1)"
           forcehighlight="true"
           class="h${headingLevel}">
           #if($headingLevel > 1) ## Indent level 1 headings

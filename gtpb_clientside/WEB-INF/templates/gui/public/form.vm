@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ Please correct the error below and try entering the data again
 #end
 <form class="agilebase" name="agilebase_form" method="post" action="$viewTools.getAppUrl()">
   <input type="hidden" name="save_new_record" value="true">
-  <input type="hidden" name="t" value="$table.getInternalTableName()"> 
+  <input type="hidden" name="t" value="$table.getInternalTableName()">
   <input type="hidden" name="c" value="$company.getInternalCompanyName()">
   #if($formType == "table")
     <table cellspacing="0" cellpadding="0" border="0" id="agilebase_form_table">
@@ -56,7 +56,7 @@ Please correct the error below and try entering the data again
 		#end
 	#end
   #if($formType == "table")
-    </table>	
+    </table>
     <button type="submit" value="Submit" class="btn" >submit</button
   #else
       <li>

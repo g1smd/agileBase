@@ -14,5 +14,5 @@ $view.getException().getMessage()
       ]]>
     </message>
   </errorData>
-#else 
-ok#end</wizardResult> 
+#else
+ok#end</wizardResult>

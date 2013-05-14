@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@
     #set($table = $reportField.getReportFieldIsFrom().getParentTable())
   #else
     #set($table = $reportField.getBaseField().getTableContainingField())
-  #end  
+  #end
   #set($fieldInHeading = false)
   #if($reportField.getClass().getSimpleName() == "ReportCalcFieldDefn")
     #if($headingCalcs.contains($reportField))

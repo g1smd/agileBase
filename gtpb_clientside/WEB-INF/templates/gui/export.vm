@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 <html>
 <head>
   <title>AgileBase - export $report</title>
-  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />      
+  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
   <script src="resources/jquery.js" language="Javascript"></script>
   <script language="Javascript">
     $(document).ready(function() {

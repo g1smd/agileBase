@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -17,5 +17,5 @@
 ##
 #if(!$top_level_xml_element_set)<request>#end
   #parse('gui/customisations/wizard_result.vm')
-  <record_lock_attempt>$sessionData.getCustomString('record_lock_attempted')</record_lock_attempt>  
+  <record_lock_attempt>$sessionData.getCustomString('record_lock_attempted')</record_lock_attempt>
 #if(!$top_level_xml_element_set)</request>#end

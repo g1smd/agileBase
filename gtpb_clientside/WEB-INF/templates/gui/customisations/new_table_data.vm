@@ -13,26 +13,26 @@
     border-bottom:1px solid #cecece;
     border-top:1px solid #cecece;
   }
-  
+
   div#_md_blank div#_md_dialog div#_md_content table#reportData td i {
     font-size:8pt;
   }
-  
+
   div#_md_blank div#_md_dialog div#_md_content table#reportData td input[type="text"] {
     width:300px;
   }
-  
+
   div#_md_blank div#_md_dialog div#_md_content table#reportData td input[isComboComponent] {
     width:auto!important;
   }
-  
+
 </style>
 
 <form name="data_form" method="post" action="AppController.servlet" onsubmit="return false">
   <input type="hidden" name="save_new_record" value="true">
   #if($view.getWhetherExceptionOccurred())
     #parse('report_error.vm')
-  #end	
+  #end
   ## copied from gui/reports_and_tables/edit.vm
   <table cellspacing="0" cellpadding="0" border="0" id="reportData">
     <tr class="first">
@@ -64,11 +64,11 @@
 	  <td>&nbsp;</td>
 	  <td class="trailing">&nbsp;</td>
 	</tr>
-  </table>				
+  </table>
 </form>
-	
+
 #else ## user doesn't have edit privileges
   Error:<p>
-  <img src="resources/icons/warning.png" style="align:left; vertical-align:middle" /> 
+  <img src="resources/icons/warning.png" style="align:left; vertical-align:middle" />
   You haven't got sufficient privileges to create/edit a <i>$sessionTable</i> record.
 #end
