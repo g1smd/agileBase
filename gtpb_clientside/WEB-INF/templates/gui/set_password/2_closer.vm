@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -20,15 +20,15 @@
 
 #if(!$top_level_xml_element_set)<request>#end
   <caption>Add Organisation - please correct your data</caption>
-  <okTemplate>gui/customisations/$companyName/actions/add_address_data/add_organisation/4_closer</okTemplate>  
-  #parse('gui/customisations/wizard_result.vm') 
+  <okTemplate>gui/customisations/$companyName/actions/add_address_data/add_organisation/4_closer</okTemplate>
+  #parse('gui/customisations/wizard_result.vm')
   <htmlContent><![CDATA[
      #parse('gui/customisations/new_table_data.vm')
      ## set the session table back to organisations so that new data will be shown when P1 is refreshed
      ## this will only happen if no exception occurs
      <form>
       <input type="hidden" name="postset_table" value="a2e9a7e9e257153de" />
-    </form>               
+    </form>
     ]]>
   </htmlContent>
 #if(!$top_level_xml_element_set)</request>#end

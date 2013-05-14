@@ -9,14 +9,14 @@
     <input style="float:right; display:none;" id="rangeEnd" />
   </div>
   <div id="dateRangePresets">
-    <button>today</button> 
-    <button>yesterday</button> 
-    <button>this week</button> 
-    <button>last week</button> 
-    <button>this month</button> 
-    <button>last month</button> 
-    <button>this year</button> 
-    <button>last year</button> 
+    <button>today</button>
+    <button>yesterday</button>
+    <button>this week</button>
+    <button>last week</button>
+    <button>this month</button>
+    <button>last month</button>
+    <button>this year</button>
+    <button>last year</button>
     <button>all</button>
     <i class="icon-plus-sign zoom in"></i>  <i class="icon-minus-sign zoom out"></i>
   </div>

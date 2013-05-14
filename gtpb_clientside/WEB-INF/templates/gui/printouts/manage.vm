@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@
 	  #end
 	  <p>
   #end
-Upload a new template for $report: 
+Upload a new template for $report:
 <form class="fileUploader" method="POST" action="AppController.servlet">
 <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" />
 <input type="hidden" name="upload_return" value="gui/printouts/manage" />

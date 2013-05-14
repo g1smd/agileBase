@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -16,13 +16,13 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <tr name="$thisUniqueId"
-  #if($headingRow) class="rowb sectioned_detail_heading" #else class="sectioned_detail_row" #end 
+  #if($headingRow) class="rowb sectioned_detail_heading" #else class="sectioned_detail_row" #end
   #if($row.size()>=6 && $row.get(5))
     #foreach($expando in $row.get(5))
       $expando.get(0)="$expando.get(1)"
     #end
-  #end 
-  onclick="$row.get(1)" 
+  #end
+  onclick="$row.get(1)"
   forcehighlight="true">
   <td class="leading">&nbsp;</td>
   #set($numCells = $thisValues.size())

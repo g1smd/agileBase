@@ -20,10 +20,10 @@ var tipCache = [];
 
 jQuery(document).ready(function(){
 	//Maximize window
-	if (window.screen) { 
-		window.moveTo(0,0); 
-		window.outerHeight = screen.availHeight; 
-		window.outerWidth = screen.availWidth; 
+	if (window.screen) {
+		window.moveTo(0,0);
+		window.outerHeight = screen.availHeight;
+		window.outerWidth = screen.availWidth;
 	}
 	displayTreemap();
 	// Our customisation to make it look more as we want it
@@ -53,8 +53,8 @@ function displayTreemap() {
 	}
 
     var json = $treeMapJSON;
-	\$jit.TM.Squarified.implement({  
-    'onLeftClick': function(elem) {  
+	\$jit.TM.Squarified.implement({
+    'onLeftClick': function(elem) {
         var internalReportName = jQuery(elem).parent().attr("id");
 		// if a report node
 		if (internalReportName.substring(0,2) == "r_") {
@@ -83,37 +83,37 @@ function displayTreemap() {
 		this.out(elem);
 		growLeaves();
 	}
-	});  
+	});
 
-    var tm = new \$jit.TM.Squarified({  
-                //Where to inject the Treemap  
+    var tm = new \$jit.TM.Squarified({
+                //Where to inject the Treemap
                 rootId: 'infovis',
 				offset: 2,
 				selectPathOnHover: true,
 				addLeftClickHandler: true,
 				addRightClickHandler: true,
-				Color: {  
-        			//Allow coloring  
-        			allow: true,  
-        			//Select a value range for the $color  
-    			    //property. Defaults to -100 and 100.  
-     			    minValue: -750,  
-     			    maxValue: 750,  
-        			//Set color range. Defaults to reddish and  
-        			//greenish. It takes an array of three  
-        			//integers as R, G and B values.  
+				Color: {
+        			//Allow coloring
+        			allow: true,
+        			//Select a value range for the $color
+    			    //property. Defaults to -100 and 100.
+     			    minValue: -750,
+     			    maxValue: 750,
+        			//Set color range. Defaults to reddish and
+        			//greenish. It takes an array of three
+        			//integers as R, G and B values.
         			//maxColorValue: [0, 255, 50],
         			maxColorValue: [255, 50, 50],
 					minColorValue: [50, 150, 255]
      			},
-				Tips: {  
-       				allow: true,  
-       				//add positioning offsets  
-       				offsetX: 20,  
+				Tips: {
+       				allow: true,
+       				//add positioning offsets
+       				offsetX: 20,
        				offsetY: 20,
-       				//implement the onShow method to  
-       				//add content to the tooltip when a node  
-       				//is hovered  
+       				//implement the onShow method to
+       				//add content to the tooltip when a node
+       				//is hovered
        				onShow: function(tip, node, isLeaf, domElement) {
 						if (isLeaf) {
 							var jqTip = jQuery(tip);
@@ -144,10 +144,10 @@ function displayTreemap() {
 						}
        				}
 				}
-             });  
+             });
     tm.loadJSON(json);
 }
-	
+
 	// 'grow' leaves to remove the gaps between them and make groups of leaves look more contiguous
 function growLeaves() {
 	// only grow leaves when viewing the entire treemap
@@ -187,7 +187,7 @@ function growLeaves() {
 </script>
 
 <div id="dashboard">
-<div id="infovis" /> 
+<div id="infovis" />
 </div>
 #else ##not valid JSON
 <div class="warningmessage">

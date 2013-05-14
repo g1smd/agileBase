@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -17,15 +17,15 @@
 ##
 <request>
   #parse('gui/customisations/wizard_result.vm')
-  <okTemplate>gui/printouts/pane2_printout_wizard_ok</okTemplate>  
-  <htmlContent><![CDATA[        
+  <okTemplate>gui/printouts/pane2_printout_wizard_ok</okTemplate>
+  <htmlContent><![CDATA[
         <form style="padding:10px;">
           <style>
             table#_md_lockBeforePrint {
               align:center;
               margin-top:20px;
             }
-            
+
             table#_md_lockBeforePrint td {
               vertical-align:top;
               padding:10px;
@@ -41,27 +41,27 @@
               <td style="padding-right:60px">
                 <label for="recordlock_no">
                   <img src="resources/recordLocking/print_draft.png">
-                </label>     
-              </td> 
+                </label>
+              </td>
                <td>&nbsp;</td>
               <td style="padding-right:60px">
                 <label for="recordlock_yes">
                   <img src="resources/recordLocking/print_locked.png">
-                </label>     
+                </label>
               </td>
 		    </tr>
             <tr>
 	              <td>
 	                <input type="radio" name="recordlock" id="recordlock_no" value="no" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="no" checked>
               </td>
-              <td style="padding-right:60px">  
+              <td style="padding-right:60px">
                 <label for="recordlock_no">No -<br />
-                  <small>print the report as a draft</label>          
-              </td>            
+                  <small>print the report as a draft</label>
+              </td>
               <td>
 	                <input type="radio" name="recordlock" id="recordlock_yes" value="yes" gtpb_lock_records="true" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="yes">
               </td>
-              <td style="padding-right:60px">  
+              <td style="padding-right:60px">
                 <label for="recordlock_yes">
                   Yes -<br />
                   <small>lock the records and print<br />a final copy</small></label>
@@ -70,5 +70,5 @@
           </table>
         </form>
     ]]>
-  </htmlContent>  
+  </htmlContent>
 </request>

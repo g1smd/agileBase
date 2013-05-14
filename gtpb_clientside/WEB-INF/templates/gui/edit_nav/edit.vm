@@ -26,11 +26,11 @@
 #end
 #set($referencedTables = $referencedTableReports.keySet())
 <div class="breadcrumb_title">edit $sessionTable.getSingularName()</div>
-<div class="presentation"> 
-  <div id="presentation-counter"></div> 
+<div class="presentation">
+  <div id="presentation-counter"></div>
   <div class="slides">
-    <div class="slide"> 
-      <section class="middle"> 
+    <div class="slide">
+      <section class="middle">
         #if(($relationFields.size() > 0) || ($dependentTables.size() > 0) || ($crossReferencedFields.size() > 0))
           #set($dependenciesExist = true)
         #else
@@ -98,7 +98,7 @@
           #end
         </div>
         #end ## end if there are any dependencies of any type
-      </section> 
+      </section>
       <div class="slide_controls">
         <div class="button_group">
           <button name="new" id="control_new" internaltablename="$internalTableName"><img src="resources/toolbar/new.png" /> new</button>
@@ -109,6 +109,6 @@
           <button name="print" id="control_print" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/print_only.png" /> print</button>
         </div>
       </div>
-    </div> <!-- slide --> 
-  </div> <!-- slides --> 
-</div> <!-- presentation --> 
+    </div> <!-- slide -->
+  </div> <!-- slides -->
+</div> <!-- presentation -->

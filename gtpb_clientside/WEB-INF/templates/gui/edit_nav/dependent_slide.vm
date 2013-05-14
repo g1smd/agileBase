@@ -12,7 +12,7 @@
   #end
   <div class="slide reportDataView" id="$slide_id">
     <img class="rewind" src="resources/edit_nav/rewind.png" />
-    <section class="middle"> 
+    <section class="middle">
       <div class="title">
       ##$dependentTable.getSimpleName()
       ##<select name="$dependentTable.getInternalTableName()_select">
