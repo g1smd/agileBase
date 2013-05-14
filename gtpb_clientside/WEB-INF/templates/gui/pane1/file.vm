@@ -32,7 +32,7 @@
   </div>
 #elseif($field.getAttachmentType() == "PROFILE_PHOTO")
   <div class="appelement image profile_photo">
-    <img src="resources/icons/file_placeholders/profile_photo.png"/>
+    <img src="resources/icons/file_placeholders/profile_photo.png" />
   </div>
 #elseif($downloadUrl.endsWith("pdf"))
   #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
@@ -40,5 +40,5 @@
     <a href="$downloadUrl" class="download" target="_blank"><img src="$previewUrl" /></a>
   </div>
 #elseif($fieldValue != "")
- <a href="$downloadUrl" class="download" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue</a>
+ <a href="$downloadUrl" class="download" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png" /> $fieldValue</a>
 #end
