@@ -19,8 +19,22 @@
 #set($colour = $tile.getColour())
 #set($comments = $view.getCompanyComments(10))
 #foreach($comment in $comments)
+  #set($commentTable = $comment.getTable())
+  #set($commentReport = false)
+  #set($viewableReports = $view.getViewableReports($commentTable))
+  #if($viewableReports.size() > 1)
+    ## Use the first report that isn't the default report for the icon
+    #set($success = $viewableReports.remove($viewableReports.first()))
+    #foreach($viewableReport in $viewableReports)
+      #if($viewableReport.getModule() && (!$viewableReport.getReportName().contains("dbvcrit")) && (!$viewableReport.getReportName().contains("dbvcalc")))
+        #set($commentReport = $viewableReport)
+        #break
+      #end
+    #end
+  #end
   #set($thisUniqueId = $comment.getRowId())
-  <div class="report_data_row comment" data-rowid="$thisUniqueId">
+  ## Include removeAdded class to stop the 'remove comment' Javascript from being attached
+  <div class="report_data_row comment removeAdded" data-rowid="$thisUniqueId" data-internaltablename="$commentTable.getInternalTableName()" #if($commentReport) data-internalreportname="$commentReport.getInternalReportName()" #end>
     #set($profileImage = false)
     #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
     #if($profileImage)
@@ -29,21 +43,9 @@
       <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
     #end
     <span class="row_title ${colour}_fg">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
-    #if($comment.getTable())
-      #set($commentTable = $comment.getTable())
-      #set($viewableReports = $view.getViewableReports($commentTable))
-      #if($viewableReports.size() > 1)
-        ## Use the first report that isn't the default report for the icon
-        #set($success = $viewableReports.remove($viewableReports.first()))
-        #foreach($viewableReport in $viewableReports)
-          #if($viewableReport.getModule() && (!$viewableReport.getReportName().contains("dbvcrit")) && (!$viewableReport.getReportName().contains("dbvcalc")))
-            #set($report = $viewableReport)
-            #break
-          #end
-        #end
-        #set($icon = $report.getModule().getIconPath())
-        <i title = "$commentTable.getSingularName()" class="comment_icon ${colour}_fg $icon"></i>
-      #end
+    #if($commentReport)
+      #set($icon = $commentReport.getModule().getIconPath())
+      <i title = "$commentTable.getSingularName()" class="comment_icon ${colour}_fg $icon"></i>
     #end
   </div>
 #end

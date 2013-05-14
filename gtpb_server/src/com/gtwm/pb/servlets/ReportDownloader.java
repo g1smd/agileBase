@@ -58,6 +58,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.TreeSet;
+
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.model.interfaces.AppUserInfo;
@@ -297,7 +299,14 @@ public final class ReportDownloader extends HttpServlet {
 			row.setHeightInPoints((short) 26);
 		}
 		int columnNum = 0;
-		Set<ReportFieldInfo> reportFields = report.getReportFields();
+		Set<ReportFieldInfo> allReportFields = report.getReportFields();
+		Set<ReportFieldInfo> reportFields = new TreeSet<ReportFieldInfo>();
+		for (ReportFieldInfo reportField : allReportFields) {
+			// For custom format reports, don't include [Auto] fields (creation timestamp etc.)
+			if ((!customFormat) || (!reportField.getBaseField().getHidden())) {
+				reportFields.add(reportField);
+			}
+		}
 		for (ReportFieldInfo reportField : reportFields) {
 			Cell cell = row.createCell(columnNum);
 			if (customFormat) {

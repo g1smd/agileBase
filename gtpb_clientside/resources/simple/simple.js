@@ -9,7 +9,7 @@ $(document).ready(function() {
 	} else {
 		tileEvents();
 		// Focus on first record
-		$(".tile.large .report_data_row:first-child").mouseenter();
+		$(".tile.large .report_data_row:first-child").first().mouseenter();
 		// If only one tile, expand it
 		if ($(".tile").not(".adder").not(".focus").size() == 1) {
 			$(".tile").not(".adder").not(".focus").click();
@@ -438,10 +438,12 @@ function calendarFocus() {
 		var internalTableName = event.attr("data-internaltablename");
 		var internalReportName = event.attr("data-internalreportname");
 		var rowId = event.attr("data-rowid");
+		var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
 		focusTile.find(".content").load("AppController.servlet", {
 			"return" : "s/tiles/focus/focus",
 			set_table : internalTableName,
 			set_report : internalReportName,
+			set_tile: internalTileName,
 			set_custom_integer : true,
 			integerkey : "focus_row_id",
 			customintegervalue : rowId
@@ -454,34 +456,52 @@ function calendarFocus() {
 }
 
 function dataStreamFocus() {
-	$(".tile.data_stream .report_data_row").mouseenter(
+	$(".tile.large .report_data_row").not(".focusRegistered").mouseenter(
 			function() {
 				var row = $(this);
+				row.addClass("focusRegistered");
 				var focusTile = $(".tile[data-type=focus]");
-				var internalTableName = $(this).closest(".tile").attr(
+				var internalTableName = false;
+				var internalReportName = false;
+				if (this.hasAttribute("data-internaltablename")) {
+				  internalTableName = $(this).attr("data-internaltablename");
+				  internalReportName = $(this).attr("data-internalreportname");
+				} else {
+				  internalTableName = $(this).closest(".tile").attr(
 						"data-internaltablename");
-				var internalReportName = $(this).closest(".tile").attr(
+				  internalReportName = $(this).closest(".tile").attr(
 						"data-internalreportname");
+				}
 				var rowId = $(this).attr("data-rowid");
-				focusTile.find(".content").load("AppController.servlet", {
+				var internalTileName = $(this).closest(".tile").attr("data-internaltilename");
+				var options = {
 					"return" : "s/tiles/focus/focus",
 					set_table : internalTableName,
-					set_report : internalReportName,
+					set_report: internalReportName,
+					set_tile: internalTileName,
 					set_custom_integer : true,
 					integerkey : "focus_row_id",
 					customintegervalue : rowId
-				}, function() {
+				};
+				focusTile.find(".content").load("AppController.servlet", options, function() {
 					var rowTitle = row.find(".row_title").text();
 					focusTile.find(".title").text(rowTitle);
 					focusEvents();
 				});
 			});
-	$(".tile.data_stream .report_data_row").click(
+	$(".tile.large .report_data_row").not("focusClickRegistered").click(
 			function(event) {
-				event.stopPropagation();
+				$(this).addClass("focusClickRegistered");
 				var container = $(this).closest(".content");
-				var internalTableName = $(this).closest(".tile").attr(
-						"data-internaltablename");
+				container.closest(".tile").addClass("focusRegistered");
+				event.stopPropagation();
+				var internalTableName = false;
+				if (this.hasAttribute("data-internaltablename")) {
+					internalTableName = $(this).attr("data-internaltablename");
+				} else {
+					internalTableName = $(this).closest(".tile").attr(
+					"data-internaltablename");
+				}
 				var rowId = $(this).attr("data-rowid");
 				loadEdit(container, internalTableName, rowId);
 			});
@@ -855,10 +875,13 @@ function backHome() {
 		});
 	}
 	// Reload recent comments, in case any have been added
-	$(".tile.comment_stream .content").load("appController.servlet", {
+	var internalTileName = $(".tile.comment_stream").attr("data-internaltilename");
+	$(".tile.comment_stream .content").load("AppController.servlet", {
 		"return": "s/tiles/comment_stream",
+		set_tile: internalTileName
 	}, function() {
 		$(".tile.comment_stream").find(".content").removeClass("notfocus");
+		dataStreamEvents();
 	});
 }
 
