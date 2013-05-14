@@ -19,7 +19,7 @@
 <html>
 <head>
   <title>agileBase</title>
-  <script language="JavaScript">
+  <script>
     top.document.location = "AppController.servlet?return=boot";
   </script>
 </head>

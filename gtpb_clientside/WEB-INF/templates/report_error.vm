@@ -27,15 +27,15 @@
     			 height:100% }	
 </style>
 <title>agilebase error report</title>
-  	<script src="resources/jquery.js" language="Javascript"> </script>
-	<script src="resources/pane2.js" language="Javascript"> </script>
+  	<script src="resources/jquery.js"> </script>
+	<script src="resources/pane2.js"> </script>
 </head>
 <body>
 #parse("gui/error.vm")
 #set($sessionTable = $sessionData.getTable())
 #set($sessionReport = $sessionData.getReport())
 #if($sessionReport && $return)
-<script language="JavaScript">
+<script>
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())
