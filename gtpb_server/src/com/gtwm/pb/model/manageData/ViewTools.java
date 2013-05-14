@@ -1619,7 +1619,7 @@ public final class ViewTools implements ViewToolsInfo {
 		if (stringToConvert == null) {
 			return "";
 		}
-		return stringToConvert.replaceAll("\n", "<p>");
+		return "<p>" + stringToConvert.replaceAll("\n", "<p>");
 	}
 
 	public String unencodeHtml(String string) {
