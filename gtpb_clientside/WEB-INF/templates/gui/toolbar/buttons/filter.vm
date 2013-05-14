@@ -23,7 +23,7 @@
 #set($classes='toggleButton')
 #set($tooltip='Narrow down the list of records in pane 2 by searching')
 #parse('gui/resources/button.vm')
-<script language=javascript>
+<script>
 function fFilters(){
 
   function fShowFilters(oButton){  
