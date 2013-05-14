@@ -34,7 +34,7 @@
   #parse("gui/error.vm")
 #else
 <h1>Import Successful</h1>
-<script language="JavaScript">
+<script>
   top.window.location=top.window.location;
 </script>
 #end

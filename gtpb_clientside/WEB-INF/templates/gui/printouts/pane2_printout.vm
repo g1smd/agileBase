@@ -93,11 +93,11 @@
       #set($module=$sessionData.getTable().getTableName())
     #end
     <title>$module - $report</title>      
- 	<script src="resources/jquery.js" language="Javascript"></script>
-    <script language="JavaScript" src="resources/wait/request_setFilter.js"></script>
-    <script language="JavaScript" src="resources/modalFramework/modalFramework.js"></script>   
+	<script src="resources/jquery.js"></script>
+    <script src="resources/wait/request_setFilter.js"></script>
+    <script src="resources/modalFramework/modalFramework.js"></script>   
     <script type="text/javascript" src="resources/highcharts.js"></script>
-    <script language="JavaScript">
+    <script>
 	function loadDetail() {
 		$('#detail').text('loading...');
 		$('#detail').load('AppController.servlet?return=gui/printouts/detail');

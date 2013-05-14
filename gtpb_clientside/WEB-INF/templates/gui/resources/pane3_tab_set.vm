@@ -75,7 +75,7 @@
   		  });
   	  }
 		</script>
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript">
 	## Used by individual tabs
     	  function fDeleteTabularItem(oObj) {
     	    	function fParent(oObj,sTag) {
@@ -204,7 +204,7 @@
       #end
 	#end
     #if(($pane2_id) && (!$mobile_device))
-      <script language="JavaScript">
+      <script>
         if (typeof(parent.pane_2.fSetRowSelection) == "function") {
           var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
         }

@@ -55,11 +55,11 @@
 			table#reportData tbody tr.rowa:hover td,
 			table#reportData tbody tr.rowb:hover td { background-color:transparent!important }
 			
-    </style>  
-  	<script language="JavaScript" src="resources/jquery.js"> </script>
-    <SCRIPT language="Javascript" src="resources/wait/request_setFilter.js"></SCRIPT> 
-  	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>  
-  	<SCRIPT language="Javascript">
+    </style>
+  	<script src="resources/jquery.js"> </script>
+    <SCRIPT src="resources/wait/request_setFilter.js"></SCRIPT>
+  	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
+  	<SCRIPT>
 	   jQuery(document.ready(function() {
     	#if($pane2_id)
 		  parent.pane_2.fSetRowSelection('$pane2_id')
