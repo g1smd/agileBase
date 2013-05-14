@@ -62,7 +62,7 @@
         #if($sessionUser.getProfilePhoto())
           <img src="$sessionUser.getProfilePhoto()" class="edit_image" />
         #else
-          <img src="resources/icons/file_placeholders/profile_photo.png" class="edit_image" />
+          <img src="resources/icons/file_placeholders/profile_photo.png" class="edit_image" alt="" />
         #end
         <input type="file" name="profilephoto" class="submit-trigger" />
         <div class="upload_progress_container">
