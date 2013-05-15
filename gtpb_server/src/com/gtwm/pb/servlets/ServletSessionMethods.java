@@ -709,6 +709,15 @@ public final class ServletSessionMethods {
 				seconds = ServletDataMethods.getIntegerParameterValue(request,
 						internalFieldName + "_seconds");
 				if (years != null) {
+					// Turn two digit years into four digit
+					if (years < 100) {
+						int currentYear = Calendar.getInstance().get(Calendar.YEAR) - 2000;
+						if ((years - currentYear) > 50) {
+							years = years + 1900;
+						} else {
+							years = years + 2000;
+						}
+					}
 					dateFieldValue.set(Calendar.YEAR, years);
 				}
 				if (months != null) {
