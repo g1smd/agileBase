@@ -27,11 +27,12 @@
 #if(!$tableDataRow || $tableDataRow.get($field).isNull() || $globalEdit)##
   #set($days="0")##
   #set($months="0")##
-  #if($globalEdit || ($field.getDateResolution() == $CONST_YEAR) || $field.getMaxAgeYears())##
-    #set($years="")##
-  #else
-    #set($years=$calendar.get($CONST_YEAR))##
-  #end
+  #set($years = "")
+##  #if($globalEdit || ($field.getDateResolution() == $CONST_YEAR) || $field.getMaxAgeYears())##
+##    #set($years="")##
+##  #else
+##    #set($years=$calendar.get($CONST_YEAR))##
+##  #end
   #set($hours="00")##
   #set($minutes="00")##
   #set($seconds="00")##
