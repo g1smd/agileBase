@@ -129,12 +129,17 @@ body {
   font-size: 10pt;
 }
 
+.tile .fieldname {
+  height: 1.5em;
+}
+
 .tile input {
   height: auto;
 }
 
 .tile textarea {
   /* match other inputs */
+  font-size: 10pt;
   min-width: 296px;
 }
 
