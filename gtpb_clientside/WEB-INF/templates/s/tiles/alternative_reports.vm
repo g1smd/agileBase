@@ -14,11 +14,7 @@
 #end
 <div class="sideAction report report1" data-internalreportname="$report.getInternalReportName()">
   <div class="explainer right notfocus">$report</div>
-  #if($alternativeReports.size() == 0)
-    <i class="icon-ok-circle"></i>
-  #else
-    <i class="icon-circle"></i>
-  #end
+  <i class="icon-ok-circle"></i>
 </div>
 #foreach($tableReport in $alternativeReports)
   #set($tableReportName = $tableReport.getReportName())

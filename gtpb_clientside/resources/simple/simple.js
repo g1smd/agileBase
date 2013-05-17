@@ -663,7 +663,7 @@ function fAlternativeReports() {
 			tile.attr("data-internalreportname", internalReportName);
 			tileLoaded(tile, false, false);
 			$("#reportSideActions .sideAction i").removeClass().addClass("icon-circle-blank");
-			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-circle");
+			$(this).find("i").removeClass("icon-circle-blank").addClass("icon-ok-circle");
 		});
 	});
 }
