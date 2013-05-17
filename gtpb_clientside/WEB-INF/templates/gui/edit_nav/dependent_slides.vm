@@ -28,7 +28,7 @@
     #end
     #if($rowCount > 0)
       #set($report = $linkingReport)
-      #parse("gui/edit_nav/dependent_slide.vm")  
+      #parse("gui/edit_nav/dependent_slide.vm")
     #end
   #end
 #end ## end dependent tables
@@ -37,7 +37,7 @@
   #if($field.getFieldCategory() == "REFERENCED_REPORT_DATA")
     #set($report = $field.getReferencedReport())
     #set($dependentTable = $report.getParentTable())
-    #parse("gui/edit_nav/dependent_slide.vm")  
+    #parse("gui/edit_nav/dependent_slide.vm")
   #end
 #end
 

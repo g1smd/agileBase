@@ -1,7 +1,7 @@
 <html>
 <head>
-<script src="resources/jquery.js" language="Javascript"></script>
-<script language="JavaScript">
+<script src="resources/jquery.js"></script>
+<script>
 var zoomPercent = 100;
 
 function zoom(zoomIn) {

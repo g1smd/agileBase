@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -75,10 +75,10 @@
 		      #end
 		    </div></td>
         #end
-      #end    
+      #end
     #end
   #end
-  <td class=trailing><div>&nbsp;</div></td>      
+  <td class=trailing><div>&nbsp;</div></td>
 </tr>
 <tr id="fieldFilterControls" style="display:none">
   <td class="leading"><div>&nbsp;</div></td>
@@ -86,5 +86,5 @@
     <div id="dateControlWrapper">
     </div>
   </td>
-  <td class=trailing><div>&nbsp;</div></td>      
+  <td class=trailing><div>&nbsp;</div></td>
 </tr>

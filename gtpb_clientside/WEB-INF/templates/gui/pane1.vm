@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -52,7 +52,7 @@
 		waitImage: false,
 		width: 229,
 		dropShadow: false,
-		hoverIntent: {  
+		hoverIntent: {
 		  interval: 500
 		}
 	  });
@@ -71,18 +71,18 @@
     <div id="header">
 	  #set($browser = $viewTools.getBrowser())
 	  #if($browser != "iPod/iPhone")
-      <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png"></a>
+      <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png" alt=""></a>
       #end
 	  <div id="links" style="left:0px">
 		#if($browser == "iPod/iPhone")
         <div class="button" style="left: 20px; width: 50px;">
             <a href="?return=gui/customisations/common/dashboard/dashboard">
-        	  <img src="resources/toolbar/dashboard.png" /> 
+        	  <img src="resources/toolbar/dashboard.png" />
         	</a>
         </div>
         <div class="button" style="left: 100px; width: 50px;">
             <a href="?return=gui/calendar/calendar">
-        	  <img src="resources/toolbar/calendar.png" /> 
+        	  <img src="resources/toolbar/calendar.png" />
         	</a>
         </div>
 		#else
@@ -136,7 +136,7 @@
           </li>
 	   ##end
 	  #end
-	</ol> ## end list of sections	  
+	</ol> ## end list of sections
 	  #if($view.getException().getMessage())
 		   <script language="javascript">
 		      alert('$viewTools.escape($view.getException().getMessage())');

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@
             #if($fieldCategory !='SEPARATOR')
 			  <div class="ab_field_input">
 			    #parse('gui/resources/input/input.vm')
-                #if($fieldCausingException.equals($field)) 
+                #if($fieldCausingException.equals($field))
                   <div class="agilebase_error_message">$exceptionCaught.getMessage()</div>
                 #end
 			  </div>

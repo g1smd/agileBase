@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -19,9 +19,9 @@
 <html>
 <head>
   <title>Manage templates</title>
-  <script language="JavaScript" src="resources/jquery.js"></script>
-  <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />   
+  <script src="resources/jquery.js"></script>
+  <script src="resources/pane3_amalgam.js"></script>
+  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
   <style>
   .infomessage {
 	border-radius: 1em;
@@ -60,7 +60,7 @@
 	  #end
 	  <p>
   #end
-Upload a new template for $report: 
+Upload a new template for $report:
 <form class="fileUploader" method="POST" action="AppController.servlet">
 <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" />
 <input type="hidden" name="upload_return" value="gui/printouts/manage" />

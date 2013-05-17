@@ -17,7 +17,7 @@
 ##
 <STYLE>@import url("resources/tab/tab.css");</STYLE>
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
   function fNothing(x,y){  
     return;
   }

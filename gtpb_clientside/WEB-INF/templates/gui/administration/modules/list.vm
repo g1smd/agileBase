@@ -47,7 +47,7 @@
 ##  #set($colourTag='')
 ## #end
  #set($row=[$module.getIndexNumber(),$module.getModuleName(),$imgTag])
- #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&set_module=$module.getInternalModuleName()'")
+ #set($click="parent.pane_3.document.location='AppController.servlet?return=$return&amp;set_module=$module.getInternalModuleName()'")
  #set($uniqueid=$module.getInternalModuleName())
  #set($success=$data.add([$row,$click,$uniqueid,'',false]))
 #end

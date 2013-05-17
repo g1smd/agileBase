@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -19,12 +19,12 @@
 <head>
 <style>
 @import url("styles/report.css");
-	
+
 		html, body {
     /* font-family: "Arial", sans-serif;  */
-    			 color: black; 
-    			 font-size: 11pt; 
-    			 margin:0; 
+    			 color: black;
+    			 font-size: 11pt;
+    			 margin:0;
     			 padding:0;
     			 height:100% }
 </style>
@@ -80,7 +80,7 @@
 #foreach($field in $sessionTable.getFields())
   #if(($field.getClass().getSimpleName() == "SequenceFieldDefn") && (! $field.equals($sessionTable.getPrimaryKey())))
 	#set($importSequenceFields = true)
-  #end 
+  #end
 #end
 #if($importSequenceFields)
 <tr class="rowa">

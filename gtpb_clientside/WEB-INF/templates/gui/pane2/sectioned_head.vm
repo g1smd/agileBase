@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@
     </div>
   #end
   <div class="sectioned_filter_row">
-    <span class="sectioned_filter_name">Detail:</span> 
+    <span class="sectioned_filter_name">Detail:</span>
     #foreach($reportField in $sessionReport.getReportFields())
       #set($field = $reportField.getBaseField())
       #set($fieldObject = $field) ## used in filter_input.vm

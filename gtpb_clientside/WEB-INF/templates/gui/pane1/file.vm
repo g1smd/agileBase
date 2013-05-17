@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -26,13 +26,13 @@
 ## Image
 #if($fieldValueObject.isImage())
   <div class="appelement image $field.getAttachmentType().name().toLowerCase()">
-    <a class="download" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
+    <a class="download" href="AppController.servlet?return=gui/resources/image&amp;set_custom_string=true&amp;key=img_src&amp;value=$downloadUrl" target="_blank">
       <img src="$downloadUrl.500.$fieldValueObject.getPreviewExtension()" />
     </a>
   </div>
 #elseif($field.getAttachmentType() == "PROFILE_PHOTO")
   <div class="appelement image profile_photo">
-    <img src="resources/icons/file_placeholders/profile_photo.png"/>
+    <img src="resources/icons/file_placeholders/profile_photo.png" alt="" />
   </div>
 #elseif($downloadUrl.endsWith("pdf"))
   #set($previewUrl = "$downloadUrl.500.png?cachebust=$viewTools.getRandomString()")
@@ -40,5 +40,5 @@
     <a href="$downloadUrl" class="download" target="_blank"><img src="$previewUrl" /></a>
   </div>
 #elseif($fieldValue != "")
- <a href="$downloadUrl" class="download" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/> $fieldValue</a>
+ <a href="$downloadUrl" class="download" target="_blank"><img border="0" style="float:left" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png" /> $fieldValue</a>
 #end

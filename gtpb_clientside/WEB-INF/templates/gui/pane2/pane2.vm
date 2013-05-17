@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -31,17 +31,17 @@
 			-ms-box-sizing: border-box;
 			box-sizing: border-box;
 		  }
-	
-	      html, body { 
-    			    color: black; 
-    			    font-size: 10pt; 
-    			    margin:0; 
+
+	      html, body {
+    			    color: black;
+    			    font-size: 10pt;
+    			    margin:0;
     			    padding:0;
     			    height:100%;
     			    background-color: #E7F5F9; /* light blue */
     			  }
-				 
-	      div#wrapper { 
+
+	      div#wrapper {
 				height:100%;
 		        /*width:100%;*/
 				#if($mobile_device)
@@ -50,18 +50,18 @@
 				/*overflow:auto;*/
 				#end
 			}
-				  
-	      input[type=text][changed=true] { 
-	        text-decoration:underline 
+
+	      input[type=text][changed=true] {
+	        text-decoration:underline
 	      }
-	#if(($browser != "Internet Explorer") && !$mobile_device) ##  
+	#if(($browser != "Internet Explorer") && !$mobile_device) ##
 	/* for fixed (frozen) table header */
 	  #set($reportStyle = $sessionReport.getReportStyle())
     #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION"))
   		div#wrapper table#reportData {
   		margin-top: 30px;
   		}
-  
+
   		div#wrapper table#reportData.lowered {
   		margin-top: 56px;
   		}
@@ -76,13 +76,13 @@
 		div#wrapper table#reportData th {
 		position:absolute;
 		}
-		
+
 		div#wrapper table#reportData #fieldFilters {
 		position: absolute;
 		top: 30px;
 		left: 0px;
 		}
-		
+
 		##div#wrapper table#reportData #fieldFilters td {
 		##position: absolute;
 		##height: 27px;
@@ -90,7 +90,7 @@
 		##}
 	#end
 	</style>
-  	<script src="resources/jquery.js" language="Javascript"></script>
+  	<script src="resources/jquery.js"></script>
 	#set($sessionReport = $sessionData.getReport())
 	#set($sessionTable = $sessionData.getTable())
 	#set($filtersShouldBeShown = true)
@@ -102,7 +102,7 @@
 	  $(document).ready(function() {
 	    assignButtonModuleActions();
         loadCharts();
-	  });	  
+	  });
 	  </script>
 	#else
       #set($filtersShouldBeShown = false)
@@ -138,7 +138,7 @@
         	 function fNew() {
         		  // do nothing
         	 }
-   		
+
    		     function fClone() {
    		       // do nothing
    		     }
@@ -171,7 +171,7 @@
       jqDoc.find('#button_forms').removeAttr('disabled');
       jqDoc.find('#button_calendar').removeAttr('disabled');
     #end ## end if not tile
-      
+
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())
@@ -225,7 +225,7 @@
     #end
 	}
 	#end
-	
+
 	</script>
     #end ## end if not mobile device
   </head>
@@ -236,7 +236,7 @@
 	</body>
 	#stop
   #end
-  
+
   #set($filters = $sessionData.getReportFilterValues())
   <body #if((!$mobile_device) && (!$tile)) style="margin-left:0.5em;" onload="#if($selection||($data.size()==0))loadPane3(); #else eval(document.getElementById('reportBody').rows[0].getAttribute('onclick')); #end" #end>
     <div id=wrapper #if($tile) class="$tile.getColour()" #end>
