@@ -1,9 +1,5 @@
 #set($report = $sessionData.getReport())
 #set($table = $report.getParentTable())
-<div class="sideAction report report1" data-internalreportname="$report.getInternalReportName()">
-  <div class="explainer right notfocus">$report</div>
-  <i class="icon-circle"></i>
-</div>
 #set($reportNum = 1)
 #set($defaultReport = $table.getDefaultReport())
 #set($hiddenReports = $view.getLoggedInUser().getHiddenReports())
@@ -16,6 +12,14 @@
     #end
   #end
 #end
+<div class="sideAction report report1" data-internalreportname="$report.getInternalReportName()">
+  <div class="explainer right notfocus">$report</div>
+  #if($alternativeReports.size() == 0)
+    <i class="icon-ok-circle"></i>
+  #else
+    <i class="icon-circle"></i>
+  #end
+</div>
 #foreach($tableReport in $alternativeReports)
   #set($tableReportName = $tableReport.getReportName())
   #set($reportNum = $reportNum + 1)
