@@ -28,8 +28,8 @@ import org.apache.commons.lang.WordUtils;
 public class Enumerations {
 
 	public enum TileType {
-		COMMENT_STREAM("Recent comments", "Stream of comments made by everyone in the organisation", true, false), DATA_STREAM("Big data tile", "Show and search your most often used data", true, false), FOCUS("People focus", "If your data stream relates to people, show their tweets, contact info and other information", false, false), CALENDAR("Calendar", "Show any date-related data on a calendar and integrate with other calendaring systems", false, false), DATA_LINK(
-				"Little data tile", "Search and edit a set of data", false, true), FILES("Files", "Upload and present images and other files", false, false), VISUALISATION("Visualisation", "Show visualisations like charts, maps or word clouds", false, false), CHAT("Chat", "View and post messages to other staff members", false, false), CUSTOM("Custom", "A custom app", false, true);
+		COMMENT_STREAM("Recent comments", "Stream of comments made by everyone in the organisation", true, false, true), DATA_STREAM("Big data tile", "Show and search your most often used data", true, false, true), FOCUS("People focus", "If your data stream relates to people, show their tweets, contact info and other information", false, false, false), CALENDAR("Calendar", "Show any date-related data on a calendar and integrate with other calendaring systems", false, false, true), DATA_LINK(
+				"Little data tile", "Search and edit a set of data", false, true, false), FILES("Files", "Upload and present images and other files", false, false, false), VISUALISATION("Visualisation", "Show visualisations like charts, maps or word clouds", false, false, false), CHAT("Chat", "View and post messages to other staff members", false, false, false), CUSTOM("Custom", "A custom app", false, true, false);
 
 		private String appName;
 
@@ -37,13 +37,16 @@ public class Enumerations {
 		
 		private boolean allowMultiple;
 		
+		private boolean usesFocus;
+		
 		private String description;
 
-		TileType(String appName, String description, boolean large, boolean allowMultiple) {
+		TileType(String appName, String description, boolean large, boolean allowMultiple, boolean usesFocus) {
 			this.appName = appName;
 			this.description = description;
 			this.large = large;
 			this.allowMultiple = allowMultiple;
+			this.usesFocus = usesFocus;
 		}
 		
 		public String getTileName() {
@@ -60,6 +63,10 @@ public class Enumerations {
 		
 		public boolean allowsMultiple() {
 			return this.allowMultiple;
+		}
+		
+		public boolean usesFocus() {
+			return this.usesFocus;
 		}
 		
 	}

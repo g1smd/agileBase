@@ -1320,7 +1320,8 @@ public final class ServletSchemaMethods {
 				reportField = tableToRemoveFrom.getDefaultReport().getReportField(internalFieldName);
 			} catch (ObjectNotFoundException onfex) {
 				// This represents a bug where the the default report wasn't returned to
-				// it's previous state after a previous failed delete. Still, we need to carry on
+				// it's previous state after a previous failed delete. Still, we need to
+				// carry on
 				// and delete it this time
 				logger
 						.warn("Field "
@@ -2915,10 +2916,19 @@ public final class ServletSchemaMethods {
 			HibernateUtil.activateObject(user);
 			HibernateUtil.currentSession().save(tile);
 			user.addTile(tile);
-			if (tileType.equals(TileType.DATA_STREAM)) {
-				TileFocusInfo focusTile = new FocusTile(colour);
-				HibernateUtil.currentSession().save(focusTile);
-				user.addTile(focusTile);
+			if (tileType.usesFocus()) {
+				boolean hasFocus = false;
+				CURRENT_TILES: for (TileInfo testTile : user.getTiles()) {
+					if (testTile.getTileType().equals(TileType.FOCUS)) {
+						hasFocus = true;
+						break CURRENT_TILES;
+					}
+				}
+				if (!hasFocus) {
+					TileFocusInfo focusTile = new FocusTile(colour);
+					HibernateUtil.currentSession().save(focusTile);
+					user.addTile(focusTile);
+				}
 			}
 			HibernateUtil.currentSession().getTransaction().commit();
 		} catch (HibernateException hex) {
@@ -2962,13 +2972,23 @@ public final class ServletSchemaMethods {
 			HibernateUtil.activateObject(user);
 			user.removeTile(tile);
 			HibernateUtil.currentSession().delete(tile);
-			if (tile.getTileType().equals(TileType.DATA_STREAM)) {
-				// Also remove the focus tile which goes with the data stream
-				for (TileInfo testTile : user.getTiles()) {
-					if (testTile.getTileType().equals(TileType.FOCUS)) {
-						user.removeTile(testTile);
-						HibernateUtil.currentSession().delete(testTile);
-						break;
+			if (tile.getTileType().usesFocus()) {
+				// Also remove the focus tile which goes with the tile, if this is the
+				// last tile that uses the focus
+				boolean focusStillNeeded = false;
+				FOCUS_TEST: for (TileInfo testTile : user.getTiles()) {
+					if (testTile.getTileType().usesFocus()) {
+						focusStillNeeded = true;
+						break FOCUS_TEST;
+					}
+				}
+				if (!focusStillNeeded) {
+					for (TileInfo testTile : user.getTiles()) {
+						if (testTile.getTileType().equals(TileType.FOCUS)) {
+							user.removeTile(testTile);
+							HibernateUtil.currentSession().delete(testTile);
+							break;
+						}
 					}
 				}
 			}
