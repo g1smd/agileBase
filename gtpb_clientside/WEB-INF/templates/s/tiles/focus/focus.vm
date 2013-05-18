@@ -137,7 +137,9 @@
 #if(($allComments.size() == 0) && ($allTweets.size() == 0) && ($allPhoneNumbers.size() == 0) && ($allEmails.size() == 0) && ($allPostcodes.size() == 0) && ($allImages.size() ==0) && ($allDocuments.size() ==0))
   <div class="group fields">
     #foreach($field in $allOtherFields.keySet())
-      <div class="field">$field: $allOtherFields.get($field)</div>
+      #if($foreach.count < 5)
+        <div class="field">$field: $allOtherFields.get($field)</div>
+      #end
     #end
   </div>
 #end
