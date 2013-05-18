@@ -143,6 +143,10 @@ body {
   min-width: 296px;
 }
 
+.tile table.single_column {
+  border-top: 1em solid white;
+}
+
 .tile .single_column textarea {
   min-width: 70%;
 }
@@ -153,6 +157,11 @@ body {
 
 .tile table#reportData.single_column td select {
   min-width: 70%;
+}
+
+.tile table#reportData.single_column .comment_toggle {
+  position: absolute;
+  right: 3em;
 }
 
 .tile .gtpb_url {
