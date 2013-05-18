@@ -109,7 +109,7 @@ body {
 }
 
 .tile table#reportData {
-  padding-top: 1em;
+  border-top: 1em solid white;
 }
 
 .tile .form_tabber {
@@ -141,10 +141,6 @@ body {
   /* match other inputs */
   font-size: 10pt;
   min-width: 296px;
-}
-
-.tile table.single_column {
-  border-top: 1em solid white;
 }
 
 .tile .single_column textarea {
