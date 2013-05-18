@@ -30,6 +30,7 @@
 #set($allPostcodes = [])
 #set($allImages = [])
 #set($allDocuments = [])
+#set($allOtherFields = $viewTools.getNewFilterMap()) ## Field -> String map
 #foreach($field in $table.getFields())
   #parse("s/tiles/focus/field.vm")
 #end
@@ -91,7 +92,7 @@
       #else
         #set($phoneArea = "unknown phone area")
       #end
-      <div class="phone_number"><i class="icon-large icon-phone"></i> <span style="font-size:180%">$phoneNumber</span>#if($phoneArea)<br>$phoneArea #end</div></div>
+      <div class="phone_number"><i class="icon-large icon-phone"></i> <span style="font-size:180%">$phoneNumber</span>#if($phoneArea)<br>$phoneArea #end</div>
     #end
   </div>
 #end
@@ -133,3 +134,10 @@
   </div>
 #end
 
+#if(($allComments.size() == 0) && ($allTweets.size() == 0) && ($allPhoneNumbers.size() == 0) && ($allEmails.size() == 0) && ($allPostcodes.size() == 0) && ($allImages.size() ==0) && ($allDocuments.size() ==0))
+  <div class="group fields">
+    #foreach($field in $allOtherFields.keySet())
+      <div class="field">$field: $allOtherFields.get($field)</div>
+    #end
+  </div>
+#end

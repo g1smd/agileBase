@@ -31,4 +31,6 @@
   #set($success = $allPhoneNumbers.add($fieldValueObject))
 #elseif(!$field.getHidden() && $otherRelatedData)
   #set($success = $otherRelatedData.put("$field",$fieldValue))
+#elseif($fieldValue != "")
+  #set($success = $allOtherFields.put($field, $fieldValue))
 #end
