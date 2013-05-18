@@ -138,7 +138,7 @@
   <div class="group fields">
     #foreach($field in $allOtherFields.keySet())
       #if($foreach.count < 5)
-        <div class="field">$field: $allOtherFields.get($field)</div>
+        <p>$field: $allOtherFields.get($field)
       #end
     #end
   </div>
