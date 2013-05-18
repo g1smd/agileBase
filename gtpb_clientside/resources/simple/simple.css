@@ -143,6 +143,18 @@ body {
   min-width: 296px;
 }
 
+.tile .single_column textarea {
+  min-width: 70%;
+}
+
+.tile table#reportData.single_column td input[type="text"] {
+  width: 70%;
+}
+
+.tile table#reportData.single_column td select {
+  min-width: 70%;
+}
+
 .tile .gtpb_url {
   display: inline-block;
   /* override pane3_amalgam.css */
