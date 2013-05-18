@@ -2916,13 +2916,11 @@ public final class ServletSchemaMethods {
 			HibernateUtil.activateObject(user);
 			HibernateUtil.currentSession().save(tile);
 			user.addTile(tile);
-			logger.debug("Tile type " + tileType + " uses focus: " + tileType.usesFocus());
 			if (tileType.usesFocus()) {
 				boolean hasFocus = false;
 				CURRENT_TILES: for (TileInfo testTile : user.getTiles()) {
 					if (testTile.getTileType().equals(TileType.FOCUS)) {
 						hasFocus = true;
-						logger.debug("Already has focus tile");
 						break CURRENT_TILES;
 					}
 				}
@@ -2930,7 +2928,6 @@ public final class ServletSchemaMethods {
 					TileFocusInfo focusTile = new FocusTile(colour);
 					HibernateUtil.currentSession().save(focusTile);
 					user.addTile(focusTile);
-					logger.debug("Focus tile added");
 				}
 			}
 			HibernateUtil.currentSession().getTransaction().commit();
