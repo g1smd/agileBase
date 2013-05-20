@@ -67,7 +67,7 @@
     #if($template == "data_stream")
       #set($filter = $sessionData.getGlobalFilterString($tile.getReport()))
       <input type="search" class="condensed" placeholder="$tile search" #if($filter) value="$filter" #end/>
-      <div class="add condensed" title="add $table.getSingularName()"><I class="icon-plus-sign"></i></div>
+      <div class="add condensed" title="add $table.getSingularName()"><i class="icon-plus-sign"></i></div>
       <div class="foot_fade condensed"></div>
     #elseif($template == "comment_stream")
       <div class="title">$tile</div>
