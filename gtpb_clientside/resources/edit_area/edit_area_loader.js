@@ -627,7 +627,7 @@ EditAreaLoader.prototype ={
 			baseURL= this.baseURL;
 		cmd	= 'editArea.execCommand(\'' + exec + '\')';
 		html	= '<a id="a_'+ id +'" href="javascript:' + cmd + '" onclick="' + cmd + ';return false;" onmousedown="return false;" target="_self" fileSpecific="'+ (isFileSpecific?'yes':'no') +'">';
-		html	+= '<img id="' + id + '" src="'+ baseURL +'images/' + img + '" title="{$' + id + '}" width="20" height="20" class="editAreaButtonNormal" onmouseover="editArea.switchClass(this,\'editAreaButtonOver\');" onmouseout="editArea.restoreClass(this);" onmousedown="editArea.restoreAndSwitchClass(this,\'editAreaButtonDown\');" /></a>';
+		html	+= '<img id="' + id + '" src="'+ baseURL +'images/' + img + '" title="{$' + id + '}" width="20" height="20" alt="" class="editAreaButtonNormal" onmouseover="editArea.switchClass(this,\'editAreaButtonOver\');" onmouseout="editArea.restoreClass(this);" onmousedown="editArea.restoreAndSwitchClass(this,\'editAreaButtonDown\');" /></a>';
 		return html;
 	},
 
@@ -648,7 +648,7 @@ EditAreaLoader.prototype ={
 				return "<br />";
 			case "|":
 		  	case "separator":
-				return '<img src="'+ t.baseURL +'images/spacer.gif" width="1" height="15" class="editAreaSeparatorLine">';
+				return '<img src="'+ t.baseURL +'images/spacer.gif" width="1" height="15" alt="" class="editAreaSeparatorLine">';
 			case "select_font":
 				html= "<select id='area_font_size' onchange='javascript:editArea.execCommand(\"change_font_size\")' fileSpecific='yes'>";
 				html+="<option value='-1'>{$font_size}</option>";

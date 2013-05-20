@@ -151,7 +151,7 @@
 					$(item).append('<a class="ui-corner-all">' + text + '</a>');
 
 					if (typeof resultObjects[i].image === 'string') {
-						$('>a', item).prepend('<img src="' + resultObjects[i].image + '" />');
+						$('>a', item).prepend('<img src="' + resultObjects[i].image + '" alt="" />');
 					}
 
 					if (typeof resultObjects[i].extra === 'string') {

@@ -38,7 +38,7 @@ function loadMap(postcode) {
 					$('#map').html('<a href="http://maps.google.co.uk/maps?f=q&hl=en&q='
 					  + postcode
 					  + '" target="_blank"><img border="1" src="'
-					  + mapUrl + '" /></a>');
+					  + mapUrl + '" alt="" /></a>');
 				}
 		});
 	}

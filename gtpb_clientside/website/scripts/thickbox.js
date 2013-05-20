@@ -47,7 +47,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
     }
 
     if(caption===null){caption="";}
-    $("body").append("<div id='TB_load'><img src='"+imgLoader.src+"' /></div>");//add loader to the page
+    $("body").append("<div id='TB_load'><img src='"+imgLoader.src+"' alt='' /></div>");//add loader to the page
     $('#TB_load').show();//show loader
 
     var baseURL;
@@ -118,7 +118,7 @@ function tb_show(caption, url, imageGroup) {//function called when the user clic
 
       TB_WIDTH = imageWidth + 30;
       TB_HEIGHT = imageHeight + 60;
-      $("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"'/></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div>");
+      $("#TB_window").append("<a href='' id='TB_ImageOff' title='Close'><img id='TB_Image' src='"+url+"' width='"+imageWidth+"' height='"+imageHeight+"' alt='"+caption+"' /></a>" + "<div id='TB_caption'>"+caption+"<div id='TB_secondLine'>" + TB_imageCount + TB_PrevHTML + TB_NextHTML + "</div></div><div id='TB_closeWindow'><a href='#' id='TB_closeWindowButton' title='Close'>close</a> or Esc Key</div>");
 
       $("#TB_closeWindowButton").click(tb_remove);
 
