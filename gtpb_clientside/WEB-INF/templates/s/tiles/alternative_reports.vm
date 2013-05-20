@@ -7,7 +7,7 @@
 #foreach($tableReport in $table.getReports())
   #set($tableReportName = $tableReport.getReportName())
   #if((!$tableReport.equals($report)) && (!$tableReport.equals($defaultReport)) && (!$tableReportName.contains("dbvcalc")) && (!$tableReportName.contains("dbvcrit")))
-    #if((!$hiddenReports.contains($tableReport)) && ($view.loggedInUserAllowedToViewReport()))
+    #if((!$hiddenReports.contains($tableReport)) && ($view.loggedInUserAllowedToViewReport($tableReport)))
       #set($success = $alternativeReports.add($tableReport))
     #end
   #end
