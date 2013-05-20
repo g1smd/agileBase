@@ -17,7 +17,7 @@
 ##
 <html>
 <head>
-<style>
+<style type="text/css">
 	html, body {
   /* font-family: "Arial", sans-serif;  */
     			 color: black;

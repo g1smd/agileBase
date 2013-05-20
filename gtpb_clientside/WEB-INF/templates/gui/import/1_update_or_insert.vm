@@ -21,7 +21,7 @@
   <caption>Import into $table</caption>
   #parse('gui/customisations/wizard_result.vm')
   <htmlContent><![CDATA[
-      <style>
+      <style type="text/css">
          table#_choice_table {
            width:85%;
            margin-top:50px;

@@ -19,7 +19,7 @@
 
 <HTML>
 <HEAD>
-  <STYLE>
+  <STYLE type="text/css">
     * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 
     html, body { padding:0;

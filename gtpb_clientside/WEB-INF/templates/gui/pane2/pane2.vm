@@ -24,7 +24,7 @@
 	#else
 	  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
 	#end
-    <style>
+    <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
 			-webkit-box-sizing: border-box;

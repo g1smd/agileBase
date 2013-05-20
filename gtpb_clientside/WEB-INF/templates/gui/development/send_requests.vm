@@ -20,7 +20,7 @@
 <html>
 <head>
   <title>Send Requests</title>
-	<style>
+	<style type="text/css">
 	  * {
 		  /* font-family:Arial; */
 			font-size:10pt;

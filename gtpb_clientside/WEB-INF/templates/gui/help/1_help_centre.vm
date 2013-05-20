@@ -20,7 +20,7 @@
 	#parse('gui/customisations/wizard_result.vm')
     <okTemplate>gui/help/end</okTemplate>
 	  <htmlContent><![CDATA[
-      <style>
+      <style type="text/css">
          table#_choice_table {
            width:85%;
            margin-top:50px;

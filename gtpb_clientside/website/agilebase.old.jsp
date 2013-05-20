@@ -27,7 +27,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 			google.load("feeds", "1");
 		</script>
 		<script type="text/javascript" src="/agileBase/website/scripts/ab.js"></script>
-		<style>
+		<style type="text/css">
 		/* Google RSS stylesheet */
 		@import url("/agileBase/website/styles/gfdynamicfeedcontrol.css");
 		@import url("/agileBase/website/styles/styles.css");

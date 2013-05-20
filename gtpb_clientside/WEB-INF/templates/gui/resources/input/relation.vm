@@ -124,7 +124,7 @@
   ## TODO: move script to head. In fact, check if it's still necessary for recent IEs
   ##<script type="text/javascript" src="resources/picker.js"></script>
   <!--[if IE]>
-    <style>
+    <style type="text/css">
       /* this block is overwriting styles below it.  Appears that in IE (v7 anyway) that
          higher style blocks take precidence over blocks below.  Of course, in the sheet
          itself, styles still cascade top to bottom */

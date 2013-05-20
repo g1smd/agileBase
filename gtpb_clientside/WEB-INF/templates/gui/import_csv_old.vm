@@ -17,7 +17,7 @@
 ##
 <html>
 <head>
-<style>
+<style type="text/css">
 @import url("styles/report.css");
 
 		html, body {

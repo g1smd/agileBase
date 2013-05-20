@@ -8,7 +8,7 @@ if (requestURL.contains("appserver.")) {
 <html>
 	<head>
 		<title>A3 reports</title>
-		<style>
+		<style type="text/css">
 		  @import url('website/a3/styles.css');
 		  @import url('website/a3/styles-thickbox.css');
 		</style>

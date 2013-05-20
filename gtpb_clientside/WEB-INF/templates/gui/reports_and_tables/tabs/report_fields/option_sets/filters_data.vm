@@ -17,7 +17,7 @@
 ##
 ## edit the filters in a report
 
-<STYLE>
+<STYLE type="text/css">
 	@import url("styles/report.css");
 
 	div#filterOptionsSet { display:none }

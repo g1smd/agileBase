@@ -20,7 +20,7 @@
   <okTemplate>gui/printouts/pane2_printout_wizard_ok</okTemplate>
   <htmlContent><![CDATA[
         <form style="padding:10px;">
-          <style>
+          <style type="text/css">
             table#_md_lockBeforePrint {
               align:center;
               margin-top:20px;

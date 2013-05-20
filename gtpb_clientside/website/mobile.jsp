@@ -12,7 +12,7 @@ if (requestURL.contains("appserver.")) {
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
 	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
-	    <style>
+	    <style type="text/css">
 	    	@import url("/agileBase/website/styles/styles.css");
 		</style>
 <script type="text/javascript">

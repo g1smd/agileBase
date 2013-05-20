@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<STYLE>@import url("resources/tab/tab.css");</STYLE>
+<STYLE type="text/css">@import url("resources/tab/tab.css");</STYLE>
 
 <script type="text/javascript">
   function fNothing(x,y){

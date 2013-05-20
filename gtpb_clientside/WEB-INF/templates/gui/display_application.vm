@@ -25,7 +25,7 @@
 	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
 	<link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
  	<!--[if IE 7]>
-    <style>
+    <style type="text/css">
 		@import url('resources/display_application-ie.css');
 		html {
 		  overflow:auto;

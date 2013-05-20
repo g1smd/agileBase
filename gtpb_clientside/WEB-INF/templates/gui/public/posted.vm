@@ -17,7 +17,7 @@
 ##
 <html>
   <head>
-    <style>
+    <style type="text/css">
       #thanks {
         font-size: 16pt;
         color: gray;

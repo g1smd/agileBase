@@ -8,7 +8,7 @@
 ## Check that the user has edit privileges
 #if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA", $sessionTable))
 
-<style>
+<style type="text/css">
   div#_md_blank div#_md_dialog div#_md_content table#reportData {
     border-bottom:1px solid #cecece;
     border-top:1px solid #cecece;

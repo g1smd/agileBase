@@ -23,7 +23,7 @@
   <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
 	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
 	<link href="resources/button/button.css" type="text/css" rel="stylesheet" />
-    <style>
+    <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
 			-webkit-box-sizing: border-box;

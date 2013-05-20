@@ -23,7 +23,7 @@
     <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
-    <style>
+    <style type="text/css">
     #[[
       .good {
         background-color: #8DC63F;

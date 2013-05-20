@@ -28,7 +28,7 @@
   #parse('gui/customisations/wizard_result.vm')
     <okTemplate>gui/help/end</okTemplate>
     <htmlContent><![CDATA[
-    <style>
+    <style type="text/css">
       ul.app_list {
         list-style: none;
       }
