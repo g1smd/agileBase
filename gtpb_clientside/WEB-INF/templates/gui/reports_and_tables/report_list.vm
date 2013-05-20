@@ -118,7 +118,7 @@
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
     	    #if($iconPath.contains(".png"))
-    	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
+    	      <span><img src="resources/icons/applications/tango/$module.getIconPath()" alt="" />$module</span> ## png icon
     	    #else
     	      <span>
     	        <i class="fonticon icon-large $iconPath" data-appid="$iconPath"></i>

@@ -60,15 +60,15 @@
 <body>
   <div class="header row transition">
     <div class="span4 spaced">
-      <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+      <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
     </div>
     <div class="span8 spaced profile transition">
       #set($profileImage = false)
       #set($profileImage = $view.getUserProfileImage($user.getInternalUserName()))
       #if($profileImage)
-        <img src="$profileImage" class="comment_author_picture" />
+        <img src="$profileImage" class="comment_author_picture" alt="" />
       #else
-        <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+        <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" alt="" />
       #end
       $user.getForename()
     </div>

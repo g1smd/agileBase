@@ -41,10 +41,10 @@
         <table id="_choice_table" border="0" cellpadding="0" cellspacing="0" align="center">
           <tr>
             <td>
-              <label for="insert"><img src="resources/icons/import/new.png" /></label>
+              <label for="insert"><img src="resources/icons/import/new.png" alt="" /></label>
             </td>
             <td>
-              <label for="update"><img src="resources/icons/import/update.png" /></label>
+              <label for="update"><img src="resources/icons/import/update.png" alt="" /></label>
             </td>
           </tr>
           <tr class="labels">

@@ -61,9 +61,9 @@
 		  #if($fieldValueObject.isURL())##
 			  #set($url = $fieldValueObject.getFormattedURL())
         #if($fieldValueObject.isImage()) ## remote image
-          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a></p>
+          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" alt="" /></a></p>
         #else
-		      <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url" /></a>##
+		      <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url" alt="" /></a>##
         #end
 		  #elseif($field.getNotNull() && (($fieldValue == "") || $customAction))
 			  <span class="mandated">* mandatory</span>
@@ -90,9 +90,9 @@
       #elseif ($fieldValueObject.isURL())##
 			  #set($url = $fieldValueObject.getFormattedURL())
         #if($fieldValueObject.isImage()) ## remote image
-          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a></p>
+          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" alt="" /></a></p>
         #else
-          <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>##
+          <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" alt="" /></a>##
         #end
       #elseif ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))##
         <br/><div class="twitter tweet query" username="$fieldValueObject"></div>

@@ -125,7 +125,7 @@
 						              #if($iconPath == $currentIconPath)
 						                #set($innerHTML = $innerHTML + ' id=icon_selected')
 						              #end
-						              #set($innerHTML=$innerHTML+' iconName="'+$iconPath+'"><img src="resources/icons/applications/tango/'+$iconPath+'"/></td>')
+						              #set($innerHTML=$innerHTML+' iconName="'+$iconPath+'"><img src="resources/icons/applications/tango/'+$iconPath+'" alt="" /></td>')
 			              #set($cellCount=$cellCount+1)
 			            #end
 			            #if($cellCount%10==0)

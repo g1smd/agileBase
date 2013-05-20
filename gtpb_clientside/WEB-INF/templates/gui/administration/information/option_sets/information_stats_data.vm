@@ -74,7 +74,7 @@ Report usage in each module, along with with the users of each report (main user
 #foreach($moduleUsageStats in $moduleStats)
   #set($companyReportViews = $companyReportViews + $moduleUsageStats.getTotalReportViews())
   #set($module = $moduleUsageStats.getModule())
-  <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/><b style="text-transform:capitalize; padding-left: 20px; font-size:13px">$module</b><br>
+  <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()" alt="" /><b style="text-transform:capitalize; padding-left: 20px; font-size:13px">$module</b><br>
   <table cellspacing=0 cellpadding=0 border=0 id=reportData><tbody>
   #set($reportViewStats = $moduleUsageStats.getUserReportViewStats())
   #foreach($report in $reportViewStats.keySet())

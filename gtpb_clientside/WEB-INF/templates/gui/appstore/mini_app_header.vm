@@ -7,35 +7,35 @@
       #set($databaseReturn = "gui/display_application")
     #end
     <a href="?return=$databaseReturn">
-      <img src="customisations/common/dashboard/panes.png" /> Database
+      <img src="customisations/common/dashboard/panes.png" alt="" /> Database
     </a>&nbsp;
   </div>
   #if($apps.contains("dashboard"))
     <div class="button">
       #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")
       <a href="?return=$databaseReturn">
-        <img src="resources/toolbar/dashboard.png" /> Dashboard
+        <img src="resources/toolbar/dashboard.png" alt="" /> Dashboard
       </a>&nbsp;
     </div>
   #end
   #if($apps.contains("calendar"))
     <div class="button">
       <a href="?return=gui/calendar/calendar">
-        <img src="resources/toolbar/calendar.png" /> Calendar
+        <img src="resources/toolbar/calendar.png" alt="" /> Calendar
       </a>&nbsp;
     </div>
   #end
   #if($apps.contains("mkis"))
     <div class="button">
       <a href="?return=gui/customisations/common/mkis/mkis">
-        <img src="resources/toolbar/mkis.png" /> Marketing
+        <img src="resources/toolbar/mkis.png" alt="" /> Marketing
       </a>&nbsp;
     </div>
   #end
   #if($apps.contains("forms"))
     <div class="button">
       <a href="?return=gui/edit_nav/edit_nav">
-        <img src="resources/toolbar/contact-new.png" /> Cards
+        <img src="resources/toolbar/contact-new.png" alt="" /> Cards
       </a>&nbsp;
     </div>
   #end

@@ -37,12 +37,12 @@
 			#if($downloadUrl.endsWith("pdf")) #set($pdf = true) #end
       #set($previewUrl = "$downloadUrl.500.png")
 			#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
-      <a href="$downloadUrl"><img border="0" class="document" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/></a>
+      <a href="$downloadUrl"><img border="0" class="document" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png" alt="" /></a>
       <a href="$downloadUrl">$fieldValue</a>
       ## PDF preview
 			###if($pdf && !$sectionHasImage)
 			##	<br clear="left" />
-			##  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl"></a>
+			##  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl" alt=""></a>
 			###end
   	  #if(!$userCanEdit)
   	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))
@@ -70,17 +70,17 @@
     #if($fieldValueObject.isImage())
       #set($extension = $fieldValueObject.getPreviewExtension())
       #if($attachmentType == "profile_photo")
-        <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
+        <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" alt="" />
         #set($hideChooser = true)
       #else
         <a href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$downloadUrl" target="_blank">
-        <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" />
+        <img src="$downloadUrl.500.$extension" class="$attachmentType edit_image" alt="" />
         </a>
       #end
       #set($sectionHasImage = true)
     #end
   #elseif($attachmentType == "profile_photo") ##field value object is null
-    <img class="$attachmentType edit_image" src="resources/icons/file_placeholders/profile_photo.png" />
+    <img class="$attachmentType edit_image" src="resources/icons/file_placeholders/profile_photo.png" alt="" />
   #end
   #if($userCanEdit && (!$mobile_device))
   	#if($ab_calendar_display)

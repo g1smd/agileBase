@@ -1,6 +1,6 @@
 #set($report = $sessionData.getCustomReport("dashboard_report"))
 #set($module = $report.getModule())
-<img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/>
+<img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()" alt="" />
 $report<p>
 #set($usageStats = $view.getUsageStats())
 #set($reportViewStats = $usageStats.getReportViewStats($report))

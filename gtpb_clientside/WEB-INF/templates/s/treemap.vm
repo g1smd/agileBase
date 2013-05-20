@@ -34,7 +34,7 @@
 	<div class="container">
 	  <div class="row spaced">
 	    <div class="span4">
-	      <a href="AppController.servlet?return=boot"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+	      <a href="AppController.servlet?return=boot"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
 	    </div>
 	  </div> ## end row
 	  <h1 class="spaced">What's in use?</h1>

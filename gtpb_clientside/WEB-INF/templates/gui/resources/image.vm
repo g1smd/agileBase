@@ -51,10 +51,10 @@ $(document).keypress(function(event) {
 </head>
 <body>
   <div id="zoom">
-    <img src="resources/preview/zoom_in_48.png" onclick="zoom(true);"><br/>
-    <img src="resources/preview/zoom_out_48.png" onclick="zoom(false);">
+    <img src="resources/preview/zoom_in_48.png" alt="" onclick="zoom(true);"><br/>
+    <img src="resources/preview/zoom_out_48.png" alt="" onclick="zoom(false);">
   </div>
   #set($imgSrc = $viewTools.escapeForURL($sessionData.getCustomString("img_src")))
-  <img id="image" src="$imgSrc" />
+  <img id="image" src="$imgSrc" alt="" />
 </body>
 </html>

@@ -69,6 +69,6 @@
 
 #else ## user doesn't have edit privileges
   Error:<p>
-  <img src="resources/icons/warning.png" style="align:left; vertical-align:middle" />
+  <img src="resources/icons/warning.png" style="align:left; vertical-align:middle" alt="" />
   You haven't got sufficient privileges to create/edit a <i>$sessionTable</i> record.
 #end

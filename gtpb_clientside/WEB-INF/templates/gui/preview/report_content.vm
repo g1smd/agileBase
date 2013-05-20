@@ -82,11 +82,11 @@
             #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
             #if($fileValue.isImage())
               #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getPreviewExtension()")
-              <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
+              <a target = "_blank" href="AppController.servlet?return=gui/resources/image&set_custom_string=true&key=img_src&value=$targetUrl"><img src="$srcUrl" alt="" #if($field.getAttachmentType() == "PROFILE_PHOTO") class="profile_photo" #else class="image" #set($captionNecessary = true) #end/></a>
               #set($image = true)
 			#elseif($cell.endsWith("pdf") && !$captionNecessary)
 				#set($srcUrl = "$targetUrl.500.png")
-				<img src="$srcUrl" class="image" />
+				<img src="$srcUrl" class="image" alt="" />
 				#set($captionNecessary = true)
               #set($image = true)
 		    #end
@@ -148,7 +148,7 @@
         #if($searchTitle.length() > 25)
         	#set($searchTitle = "$reportName")
         #end
-  			<li data-searchtitle="$searchTitle" data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()"><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
+  			<li data-searchtitle="$searchTitle" data-internaltablename="$report.getParentTable().getInternalTableName()" data-internalreportname="$report.getInternalReportName()"><img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()" alt="" /> $moduleName - $reportName <span style="color:gray">$reportDescription</span></li>
 			#end
 		#end
 	#end

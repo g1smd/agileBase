@@ -11,7 +11,7 @@
     #set($slide_id = "slide_$sessionTable.getInternalTableName()_$dependentTable.getInternalTableName()_$sessionRowId")
   #end
   <div class="slide reportDataView" id="$slide_id">
-    <img class="rewind" src="resources/edit_nav/rewind.png" />
+    <img class="rewind" src="resources/edit_nav/rewind.png" alt="" />
     <section class="middle">
       <div class="title">
       ##$dependentTable.getSimpleName()
@@ -21,7 +21,7 @@
       ##  #end
       ##  <option value="$dependentTable.getDefaultReport().getInternalReportName()">all records</option>
       ##</select>
-      <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/> $report
+      <img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()" alt="" /> $report
       </div>
       #parse("gui/edit_nav/report_content.vm")
     </section>

@@ -23,9 +23,9 @@
   #set($url = $fieldValueObject.getFormattedURL())
   <div class="appelement">
     #if($fieldValueObject.isImage()) ## remote image
-      <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a>
+      <a href="$url" target="_blank"><img src="$url" style="max-width: 100%" alt="" /></a>
     #else
-      <a href="$url" target="_blank" class="gtpb_url"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $fieldValueObject.getShortURL()</a>
+      <a href="$url" target="_blank" class="gtpb_url"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" alt="" /> $fieldValueObject.getShortURL()</a>
     #end
   </div>
 #elseif($fieldValueObject.isEmailAddress())

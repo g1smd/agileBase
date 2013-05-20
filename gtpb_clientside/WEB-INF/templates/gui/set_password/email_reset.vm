@@ -58,11 +58,11 @@
 <body><div class="container">
   <div class="row abNav">
     <div class="span2 home">
-      <img src="/agileBase/website/images/agilebase.png" />
+      <img src="/agileBase/website/images/agilebase.png" alt="" />
       <div class="arrow"></div>
     </div>
   </div>
-  <h1><img src="/agileBase/website/images/brandmark.png" /> : password set</h1>
+  <h1><img src="/agileBase/website/images/brandmark.png" alt="" /> : password set</h1>
 #set($requested_username = $viewTools.getRequestParameters().get("u")[0])
 #if($requested_username != $user.getUserName())
   <div class="big spaced">You are still logged in as $user. Please <a href="AppController.servlet?logout=true&return=boot">log out</a> then try the link again to reset $requested_username's password</div>

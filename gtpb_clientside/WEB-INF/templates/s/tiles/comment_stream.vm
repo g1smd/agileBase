@@ -38,9 +38,9 @@
     #set($profileImage = false)
     #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
     #if($profileImage)
-      <img src="$profileImage" class="comment_author_picture" />
+      <img src="$profileImage" class="comment_author_picture" alt="" />
     #else
-      <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+      <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" alt="" />
     #end
     <span class="row_title ${colour}_fg">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
     #if($commentReport)

@@ -56,9 +56,9 @@
           ## image.vm sets cell to be an img tag
           #parse("gui/pane2/image.vm") $cell
         #elseif($attachmentType == "PROFILE_PHOTO")
-          <img src="resources/icons/file_placeholders/profile_photo.png"' />
+          <img src="resources/icons/file_placeholders/profile_photo.png"' alt="" />
         #elseif(${fileValue.getIconName()} != "")
-          <img src="resources/icons/filetypes/${fileValue.getIconName()}.png" />
+          <img src="resources/icons/filetypes/${fileValue.getIconName()}.png" alt="" />
         #end
       #end
     #end ## end of images

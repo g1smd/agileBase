@@ -28,11 +28,11 @@
 <body><div class="container">
   <div class="row abNav">
     <div class="span2 home">
-      <img src="/agileBase/website/images/agilebase.png" />
+      <img src="/agileBase/website/images/agilebase.png" alt="" />
       <div class="arrow"></div>
     </div>
   </div>
-  <h1><img src="/agileBase/website/images/brandmark.png" /> : password set</h1>
+  <h1><img src="/agileBase/website/images/brandmark.png" alt="" /> : password set</h1>
     <div class="big spaced">
       <p>Your password is now set, you can continue to log in to $user.getCompany() at
       <p><a href="http://www.agilebase.co.uk/start">www.agilebase.co.uk/start</a>
