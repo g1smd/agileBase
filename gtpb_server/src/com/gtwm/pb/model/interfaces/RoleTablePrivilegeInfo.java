@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,9 +24,9 @@ package com.gtwm.pb.model.interfaces;
 public interface RoleTablePrivilegeInfo extends RoleGeneralPrivilegeInfo {
 
     /**
-     * 
+     *
      * @return TableInfo object to which permission refers
-     *         
+     *
      *         NOTE: we could look at this again in future
      */
     public TableInfo getTable();

@@ -5,7 +5,7 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
 /**
  * Store field options so they can be passed easily between methods, reducing
  * the number of method parameters necessary
- * 
+ *
  * Options for different type of fields will extend this class. This is a really
  * simple set of classes, we don't need fancy stuff like interfaces or abstract
  * classes

@@ -1,6 +1,6 @@
   jQuery(document).ready(function() {
 	//windowResize();
-	
+
 	if (jQuery("#loginform").size() == 0) {
 	  var options = {
 		'return':'gui/customisations/common/a3/a3_report_content',
@@ -32,14 +32,14 @@
 	jQuery(window).resize(function() {
 	  windowResize();
 	});
-	
+
 	jQuery(".editable").live('keyup', function() {
 	  if (jQuery("#loginform").size() == 0) {
 	    oBuffer.writeBuffer(this);
 	  }
 	  fontResize(gtpb_currentFontSize, 0);
 	});
-	
+
 	jQuery("#new_report").click(function() {
 	  jQuery("#a3_report").fadeOut("normal");
 	  jQuery("#a3_report").load("AppController.servlet",
@@ -52,11 +52,11 @@
 		  fontResize(gtpb_currentFontSize, 0);
 	    });
 	});
-	
+
 	jQuery("#next_report").click(function() {
 	  next_report('next');
 	});
-	
+
 	jQuery("#previous_report").click(function() {
 	  next_report('previous');
 	});
@@ -64,15 +64,15 @@
 	jQuery("#search").keyup(function() {
 	  alert('Upgrade to search all reports...');
 	});
-	
+
 	jQuery("#print").click(function() {
 	  window.print();
 	});
-	
+
 	jQuery("#share").click(function() {
 	  alert('Upgrade to share reports...');
 	});
-	
+
 	jQuery("#manage").click(function() {
 	  if(jQuery("#company").text() == "A3 Reports Demo") {
 	    alert("Upgrade to manage all A3 reports");
@@ -80,11 +80,11 @@
 	    document.location = "AppController.servlet?return=gui/display_application&set_report=a3 reports";
 	  }
 	});
-	
+
 	jQuery("#delete").click(function() {
 	  jQuery("#delete_dialog").dialog("open");
 	});
-	
+
 	// Initialise the dialog object
 	jQuery("#delete_dialog").dialog({
       autoOpen: false,
@@ -108,8 +108,8 @@
 	jQuery("#email_input").focus(function() {
 	  jQuery("#email_input").val("");
 	});
-	
-	jQuery('#signup_form').submit(function() { 
+
+	jQuery('#signup_form').submit(function() {
         if (jQuery("#email_input").val().indexOf("@") == -1) {
         	alert("Please enter an email address");
         	return false;
@@ -118,10 +118,10 @@
         }
     });
 
-  });  
-  
+  });
+
 /* Helper functions, outside of document.ready */
-  
+
 function windowResize() {
 	// Size the report
     var windowWidth = jQuery(window).width();

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -92,7 +92,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 		return Collections
 				.unmodifiableSortedSet(new TreeSet<AppUserInfo>(this.getUsersCollection()));
 	}
-	
+
 	@OneToMany(mappedBy = "company", targetEntity = AppUser.class, cascade = CascadeType.ALL)
 	// Bi-directional OneToMany
 	protected synchronized Set<AppUserInfo> getUsersCollection() {
@@ -221,7 +221,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private SortedSet<Long> getChartIdsForDashboardDirect() {
 		return this.chartIdsForDashboard;
 	}
-	
+
 	/* Only used by Hibernate */
 	private void setChartIdsForDashboardDirect(SortedSet<Long> sids) {
 		this.chartIdsForDashboard = sids;
@@ -250,19 +250,19 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	public void removeChartIdNotForDashboard(long id) {
 		this.getChartIdsNotForDashboardDirect().remove(id);
 	}
-	
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	public Set<String> getApps() {
 		return this.apps;
 	}
 
-	/** 
+	/**
 	 * Used only by Hibernate
 	 */
 	private void setApps(Set<String> apps) {
 		this.apps = apps;
 	}
-	
+
 	public void addApp(String app) {
 		this.apps.add(app);
 	}
@@ -311,7 +311,7 @@ public class Company implements CompanyInfo, Comparable<CompanyInfo> {
 	private Set<TableInfo> tables = new HashSet<TableInfo>();
 
 	private Set<ModuleInfo> modules = new HashSet<ModuleInfo>();
-	
+
 	private String companyName = "";
 
 	private String internalCompanyName = null;

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -233,7 +233,7 @@ public final class ReportDownloader extends HttpServlet {
 
 	/**
 	 * Write the session report as an Excel file in a temporary location
-	 * 
+	 *
 	 * Synchronized to allow only one export at a time, they can be memory
 	 * consuming
 	 */

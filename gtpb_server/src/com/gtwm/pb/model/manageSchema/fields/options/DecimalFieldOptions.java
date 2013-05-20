@@ -57,19 +57,19 @@ public class DecimalFieldOptions extends BasicFieldOptions {
 	public void setStoresCurrency(boolean storesCurrency) {
 		this.storesCurrency = storesCurrency;
 	}
-	
+
 	private Double defaultValue = null;
-	
+
 	private Integer precision = null;
-	
+
 	private boolean notApplicable = false;
-	
+
 	private String notApplicableDescription = null;
-	
+
 	private Double notApplicableValue = null;
-	
+
 	private boolean usesLookup = false;
-	
+
 	private boolean storesCurrency = false;
 
 }

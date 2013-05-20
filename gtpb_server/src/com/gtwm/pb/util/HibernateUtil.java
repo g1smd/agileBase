@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -234,9 +234,9 @@ public final class HibernateUtil {
 			}
 		}
 	}
-	
+
 	private static final SessionFactory sessionFactory;
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(HibernateUtil.class);
 
 }

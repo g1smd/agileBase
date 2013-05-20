@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -1828,17 +1828,17 @@ public final class DataManagement implements DataManagementInfo {
 
 	/**
 	 * Used when deleting a record.
-	 * 
+	 *
 	 * Recursively get any tables which contain data that depends on the record
 	 * specified, i.e. data that would be deleted in a cascade if the record were
 	 * deleted
-	 * 
+	 *
 	 * Along with each table, return a snippet of the contents of dependent
 	 * record(s)
-	 * 
+	 *
 	 * Also throw an exception immediately if any locked records are found as this
 	 * means the deletion should fail
-	 * 
+	 *
 	 * @param tables
 	 *          The set of tables to check for dependencies between, e.g. all the
 	 *          tables in a company
@@ -3624,7 +3624,7 @@ public final class DataManagement implements DataManagementInfo {
 	/**
 	 * Acts similarly to logLastChangeTime but taking a company object directly
 	 * instead of a HTTP request
-	 * 
+	 *
 	 * @see #logLastDataChangeTime(HttpServletRequest)
 	 */
 	private static void setLastCompanyDataChangeTime(CompanyInfo company) {

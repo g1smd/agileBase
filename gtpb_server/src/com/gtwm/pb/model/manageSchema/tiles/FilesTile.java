@@ -14,7 +14,7 @@ public class FilesTile extends AbstractTile implements TileFilesInfo {
 
 	private FilesTile() {
 	}
-	
+
 	public FilesTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
@@ -34,8 +34,8 @@ public class FilesTile extends AbstractTile implements TileFilesInfo {
 	}
 
 	public void setReport(BaseReportInfo report) {
-		this.report = report;		
+		this.report = report;
 	}
-	
+
 	private BaseReportInfo report = null;
 }

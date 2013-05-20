@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@
       #else
         #set($phoneArea = "unknown phone area")
       #end
-    #end  
+    #end
   #end
 #end##
 ##
@@ -61,9 +61,9 @@
 		  #if($fieldValueObject.isURL())##
 			  #set($url = $fieldValueObject.getFormattedURL())
         #if($fieldValueObject.isImage()) ## remote image
-          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a></p>
+          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" alt="" /></a></p>
         #else
-		      <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url" /></a>##
+		      <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url" alt="" /></a>##
         #end
 		  #elseif($field.getNotNull() && (($fieldValue == "") || $customAction))
 			  <span class="mandated">* mandatory</span>
@@ -90,14 +90,14 @@
       #elseif ($fieldValueObject.isURL())##
 			  #set($url = $fieldValueObject.getFormattedURL())
         #if($fieldValueObject.isImage()) ## remote image
-          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" /></a></p>
+          <p><a href="$url" target="_blank"><img src="$url" style="max-width: 100%" alt="" /></a></p>
         #else
-          <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /></a>##
+          <a href="$url" target="_blank" class="gtpb_url"><img src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" alt="" /></a>##
         #end
       #elseif ($fieldValueObject.isTwitterName() || ($field.getFieldName().toLowerCase().contains("twitter") && ($fieldValue.trim().length() > 1)))##
         <br/><div class="twitter tweet query" username="$fieldValueObject"></div>
         ##<a href="http://www.twitter.com/$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
-      #elseif ($fieldValueObject.isTwitterHashTag())##      
+      #elseif ($fieldValueObject.isTwitterHashTag())##
         <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
       #elseif ($fieldValueObject.isPostcode())##
         <a href="https://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">map</a>##
@@ -114,7 +114,7 @@
 	  #end ## end of normal (not big text) field
 	##
     #if($globalEdit)##
-      <script language="Javascript">
+      <script type="text/javascript">
         function fUpdateGlobalText() {
           function fResponse(sResponseText, sResponseXML) {
             if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {
@@ -128,14 +128,14 @@
                 new fChange(oField);
             }
           }
-          
+
           var oField=this.field;
           var aPostVars=new Array();
-          aPostVars['returntype']='xml'; 
+          aPostVars['returntype']='xml';
           aPostVars['return']='gui/resources/sessionReportInfo';
-          var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);           
+          var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
         }
-        
+
         var oElement=document.getElementsByName('$field.getInternalFieldName()')[document.getElementsByName('$field.getInternalFieldName()').length-1];
         oElement.setAttribute('gtpb_global_edit','true');
         var oButton=document.createElement('BUTTON');
@@ -147,7 +147,7 @@
         // them from expandos on the element which will save some client processing time and memory
         ##oButton.addEventListener('click',fUpdateGlobalText,false);
         $(oButton).click(fUpdateGlobalText);
-                
+
         oElement.parentNode.appendChild(oButton);
       </script>
     #end##
@@ -161,7 +161,7 @@
   	  <a href="$fieldValueObject.getFormattedURL()" target="_blank" class="gtpb_url">$fieldValue</a>##
     #elseif ($fieldValueObject.isTwitterName())##
       <div class="twitter tweet query" username="$fieldValueObject"></div>
-    #elseif ($fieldValueObject.isTwitterHashTag())##      
+    #elseif ($fieldValueObject.isTwitterHashTag())##
       <a href="http://twitter.com/#!/search?q=$fieldValueObject" target="_blank" class="gtpb_url">twitter</a>##
 	#elseif ($fieldValueObject.isPostcode())##
   	  <a href="http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue.trim()" target="_blank">$fieldValue</a>##

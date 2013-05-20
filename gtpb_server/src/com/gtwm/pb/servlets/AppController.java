@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -90,12 +90,12 @@ public final class AppController extends VelocityViewServlet {
 	/**
 	 * init() is called once automatically by the servlet container (e.g. Tomcat)
 	 * at servlet startup. We use it to initialise various things, namely:
-	 * 
+	 *
 	 * a) create the DatabaseDefn object which is the top level application
 	 * object. The DatabaseDefn object will load the list of tables & reports into
 	 * memory when it is constructed. It will also configure and load the object
 	 * database
-	 * 
+	 *
 	 * b) create a DataSource object here to pass to the DatabaseDefn. This data
 	 * source then acts as a pool of connections from which a connection to the
 	 * relational database can be called up whenever needed.
@@ -175,10 +175,10 @@ public final class AppController extends VelocityViewServlet {
 	/**
 	 * Optionally return application/xml or other content rather than the default
 	 * text/html
-	 * 
+	 *
 	 * If there is no returntype specified, don't set a header, but return
 	 * ResponseReturnType.HTML
-	 * 
+	 *
 	 * This can be useful when using AJAX interfaces with XMLHttpRequest in the
 	 * browser
 	 */
@@ -615,11 +615,11 @@ public final class AppController extends VelocityViewServlet {
 	/**
 	 * The main control function, called for every HTTP GET or POST request.
 	 * Basically performs three functions:
-	 * 
+	 *
 	 * 1) Sets any session variables posted from the user interface, if any
-	 * 
+	 *
 	 * 2) Performs any actions requested by the UI, if any
-	 * 
+	 *
 	 * 3) Parses and returns the template requested by the UI
 	 */
 	public Template handleRequest(HttpServletRequest request, HttpServletResponse response,
@@ -727,17 +727,17 @@ public final class AppController extends VelocityViewServlet {
 	/**
 	 * Create an instance of ViewMethods to provide the UI with the necessary
 	 * functionality, and return the requested template.
-	 * 
+	 *
 	 * TODO: This method obviously doesn't throw any exceptions for a reason,
 	 * presumably we always want to return a template whatever happens. Check out
 	 * whether there's a better way of doing things though
-	 * 
+	 *
 	 * @param exceptionCaught
 	 *          An exception thrown by handleRequest. Pass null if none. This will
 	 *          be saved in ViewMethods to allow the UI to find out what went
 	 *          wrong
 	 * @return The template requested, ready to parse by the UI
-	 * 
+	 *
 	 */
 	private Template getUserInterfaceTemplate(HttpServletRequest request,
 			HttpServletResponse response, String templateName, Context context, HttpSession session,
@@ -952,7 +952,7 @@ public final class AppController extends VelocityViewServlet {
 	}
 
 	/**
-	 * 
+	 *
 	 * Object representation of the relational database - basically a collection
 	 * of tables & views
 	 */

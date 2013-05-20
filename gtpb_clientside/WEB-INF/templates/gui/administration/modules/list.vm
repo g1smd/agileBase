@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@
 #foreach($module in $modules)
  #if($module.getIconPath() != "")
    #set($imgTag='<i class="icon-large $module.getIconPath()"></i>')
-##   #set($imgTag='<img src="resources/icons/applications/tango/'+$module.getIconPath()+'">')
+##   #set($imgTag='<img src="resources/icons/applications/tango/'+$module.getIconPath()+'" alt="">')
  #else
    #set($imgTag='')
  #end

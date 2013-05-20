@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -170,7 +170,7 @@ public final class Helpers {
 	 * Given a date resolution that is a Calendar value, e.g. Calendar.MONTH,
 	 * return a string that can be used by Java's String.format() method to format
 	 * a date value
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           if the dateResolution isn't a valid Calendar value
 	 * @see String#format(java.lang.String, java.lang.Object[])
@@ -198,7 +198,7 @@ public final class Helpers {
 	/**
 	 * Given a decimal precision, return a string that can be used by Java's
 	 * String.format() method to format a float or integer value
-	 * 
+	 *
 	 * @see String#format(java.lang.String, java.lang.Object[])
 	 */
 	public static String generateJavaDecimalFormat(int decimalPrecision) {
@@ -213,9 +213,9 @@ public final class Helpers {
 	 * Given a date resolution that is a Calendar value, e.g. Calendar.MONTH,
 	 * return a string that can be used by postggresql's to_char() function to
 	 * format a date value.
-	 * 
+	 *
 	 * NB this method is database specific
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           if the dateResolution isn't a valid Calendar value
 	 * @see java.util.Calendar
@@ -242,7 +242,7 @@ public final class Helpers {
 	/**
 	 * Given a Integer/String map, return the integer key for a given value, i.e.
 	 * invert the key/value mapping
-	 * 
+	 *
 	 * @param requireExactMatch
 	 *          Require that the exact value is found. If false and there's no
 	 *          exact match, try to find a close match, e.g. a substring match
@@ -312,7 +312,7 @@ public final class Helpers {
 
 	/**
 	 * Replace all non-word characters apart from the allowed characters
-	 * 
+	 *
 	 * @param escapedAllowedCharacters
 	 *          Special characters must be double escaped. E.g. to allow slashes,
 	 *          pass in "\\/"
@@ -328,12 +328,12 @@ public final class Helpers {
 	 * Parameterization should be and is used for protection against SQL injection
 	 * attacks where possible. This method is a fallback which can be used when it
 	 * isn't possible to use prepared statements with parameters.
-	 * 
+	 *
 	 * Downsides are a) protection may not be 100% b) legitimate input may be
 	 * replaced
-	 * 
+	 *
 	 * PostgreSQL specific.
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           if the input string contains stuff which shouldn't be there
 	 */
@@ -374,9 +374,9 @@ public final class Helpers {
 	/**
 	 * Replace any internal table, report or field names with user friendly
 	 * versions.
-	 * 
+	 *
 	 * Useful when generating error messages
-	 * 
+	 *
 	 * @param report
 	 *          Internal names of all objects in this report or related to it will
 	 *          be found and replaced
@@ -401,7 +401,7 @@ public final class Helpers {
 
 	/**
 	 * Replace HTML entities with plain versions
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */

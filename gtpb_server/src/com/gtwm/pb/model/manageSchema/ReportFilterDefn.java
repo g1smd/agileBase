@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 	 * Constructs a filter on a set of values, e.g. for a dropdown field. If the
 	 * set of values contains only one value, then a single value filter will be
 	 * constructed.
-	 * 
+	 *
 	 * This is the method to use if you want to construct a simple single-value
 	 * filter
 	 */
@@ -84,7 +84,7 @@ public class ReportFilterDefn implements ReportFilterInfo {
 	 * Constructs a filter which can use fields or values in the filter value,
 	 * e.g. a subselect filter given a user-input WHERE clause (custom
 	 * subselect)
-	 * 
+	 *
 	 * @param reportContainingFilterField
 	 *            The report the field you're filtering on is from. e.g. in
 	 *            SELECT myreport.field from myreport join another,

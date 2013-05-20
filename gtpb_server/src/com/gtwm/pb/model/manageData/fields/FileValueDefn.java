@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -87,7 +87,7 @@ public class FileValueDefn implements FileValue {
 			return "";
 		}
 	}
-	
+
 	public String getPreviewExtension() {
 		String previewExtension = this.getExtension();
 		if (previewExtension.startsWith("tif")) {

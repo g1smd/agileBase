@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -27,12 +27,12 @@ import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.manageSchema.fields.TextFieldDefn;
 
 public class FieldTests {
-	
+
 	@Before public void setUp() {
 		//TextField this.textField = new TextFieldDefn(null, )
 	}
 
-	
+
 	private DataSource relationalDataSource = null;
 
 }

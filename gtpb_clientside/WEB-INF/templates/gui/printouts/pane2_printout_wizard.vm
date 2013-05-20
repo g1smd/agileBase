@@ -40,13 +40,13 @@
               <td>&nbsp;</td>
               <td style="padding-right:60px">
                 <label for="recordlock_no">
-                  <img src="resources/recordLocking/print_draft.png">
+                  <img src="resources/recordLocking/print_draft.png" alt="">
                 </label>
               </td>
                <td>&nbsp;</td>
               <td style="padding-right:60px">
                 <label for="recordlock_yes">
-                  <img src="resources/recordLocking/print_locked.png">
+                  <img src="resources/recordLocking/print_locked.png" alt="">
                 </label>
               </td>
 		    </tr>

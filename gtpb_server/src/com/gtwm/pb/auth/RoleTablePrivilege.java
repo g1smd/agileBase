@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ public class RoleTablePrivilege extends RoleGeneralPrivilege implements RoleTabl
 
 	/**
 	 * Construct a table privilege
-	 * 
+	 *
 	 * @param role
 	 *          The role to assign the privilege type to
 	 * @param privilegeType

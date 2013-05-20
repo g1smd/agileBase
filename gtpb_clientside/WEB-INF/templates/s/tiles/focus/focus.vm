@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@
     #if(!$reportFieldTable.equals($table))
       #set($relatedRowIds = $view.getRelatedRowIds($rowId, $reportFieldTable))
       #if($relatedRowIds.size() == 1)
-        #foreach($relatedRowId in $relatedRowIds) 
+        #foreach($relatedRowId in $relatedRowIds)
           #set($rrd_rowId = $relatedRowId)
           #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
           #foreach($field in $reportFieldTable.getFields())
@@ -62,9 +62,9 @@
           #set($profileImage = false)
           #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
           #if($profileImage)
-            <img src="$profileImage" class="comment_author_picture" />
+            <img src="$profileImage" class="comment_author_picture" alt="" />
           #else
-            <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+            <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" alt="" />
           #end
           <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
         </div>
@@ -103,7 +103,7 @@
       <div class="email"><a href="mailto:$email"><i class="icon-large icon-envelope"></i> $email</a></div>
     #end
     #foreach($url in $allUrls)
-      <div class="email"><a href="$url" target="_blank"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" /> $url.getShortURL()</a></div>
+      <div class="email"><a href="$url" target="_blank"><img style="vertical-align: middle" src="https://getfavicon.appspot.com/$url?defaulticon=lightpng" alt="" /> $url.getShortURL()</a></div>
     #end
   </div>
 #end
@@ -122,7 +122,7 @@
 #if($allImages.size() > 0)
   <div class="group images">
     #foreach($image in $allImages)
-      <img src="$image" />
+      <img src="$image" alt="" />
     #end
   </div>
 #end
@@ -130,7 +130,7 @@
 #if($allDocuments.size() > 0)
   <div class="group documents">
     #foreach($document in $allDocuments)
-     <img border="0" style="float:left" src="resources/icons/filetypes/${document.getIconName()}.png"/> $document</a>    #end
+     <img border="0" style="float:left" src="resources/icons/filetypes/${document.getIconName()}.png" alt="" /> $document</a>    #end
   </div>
 #end
 

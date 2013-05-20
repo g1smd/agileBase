@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ public interface BaseFieldDescriptorOptionInfo {
      *         case
      */
     public String getFormInputName();
-    
+
     /**
      * Return whether this option is considered advanced (true) or basic (false)
      */

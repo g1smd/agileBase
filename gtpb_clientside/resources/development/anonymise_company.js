@@ -149,7 +149,7 @@ var gtwmJson = [{
 	a1d83745a557cb275: 'OTHER', // title
 	a5c994b6802921b5a: 'OTHER', // who
 	a82dc96fece7c6af9: 'OTHER' //what
-	
+
 },
 {
 	anonymise : true,
@@ -157,7 +157,7 @@ var gtwmJson = [{
 	set_table : 'a7d7814185004ee4d',
 	table_description: 'b4.1) glossary',
 	a5979e36e4d7381cb: 'OTHER', // word
-	a438ba3d695f779ce: 'OTHER' // usage	
+	a438ba3d695f779ce: 'OTHER' // usage
 },
 {
 	anonymise : true,
@@ -165,7 +165,7 @@ var gtwmJson = [{
 	set_table : 'afeff8cee435c68ba',
 	table_description: 'b4.3) tasks',
 	aaef2b8a16274ae26: 'OTHER', // task
-	a438ba3d695f779ce: 'OTHER' // usage	
+	a438ba3d695f779ce: 'OTHER' // usage
 },
 {
 	anonymise : true,

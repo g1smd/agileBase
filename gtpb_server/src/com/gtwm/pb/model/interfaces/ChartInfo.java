@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ public interface ChartInfo {
 	/**
 	 * Remove field from grouping. If field isn't in grouping, do nothing, don't
 	 * raise an exception
-	 * 
+	 *
 	 * @return the removed grouping, or null if no grouping on the fieldToRemove
 	 *         exists
 	 */
@@ -65,10 +65,10 @@ public interface ChartInfo {
 	/**
 	 * Remove any aggregate functions acting on the specified field - there may
 	 * be 0, 1 or more. If 0, take no action and don't raise an exception.
-	 * 
+	 *
 	 * This is used when removing a field from a report, to remove any
 	 * aggregates on that field
-	 * 
+	 *
 	 * @return the set of functions acting on fieldToRemove, which were removed
 	 */
 	public Set<ChartAggregateInfo> removeFunctions(ReportFieldInfo reportFieldToRemove);
@@ -95,7 +95,7 @@ public interface ChartInfo {
 	/**
 	 * Return a prepared statement that is for getting the summary (aggregate)
 	 * data for a report
-	 * 
+	 *
 	 * @return A string of SQL used to get the summary data from the database
 	 */
 	public PreparedStatement getChartSqlPreparedStatement(Connection conn,
@@ -148,31 +148,31 @@ public interface ChartInfo {
 
 	/**
 	 * Affects the LIMIT SQL clause, i.e. return a percentage of the total rows
-	 * 
+	 *
 	 * @see getRangeDirection()
 	 */
 	public int getRangePercent();
-	
+
 	public void setRangePercent(int rangePercent);
 
 	/**
 	 * True represents the top of the range, false the bottom. so a range
 	 * direction of true and a range percent of 25% would mean return the top
 	 * 25% of rows, i.e. the upper quartile
-	 * 
+	 *
 	 * @see getRangePercent()
 	 */
 	public boolean getRangeDirection();
 
 	public void setRangeDirection(boolean rangeDirection);
-	
+
 	/**
 	 * Return true if this chart can be represented with a date/time x-axis
 	 */
 	public boolean isTimeSeries() throws CodingErrorException;
-	
+
 	public static final boolean UPPER_RANGE = true;
-	
+
 	public static final boolean LOWER_RANGE = false;
 
 	/**
@@ -180,5 +180,5 @@ public interface ChartInfo {
 	 *         to a summary
 	 */
 	public BaseReportInfo getReport();
-	
+
 }

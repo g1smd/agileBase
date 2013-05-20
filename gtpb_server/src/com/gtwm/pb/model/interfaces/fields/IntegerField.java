@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ public interface IntegerField extends BaseField {
 	 * Returns a set of distinct values that are stored for this field in the
 	 * field's parent table. Useful for displaying a lookup / combo box of
 	 * values for entry
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             if the text field type doesn't support lookups. Currently,
 	 *             BigTextFieldDefn doesn't
@@ -88,7 +88,7 @@ public interface IntegerField extends BaseField {
 	 * Similar to getItems() but instead of returning values from the field's
 	 * parent table, returns them from the report passed in, filtered by the
 	 * supplied filter map. An empty map can be used for no filtering.
-	 * 
+	 *
 	 * @param filterValues
 	 *            A filter map in the same format as that passed to
 	 *            ReportDataInfo.getReportDataRows

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -21,10 +21,10 @@
     <tr>
       <td>$user.getForename() $user.getSurname()<BR>$user.getUserName()</td>
       <td>
-			        <input type=checkbox 
-			         name="$user.getInternalUserName()" 
-       	  fn_checked="assign_user_to_role" 
-         fn_unchecked="remove_user_from_role" 
+			        <input type=checkbox
+			         name="$user.getInternalUserName()"
+       	  fn_checked="assign_user_to_role"
+         fn_unchecked="remove_user_from_role"
          #if($roleMembers.contains($user))checked#end
          gtpb_internalrolename="$sessionRole.getInternalRoleName()"
          gtpb_internalusername="$user.getInternalUserName()"

@@ -1,4 +1,4 @@
-## For each child tab of the table of the current record, 
+## For each child tab of the table of the current record,
 ## show whether related data exists.
 ## Output JSON
 #set($table = $sessionData.getTable())

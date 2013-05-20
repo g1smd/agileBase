@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@
   <script type="text/javascript" src="resources/wait/jquery.ajaxmanager.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
   <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
-  <script type="text/javascript" src="customisations/$viewTools.cleanString($companyName)/modalFrameworkCustomisations.js"></script>      
+  <script type="text/javascript" src="customisations/$viewTools.cleanString($companyName)/modalFrameworkCustomisations.js"></script>
   <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
   <script type="text/javascript" src="resources/tabs/tabs.js"></script>
   <script type="text/javascript">
@@ -70,7 +70,7 @@
     Error: no action called $actionName was found in the module $module or table $table<p>
 	Available actions are $moduleActions
   #end
-  
+
 </body>
 </html>
 

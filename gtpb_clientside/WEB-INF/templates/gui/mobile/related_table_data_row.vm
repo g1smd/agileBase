@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@
     #end
 	#parse('gui/resources/input/input.vm')<br>
 	#if($address.lastKey().equals($field))
-		<script langauge="JavaScript">
+		<script type="text/javascript">
 		  loadMap("$tableDataRow.get($field).toString()");
 		</script>
 		    #set($partOfAddress = false)
@@ -43,11 +43,11 @@
 	#end
   #else
 	#set($fieldCategory = $field.getFieldCategory())
-	#if($fieldCategory !='SEPARATOR') 
+	#if($fieldCategory !='SEPARATOR')
 		#if($field.getClass().getSimpleName().equals("RelationFieldDefn"))
-			<span class="fieldname capitalised">$field.getSimplifiedFieldName()</span>: 
+			<span class="fieldname capitalised">$field.getSimplifiedFieldName()</span>:
 		#else
-			<span class="fieldname capitalised">$field</span>: 
+			<span class="fieldname capitalised">$field</span>:
 		#end
 		#parse('gui/resources/input/input.vm')<br>
 	#end

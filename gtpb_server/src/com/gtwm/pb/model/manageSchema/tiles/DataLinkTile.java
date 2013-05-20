@@ -14,7 +14,7 @@ public class DataLinkTile extends AbstractTile implements TileDataLinkInfo {
 
 	private DataLinkTile() {
 	}
-	
+
 	public DataLinkTile(String colour, BaseReportInfo report, String icon) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
@@ -38,8 +38,8 @@ public class DataLinkTile extends AbstractTile implements TileDataLinkInfo {
 	}
 
 	public void setReport(BaseReportInfo report) {
-		this.report = report;		
+		this.report = report;
 	}
-	
+
 	private BaseReportInfo report = null;
 }

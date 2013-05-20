@@ -3,7 +3,7 @@ $(document).ready(function() {
   $("#report_selection input:checked").each(function() {
     addRemoveForm(this);
   });
-  
+
   // Add/remove forms from form selector on click
   $(".report_selection input").change(function() {
     var jqCheckbox = $(this);
@@ -38,7 +38,7 @@ $(document).ready(function() {
     }
 	return false;
   });
-  
+
   $(".report_selection_header input").change(function(event) {
 	var jqRadio = $(this);
 	var internalTableName = jqRadio.attr("id").replace("legend_","");
@@ -49,7 +49,7 @@ $(document).ready(function() {
 	});
 	return false;
   });
-	  
+
 });
 
 function fMobileDevice() {
@@ -67,7 +67,7 @@ function addRemoveForm(checkboxElement) {
 	var checked = "";
 	if (jqCheckbox.attr("sessiontable") == "true") {
 	  checked = "checked";
-	} 
+	}
     var legendElement = $("<input type='radio' name='form_radio' id='legend_" + internalTableName + "' " + checked + " />");
     $("#report_selection_header").append(legendElement);
     var labelElement = $("<label for='legend_" + internalTableName + "' >" + simpleTableName + "&nbsp;</label>")

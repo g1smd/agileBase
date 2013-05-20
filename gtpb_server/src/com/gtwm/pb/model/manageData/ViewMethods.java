@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -95,7 +95,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	/**
 	 * Create and initialise the viewMethods object that'll be used by templates
 	 * to display the application
-	 * 
+	 *
 	 * @param request
 	 *          Allows methods to get session data, also used when we need to know
 	 *          the current user
@@ -382,7 +382,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 		AppUserInfo user = this.getLoggedInUser();
 		return this.databaseDefn.getDataManagement().getCompanyComments(this.request, user, rowLimit);
 	}
-	
+
 	public SortedSet<CommentInfo> getComments(BaseField field, int rowId) throws SQLException,
 			DisallowedException, ObjectNotFoundException, CantDoThatException {
 		if (field == null) {

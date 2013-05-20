@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -30,19 +30,19 @@ public interface ReportFieldInfo extends Comparable<ReportFieldInfo> {
      * Return the actual field object this class wraps around - use this to get the field properties
      */
     public BaseField getBaseField();
-    
+
     /**
      * Shortcut to getBaseField.getFieldName()
      * @see com.gtwm.pb.model.interfaces.fields.BaseField#getFieldName()
      */
     public String getFieldName();
-    
+
     /**
      * Shortcut to getBaseField().getFieldDescription()
      * @see com.gtwm.pb.model.interfaces.fields.BaseField#getFieldDescription()
      */
     public String getFieldDescription();
-    
+
     /**
      * Shortcut to getBaseField().getInternalFieldName()
      * @see com.gtwm.pb.model.interfaces.fields.BaseField#getInternalFieldName()
@@ -53,7 +53,7 @@ public interface ReportFieldInfo extends Comparable<ReportFieldInfo> {
      * When a field is added to a report, it either gets added from a table or from another report. If from a
      * table, you can get the table by using getBaseField().getTableContainingField(). If from a report, you
      * can use this method to return that report
-     * 
+     *
      * @return The report that the field comes from, if a report
      * @throws CantDoThatException
      *             If field is from a table not a report
@@ -70,11 +70,11 @@ public interface ReportFieldInfo extends Comparable<ReportFieldInfo> {
      *         returned by getReportFieldIsFrom(), if the field is from a report not a table
      */
     public BaseReportInfo getParentReport();
-    
+
     /**
      * Report fields are sorted by field index
      */
     public void setFieldIndex(Integer fieldIndex);
-    
+
     public Integer getFieldIndex();
 }

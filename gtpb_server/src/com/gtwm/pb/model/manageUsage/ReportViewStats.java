@@ -11,13 +11,13 @@ public class ReportViewStats implements ReportViewStatsInfo {
 		this.percentageIncrease = 0;
 		this.userStats = null;
 	}
-	
+
 	public ReportViewStats(int averageViews, int percentageIncrease, SortedSet<UserReportViewStatsInfo> userStats) {
 		this.averageViews = averageViews;
 		this.percentageIncrease = percentageIncrease;
 		this.userStats = userStats;
 	}
-	
+
 	public int getAverageViews() {
 		return this.averageViews;
 	}
@@ -31,8 +31,8 @@ public class ReportViewStats implements ReportViewStatsInfo {
 	}
 
 	private final int averageViews;
-	
+
 	private final int percentageIncrease;
-	
+
 	private final SortedSet<UserReportViewStatsInfo> userStats;
 }

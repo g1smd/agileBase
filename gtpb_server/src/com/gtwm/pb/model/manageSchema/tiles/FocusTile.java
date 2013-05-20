@@ -10,11 +10,11 @@ public class FocusTile extends AbstractTile implements TileFocusInfo {
 
 	private FocusTile() {
 	}
-	
+
 	public FocusTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
 		super.setTileType(TileType.FOCUS);
 	}
-	
+
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import java.util.SortedSet;
 public interface TextValue extends BaseValue {
 
 	public String toXmlString();
-	
+
 	public SortedSet<String> toTags();
 
 	public boolean isEmailAddress();
@@ -50,15 +50,15 @@ public interface TextValue extends BaseValue {
   * web browsers load it properly from a link
   */
 	public String getFormattedURL();
-	
+
 	/**
 	 * Return a 'preview' version of the URL similar, cutting out bits that browser address bars sometimes grey out.
-	 * 
+	 *
 	 * E.g. given http://www.google.com?q=my%20search
-	 * 
+	 *
 	 * return google.com
 	 */
 	public String getShortURL();
-	
+
 	public boolean isPostcode();
 }

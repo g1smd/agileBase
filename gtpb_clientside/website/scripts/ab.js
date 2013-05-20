@@ -39,7 +39,7 @@ $(document).ready(function(){
 			return false;
 		} else {
 			return true;
-		} 
+		}
 	});
 	// just in time etc. tooltips
 	$("#just_in a").each(function(i) {
@@ -59,7 +59,7 @@ $(document).ready(function(){
 	  var id = $(this).attr("href");
 	  $(id).slideDown();
 	});
-}); 
+});
 
 function showSection(sectionName) {
 	$("#navigation").find("a").removeClass("current");

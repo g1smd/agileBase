@@ -8,10 +8,10 @@ if (requestURL.contains("appserver.")) {
 <html>
 	<head>
 		<title>agileBase</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
-	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
 	    <style>
 	    	@import url("/agileBase/website/styles/styles.css");
 		</style>
@@ -29,7 +29,7 @@ if (requestURL.contains("appserver.")) {
     </head>
     <body>
 		<div id="mobileLogin">
-			<img src="/agileBase/website/images/logo-agilebase.png"><br><br>
+			<img src="/agileBase/website/images/logo-agilebase.png" alt=""><br><br>
 			<% if(live) { %>
 				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } else { %>

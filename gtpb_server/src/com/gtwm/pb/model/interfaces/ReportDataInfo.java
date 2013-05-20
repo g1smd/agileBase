@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -51,7 +51,7 @@ public interface ReportDataInfo {
 	 *            will be thrown. This helps ensure app-only users can't see
 	 *            information entered by other users
 	 * @return Report data as ArrayList of ReportDataRow
-	 * @see http 
+	 * @see http
 	 *      ://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/ServletRequest
 	 *      .html#getParameterMap() HTTPServletRequest.getParameterMap generates
 	 *      the filterValues map
@@ -73,11 +73,11 @@ public interface ReportDataInfo {
 	 * definition. Usually code would call getReportDataRows instead, this
 	 * method is only useful in a few particular circumstances where more
 	 * control over the returned data is required
-	 * 
+	 *
 	 * @param selectField
 	 *            If selectField is null, prepare an SQL 'SELECT * FROM'
 	 *            otherwise prepare a 'SELECT DISTINCT selectField FROM'
-	 * 
+	 *
 	 * @see #getReportDataRows(Connection, Map, int) Please consider using this
 	 *      method instead as it is higher level
 	 */
@@ -90,9 +90,9 @@ public interface ReportDataInfo {
 	/**
 	 * Generate a SQL WHERE clause that will work on a report given a map of
 	 * filter values.
-	 * 
+	 *
 	 * @filterType whether to treat field filters as joined by ANDs or ORs
-	 * 
+	 *
 	 * @return A Map containing one entry. The string key is the WHERE clause
 	 *         (not containing the word 'WHERE') containing question marks for
 	 *         filter values. The value is an ordered list of filters that can
@@ -107,7 +107,7 @@ public interface ReportDataInfo {
 	 * Given a set of filters (from getWhereClause) and the PreparedStatement
 	 * for the report, match the filter values to the parameters in the
 	 * statement and set the values accordingly.
-	 * 
+	 *
 	 * This method is public so that it can be used by summary reports as well
 	 */
 	public PreparedStatement fillInFilterValues(List<ReportQuickFilterInfo> filtersUsed,

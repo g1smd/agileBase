@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -150,13 +150,13 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * There should be one DatabaseInfo object per agileBase application instance.
 	 * This constructor generates it. It bootstraps the application. All schema
 	 * objects are loaded into memory from the pervasive store.
-	 * 
+	 *
 	 * The authentication manager (AuthManagerInfo), store of all users, roles and
 	 * permissions is loaded too.
-	 * 
+	 *
 	 * Finally, the data manager (a DataManagementInfo object) is created and
 	 * initialised
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If more than one Authenticator was found in the database
 	 */
@@ -1101,7 +1101,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 	}
-	
+
 	public void uploadCustomReportTemplate(HttpServletRequest request, BaseReportInfo report,
 			String templateName, List<FileItem> multipartItems) throws DisallowedException,
 			ObjectNotFoundException, CantDoThatException, FileUploadException {
@@ -1413,7 +1413,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	 * field. The other addField function is called by this and handles the
 	 * specifics of database and in-memory addition as well as adding the field to
 	 * the table's default report.<br>
-	 * 
+	 *
 	 * @see #addField(TableInfo, BaseField) addField(TableInfo, BaseField) does
 	 * the specifics
 	 */
@@ -1758,7 +1758,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 			}
 		}
 	}
-	
+
 	public void convertIntegerToDecimal(IntegerField integerField, int precision) throws CantDoThatException {
 		DecimalFieldOptions fieldOptions = new DecimalFieldOptions();
 		fieldOptions.setUnique(integerField.getUnique());
@@ -1870,12 +1870,12 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Adds field to relational database but not to object database
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If an internal coding bug exists caused, specifically a field
 	 *           type passed is a VARCHAR field but the type is not recognised as
 	 *           a text field
-	 * 
+	 *
 	 * @see #addFieldDbAction(Connection, String, String, String, boolean)
 	 * @see #addForeignKeyDbAction(Connection, String, RelationField)
 	 * @see #addIndexDbAction(Connection, String, String)
@@ -1943,7 +1943,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Actually generates and executes the SQL for adding a field.
-	 * 
+	 *
 	 * @see #addField(TableInfo, TextField) An example function that calls this
 	 */
 	private void addFieldDbAction(Connection conn, String internalTableName,
@@ -2003,7 +2003,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/*
 	 * The top level function to call to add a database foreign key relation
-	 * 
+	 *
 	 * @see addField(String, String, String, String, Map<String, String>)
 	 * Equivalent to addField but for relation fields, not normal fields
 	 */
@@ -2070,7 +2070,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Test whether field can legally be removed from a table
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           Thrown if the field shouldn't be removed from it's parent table,
 	 *           with a message explaining why not
@@ -2430,7 +2430,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		return false;
 	}
-	
+
 	private boolean  tableJoinChecks(JoinClauseInfo join, SimpleReportInfo report, TableInfo checkTable) throws CantDoThatException, CodingErrorException {
 		Set<JoinClauseInfo> reportJoins = report.getJoins();
 		Set<ReportFieldInfo> reportFields = report.getReportFields();
@@ -2477,7 +2477,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 		}
 		return false;
 	}
-	
+
 	public void removeJoinFromReport(HttpServletRequest request, Connection conn,
 			SimpleReportInfo report, JoinClauseInfo join) throws DisallowedException, SQLException,
 			CantDoThatException, CodingErrorException, ObjectNotFoundException {
@@ -2676,7 +2676,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 	/**
 	 * Return a set of all reports that would have to be modified before dropping
 	 * the given report, i.e. those that join to this one
-	 * 
+	 *
 	 * TODO: some overlap between this and
 	 */
 	private SortedSet<BaseReportInfo> getDependentReports(SimpleReportInfo report,
@@ -3440,7 +3440,7 @@ public final class DatabaseDefn implements DatabaseInfo {
 
 	/**
 	 * Generates and executes the SQL to add a single-column index
-	 * 
+	 *
 	 * @param conn
 	 *          Database connection to work with
 	 * @param internalTableName

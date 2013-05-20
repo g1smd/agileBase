@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 <input type="hidden" name="customstringvalue" value="$mobile_pane2_selection">
 
 ## Report
-<button #if($mobile_pane2_selection == "report") disabled #end onclick="document.footerform.customstringvalue.value='report'; submit();">report</button> 
+<button #if($mobile_pane2_selection == "report") disabled #end onclick="document.footerform.customstringvalue.value='report'; submit();">report</button>
 ## Summary
 #set($summary = $report.getChart())
 #set($summary_enabled = false)
@@ -37,6 +37,6 @@
   #set($summary_enabled = false)
 #end
 ## Charts don't work on mobile version yet
-##<button #if(!$summary_enabled) disabled #end onclick="document.footerform.customstringvalue.value='summary'; submit();">charts</button> 
+##<button #if(!$summary_enabled) disabled #end onclick="document.footerform.customstringvalue.value='summary'; submit();">charts</button>
 </form>
 </div>

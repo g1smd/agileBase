@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@ package com.gtwm.pb.model.interfaces.fields;
 
 /**
  * A field value. Subclasses will implement numeric, string, date etc. values.
- * 
+ *
  * All values should override toString in a meaningful way. toString should
  * never return null, as the Velocity templating language doesn't deal well with
  * nulls. Instead, an empty string should be returned
- * 
+ *
  * Subclasses should however allow null values to be set in the constructor,
  * i.e. take an object which could be null rather than a primitive type
  */

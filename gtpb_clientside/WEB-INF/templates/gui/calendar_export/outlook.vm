@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 <request>
   #parse('gui/customisations/wizard_result.vm')
   <okTemplate>gui/calendar_export/calendar_export_ok</okTemplate>
-  <htmlContent><![CDATA[        
+  <htmlContent><![CDATA[
     <form style="padding:10px;">
       <h1>Setup instructions</h1>
       Once you've carried out these steps once, you won't need to again. Outlook will update from agileBase when you press Send/Receive.
@@ -44,6 +44,6 @@
         </ol>
       </form>
     ]]>
-  </htmlContent>  
+  </htmlContent>
   <caption>Export report data to Google calendar</caption>
 </request>

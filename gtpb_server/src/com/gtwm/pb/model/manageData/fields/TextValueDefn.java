@@ -52,7 +52,7 @@ public class TextValueDefn implements TextValue {
 			return Naming.makeValidXML(this.textValue);
 		}
 	}
-	
+
 	public SortedSet<String> toTags() {
 		SortedSet<String> tags = new TreeSet<String>();
 		if (this.textValue == null) {
@@ -173,9 +173,9 @@ public class TextValueDefn implements TextValue {
 			regexIntl += ")";
 			regexIntl += "([x\\#]\\d{3,4})?";        // optional "x" or "#" and extension
 			regexIntl += "$";
-			if (this.textValue.trim().matches(regexIntl) 
+			if (this.textValue.trim().matches(regexIntl)
 					&& !this.textValue.trim()  // Don't match country 44 as International
-					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)?4[\\s\\(\\)]*4.*") 
+					.matches("\\(?(?:0(?:0|11)\\)?\\s?\\(?|\\+)?4[\\s\\(\\)]*4.*")
 					&& !this.textValue.trim()  // Reserve 011+8digits as always GB number
 					.matches("\\(?011([\\s\\(\\)]*\\d){8}")) {
 				return true;
@@ -194,7 +194,7 @@ public class TextValueDefn implements TextValue {
 			return "http://" + this.textValue.trim();
 		}
 	}
-	
+
 	public String getShortURL() {
 		String shortUrl = this.textValue.trim();
 		shortUrl = shortUrl.replaceAll("^.*\\/\\/", "");

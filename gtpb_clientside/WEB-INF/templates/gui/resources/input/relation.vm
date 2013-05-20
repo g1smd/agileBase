@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -36,9 +36,9 @@
 #if($globalEdit)##
 	#set($inputId="${internalFieldName}-globalEdit")##
 #elseif($userCanEdit)
-	#set($inputId="${internalFieldName}-edit")##	
+	#set($inputId="${internalFieldName}-edit")##
 #else
-	#set($inputId="$internalFieldName")##	
+	#set($inputId="$internalFieldName")##
 #end
 ## Get an estimate of row count in the related table
 ## to see if we can use a dropdown instead of a relation picker
@@ -122,13 +122,13 @@
 	#end
   </div>##
   ## TODO: move script to head. In fact, check if it's still necessary for recent IEs
-  ##<script language="JavaScript" src="resources/picker.js"></script>  
+  ##<script type="text/javascript" src="resources/picker.js"></script>
   <!--[if IE]>
     <style>
       /* this block is overwriting styles below it.  Appears that in IE (v7 anyway) that
          higher style blocks take precidence over blocks below.  Of course, in the sheet
          itself, styles still cascade top to bottom */
-         
+
       div.relation_picker div#toolbar {
         height:24px;
         width:auto;
@@ -136,7 +136,7 @@
 
     </style>
   <![endif]-->
-  
+
   #if(($field.getNotNull()) && ($tableDataRow.get($field).isNull()) && (!$globalEdit))
     <span class="mandated">* mandatory</span>
   #end

@@ -234,7 +234,7 @@ function initialiseSlides() {
 
 /**
  * Called by fRelationPickers() in tabs.js when a relation is changed
- * 
+ *
  * @param oHidden
  *          The hidden field containing the row ID of the new selection and
  *          other details
@@ -335,7 +335,7 @@ function initialiseDependencies() {
 /*
  * For any table (represented by a slide), there can be dependent tables that
  * link to it. Show these as slides to the right
- * 
+ *
  * Return true if there were any dependent slides
  */
 function loadDependentSlides() {

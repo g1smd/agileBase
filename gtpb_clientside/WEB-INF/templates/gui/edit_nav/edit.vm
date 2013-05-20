@@ -70,8 +70,8 @@
               #foreach($report in $dependentTable.getReports())
                 #if(($view.loggedInUserAllowedToViewReport($report)) && ($report.getReportBaseFields().contains($primaryKey)) && (!$report.getReportName().contains("dbvcalc")) && (!$report.getReportName().contains("dbvcrit")))
                   <div class="dependent_table" internaltablename="$dependentTable.getInternalTableName()" id="dependent_table_${internalTableName}_${dependentTable.getInternalTableName()}_$rowId">
-                    <img src="resources/edit_nav/new_flat_greyscale.png" class="go_new" title="add $dependentTable.getSingularName()" />
-                    <img src="resources/edit_nav/right.png" class="go_right" title="view/edit $dependentTable.getSimpleName()" />
+                    <img src="resources/edit_nav/new_flat_greyscale.png" class="go_new" title="add $dependentTable.getSingularName()" alt="" />
+                    <img src="resources/edit_nav/right.png" class="go_right" title="view/edit $dependentTable.getSimpleName()" alt="" />
                     <h1>$dependentTable.getSimpleName() <span class="count"></span></h1>
                     <div class="record_snippets">
                     </div>
@@ -88,8 +88,8 @@
               #set($referencedReport = $field.getReferencedReport())
               #set($referencedTable = $referencedReport.getParentTable())
               <div class="dependent_table cross_reference" internaltablename="$referencedTable.getInternalTableName()" id="dependent_table_${internalTableName}_${referencedTable.getInternalTableName()}_${field.getInternalFieldName()}_$rowId">
-                <img src="resources/edit_nav/new_flat_greyscale.png" class="go_new" title="add $field" />
-                <img src="resources/edit_nav/right.png" class="go_right" title="view/edit $field" />
+                <img src="resources/edit_nav/new_flat_greyscale.png" class="go_new" title="add $field" alt="" />
+                <img src="resources/edit_nav/right.png" class="go_right" title="view/edit $field" alt="" />
                 <h1>$field <span class="count"></span></h1>
                 <div class="record_snippets">
                 </div>
@@ -101,12 +101,12 @@
       </section>
       <div class="slide_controls">
         <div class="button_group">
-          <button name="new" id="control_new" internaltablename="$internalTableName"><img src="resources/toolbar/new.png" /> new</button>
-          <button name="clone" id="control_clone" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/clone.png" /> clone</button>
-          <button name="delete" id="control_delete" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/delete.png" /> delete</button>
+          <button name="new" id="control_new" internaltablename="$internalTableName"><img src="resources/toolbar/new.png" alt="" /> new</button>
+          <button name="clone" id="control_clone" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/clone.png" alt="" /> clone</button>
+          <button name="delete" id="control_delete" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/delete.png" alt="" /> delete</button>
         </div>
         <div class="button_group">
-          <button name="print" id="control_print" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/print_only.png" /> print</button>
+          <button name="print" id="control_print" internaltablename="$internalTableName" rowid="$rowId"><img src="resources/toolbar/print_only.png" alt="" /> print</button>
         </div>
       </div>
     </div> <!-- slide -->

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -48,11 +48,11 @@ public interface ViewToolsInfo {
 	public boolean isNull(Object o);
 
 	public boolean isInteger(String string);
-	
+
 	/**
 	 * Turn a number such as 1023.54 into text such as one thousand and twenty
 	 * three point five four, using the ICU tools
-	 * 
+	 *
 	 * @see http://icu.sourceforge.net/
 	 */
 	public String spelloutDecimal(double number);
@@ -74,7 +74,7 @@ public interface ViewToolsInfo {
 	 * Returns the current date in the form dd/mm/yyyy
 	 */
 	public String getDatestampString();
-	
+
 	/**
 	 * Return the name of the current timezone, as recognised by the server
 	 */
@@ -84,14 +84,14 @@ public interface ViewToolsInfo {
 	 * Because velocity doesn't allow you to access constant values, you can't
 	 * use Calendar.DAY_OF_MONTH etc. directly so use this method to access them
 	 * instead.
-	 * 
+	 *
 	 * In the template, you would use something like this to get the current
 	 * year for example:
-	 * 
+	 *
 	 * #set($calendar = $viewTools.getCalendar())
-	 * 
+	 *
 	 * #set($year = $calendar.get($viewTools.getCalendarConstant("YEAR")))
-	 * 
+	 *
 	 * @param constantName
 	 *            String representation of one of the calendar constants, e.g.
 	 *            DAY_OF_MONTH, HOUR, MINUTE
@@ -122,10 +122,10 @@ public interface ViewToolsInfo {
 	 * city, postcode, telephone number'. The returned map would be of fields
 	 * 'address 1, address 2, city, postcode' and their corresponding values. If
 	 * no address is detected, an empty map is returned
-	 * 
+	 *
 	 * Note: obviously, detecting an address from just a set of fields and
 	 * values isn't going to be 100% accurate
-	 * 
+	 *
 	 * @see ViewMethodsInfo#getTableDataRow()
 	 */
 	public SortedMap<BaseField, BaseValue> getAddress(Map<BaseField, BaseValue> tableDataRow);
@@ -133,7 +133,7 @@ public interface ViewToolsInfo {
 	/**
 	 * Provides information helpful to the UI when displaying the section to
 	 * create a field
-	 * 
+	 *
 	 * @return A set of all field types that can be created, including
 	 *         information necessary to display the options relevant to each
 	 *         type on screen
@@ -146,7 +146,7 @@ public interface ViewToolsInfo {
 	 * Log a message to file - can be used for debugging purposes. If a string
 	 * is passed, then that string will be logged, if another object is passed
 	 * then that object's toString() will be logged
-	 * 
+	 *
 	 * The log file is located at [tomcat root]/logs/catalina.out
 	 */
 	public void log(Object itemToLog);
@@ -159,7 +159,7 @@ public interface ViewToolsInfo {
 	/**
 	 * Stops the timer specified and logs the time spent since startTimer was
 	 * called
-	 * 
+	 *
 	 * @see log(Object)
 	 */
 	public void stopTimer(String timerName);
@@ -180,7 +180,7 @@ public interface ViewToolsInfo {
 
 	/**
 	 * Escape for use in a mailo tag or URL
-	 * 
+	 *
 	 * @param string
 	 *            e.g. http://appserver.agilebase.co.uk/agileBase/AppController
 	 *            .servlet
@@ -195,9 +195,9 @@ public interface ViewToolsInfo {
 	/**
 	 * Return a tool which can be used to do floating point maths. Velocity
 	 * can't do this by default.
-	 * 
+	 *
 	 * An example use would be $viewTools.getMathTool().add(1.4,2.3)
-	 * 
+	 *
 	 * @see http://jakarta.apache.org/velocity/tools/generic/MathTool.html See
 	 *      the Velocity documentation for full details
 	 */
@@ -232,7 +232,7 @@ public interface ViewToolsInfo {
 	 * getBrowserName(). Versions tested are specific to the browser. So for
 	 * example to test for Firefox >= 1.5, you'd pass up "1.5" but to test for
 	 * IE 7, you'd pass up "7"
-	 * 
+	 *
 	 * NB The string you pass has to represent a decimal number. So to test for
 	 * version 1.5.0.1, you'd pass up "1.501". A web page such as
 	 * http://www.ericgiguere.com/tools/http-header-viewer.html can show you
@@ -255,13 +255,13 @@ public interface ViewToolsInfo {
 	/**
 	 * The map returned can be used for creating report filters in templates.
 	 * use something like:
-	 * 
+	 *
 	 * $filters = $viewTools.getNewFilterMap()
-	 * 
+	 *
 	 * $filters.put($filterField, "filterValue")
-	 * 
+	 *
 	 * then pass $filters in to viewMethods.getReportDataRows(...)
-	 * 
+	 *
 	 * @return An empty map of BaseField to String objects
 	 */
 	public Map<BaseField, String> getNewFilterMap();
@@ -274,9 +274,9 @@ public interface ViewToolsInfo {
 	public SortedMap<String, Object> getNewSortedStringObjectMap();
 
 	public SortedMap<ModuleInfo, Object> getNewSortedModuleObjectMap();
-	
+
 	public SortedSet<CalendarRowInfo> getNewSortedCalendarRowSet();
-	
+
 	public CalendarRowInfo getNewCalendarRow(BaseReportInfo report, DataRowInfo reportDataRow) throws CodingErrorException, CantDoThatException;
 
 	/**
@@ -292,7 +292,7 @@ public interface ViewToolsInfo {
 	public void reverseList(List list);
 
 	/**
-	 * 
+	 *
 	 * Return the list having been reordered into ascending order
 	 */
 	public void sortList(List list);
@@ -300,8 +300,8 @@ public interface ViewToolsInfo {
 	/**
 	 * Return a map of parameters to values made in the current HTTP request, as
 	 * returned by HttpServletRequest.getParameterMap()
-	 * 
-	 * @see http 
+	 *
+	 * @see http
 	 *      ://java.sun.com/j2ee/sdk_1.3/techdocs/api/javax/servlet/ServletRequest
 	 *      .html#getParameterMap() HttpServletRequest.getParameterMap()
 	 */
@@ -309,7 +309,7 @@ public interface ViewToolsInfo {
 
 	/**
 	 * Return the serverside path of the root of the application
-	 * 
+	 *
 	 * NB for security you should be aware this is the serverside path, e.g.
 	 * /usr/local/tomcat/webapps/agileBase/
 	 */
@@ -330,7 +330,7 @@ public interface ViewToolsInfo {
 
 	/**
 	 * Similar to postgresql's lpad function
-	 * 
+	 *
 	 * @see http://www.postgresql.org/docs/8.1/static/functions-string.html See
 	 *      lpad in postgresql doc
 	 */
@@ -350,11 +350,11 @@ public interface ViewToolsInfo {
 	/**
 	 * Return a the String representation of every object in the collection,
 	 * with the joiner string inbetween them, e.g.
-	 * 
+	 *
 	 * a collection of [Object1 Object2 Object3]
-	 * 
+	 *
 	 * and joiner ", " would give
-	 * 
+	 *
 	 * "Object1, Object2, Object3"
 	 */
 	public String joinWith(Collection<Object> collection, String joiner);
@@ -368,14 +368,14 @@ public interface ViewToolsInfo {
 	/**
 	 * Replace &amp; with &, &lt; and &gt; with < and > to allow HTML tags to
 	 * work.
-	 * 
+	 *
 	 * AgileBase replaces < and > with the two equivalents when saving data
 	 */
 	public String unencodeHtml(String string);
 
 	/**
 	 * Tells you whether the given template exists
-	 * 
+	 *
 	 * @param templateFilename
 	 *            e.g. "gui/customisations/companya/applications.vm"
 	 */
@@ -383,7 +383,7 @@ public interface ViewToolsInfo {
 
 	/**
 	 * Return a list of files in the specified folder.
-	 * 
+	 *
 	 * @param folder
 	 *            Folder name relative to agileBase root, e.g.
 	 *            "resources/icons/applications/tango"
@@ -400,7 +400,7 @@ public interface ViewToolsInfo {
 	 * against. Currently a github URL
 	 */
 	public String getCommitUrl() throws IOException, CantDoThatException;
-	
+
 	/**
 	 * Return fuller details of the last commit that the app was built with
 	 */
@@ -410,7 +410,7 @@ public interface ViewToolsInfo {
 	 * Return an MD5 digest of the input
 	 */
 	public String md5(String input);
-	
+
 	/**
 	 * Causes an exception to be thrown for test purposes - intended for testing
 	 * of error handling

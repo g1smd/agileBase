@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -118,7 +118,7 @@
     	  #set($moduleActions = $view.getModuleActions($internalModuleName))
     	  #if(!$app_launcher)<h2>#end
     	    #if($iconPath.contains(".png"))
-    	      <span><img src="resources/icons/applications/tango/$module.getIconPath()"/>$module</span> ## png icon
+    	      <span><img src="resources/icons/applications/tango/$module.getIconPath()" alt="" />$module</span> ## png icon
     	    #else
     	      <span>
     	        <i class="fonticon icon-large $iconPath" data-appid="$iconPath"></i>
@@ -139,7 +139,7 @@
     	  #end ## end if there are module actions
     	  #if(!$app_launcher)
     	  <ul parent="$internalModuleName" class="inner">
-    	  #foreach($report in $visibleModuleReports) 
+    	  #foreach($report in $visibleModuleReports)
     		#set($table=$report.getParentTable())
     		<li id="$table.getInternalTableName()$report.getInternalReportName()">
     		  <div class="module-tree-item-wrap">

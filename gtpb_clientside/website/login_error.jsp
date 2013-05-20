@@ -1,6 +1,6 @@
-<!-- 
+<!--
 ##  Copyright 2010 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -33,13 +33,13 @@ Thread.sleep(3000);
   <div class="container big">
     <div class="row abNav">
       <div class="span2 home">
-        <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" /></a>
+        <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
         <div class="arrow"></div>
       </div>
     </div>
     <div id="content">
     <div class="alert alert-block">
-      <i class="icon-large icon-exclamation-sign"></i> 
+      <i class="icon-large icon-exclamation-sign"></i>
       Login failed, please <a href="/agileBase/AppController.servlet?return=boot">return to the login page</a>
     </div>
     <p>If you've forgotten your password, please use the 'Can't log in' link in the login page to reset it

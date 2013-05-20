@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -22,10 +22,10 @@ import java.util.Calendar;
 /**
  * agileBase keeps a version history of files uploaded into a file field for a
  * particular record.
- * 
+ *
  * This interface represents one file version, containing the important
  * information for display and to allow access to it.
- * 
+ *
  * @see FileField Used by FileField
  */
 public interface FileVersion {
@@ -34,10 +34,10 @@ public interface FileVersion {
 	 * Return the URL for the file that will let it be downloaded
 	 */
 	public String getFileName();
-	
+
 	/**
 	 * Return the date that this file was either uploaded or replaced by a file with the same name
 	 */
-	public Calendar getLastModified(); 
+	public Calendar getLastModified();
 
 }

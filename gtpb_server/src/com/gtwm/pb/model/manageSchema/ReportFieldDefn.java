@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -142,7 +142,7 @@ public class ReportFieldDefn extends AbstractReportField implements ReportFieldI
 	}
 
 	private BaseField baseField = null;
-	
+
 	private volatile int hashCode = 0;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportFieldDefn.class);

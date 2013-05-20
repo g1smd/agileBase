@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-  <script src="resources/jquery.js"></script>
-  <script src="resources/preview/argument.js"></script>
-  <script src="resources/pane3_amalgam.js"></script>
+  <script type="text/javascript" src="resources/jquery.js"></script>
+  <script type="text/javascript" src="resources/preview/argument.js"></script>
+  <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
   <link rel="stylesheet" type="text/css" href="resources/pane3_amalgam.css" />
   <link rel="stylesheet" type="text/css" href="resources/preview/argument.css" />
 </head>

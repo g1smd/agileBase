@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,10 +33,10 @@ public interface ReferencedReportDataField extends BaseField {
 	 * Return the report that contains the data to display. The report must
 	 * contain this field's parent table's primary key (ID) field. Data from all
 	 * rows where the IDs match will be coalesced and returned
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             if the list of candidate reports hasn't been set yet
 	 */
 	public BaseReportInfo getReferencedReport() throws CantDoThatException;
-	
+
 }

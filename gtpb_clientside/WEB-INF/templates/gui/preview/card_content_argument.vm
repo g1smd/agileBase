@@ -8,5 +8,5 @@
     #end
     #set($targetUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue")
     #set($srcUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$fieldId/$fileValue.500.$fileValue.getPreviewExtension()")
-    <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" />
+    <img class="image" data-bigsrc="$targetUrl" src="$srcUrl" alt="" />
   #end

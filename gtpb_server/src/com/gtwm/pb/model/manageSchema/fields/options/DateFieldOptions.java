@@ -1,7 +1,7 @@
 package com.gtwm.pb.model.manageSchema.fields.options;
 
 public class DateFieldOptions extends BasicFieldOptions {
-	
+
 	public boolean getDefaultToNow() {
 		return defaultToNow;
 	}
@@ -35,10 +35,10 @@ public class DateFieldOptions extends BasicFieldOptions {
 	}
 
 	private boolean defaultToNow = false;
-	
+
 	private Integer maxAgeYears = null;
-	
+
 	private Integer minAgeYears = null;
-	
+
 	private Integer dateResolution = null;
 }

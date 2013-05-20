@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@ package com.gtwm.pb.model.manageSchema;
 
 /**
  * INNER, LEFT_OUTER, RIGHT_OUTER and FULL_OUTER are the standard SQL join types.
- * 
+ *
  * NONE means don't do 'table 1 join table 2 on condition', but just 'table 1, table 2'. This has the effect
  * of including data in each row of table 2 for every row of table 1. e.g. if table 1 has 10 rows and table 2
  * 2, the join will result in 20 rows. This 'cross product' type of join is useful to use when table 2 has only one row. You
  * can include constants in calculations without having to hard code them. For example, table 2 could contain
  * a pay rate to be changed annually.
- * 
+ *
  * If NONE is used, the left table and field and right field are ignored, the only relevant part of the join
  * data is the right report or table
  */

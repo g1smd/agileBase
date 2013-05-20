@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -26,8 +26,8 @@ import com.gtwm.pb.util.Enumerations.QuickFilterType;
 public interface ReportQuickFilterInfo {
 
 	public BaseField getFilterField();
-	
+
 	public String getFilterValue();
-	
+
 	public QuickFilterType getFilterType();
 }

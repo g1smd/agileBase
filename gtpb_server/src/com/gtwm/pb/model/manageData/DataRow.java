@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -230,7 +230,7 @@ public class DataRow implements DataRowInfo {
 		}
 		return false;
 	}
-	
+
 	public Map<RelationField, List<DataRow>> getChildDataRows(DatabaseInfo databaseDefn,
 			Connection conn, HttpServletRequest request) throws SQLException,
 			ObjectNotFoundException, CodingErrorException {

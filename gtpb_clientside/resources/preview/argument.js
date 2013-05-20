@@ -111,7 +111,7 @@ function init() {
 	    container.addClass("zoomed");
 	    abCardScale = 1.0;
 	    setTimeout(function() {
-		    $(".container").not(container).addClass("unzoomed");	    	
+		    $(".container").not(container).addClass("unzoomed");
 	    }, 1000);
 	  }
 	  event.stopPropagation();

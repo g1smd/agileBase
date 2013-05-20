@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 ##
 <request>
 	<caption>Help Centre</caption>
-	#parse('gui/customisations/wizard_result.vm') 
+	#parse('gui/customisations/wizard_result.vm')
     <okTemplate>gui/help/end</okTemplate>
 	  <htmlContent><![CDATA[
       <style>
@@ -25,15 +25,15 @@
            width:85%;
            margin-top:50px;
          }
-         
+
         table#_choice_table td {
            text-align:center;
          }
-         
+
          table#_choice_table tr.labels td {
            padding-top:30px;
          }
-		 
+
 		 .helpfooter {
 		   vertical-align:bottom;
 		   padding: 5px;
@@ -41,29 +41,29 @@
 		   text-align:right;
 		 }
       </style>
-	  
+
   		<div style="padding:5px">
         <h1>Choose a link to get help</h1>
         <table id="_choice_table" border="0" cellpadding="0" cellspacing="0" align="center">
           <tr>
             <td>
-              <img src="resources/icons/help/book.png" />
+              <img src="resources/icons/help/book.png" alt="" />
             </td>
             <td>
-              <img src="resources/icons/help/questions.png" />
+              <img src="resources/icons/help/questions.png" alt="" />
             </td>
           </tr>
           <tr class="labels">
             <td>
               Read documentation<p>
-			  <a href="http://gtwebmarque.com/wikis/gtwm/index.php/Annotated_Screenshot" target="_blank" title="Quick start guide in the documentation wiki">Introductory tour</a> or 
+			  <a href="http://gtwebmarque.com/wikis/gtwm/index.php/Annotated_Screenshot" target="_blank" title="Quick start guide in the documentation wiki">Introductory tour</a> or
 			  <a href="http://gtwebmarque.com/wikis/gtwm/index.php/GT_portalBase" target="_blank" title="The documentation wiki">comprehensive guide</a>
             </td>
             <td>
               Send a question via the forum<p>
 			  <a href="http://www.agilebase.co.uk/forum" target="_blank">Visit forum</a>
             </td>
-          </tr>          
+          </tr>
         </table>
 		</div>
 		<div class="helpfooter">

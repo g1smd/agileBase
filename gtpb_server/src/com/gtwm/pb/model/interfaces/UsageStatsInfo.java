@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -46,7 +46,7 @@ public interface UsageStatsInfo {
 	/**
 	 * Return data that can be used to build a treemap of report view
 	 * statistics. Reports are grouped by module
-	 * 
+	 *
 	 * @return JSON formatted data suitable for use with the Infoviz toolkit, OR
 	 *         a plain String error message
 	 */
@@ -56,7 +56,7 @@ public interface UsageStatsInfo {
 	/**
 	 * Return module viewing stats, sorted by the total number of report views
 	 * per module
-	 * 
+	 *
 	 * @Deprecated No current UI templates use this. Functionality replaced by
 	 *             getTreeMapJSON()
 	 */
@@ -67,12 +67,12 @@ public interface UsageStatsInfo {
 	/**
 	 * Return raw data about the current company from the log tables, suitable
 	 * for exporting to a spreadsheet for example
-	 * 
+	 *
 	 * Format is a list of rows, each row consisting of a list of columns.
-	 * 
+	 *
 	 * Internal names such as internal report names in the log will be replaced
 	 * with user friendly names.
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.manageUsage.LogType See LogType for a list of
 	 *      allowed log types
 	 */
@@ -82,7 +82,7 @@ public interface UsageStatsInfo {
 	/**
 	 * Get raw stats about usage of a particular table - data changes or table
 	 * schema changes
-	 * 
+	 *
 	 * @param logType
 	 *            Can be DATA_CHANGE or TABLE_SCHEMA_CHANGE
 	 * @param rowLimit
@@ -95,7 +95,7 @@ public interface UsageStatsInfo {
 	/**
 	 * Get a list of reports that data from this table is included in along with
 	 * some overview stats about each report
-	 * 
+	 *
 	 * Columns for each row returned are: report, username, last access date,
 	 * total access count
 	 */
@@ -120,14 +120,14 @@ public interface UsageStatsInfo {
 	/**
 	 * Return counts of the total no. log entries per week, in order from oldest
 	 * to newest
-	 * 
+	 *
 	 * @param options
 	 *            For the schema change logs, the constant 1 means only return
 	 *            log entries that are to do with schema building. -1 means
 	 *            return those that are to do with demolishing, e.g. remove a
 	 *            field, remove a table. The parameter is ignored for other log
 	 *            types
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.manageUsage.LogType See LogType for a list of
 	 *      allowed log types
 	 */
@@ -136,7 +136,7 @@ public interface UsageStatsInfo {
 
 	/**
 	 * Returns a description of the last login time of the user
-	 * 
+	 *
 	 * e.g. '3 days ago'
 	 */
 	public String getLastLoginAge(AppUserInfo user) throws SQLException;

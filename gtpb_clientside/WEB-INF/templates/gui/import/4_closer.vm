@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -20,8 +20,8 @@
 
 #if(!$top_level_xml_element_set)<request>#end
   <caption>Password set</caption>
-  <okTemplate>gui/set_password/2_closer</okTemplate>  
-  #parse('gui/customisations/wizard_result.vm') 
+  <okTemplate>gui/set_password/2_closer</okTemplate>
+  #parse('gui/customisations/wizard_result.vm')
   <htmlContent><![CDATA[
     ]]>
   </htmlContent>

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 <title>Loading ${wikiPageName}...</title>
 </head>
 <body>
-<script language="JavaScript">
+<script type="text/javascript">
 ##document.location="../jamwiki/$cleanCompanyName/StartingPoints";
 document.location="$view.getWikiPageUrl($wikiPageName, true)";
 </script>

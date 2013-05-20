@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## For <script>, see pane3.vm
+## For <script type="text/javascript">, see pane3.vm
 ##set($button_img='resources/toolbar/pane2.png')
 #set($button_img='icon-align-justify')
 #set($click="fFormatRHPanes(this)")

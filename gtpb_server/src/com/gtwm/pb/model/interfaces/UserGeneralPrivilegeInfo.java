@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -21,13 +21,13 @@ import com.gtwm.pb.auth.PrivilegeType;
 
 /**
  * Represents an application level privilege assigned to a specific user
- * 
+ *
  * @see com.gtwm.pb.model.interfaces.RoleGeneralPrivilegeInfo RoleGeneralPrivilegeInfo is a similar object but
  *      for a role rather than a single user
  */
 public interface UserGeneralPrivilegeInfo {
 
     public AppUserInfo getUser();
-    
+
     public PrivilegeType getPrivilegeType();
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -30,11 +30,11 @@ import com.gtwm.pb.model.manageSchema.ListFieldDescriptorOption.FieldPrintoutSet
  * for more advanced field types. Extends comparable because we want to be able
  * to sort fields. Note we also want to implement equals and hashCode for when
  * we need to search sorted collections.
- * 
+ *
  * Fields of type BaseField store info about a field, not about the values in
  * the field at any particular time. To store values, use one of the ...Input
  * classes
- * 
+ *
  * A note on compareTo, equals and hashCode, which should be implemented by
  * concrete classes for TableInfo, ReportInfo and all field types: All of these
  * should compare on object name(s) case insensitively because this is how they
@@ -76,7 +76,7 @@ public interface BaseField extends Comparable<BaseField> {
 
 	/**
 	 * Defines whether the field value in the database can be empty or not
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             If you try and run this method on a field type which is
 	 *             <i>always</i> null or not null
@@ -86,7 +86,7 @@ public interface BaseField extends Comparable<BaseField> {
 	public boolean getNotNull();
 
 	/**
-	 * 
+	 *
 	 * @return true if a default value has been set for the field, in the case
 	 *         of subclass for which a default value should not be found this
 	 *         method should never return true.
@@ -96,17 +96,17 @@ public interface BaseField extends Comparable<BaseField> {
 	/**
 	 * Record whether any record in the table has comments attached to this
 	 * field
-	 * 
+	 *
 	 * @return true if at least one record does have comments attached, false if
 	 *         none have, null if unknown (the initial state)
 	 */
 	public Boolean hasComments();
-	
+
 	public void setHasComments(boolean hasComments) throws CantDoThatException;
 
 	/**
 	 * Defines whether the database table allows duplicate values in this field
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             If you try to run this method on a field type which is
 	 *             <i>always</i> unique of not unique
@@ -123,7 +123,7 @@ public interface BaseField extends Comparable<BaseField> {
 	 * Sets whether the field should be displayed in input forms. Note - the
 	 * field may still be shown in reports even if hidden. Hiding in reports
 	 * will be controlled by a separate ReportFieldInfo parameter (TODO)
-	 * 
+	 *
 	 * e.g. fields like the record creation timestamp will be hidden
 	 */
 	public void setHidden(Boolean hidden);
@@ -141,7 +141,7 @@ public interface BaseField extends Comparable<BaseField> {
 	/**
 	 * For use only by the user interface. The UI can use the return value to
 	 * generate an input form for example to edit or display the properties
-	 * 
+	 *
 	 * @return A representation of the field properties
 	 * @throws CantDoThatException
 	 *             If there was an internal error generating the descriptor
@@ -160,7 +160,7 @@ public interface BaseField extends Comparable<BaseField> {
 	public static final boolean UNIQUE = true;
 
 	public static final boolean USES_LOOKUP = true;
-	
+
 	public static final boolean TIE_DOWN_LOOKUP = true;
 
 	public static final boolean DEFAULT_TO_NOW = true;

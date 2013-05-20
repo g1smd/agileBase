@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -30,10 +30,10 @@
   	<div id="globalWrapper">
 		  <div id="column-content">
 	  <div id="content">
-				  
+
     <h1 class="firstHeading">agileBase development tools</h1>
     <div id="bodyContent">
-    
+
     <h2>Schema development</h2>
     #if($view.loggedInUserAllowedTo('MASTER'))
       <!-- Company Management Console should only be available to MASTER gtpb user -->

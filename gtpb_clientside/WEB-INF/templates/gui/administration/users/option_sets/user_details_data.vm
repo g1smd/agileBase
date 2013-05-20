@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -57,10 +57,10 @@
     <td colspan="2">
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         <input type="hidden" name="upload_profile_picture" />
-        <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" /> 
+        <input type="hidden" name="return" value="gui/resources/xmlreturn_rowid" />
         <input type="hidden" name="internalusername" value="$internalUserName" />
         #if($sessionUser.getProfilePhoto())
-          <img src="$sessionUser.getProfilePhoto()" class="edit_image" />
+          <img src="$sessionUser.getProfilePhoto()" class="edit_image" alt="" />
         #else
           <img src="resources/icons/file_placeholders/profile_photo.png" class="edit_image" alt="" />
         #end

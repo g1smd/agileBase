@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -208,11 +208,11 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 	private boolean getStoresCurrency() {
 		return this.storesCurrency;
 	}
-	
+
 	public void setStoresCurrency(boolean storesCurrency) {
 		this.storesCurrency = storesCurrency;
 	}
-	
+
 	@Transient
 	public boolean storesCurrency() {
 		return this.getStoresCurrency();
@@ -293,7 +293,7 @@ public class IntegerFieldDefn extends AbstractField implements IntegerField {
 	private Integer notApplicableValue = -1;
 
 	private boolean usesLookup = false;
-	
+
 	private boolean storesCurrency = false;
 
 	private transient DataSource dataSource = null;

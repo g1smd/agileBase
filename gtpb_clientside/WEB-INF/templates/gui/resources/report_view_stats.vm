@@ -1,13 +1,13 @@
 #set($report = $sessionData.getCustomReport("dashboard_report"))
 #set($module = $report.getModule())
-<img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()"/>
-$report<p>	
+<img style="vertical-align: middle;" src="resources/icons/applications/tango/$module.getIconPath()" alt="" />
+$report<p>
 #set($usageStats = $view.getUsageStats())
 #set($reportViewStats = $usageStats.getReportViewStats($report))
 $reportViewStats.getAverageViews() views per month<br>
 #set($userStats = $reportViewStats.getUserStats())
 Used by $userStats.size() people<br>
-Top users: 
+Top users:
 #foreach($userStat in $userStats)
 	$userStat.getUser()
 	#if($foreach.count > 2)

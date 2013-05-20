@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@
     #end
   #end
 #end
-#set($DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH")) 
+#set($DAY_OF_MONTH = $viewTools.getCalendarConstant("DAY_OF_MONTH"))
 #set($colour = $tile.getColour())
 #foreach($event in $events)
   #set($date = $event.getDate())
@@ -58,8 +58,8 @@
     </div>
     #set($calendarStartField = $report.getCalendarStartField())
     #if($calendarStartField.getBaseField().getDateResolution() > $DAY_OF_MONTH)
-      #set($HOUR_OF_DAY = $viewTools.getCalendarConstant("HOUR_OF_DAY")) 
-      #set($MINUTE = $viewTools.getCalendarConstant("MINUTE")) 
+      #set($HOUR_OF_DAY = $viewTools.getCalendarConstant("HOUR_OF_DAY"))
+      #set($MINUTE = $viewTools.getCalendarConstant("MINUTE"))
       #set($hour = $date.get($HOUR_OF_DAY))
       #set($minute = $date.get($MINUTE))
       #if(($hour != 0) || ($minute != 0))

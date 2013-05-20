@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -33,42 +33,42 @@
   <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
   <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" /> 
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" /> 
+  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
   <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
   ##<link href="resources/simple_amalgam.css" type="text/css" rel="stylesheet" />
   <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
   #if($hasCalendar)
-    <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />    
+    <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
   #end
-  
+
 	<title>Agilebase</title>
-	<script src="resources/jquery.js" language="JavaScript"></script>
-  <script language="JavaScript" src="resources/jquery.scrollTo.js"></script>
-  <script language="JavaScript" src="resources/simple/simple.js"></script>
-  <script language="JavaScript" src="resources/pane2_amalgam.js"></script>
-  <script language="JavaScript" src="resources/pane3_amalgam.js"></script>
+	<script type="text/javascript" src="resources/jquery.js"></script>
+  <script type="text/javascript" src="resources/jquery.scrollTo.js"></script>
+  <script type="text/javascript" src="resources/simple/simple.js"></script>
+  <script type="text/javascript" src="resources/pane2_amalgam.js"></script>
+  <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
   #if($tiles.size() == 0)
     ## Used for tile auto-add
-    <script language="JavaScript" src="resources/jquery.ajaxq.js"></script>
+    <script type="text/javascript" src="resources/jquery.ajaxq.js"></script>
   #end
   #if($hasCalendar)
-    <script language="JavaScript" src="resources/fullcalendar/jquery-ui-custom.js"></script>
-    <script language="JavaScript" src="resources/fullcalendar/fullcalendar.js"></script>
+    <script type="text/javascript" src="resources/fullcalendar/jquery-ui-custom.js"></script>
+    <script type="text/javascript" src="resources/fullcalendar/fullcalendar.js"></script>
   #end
 </head>
 <body>
   <div class="header row transition">
     <div class="span4 spaced">
-      <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+      <a href="AppController.servlet?return=gui/display_application&amp;clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
     </div>
     <div class="span8 spaced profile transition">
       #set($profileImage = false)
       #set($profileImage = $view.getUserProfileImage($user.getInternalUserName()))
       #if($profileImage)
-        <img src="$profileImage" class="comment_author_picture" />
+        <img src="$profileImage" class="comment_author_picture" alt="" />
       #else
-        <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+        <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" alt="" />
       #end
       $user.getForename()
     </div>

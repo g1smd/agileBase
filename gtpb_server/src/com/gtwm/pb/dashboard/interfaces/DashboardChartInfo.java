@@ -7,12 +7,12 @@ import com.gtwm.pb.model.interfaces.ChartInfo;
  * @see ChartDataInfo
  */
 public interface DashboardChartInfo {
-	
+
 	public ChartInfo getChart();
-	
+
 	/**
 	 * Return a score that ranks the summary in the dashboard
 	 */
 	public int getScore();
-	
+
 }

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
   td[wikiExists=false] div#createWikiEntry {
     display:auto;
   }
-  
+
 
 	  div.wikiControl {
 	    float:right;
@@ -37,14 +37,14 @@
 	    white-space:nowrap;
 	    font-weight:normal;
 	  }
-	  
+
 	  tr.wikiTitle div {
-	    float: left; 
-	    margin-right: 20px; 
-	    padding-top: 5px; 
+	    float: left;
+	    margin-right: 20px;
+	    padding-top: 5px;
 	    font-weight: bold;
 	  }
-	  
+
 	  tr.wikiTitle button {
 	    padding:2px;
 	  }
@@ -53,12 +53,12 @@
 <tr class="rowa">
 			  <td class="leading">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="trailing">&nbsp;</td>
 			</tr>
-			
+
 			#set($wikiTitle=$tableDataRow.get($sessionTable.getField('Wiki page [Auto]')))
 			#set($wikiSnippet = $view.getWikiPageSnippet($wikiTitle.toString(), 300))
 						<thead id="wikiHead" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
 			  <tr>
-			    <th class="leading">&nbsp;</th>			
+			    <th class="leading">&nbsp;</th>
 			    <th colspan="2">
 			      #if($tabCaption=="edit")
 			      <div class="wikiControl">
@@ -71,7 +71,7 @@
 			    </th>
 			    <th class="trailing">&nbsp;</th>
 			  </tr>
-			  
+
 			  <tr class="wikiTitle">
 			    <td class="leading">&nbsp;</td>
 			    <td colspan="2">
@@ -80,23 +80,23 @@
 	        #else [untitled]
 	        #end
 	      </div>
-			      #if($tabCaption=="edit")	      
+			      #if($tabCaption=="edit")
 			      <button name="_edit_wiki_page">
 			        edit
-			        <img src="resources/reports/edit.png" align="absmiddle">
+			        <img src="resources/reports/edit.png" align="absmiddle" alt="">
 			      </button>
 			      #end
 			    </td>
 			    <td class="trailing">&nbsp;</td>
 			  </tr>
-		</thead>		        
+		</thead>
 			<tr class="rowa">
 						  <td class="leading">&nbsp;</td>
 						  <td colspan="2" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
-			      #if($tabCaption=="edit")	      
-					    <script language="Javascript">
+			      #if($tabCaption=="edit")
+					    <script type="text/javascript">
 					      oWikiWindow=null;
-					      
+
 					      function fCheckWikiWindow() {
 					        if(!oWikiWindow) return;
 					        if(!oWikiWindow.closed) window.setTimeout('fCheckWikiWindow()',500);
@@ -107,9 +107,9 @@
 						      <p style="margin-top:20px">
 						        There is no page linked to this record...<br />
 						        <i><span class="greytext">
-						          With a wiki page you can create a long block of text for this record, 
+						          With a wiki page you can create a long block of text for this record,
 						          including links to other pages
-						        </span></i>						              
+						        </span></i>
 						      </p>
 						      <p>
 						        <input />
@@ -117,8 +117,8 @@
 						        <button name="_link_wiki_page" isWiki="true">
 						          link to an existing page
 						        </button>
-						        <script language="JavaScript" src="resources/picker.js"></script>
-						        <script language="Javascript">
+						        <script type="text/javascript" src="resources/picker.js"></script>
+						        <script type="text/javascript">
 						          function fInitialise() {
 						            function fDoInitialise(oBox){
 						              function fButton() {
@@ -133,7 +133,7 @@
 						                oButton.wikiNameBox=oBox;
 						                return oButton;
 						              }
-						              
+
 						              function fSetUpdateWatch() {
 						                function fSetWatch(oElement, oWikiCaption) {
 						                  function fUpdateWikiName() {
@@ -147,7 +147,7 @@
 						                  ##oElement.addEventListener('keyup',fUpdateWikiName,false);
 						                  $(oElement).keyup(fUpdateWikiName);
 						                }
-						                
+
 						                var oWikiCaption=document.getElementById('_wikiCaption')
 						                var aInputs=document.getElementsByTagName('INPUT');
 						                for(var i=0;i<aInputs.length;i++) {
@@ -158,12 +158,12 @@
 						                }
 						                return null;
 						              }
-						              
+
 						              function fSetWikiTitleInDb() {
 						                new fChange(oBox);
 						                oBox.setAttribute('manualChange','true');
 						              }
-						              
+
 						              function fEditCreatePage() {
 						                // this string will need to be cleaned...!
 						                oBox.setAttribute('disabled','true');
@@ -173,11 +173,11 @@
 						                oWikiWindow.focus();
 						                setTimeout('fCheckWikiWindow()',500);
 						              }
-						              
+
 						              function fMarkAsChanged() {
 						                this.setAttribute('manualChange','true');
 						              }
-						              
+
 						              ##oBox.addEventListener('keyup',fMarkAsChanged,false);
 						              $(oBox).keyup(fMarkAsChanged);
 						              oBox.setAttribute('type','text');
@@ -203,25 +203,25 @@
 						              oBox.oLinkButton.formEl = oBox;
 						              oBox.parentNode.appendChild(oBox.oCreateButton);
 						            }
-						            
+
 						            fDoInitialise(this)
 						          }
-						        
+
 						          // find the input just created
 						          var oWikiNameBox=document.getElementsByTagName('INPUT')[document.getElementsByTagName('INPUT').length-1]
-						          
+
 						          // should test that this has been found OK
 						          oWikiNameBox.initialise=fInitialise;
 						          oWikiNameBox.initialise();
-						          
-						        
+
+
 						        </script>
 
 						      </p>
 						    </div>
-						    #end ## end if in edit tab      
+						    #end ## end if in edit tab
 						    <div id="editWikiEntry">
-						      <script language="Javascript">
+						      <script type="text/javascript">
 						        function fUpdateWikiSnippet() {
 						          function fUpdateSnippetContent(sText,sXML){
 						            if (!sText || sText=='') return;
@@ -230,17 +230,17 @@
 						            document.getElementById('wikiHead').setAttribute('wikiExists','true');
 						            oSnippetDiv.parentNode.setAttribute('wikiExists','true');
 						          }
-						          
+
 						          var aPostVars=new Array();
           aPostVars['return']='gui/reports_and_tables/tabs/wikiSnippet';
           var oReq=new fRequest('AppController.servlet',aPostVars,fUpdateSnippetContent,0);
 						        }
 						      </script>
-												      $wikiSnippet 
+												      $wikiSnippet
 												      #if($tabCaption=="view")
-												        ##<a href="../jamwiki/$viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/$wikiTitle" target="_blank"> more...</a> 
-												        <a href="?return=/gui/resources/wiki/view_wiki_page&set_custom_string=1&stringkey=wikipagename&customstringvalue=$wikiTitle" target="_blank"> more...</a> 
-												      #else     
+												        ##<a href="../jamwiki/$viewTools.cleanString($view.getLoggedInUser().getCompany().getCompanyName().toLowerCase())/$wikiTitle" target="_blank"> more...</a>
+												        <a href="?return=/gui/resources/wiki/view_wiki_page&set_custom_string=1&stringkey=wikipagename&customstringvalue=$wikiTitle" target="_blank"> more...</a>
+												      #else
 												         ...
 												      #end
 						    </div>

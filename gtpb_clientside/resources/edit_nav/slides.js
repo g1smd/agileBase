@@ -1,37 +1,37 @@
 /*
   Copyright 2010 Google Inc.
- 
+
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
- 
+
      http://www.apache.org/licenses/LICENSE-2.0
- 
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
- 
+
   Original slides: Marcin Wichary (mwichary@google.com)
   Modifications: Chrome Developer Relations <chrome-devrel@googlegroups.com>
 */
 /* From http://studio.html5rocks.com/#Deck */
 	    var doc = document;
         var disableBuilds = true;
- 
+
         var ctr = 0;
         var spaces = /\s+/, a1 = [''];
- 
+
         var toArray = function(list) {
           return Array.prototype.slice.call(list || [], 0);
         };
- 
+
         var byId = function(id) {
           if (typeof id == 'string') { return doc.getElementById(id); }
           return id;
         };
- 
+
         var query = function(query, root) {
           if (!query) { return []; }
           if (typeof query != 'string') { return toArray(query); }
@@ -39,11 +39,11 @@
             root = byId(root);
             if(!root){ return []; }
           }
- 
+
           root = root || document;
           var rootIsDoc = (root.nodeType == 9);
           var doc = rootIsDoc ? root : (root.ownerDocument || document);
- 
+
           // rewrite the query to be ID rooted
           if (!rootIsDoc || ('>~+'.indexOf(query.charAt(0)) >= 0)) {
             root.id = root.id || ('qUnique' + (ctr++));
@@ -51,10 +51,10 @@
           }
           // don't choke on something like ".yada.yada >"
           if ('>~+'.indexOf(query.slice(-1)) >= 0) { query += ' *'; }
- 
+
           return toArray(doc.querySelectorAll(query));
         };
- 
+
         var strToArray = function(s) {
           if (typeof s == 'string' || s instanceof String) {
             if (s.indexOf(' ') < 0) {
@@ -66,7 +66,7 @@
           }
           return s;
         };
- 
+
         var addClass = function(node, classStr) {
           classStr = strToArray(classStr);
           var cls = ' ' + node.className + ' ';
@@ -78,7 +78,7 @@
           }
           node.className = cls.trim();
         };
- 
+
         var removeClass = function(node, classStr) {
           var cls;
           if (classStr !== undefined) {
@@ -95,7 +95,7 @@
             node.className = cls;
           }
         };
- 
+
         var toggleClass = function(node, classStr) {
           var cls = ' ' + node.className + ' ';
           if (cls.indexOf(' ' + classStr.trim() + ' ') >= 0) {
@@ -104,20 +104,20 @@
             addClass(node, classStr);
           }
         };
- 
+
         var ua = navigator.userAgent;
         var isFF = parseFloat(ua.split('Firefox/')[1]) || undefined;
         var isWK = parseFloat(ua.split('WebKit/')[1]) || undefined;
         var isOpera = parseFloat(ua.split('Opera/')[1]) || undefined;
- 
+
         var canTransition = (function() {
           var ver = parseFloat(ua.split('Version/')[1]) || undefined;
           // test to determine if this browser can handle CSS transitions.
-          var cachedCanTransition = 
+          var cachedCanTransition =
             (isWK || (isFF && isFF > 3.6 ) || (isOpera && ver >= 10.5));
           return function() { return cachedCanTransition; }
         })();
- 
+
         //
         // Slide class
         //
@@ -132,7 +132,7 @@
           this._makeCounter();
           this._makeBuildList();
         };
- 
+
         Slide.prototype = {
           _node: null,
           _count: 0,
@@ -153,7 +153,7 @@
             removeClass(this._node, this._states);
             addClass(this._node, state);
             this._currentState = state;
- 
+
             // delay first auto run. Really wish this were in CSS.
             /*
             this._runAutos();
@@ -218,7 +218,7 @@
             return true;
           },
         };
- 
+
         //
         // SlideShow class
         //
@@ -226,35 +226,35 @@
           this._slides = (slides || []).map(function(el, idx) {
             return new Slide(el, idx);
           });
- 
+
           var h = window.location.hash;
           try {
             this.current = parseInt(h.split('#slide')[1], 10);
           }catch (e) { /* squeltch */ }
           this.current = isNaN(this.current) ? 1 : this.current;
           var _t = this;
-          doc.addEventListener('keydown', 
+          doc.addEventListener('keydown',
               function(e) { _t.handleKeys(e); }, false);
-//          doc.addEventListener('mousewheel', 
+//          doc.addEventListener('mousewheel',
 //              function(e) { _t.handleWheel(e); }, false);
-//          doc.addEventListener('DOMMouseScroll', 
+//          doc.addEventListener('DOMMouseScroll',
 //              function(e) { _t.handleWheel(e); }, false);
-          doc.addEventListener('touchstart', 
+          doc.addEventListener('touchstart',
               function(e) { _t.handleTouchStart(e); }, false);
-          doc.addEventListener('touchend', 
+          doc.addEventListener('touchend',
               function(e) { _t.handleTouchEnd(e); }, false);
-          window.addEventListener('popstate', 
+          window.addEventListener('popstate',
               function(e) { _t.go(e.state); }, false);
-          this._update();          
+          this._update();
         };
- 
+
         SlideShow.prototype = {
           _slides: [],
           _update: function(dontPush) {
-            
+
             // catch to set things right on the initial load. popstate fires on pageload.
             if (this.current === null) return;
-            
+
             document.querySelector('#presentation-counter').innerText = this.current;
             //if (history.pushState) {
             //  if (!dontPush) {
@@ -269,7 +269,7 @@
               }
             }
           },
- 
+
           current: 0,
           next: function() {
             if (!this._slides[this.current-1].buildNext()) {
@@ -288,7 +288,7 @@
             this.current = num;
             this._update(true);
           },
- 
+
           handleKeys: function(e) {
             if (/^(input|textarea)$/i.test(e.target.nodeName) ||
                 e.target.isContentEditable) {
@@ -315,8 +315,8 @@
             }
           },
         };
- 
-        
+
+
         function toggleCounter() {
           toArray(counters).forEach(function(el) {
             el.style.display = (el.offsetHeight) ? 'none' : 'block';

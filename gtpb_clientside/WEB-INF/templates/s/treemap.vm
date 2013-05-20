@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
     <title>Agilebase usage</title>
-    <script src="resources/jquery.js" language="JavaScript"></script>
-    <script language="JavaScript" src="resources/jit.js"></script>
-    <script language="JavaScript" src="resources/jquery.sparkline.js"></script>
-    <script language="JavaScript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
-    <script language="JavaScript" src="resources/simple/simple.js"></script>
+    <script type="text/javascript" src="resources/jquery.js"></script>
+    <script type="text/javascript" src="resources/jit.js"></script>
+    <script type="text/javascript" src="resources/jquery.sparkline.js"></script>
+    <script type="text/javascript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
+    <script type="text/javascript" src="resources/simple/simple.js"></script>
 </head>
 <body>
 	<div class="container">
 	  <div class="row spaced">
 	    <div class="span4">
-	      <a href="AppController.servlet?return=boot"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" /></a>
+	      <a href="AppController.servlet?return=boot"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
 	    </div>
 	  </div> ## end row
 	  <h1 class="spaced">What's in use?</h1>
@@ -58,17 +58,17 @@
       </div>
 	  <div class="row" style="margin-bottom: 2em">
 	    <div class="span4">
-			<span class="sparkline_logins">...</span> 
+			<span class="sparkline_logins">...</span>
 			<a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">logins</a>
 			<br>
-			<span class="sparkline_report_views" alt="report_views">...</span> 
+			<span class="sparkline_report_views" alt="report_views">...</span>
 			<a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">report views</a>
 			<br>
-			<span class="sparkline_data_edits">...</span> 
+			<span class="sparkline_data_edits">...</span>
 			<a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">data changes</a>
 	    </div>
         <div class="span4">
-			<span class="sparkline_report_additions">...</span> 
+			<span class="sparkline_report_additions">...</span>
 			<span class="sparkline_report_removals">...</span>
 			<br><span style="color:009FE3">report building</span> and <span style="color:#E30083">demolishing</span><br>
 			<a href="?return=gui/administration/information/export/report_schema_change&returntype=download&returnfilename=report_schema_changes.csv">download all changes</a>

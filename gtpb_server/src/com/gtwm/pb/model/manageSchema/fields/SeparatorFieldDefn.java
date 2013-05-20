@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -37,8 +37,8 @@ public class SeparatorFieldDefn extends AbstractField implements SeparatorField 
 
 	private SeparatorFieldDefn() {
 	}
-	
-	public SeparatorFieldDefn(TableInfo tableContainingField, 
+
+	public SeparatorFieldDefn(TableInfo tableContainingField,
 			String fieldName, String fieldDesc) throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);
 		super.setInternalFieldName(RandomString.generate());

@@ -10,7 +10,7 @@ public class DashboardPopulator implements Runnable {
 		logger.info("Notice: dashboard generation unable to run");
 		logger.info("Dashboard components are not distributed in the agileBase open source version");
 		logger.info("Please contact GT webMarque to obtain the dashboard module");
-		logger.info("Email: support@agilebase.co.uk");		
+		logger.info("Email: support@agilebase.co.uk");
 	}
 
 	public DashboardPopulator(DatabaseInfo databaseDefn) {

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -34,11 +34,11 @@ public final class Naming {
 	/**
 	 * Replace invalid characters in XML, i.e. angle brackets, ampersands and
 	 * double quotes with their HTML codes.
-	 * 
+	 *
 	 * This can also be used to sanitise input protecting against cross-site scripting vulnerabilities
-	 * 
+	 *
 	 * Also check out https://www.owasp.org/index.php/ESAPI
-	 * 
+	 *
 	 * Note there is an Apache 3rd party utility to do
 	 * this better but it converts all entities not just the few we need
 	 */
@@ -70,11 +70,11 @@ public final class Naming {
 	 * regenerate the name at a later time in order to delete the constraint -
 	 * makeCompositeId has this property. This is a thin wrapper around
 	 * makeCompositeId.
-	 * 
+	 *
 	 * @see #makeCompositeId(String, String) makeCompositeId is called by this
 	 *      function with the related table name and related field name as
 	 *      arguments
-	 * 
+	 *
 	 * @param relationField
 	 *            The object representing the foreign key relation
 	 */
@@ -88,7 +88,7 @@ public final class Naming {
 	 * Creates a (very probably) unique composite identifier for a set of two
 	 * strings that is less than 31 chars long. This is useful for creating IDs
 	 * to go in the database for things like foreign keys.
-	 * 
+	 *
 	 * Given any two strings, the method will always return the same composite
 	 * value, there's no random element. This is to allow re-generation of the
 	 * composite from the original inputs

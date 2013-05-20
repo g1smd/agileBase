@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!DOCTYPE web-app 
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" 
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
@@ -29,7 +29,7 @@
     <listener>
             <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
-        
+
     <servlet>
       <servlet-name>AppController</servlet-name>
       <description>
@@ -42,7 +42,7 @@
         <param-value>/velocity.properties</param-value>
       </init-param>
     </servlet>
-	
+
     <servlet-mapping>
       <servlet-name>AppController</servlet-name>
       <url-pattern>/AppController.servlet</url-pattern>
@@ -56,12 +56,12 @@
       <servlet-class>com.gtwm.pb.servlets.ReportDownloader</servlet-class>
       <load-on-startup>0</load-on-startup>
     </servlet>
-	
+
     <servlet-mapping>
       <servlet-name>ReportDownloader</servlet-name>
       <url-pattern>/ReportDownloader.servlet</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
       <servlet-name>CalendarPublisher</servlet-name>
       <description>
@@ -70,12 +70,12 @@
       <servlet-class>com.gtwm.pb.servlets.CalendarPublisher</servlet-class>
       <load-on-startup>0</load-on-startup>
     </servlet>
-	
+
     <servlet-mapping>
       <servlet-name>CalendarPublisher</servlet-name>
       <url-pattern>/CalendarPublisher.ics</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
       <servlet-name>Public</servlet-name>
       <description>
@@ -84,12 +84,12 @@
       <servlet-class>com.gtwm.pb.servlets.Public</servlet-class>
       <load-on-startup>0</load-on-startup>
     </servlet>
-	
+
     <servlet-mapping>
       <servlet-name>Public</servlet-name>
       <url-pattern>/Public.ab</url-pattern>
     </servlet-mapping>
-    
+
     <session-config>
       <!-- 360 = 6 hours - set the session timeout to a long time so the app won't break if the user leaves it on screen for a few hours without doing anything -->
       <!-- 240 = 4 hours-->
@@ -116,9 +116,9 @@
     <error-code>500</error-code>
     <location>/website/500.jsp</location>
   </error-page>
-  <error-page> 
-    <error-code>404</error-code> 
-    <location>/website/404.htm</location> 
+  <error-page>
+    <error-code>404</error-code>
+    <location>/website/404.htm</location>
   </error-page>
 
 </web-app>

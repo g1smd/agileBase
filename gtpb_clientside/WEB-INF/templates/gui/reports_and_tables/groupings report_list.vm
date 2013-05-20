@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@
   #set($reportName = $report.getReportName())
   #if( (($reportName.contains("dbvcalc")) || ($reportName.contains("dbvcrit"))) && ($sessionContext != "SYSADMIN"))
     ## don't display calculation/criteria reports
-    #set($displayReport = false)  
+    #set($displayReport = false)
   #end
   ## add report to mapping if it should be displayed
   #if($displayReport)
@@ -74,8 +74,8 @@
 	#foreach($grouping in $reportGroupings.keySet())
   <li name="$grouping" branch="true" #if(($sessionReportGrouping==$grouping) || ($grouping=="{ungrouped}" && $sessionReportGrouping==""))expanded="true"#end>
     #set($icon = $app_icons.get($grouping))
-    #if($icon && ($icon!="")) 
-		      <span><img class="appIcon" src="resources/icons/applications/$icon">$grouping</span>
+    #if($icon && ($icon!=""))
+		      <span><img class="appIcon" src="resources/icons/applications/$icon" alt="">$grouping</span>
 		    #else
 		      $grouping
 		    #end

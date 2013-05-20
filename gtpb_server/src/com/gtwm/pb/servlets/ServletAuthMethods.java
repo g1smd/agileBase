@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -60,11 +60,11 @@ import com.gtwm.pb.util.Enumerations.InitialView;
  * AppController, or any other custom servlet written for a particular
  * application based on agileBase. The JavaDoc here describes the HTTP requests
  * that must be sent to use the methods.
- * 
+ *
  * Part of a set of three interfaces, ServletSchemaMethods to manage setting up
  * the database schema, ServletDataMethods to manage data editing and
  * ServletAuthMethods to do with users, roles and privileges
- * 
+ *
  * @see ServletSchemaMethods
  * @see ServletDataMethods
  */
@@ -97,7 +97,7 @@ public final class ServletAuthMethods {
 
 	/**
 	 * TODO: Http example usage
-	 * 
+	 *
 	 * @throws MissingParametersException
 	 *           If there's an internal error passed up from
 	 *           authManager.addUser(). This should never happen
@@ -273,7 +273,7 @@ public final class ServletAuthMethods {
 			}
 		}
 	}
-	
+
 	public synchronized static void updateUser(SessionDataInfo sessionData,
 			HttpServletRequest request, AuthManagerInfo authManager) throws DisallowedException,
 			MissingParametersException, ObjectNotFoundException, CantDoThatException,
@@ -512,7 +512,7 @@ public final class ServletAuthMethods {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param request
 	 * @throws DisallowedException
 	 * @throws MissingParametersException
@@ -574,7 +574,7 @@ public final class ServletAuthMethods {
 	 * Gives a user/role all privileges up to the level specified by the
 	 * privilegetype HTTP parameter. If they have any higher level privileges,
 	 * removes them
-	 * 
+	 *
 	 * @throws MissingParametersException
 	 *           If privilegetype, internaltablename and one of username or
 	 *           rolename are not included in the HTTP request

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -33,9 +33,9 @@
     #set($profileImage = false)
     #set($profileImage = $view.getUserProfileImage($comment.getAuthorInternalName()))
     #if($profileImage)
-      <img src="$profileImage" class="comment_author_picture" />
+      <img src="$profileImage" class="comment_author_picture" alt="" />
     #else
-      <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" />
+      <img src="resources/icons/file_placeholders/profile_photo.png" class="comment_author_picture" alt="" />
     #end
     <span class="comment_text">$comment.getText()</span> <span class="comment_attribution">- $comment.getAuthor(), $comment.getTimestampString()</span>
   </div>

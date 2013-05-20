@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -34,11 +34,11 @@ public interface ChartDataInfo {
 	 * value 25 would be 50%
 	 */
 	public int getValueAsPercentage(ChartAggregateInfo aggregate, Number value);
-	
+
 	/**
 	 * For sum and count aggregates, grand totals are stored
 	 */
 	public double getGrandTotal(ChartAggregateInfo aggregate) throws ObjectNotFoundException;
-	
+
 	public long getCacheCreationTime();
 }

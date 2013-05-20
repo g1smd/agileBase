@@ -10,7 +10,7 @@ public class CalendarTile extends AbstractTile implements TileCalendarInfo {
 
 	private CalendarTile() {
 	}
-	
+
 	public CalendarTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());

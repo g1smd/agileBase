@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!--  
+<!--
 ##  Copyright 2011 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify

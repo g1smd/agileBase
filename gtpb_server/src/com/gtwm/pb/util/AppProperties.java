@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ public class AppProperties {
 	 * Enable startTimer and stopTimer in ViewTools. Useful for tracking down
 	 * any performance issues in the GUI to an individual template, as one HTTP
 	 * request may result in parsing many templates
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.ViewToolsInfo#startTimer(String)
 	 */
 	public static final boolean enableTemplateTimers = false;
@@ -56,11 +56,11 @@ public class AppProperties {
 	 * If false, the app will be optimised for correctness in some cases and
 	 * will do extra work, e.g. methods returning collections will return copy
 	 * collections in an unmodifiable wrapper.
-	 * 
+	 *
 	 * If true, this work won't be done and in the case above, the original
 	 * 'raw' collections will be returned, saving a small amount of memory and
 	 * CPU
-	 * 
+	 *
 	 * The app should be run with this setting false at least periodically to
 	 * check that calling methods aren't doing anything improper
 	 */
@@ -71,7 +71,7 @@ public class AppProperties {
 	 * in milliseconds
 	 */
 	public static final int lookupCacheTime = 1000 * 10;
-	
+
 	/**
 	 * Cache tags for a lot longer because tag additions are added to the cache as they happen
 	 */
@@ -107,7 +107,7 @@ public class AppProperties {
 	/**
 	 * Setting this to true will prepare agileBase for testing and also speed up
 	 * agileBase reloading by only loading one company - see AuthManager constructor
-	 * 
+	 *
 	 * SET THIS TO false IN PRODUCTION
 	 */
 	public static final boolean testMode = false;

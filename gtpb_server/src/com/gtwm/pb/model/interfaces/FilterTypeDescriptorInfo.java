@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ public interface FilterTypeDescriptorInfo {
      * report itself to the UI as unique. NB This has no effect on the actual value of the field's unique
      * property but should only be used when constructing a field descriptor to return to the UI from the
      * actual field properties
-     * 
+     *
      * @param booleanOption
      *            A boolean field option, such as UNIQUE or NOT_NULL
      * @param state
@@ -55,19 +55,19 @@ public interface FilterTypeDescriptorInfo {
      * Set a text option to its String value.NB This has no effect on the actual value of the field's
      * property but should only be used when constructing a field descriptor to return to the UI from the
      * actual field properties
-     *  
+     *
      * @param textOption
      * @param value
      * @throws ObjectNotFoundException
      */
     public void setTextOptionValue(PossibleTextOptions textOption, String value) throws ObjectNotFoundException;
-    
+
     /**
      * Sets the current state of a list option, i.e. the selected item, identified by key. For example,
      * passing DATERESOLUTION and String.valueOf(Calendar.MINUTE) will set the field to report that the date
      * stored is accurate to the minute. NB This has no effect on the actual state of the field but should nly
      * be used when constructing a field descriptor to return to the UI from the UI
-     * 
+     *
      * @param listOption
      *            A list option, such as DATERESOLUTION or NUMBERPRECISION
      * @param selectedItemKey
@@ -82,7 +82,7 @@ public interface FilterTypeDescriptorInfo {
      * @return  The general field type of the field, e.g. whether it's a numeric, text etc. field
      */
     public FilterType getFilterType();
-    
+
     /**
      * @return The options that the UI can set for this field
      */

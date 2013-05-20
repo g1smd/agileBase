@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@
     		<option value="$washedItem">$washedItem</option>
     	#end
     	</optgroup>
-    
+
     	<optgroup label="all items">
     	#foreach($item in $all_items)
     		#set($washedItem = $viewTools.escape($item))
@@ -85,11 +85,11 @@
 	#if($globalEdit || !$updateAsType)
 		 id="$field.getInternalFieldName()_text_global-edit"
 	#else
-		 id="$field.getInternalFieldName()_text_edit"	
+		 id="$field.getInternalFieldName()_text_edit"
   #end
-	value="$fieldValue" 
-	#if((!$globalEdit) && ($updateAsType)) 
-		onkeyup="top.oBuffer.writeBuffer(this, event)" 
+	value="$fieldValue"
+	#if((!$globalEdit) && ($updateAsType))
+		onkeyup="top.oBuffer.writeBuffer(this, event)"
 		gtpb_update_record="true"
     gtpb_internaltablename="$field.getTableContainingField().getInternalTableName()" gtpb_rowid="$sessionRowId"
 	#end

@@ -15,7 +15,7 @@ public class DataStreamTile extends AbstractTile implements TileDataStreamInfo {
 
 	private DataStreamTile() {
 	}
-	
+
 	public DataStreamTile(String colour, BaseReportInfo report) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
@@ -35,8 +35,8 @@ public class DataStreamTile extends AbstractTile implements TileDataStreamInfo {
 	}
 
 	public void setReport(BaseReportInfo report) {
-		this.report = report;		
+		this.report = report;
 	}
-	
+
 	private BaseReportInfo report = null;
 }

@@ -5,29 +5,29 @@ if (requestURL.contains("appserver.")) {
   live = true;
 }
 %>
-<html> 
-	<head> 
+<html>
+	<head>
 		<title>A3 reports</title>
-		<style> 
+		<style>
 		  @import url('website/a3/styles.css');
 		  @import url('website/a3/styles-thickbox.css');
 		</style>
-		
+
 		<script type="text/javascript" src="website/scripts/jquery.js"></script>
-		
-    <script language="javascript">
+
+    <script type="text/javascript">
       $(document).ready(function() {
-                
+
         $('.container:first-child').addClass('first');
         $('.container:last-child').addClass('last');
         $('.container:nth-child(even)').addClass('alternate');
 
 				//$.localScroll({target:'#scroller'});
-				
+
         //$('.video').each(function() {
 				//	$(this).flashembed($(this).attr('url')+'&rel=0&showinfo=0&');
 				//});
-				
+
 				$('#email_input').focus(function() {
 					if ($('#email_input').val() == "your email address") {
 						$('#email_input').val("");
@@ -54,9 +54,9 @@ if (requestURL.contains("appserver.")) {
         <div id="scroller">
             <div id="wrapper">
 				<ul id="menu">
-  		            <img style="position:absolute; left:40px; top:30px" src="website/a3/images/logo_a3reports.png" />
+  		            <img style="position:absolute; left:40px; top:30px" src="website/a3/images/logo_a3reports.png" alt="" />
 				</ul>
-				
+
 				<div id="content">
 				    <div class="container" style="background-color:#74a9cf">
 				        <div style="float:left; width:100%; margin-left:80px;">
@@ -88,7 +88,7 @@ if (requestURL.contains("appserver.")) {
 				        </div>
 				        <br style="clear:both" />
 				    </div>
-				    
+
 				    <div class="container" id="contact">
 						<table cellspacing="0" cellpadding="0" border="0">
 							<tr>
@@ -110,7 +110,7 @@ if (requestURL.contains("appserver.")) {
 							site design by David Boultbee &copy;2010
 						</p>
 				    </div>
-				    
+
 				</div> <!-- end of content -->
             </div> <!-- end of wrapper -->
         </div> <!-- end of scroller -->

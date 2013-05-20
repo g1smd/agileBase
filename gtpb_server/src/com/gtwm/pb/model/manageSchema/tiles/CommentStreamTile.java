@@ -10,11 +10,11 @@ public class CommentStreamTile extends AbstractTile implements TileCommentStream
 
 	private CommentStreamTile() {
 	}
-	
+
 	public CommentStreamTile(String colour) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
 		super.setTileType(TileType.COMMENT_STREAM);
 	}
-	
+
 }

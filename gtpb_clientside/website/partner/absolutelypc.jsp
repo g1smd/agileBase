@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>agileBase - Absolutely PC</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-59206-20']);
@@ -15,7 +15,7 @@
 </script>
     </head>
     <body style="text-align: center">
-      <img src="website/partner/absolutelypc.png" />
+      <img src="website/partner/absolutelypc.png" alt="" />
 			<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			username<br />
 			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>

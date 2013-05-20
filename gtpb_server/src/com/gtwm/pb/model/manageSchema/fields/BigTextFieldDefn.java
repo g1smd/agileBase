@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -45,7 +45,7 @@ import com.gtwm.pb.util.Enumerations.TextCase;
 /**
  * A multi-line text field that could be represented by a <textarea> form
  * element
- * 
+ *
  * Deprecated in favour of plain TextFieldDefn instances - all text fields are
  * now represented by the same type of field to make it possible to switch
  * between sizes without having to change type
@@ -204,7 +204,7 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 
 	public void setTieDownLookup(boolean tieDownLookup) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -216,12 +216,12 @@ public class BigTextFieldDefn extends AbstractField implements TextField {
 	@Override
 	public void setUsesTags(Boolean usesTags) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void addTags(Set<String> tags) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

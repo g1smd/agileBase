@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -21,6 +21,6 @@ package com.gtwm.pb.model.interfaces.fields;
  * A 'true or false' object storing a boolean value
  */
 public interface CheckboxValue extends BaseValue {
-    
+
     public boolean getValueBoolean();
 }

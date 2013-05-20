@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -97,13 +97,13 @@ public interface DataManagementInfo {
 
 	/**
 	 * Return a calendar JSON feed for the data in a report, suitable for use with
-	 * 
+	 *
 	 * http://arshaw.com/fullcalendar/
-	 * 
+	 *
 	 * or
-	 * 
+	 *
 	 * http://www.simile-widgets.org/timeline/
-	 * 
+	 *
 	 * @param filterValues
 	 *          Session filters *plus* a filter on the calendar date field so that
 	 *          only dates requested by fullcalendar are returned (controlled by
@@ -148,9 +148,9 @@ public interface DataManagementInfo {
 	 * Return a report data object that contains metadata about the report data.
 	 * Note, to get actual report rows which is the more usual case, use
 	 * getReportDataRows instead
-	 * 
+	 *
 	 * @see getReportDataRows
-	 * 
+	 *
 	 * @param company
 	 *          Needed for internal caching mechanism. Can be null, but if so, no
 	 *          caching will be done at all
@@ -173,13 +173,13 @@ public interface DataManagementInfo {
 	 * Get all comments from all tables that the user has privileges to view
 	 */
 	public SortedSet<CommentInfo> getCompanyComments(HttpServletRequest request, AppUserInfo user, int rowLimit) throws SQLException;
-	
+
 	public void addComment(SessionDataInfo sessionData, BaseField field, int rowId, AppUserInfo user,
 			String comment) throws SQLException, ObjectNotFoundException, CantDoThatException,
 			CodingErrorException;
 
 	public void removeComment(int commentId, AppUserInfo user) throws SQLException, CantDoThatException;
-	
+
 	/**
 	 * Return true if the record with the given primary key is visible in the
 	 * report
@@ -194,7 +194,7 @@ public interface DataManagementInfo {
 	/**
 	 * A List of related records in the related table for each RelationField in
 	 * tableDefn. The lists are stored in a Map via the RelationField object
-	 * 
+	 *
 	 * @throws SQLException
 	 * @throws ObjectNotFoundException
 	 *           If a record with the provided rowid is not found in the table
@@ -220,7 +220,7 @@ public interface DataManagementInfo {
 
 	/**
 	 * Get a single row as a map of field name => value, for editing or viewing
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.TableDataInfo#getTableDataRow(java.sql.Connection,
 	 *      int) See TableData.getTableDataRow for an explanation of the
 	 *      exceptions thrown
@@ -240,7 +240,7 @@ public interface DataManagementInfo {
 	 * When passed a row ID and a report, finds rows in the report with the parent
 	 * table's row ID set to that ID. For each row found, if relatedTable's
 	 * primary key is in the report, return the value of it.
-	 * 
+	 *
 	 * @param masterRowId
 	 *          Row ID used as lookup: a value of the report parent table's
 	 *          primary key
@@ -261,9 +261,9 @@ public interface DataManagementInfo {
 	/**
 	 * Save a new record or update an existing one in a database table. Also save
 	 * the field input values in the session for later retrieval
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo#setFieldInputValues(Map)
-	 * 
+	 *
 	 * @param table
 	 *          Table to save data to
 	 * @param dataToSave
@@ -310,7 +310,7 @@ public interface DataManagementInfo {
 	/**
 	 * Lock all records which are in the current report with the current filters
 	 * on.
-	 * 
+	 *
 	 * NB This can be quite slow for a large number of rows. To speed things up,
 	 * pass in filters which reduce the number of rows or use lockAllTableRecords
 	 * instead if appropriate which is a lot faster
@@ -334,7 +334,7 @@ public interface DataManagementInfo {
 	 * ordered the same as the table fields being imported into. The first file
 	 * encountered in the input form will be imported, the form name doesn't
 	 * matter
-	 * 
+	 *
 	 * @param updateExistingRecords
 	 *          Whether to match the import data to existing records in the table
 	 *          or create all new records
@@ -405,7 +405,7 @@ public interface DataManagementInfo {
 	/**
 	 * A very basic global edit. Sets all field values specified in the
 	 * dataToEditParameter, for all rows in the table
-	 * 
+	 *
 	 * @param dataToEdit
 	 *          A map of field to a value for each field
 	 */
@@ -437,14 +437,14 @@ public interface DataManagementInfo {
 	/**
 	 * Return the average upload speed of files since agileBase started up, with
 	 * newer uploads given a larger weighting
-	 * 
+	 *
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
 
 	/**
 	 * Get the next or previous row ID in the given report with filters active
-	 * 
+	 *
 	 * @param forwardSearch
 	 *          Whether to get the next or previous ID
 	 */
@@ -456,7 +456,7 @@ public interface DataManagementInfo {
 	 */
 	public BaseReportInfo getMostPopularReport(HttpServletRequest request, DatabaseInfo databaseDefn,
 			AppUserInfo user) throws SQLException, CodingErrorException;
-	
+
 	/**
 	 * Return a set of the most popular reports, with ordering (e.g. as a LinkedHashSet), so the most popular will be first in the collection
 	 */

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -21,15 +21,15 @@
 <HEAD>
   <STYLE>
     * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
-    
+
     html, body { padding:0;
     	             margin:0;
     	             height:100%;
     	             /* font-family:sans-serif,Arial; */
     	             font-size:10pt;
     	           }
-    	           
-    #navigation { position:absolute; 
+
+    #navigation { position:absolute;
                   height:100%;
                   width:120px;
                   background-color:#E8E7E3;
@@ -39,27 +39,27 @@
                   left:0;
                   text-align:center;
                 }
-                
+
     #options_wrapper { position:absolute;
-    		                   margin-left:150px; 
+    		                   margin-left:150px;
                        padding-top:10px;
                        height:100%;
                        overflow-y:scroll }
-                       
-   
+
+
     #options_wrapper div.options_set { display:none }
     #options_wrapper div.options_set[selected] { display:block }
     #options_wrapper div.options_set h1 { font-size:14pt;
                                           font-weight:normal;
                                           border-bottom:1px solid black }
-    #options_wrapper div.options_set tr:hover { background-color:#E8E7E3 }  
+    #options_wrapper div.options_set tr:hover { background-color:#E8E7E3 }
     #options_wrapper div.options_set th { text-transform:uppercase;
                                           border-bottom:1px solid #333333;
                                           color:#333333;
                                           padding-bottom:3px;
                                           vertical-align:bottom;
                                           font-size:8pt }
-    #options_wrapper div.options_set tr.caption:hover { background:transparent }                                        
+    #options_wrapper div.options_set tr.caption:hover { background:transparent }
     #options_wrapper div.options_set td { padding:10px;
                                           font-size:8pt;
                                           color:#666666;
@@ -67,25 +67,25 @@
     #options_wrapper div.options_set td:first-child:first-line { font-size:10pt;
                                                       color:black;
                                                       vertical-align:top;
-                                                      padding-top:13px }                                         
-                                       
+                                                      padding-top:13px }
 
-  
+
+
   </STYLE>
-  <SCRIPT language=javascript>
+  <SCRIPT type="text/javascript">
     parent.pane_2.fSetRowSelection('$sessionData.getRole()');
-    
+
     function fInit()
     {  // show the first tab
     	   document.getElementById('navigation').getElementsByTagName('BUTTON')[0].click();
     }
-    
+
     function fShowOption(sOptionID)
     {  var oOptions=document.getElementById('options_wrapper').getElementsByTagName('DIV');
        for(var i=0;i<oOptions.length;i++) oOptions[i].removeAttribute('selected');
        document.getElementById(sOptionID).setAttribute('selected','true');
     }
-    
+
   </SCRIPT>
 </HEAD>
 <BODY onload="fInit()">
@@ -107,7 +107,7 @@
           #if($roleMembers.contains($user))
             <td><input type=checkbox name="$user.getInternalUserName()" checked></td>
           #else
-            <td><input type=checkbox name="$user.getInternalUserName()"></td>            
+            <td><input type=checkbox name="$user.getInternalUserName()"></td>
           #end
         </tr>
       #end
@@ -126,7 +126,7 @@
         #elseif($view.roleHasPrivilege("EDIT_TABLE_DATA", $table))
           #set($highestTablePrivilege = "EDIT_TABLE_DATA")
         #elseif($view.roleHasPrivilege("VIEW_TABLE_DATA", $table))
-          #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
+          #set($highestTablePrivilege = "VIEW_TABLE_DATA")
         #end
         <tr>
           <td>$table.getTableName()<br>$table.getTableDescription()</td>
@@ -139,6 +139,6 @@
       </table>
     </DIV>
   </DIV>
-  
+
 </BODY>
 </HTML>

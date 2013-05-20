@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -80,14 +80,14 @@ public final class AuthManager implements AuthManagerInfo {
 	 * Make the application ready for using authentication by loading the
 	 * authentication object from the object database or creating a new one if it
 	 * doesn't exist, populated with a default user
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *           If there was an internal error populating a new authentication
 	 *           object
 	 * @throws SQLException
 	 *           If there was an error bootstrapping the relational database
 	 *           authentication tables
-	 * 
+	 *
 	 *           Note: No exception handling (finally block) is done here, that's
 	 *           in the DatabaseDefn constructor that calls this
 	 */

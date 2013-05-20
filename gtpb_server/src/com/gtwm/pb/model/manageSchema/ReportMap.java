@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -68,17 +68,17 @@ public class ReportMap implements ReportMapInfo {
 	public void setCategoryField(ReportFieldInfo categoryField) {
 		this.categoryField = categoryField;
 	}
-	
+
 	public String toString() {
 		return "Map for postcode field " + this.postcodeField + ", coloured by " + colourField + ", categorised by " + categoryField;
 	}
-	
+
 	private ReportFieldInfo postcodeField;
-	
+
 	private ReportFieldInfo colourField;
-	
+
 	private ReportFieldInfo categoryField;
-	
+
 	private long id;
 
 }

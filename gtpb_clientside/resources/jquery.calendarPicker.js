@@ -21,7 +21,7 @@ jQuery.fn.calendarPicker = function(options) {
 
   if (typeof(options.callbackDelay) == "undefined")
     options.callbackDelay=500;
-  
+
   if (typeof(options.monthNames) == "undefined")
     options.monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 

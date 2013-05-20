@@ -60,7 +60,7 @@ public class Comment implements CommentInfo {
 	public int getRowId() {
 		return this.rowId;
 	}
-	
+
 	public TableInfo getTable() {
 		return this.table;
 	}
@@ -120,8 +120,8 @@ public class Comment implements CommentInfo {
 	private final int rowId;
 
 	private final int commentId;
-	
+
 	private final TableInfo table;
-	
+
 	private volatile int hashCode = 0;
 }

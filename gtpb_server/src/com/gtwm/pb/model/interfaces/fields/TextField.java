@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -40,7 +40,7 @@ public interface TextField extends BaseField {
 
 	/**
 	 * If this field is a lookup, return the CSV of default items
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             if the field isn't a lookup
 	 */
@@ -94,23 +94,23 @@ public interface TextField extends BaseField {
 	 *             can't use lookups
 	 */
 	public void setUsesLookup(Boolean usesLookup) throws CantDoThatException;
-	
+
 	public boolean usesTags();
-	
+
 	/**
 	 * If tags are used, a CSV of items is stored in the field. Tags are used when a user wants to store more than one value in a field
 	 */
 	public void setUsesTags(Boolean usesTags) throws CantDoThatException;
-	
+
 	public void addTags(Set<String> tags) throws CantDoThatException;
 
 	/**
 	 * Returns a set of distinct values that are stored for this field in the
 	 * field's parent table. Useful for displaying a lookup / combo box or set of tags for entry
-	 * 
+	 *
 	 * TODO: also include any values returned by getDefault() if that returns a
 	 * comma separated list
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             if the text field type doesn't support lookups. Currently,
 	 *             BigTextFieldDefn doesn't
@@ -129,7 +129,7 @@ public interface TextField extends BaseField {
 	 * Similar to getItems() but instead of returning values from the field's
 	 * parent table, returns them from the report passed in, filtered by the
 	 * supplied filter map. An empty map can be used for no filtering.
-	 * 
+	 *
 	 * @param filterValues
 	 *            A filter map in the same format as that passed to
 	 *            ReportDataInfo.getReportDataRows

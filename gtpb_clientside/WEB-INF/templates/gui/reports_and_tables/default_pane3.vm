@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ $viewTools.startTimer("gui/reports_and_tables/default_pane3")
 #if($view.loggedInUserAllowedTo('MANAGE_TABLE',$sessionData.getTable()) && (!$mobile_device))
 	  ## the current user can manage the table so show them admin options as well
 	  ## as the data and summary in tabs
-      #set($success=$tabs.add({'tabName':'global edit', 'tabSource':'gui/reports_and_tables/tabs/global_edit'}))	
+      #set($success=$tabs.add({'tabName':'global edit', 'tabSource':'gui/reports_and_tables/tabs/global_edit'}))
  	  #set($success=$styles.add('resources/tabs/manage_tabs.css'))
       #set($success=$tabs.add({'tabName':'fields', 'tabSource':'gui/reports_and_tables/tabs/table_fields'}))
       #set($success=$styles.add('resources/tabs/table_fields.css'))

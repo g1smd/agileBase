@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ import com.gtwm.pb.model.interfaces.ReportCalcFieldInfo;
  * in the case of calculation fields. Calcs aren't proper table fields and
  * should never be persisted to Hibernate. All the interesting methods are in
  * ReportCalcFieldDefn
- * 
+ *
  * @see com.gtwm.pb.model.interfaces.ReportCalcFieldInfo
  */
 public interface CalculationField extends BaseField {

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
 ##
 #macro(radio_role $caption $privilege $pbfn)
   <label FOR="$table.getInternalTableName()${privilege}setrole$foreach.count">
-    <input type=radio 
+    <input type=radio
      id="$table.getInternalTableName()${privilege}setrole$foreach.count"
-     ##name="$table.getInternalTableName()setrole$foreach.count" 
+     ##name="$table.getInternalTableName()setrole$foreach.count"
      name="rolesmacrosetrole$foreach.count"
 	 value="$privilege"
      gtpb_internalrolename="$role.getInternalRoleName()"
@@ -46,7 +46,7 @@
       #elseif($view.roleHasPrivilege("EDIT_TABLE_DATA", $table))
         #set($highestTablePrivilege = "EDIT_TABLE_DATA")
       #elseif($view.roleHasPrivilege("VIEW_TABLE_DATA", $table))
-        #set($highestTablePrivilege = "VIEW_TABLE_DATA")          
+        #set($highestTablePrivilege = "VIEW_TABLE_DATA")
       #end
       <tr>
         <td>$table.getTableName()<br>$table.getTableDescription()</td>

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
   #set($sessionRowId=$sessionData.getRowId($sessionTable))
 #end
 #if($parentChooserRequired)
-  ## See edit.vm  
+  ## See edit.vm
   #set($field = $parentChooserField)
   ## Temporarily set session ID to that of the tab
   #set($parentRowId = $sessionRowId)

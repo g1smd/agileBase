@@ -10,12 +10,12 @@ public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 		this.fileName = null;
 		this.lastModified = null;
 	}
-	
+
 	public FileVersionDefn(String fileName, Calendar lastModified) {
 		this.fileName = fileName;
 		this.lastModified = lastModified;
 	}
-	
+
 	public String getFileName() {
 		return this.fileName;
 	}
@@ -23,7 +23,7 @@ public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 	public Calendar getLastModified() {
 		return this.lastModified;
 	}
-	
+
 	/**
 	 * equals is based on fileUrl
 	 */
@@ -40,11 +40,11 @@ public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 		}
 		return (this.getFileName()).equals(otherFileVersion.getFileName());
 	}
-	
+
 	public int hashCode() {
 		return this.fileName.hashCode();
 	}
-	
+
 	/**
 	 * Compare firstly based on file modification time
 	 */
@@ -62,9 +62,9 @@ public class FileVersionDefn implements FileVersion, Comparable<FileVersion> {
 	public String toString() {
 		return this.fileName;
 	}
-	
+
 	private final String fileName;
-	
+
 	private final Calendar lastModified;
 
 }

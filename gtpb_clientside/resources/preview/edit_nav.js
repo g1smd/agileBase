@@ -35,7 +35,7 @@ function appLauncherStandalone() {
   		appTemplate = "gui/display_application";
   	}
   	document.location = "AppController.servlet?return=" + appTemplate + "&set_table=" + internalTableName + "&set_report=" + internalReportName + "&set_module=" + internalModuleName + "&set_app_id=" + appId + "&cachebust=" + (new Date).getTime();
-  });	
+  });
 	appLauncherCommon();
 }
 
@@ -61,7 +61,7 @@ function appLauncherCommon() {
   	document.location = "AppController.servlet?return=gui/display_application&clear_app_id=true";
   });
   $("#usage").click(function() {
-  	
+
   });
 }
 
@@ -106,5 +106,5 @@ function loadPreviewResults(filterString, internalReportName) {
 			if($("#schemaResults ul li").size() == 0) {
 				$("#schemaResults").hide();
 			}
-	});	
+	});
 }

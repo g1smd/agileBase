@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -177,7 +177,7 @@ function fBuffer() {
 
 		// set an interval on the sent item to resend if no response is received
 		fSetTimer();
-		
+
 		// this runs the request. change property is a handle to the xmlHTTP
 		// request which is handling the data
 		oBufferObject.change = new fChange(oBufferObject.element);
@@ -210,19 +210,19 @@ function fBuffer() {
 	}
 
 	function fClearFromSendQueue(oDOMObject) {
-		var iSendElementIndex = -1;	
+		var iSendElementIndex = -1;
 		// try and find the element in the queue
 		for ( var i = 0; i < aSendBuffer.length; i++) {
-			if (aSendBuffer[i]) {			
+			if (aSendBuffer[i]) {
 				if (aSendBuffer[i].element == oDOMObject) {
-					iSendElementIndex = i;				
+					iSendElementIndex = i;
 				}
 			}
-		}			
+		}
 		if (iSendElementIndex == -1) {
 			return;
 		}
-		
+
 		oBufferObject = aSendBuffer[iSendElementIndex];
 		window.clearInterval(oBufferObject.timerId);
 		aSendBuffer[iSendElementIndex] = null;
@@ -288,11 +288,11 @@ var oBuffer = new fBuffer();
  * Low level functions to do with data editing
  */
 
-function fInit() {  
-	
+function fInit() {
+
   // function to match the fields displayed in pane2 with the input fields in pane3
   // oCells is a collection of the cells in the heading row of the table
-  function fMatchFields() {  
+  function fMatchFields() {
   	var oViewPane = top.document.getElementById('oViewPane');
 		if (oViewPane == null) {
 		  return;
@@ -308,22 +308,22 @@ function fInit() {
     if(oViewPane.contentWindow.pane_2.document.getElementById('currentRow'))
       var iRowIndex = oViewPane.contentWindow.pane_2.document.getElementById('currentRow').rowIndex;
     else var iRowIndex=-1;
-      
+
     /* for each of the cells, look at its field name and see whether
        there are any fields in pane3 whose name matches */
-    for (var i=0;i<oCells.length;i++) { 
+    for (var i=0;i<oCells.length;i++) {
       var aMatchingElements = document.getElementsByName(oCells[i].getAttribute('internalName'));
-      for (var j=0; j<aMatchingElements.length; j++) {	
+      for (var j=0; j<aMatchingElements.length; j++) {
         // attach the matching header cell to the input field
       	aMatchingElements[j].pane2_field = oCells[i];
       	// attach the actual cell to the input field
       	if (iRowIndex>-1)
       	  aMatchingElements[j].pane2_cell = oViewPane.contentWindow.pane_2.document.getElementById('reportData').rows[iRowIndex].cells[i];
       	}
-    } 
+    }
   }
-	 
-  function fMatchTree() {  
+
+  function fMatchTree() {
   	var oViewPane = top.document.getElementById('oViewPane');
 	if (oViewPane == null) {
 	  return;
@@ -332,33 +332,33 @@ function fInit() {
 	  return;
 	}
     var oCaptions=parent.pane_1.document.getElementsByName('caption');
-	 
-	for (var i=0;i<oCaptions.length;i++) { 
+
+	for (var i=0;i<oCaptions.length;i++) {
 	  var aMatchingElements=document.getElementsByName(oCaptions[i].getAttribute('type'));
-	  for (var j=0;j<aMatchingElements.length;j++) {	
+	  for (var j=0;j<aMatchingElements.length;j++) {
 	    // attach the matching cell to the caption
       	if (aMatchingElements[j].getAttribute('identifier')==oCaptions[i].getAttribute('identifier'))
       	aMatchingElements[j].pane1_field=oCaptions[i];
       }
 	}
   }
-	 
-  // match the input fields to those in pane2   
+
+  // match the input fields to those in pane2
   fMatchFields();
-	 
+
   // match the input fields to those in pane1
   fMatchTree();
 }
 
-function fSetPBfn(oObj) {	
-  with(oObj){	
+function fSetPBfn(oObj) {
+  with(oObj){
     removeAttribute('gtpb_'+getAttribute('fn_checked'));
 	removeAttribute('gtpb_'+getAttribute('fn_unchecked'));
 	setAttribute('gtpb_'+getAttribute(oObj.checked?'fn_checked':'fn_unchecked'),'');
   }
 }
 
-/* algorithm from http://jroller.com/page/rmcmahon?entry=resizingtextarea_with_prototype 
+/* algorithm from http://jroller.com/page/rmcmahon?entry=resizingtextarea_with_prototype
    as seen on ajaxian.com */
 function fResizeTextArea(oObj) {
   var lines = oObj.value.split('\n');
@@ -376,7 +376,7 @@ function fResizeTextArea(oObj) {
   if (newRows < oldRows) oObj.rows = Math.max(3, newRows);
 }
 
-function fIsBooleanType(oObj) { 
+function fIsBooleanType(oObj) {
   /* if the input field is a non-boolean type return false
      otherwise return true */
   var jqObj = $(oObj);
@@ -400,23 +400,23 @@ function fEnableDisable(sAction, oFormObject) {
     /* create a collection of all the objects with the name.  If this is a single
        object e.g. a text box it should just be one object but if it's a radio
        group or a bunch of checkboxes then we can set them all */
-       
+
     /* now only works on radio groups (why did it ever work on checkboxes?) */
-     
+
     function fFormObjDocument() {
       var oDocument=oFormObject.parentNode;
       while (oDocument.parentNode) oDocument=oDocument.parentNode;
       return oDocument;
     }
-        
+
     var oDocument=fFormObjDocument();
     //if(oFormObject.getAttribute('type')!='radio') var cObjects= new Array(oFormObject);
     //else
     var cObjects=oDocument.getElementsByName(oFormObject.getAttribute('name'));
     oFormObject.objectCollection=cObjects;
     return cObjects;
-  }	
-  
+  }
+
   function fBusyAttr() {
     if(oFormObject.getAttribute('busyAttribute')) return oFormObject.getAttribute('busyAttribute');
     else {
@@ -459,49 +459,49 @@ function fEnableDisable(sAction, oFormObject) {
 /*
   var cObjects=oFormObject.objectCollection?oFormObject.objectCollection:fSetObjectCollection();
   //var xx=cObjects.length;
-  for(var i=0;i<cObjects.length;i++) {  
+  for(var i=0;i<cObjects.length;i++) {
 	// see whether we've passed in the hidden field from a picker
 	var oObjToChange=((cObjects[i].getAttribute('type')=='hidden') && cObjects[i].label)?cObjects[i].label:cObjects[i];
 	// if we're enabling remember to *remove* the busy attribute
     if(sAction=='enable') oObjToChange.removeAttribute(fBusyAttr());
-    else oObjToChange.setAttribute(fBusyAttr(),'true');   
-  }	
-  */  
+    else oObjToChange.setAttribute(fBusyAttr(),'true');
+  }
+  */
 }
 
 function fChange(oObj, postChangeFunction)  {
   /* object to handle changing the value of a form element and update the db immediately
 	 over XMLHTTP.
-			
-	 The object stores the form object that it's working on, marks it as being updated, 
-	 fires the request, collects the response and handles it. 
-			
+
+	 The object stores the form object that it's working on, marks it as being updated,
+	 fires the request, collects the response and handles it.
+
 	 The object contains compatibility for text, checkbox, radio inputs and contentEditable divs.
-			
+
 	 Any expando property of the form object prefixed with 'gtpb_' will be sent
 	 as a key value pair in the post parameters of the request.  In addition the name
 	 and calculated value of the object are sent by default */
-	 
-  function fReqComplete(sResponseText,sResponseXML) { 
-    function fDisplayValue() {  
+
+  function fReqComplete(sResponseText,sResponseXML) {
+    function fDisplayValue() {
       // note that vValue and vCurrentValue are currently equal
-   	
+
    	  // obj is a select so show the value display, not the option value
    	  // we can use selected index as the value sent is the current value i.e. that shown
-   	  if(oObj.tagName=='SELECT') return oObj.options[oObj.selectedIndex].innerHTML;   	 		
+   	  if(oObj.tagName=='SELECT') return oObj.options[oObj.selectedIndex].innerHTML;
    	  if((oObj.tagName=='INPUT')&&(oObj.getAttribute('type')=='checkbox')) return vValue?'true':'false';
-   	  if((oObj.tagName=='INPUT')&&(oObj.getAttribute('type')=='hidden') && oObj.label) return oObj.label.value;	
-   	  // if there is a P2 field, it has a maxTextLength property, this is a number and the length of vValue is longer than this	
-   	  if(oObj.pane2_field) 
+   	  if((oObj.tagName=='INPUT')&&(oObj.getAttribute('type')=='hidden') && oObj.label) return oObj.label.value;
+   	  // if there is a P2 field, it has a maxTextLength property, this is a number and the length of vValue is longer than this
+   	  if(oObj.pane2_field)
    	    with (oObj.pane2_field)
    	      if (getAttribute('maxTextLength')&&(!isNaN(getAttribute('maxTextLength')))&&(vValue.length>getAttribute('maxTextLength'))) {
    	    // truncate the text if it exceeds the maximum value
    	    // this ensures that the JS update of P2 will show the same content as if it was loaded from the server
-   	    return vValue.substring(0,getAttribute('maxTextLength'))+'...'; 	    
+   	    return vValue.substring(0,getAttribute('maxTextLength'))+'...';
    	  }
    	  return vValue;
     }
-    
+
     function fUpdatePane3() {
 	    // Invalidate the tabs as their data will be obsolete
     	var frameset = frames['oViewPane'];
@@ -514,8 +514,8 @@ function fChange(oObj, postChangeFunction)  {
 			}
     	}
     }
-   	 
-   	function fUpdatePane2() {	
+
+   	function fUpdatePane2() {
    	  // the input field should have been matched with a field in pane2
    	  if(oObj.getAttribute('gtpb_global_edit') !== null) {
    	    // if editing globally, update the whole column of the current record
@@ -540,32 +540,32 @@ function fChange(oObj, postChangeFunction)  {
         else oCell.removeAttribute('nowrap');
       }
     }
-     
-    function fUpdatePane1() {  
+
+    function fUpdatePane1() {
     	var pane1_report_name = oObj.getAttribute("pane1_report_name");
 
     	if (typeof(pane1_report_name) == "string") {
     		$(top.oViewPane.pane_1.document).find("[name="+pane1_report_name+"]").find("a").eq(0).text(fDisplayValue());
     	}
     }
-     
-    function fSetError(sMessage) {	
+
+    function fSetError(sMessage) {
       sMessage = sMessage.replace(/\'/,'&quot;')
       var oLink=document.createElement('A');
       oLink.innerHTML='error: ' + sMessage;
       oLink.setAttribute('error','true');
       oLink.setAttribute('href','javascript:alert(\''+sMessage+'\')');
-     		
+
       fClearError(true);
       oObj.errorMessageObj=oLink;
       oObj.parentNode.appendChild(oLink);
       oObj.setAttribute('title',sMessage);
       oObj.setAttribute('error','true');
     }
-     
-    function fClearError(bLeaveAttrs) {  
+
+    function fClearError(bLeaveAttrs) {
       // even if one doesn't exist, this will be OK
-      if (oObj.errorMessageObj) {  
+      if (oObj.errorMessageObj) {
         oObj.errorMessageObj.parentNode.removeChild(oObj.errorMessageObj);
         oObj.errorMessageObj=false;
       }
@@ -573,7 +573,7 @@ function fChange(oObj, postChangeFunction)  {
       oObj.removeAttribute('error');
       oObj.removeAttribute('title');
     }
-    
+
     function fClearWarning() {
     	var oViewPane = top.document.getElementById('oViewPane');
     	if (oViewPane == null) {
@@ -583,7 +583,7 @@ function fChange(oObj, postChangeFunction)  {
         var warningId = $(oObj).attr("name") + "_warning";
         jqDoc.find("#" + warningId).hide("slow");
     }
-    
+
     function fSetWarning(sMessage) {
       var oViewPane = top.document.getElementById('oViewPane');
       if (oViewPane == null) {
@@ -593,7 +593,7 @@ function fChange(oObj, postChangeFunction)  {
       var warningId = $(oObj).attr("name") + "_warning";
       jqDoc.find("#" + warningId).text(sMessage).show("slow");
     }
-     
+
     top.oBuffer.clearFromSendQueue(oObj);
     var jqObj = jQuery(oObj);
     if (oObj.tagName == 'DIV' && (!jqObj.hasClass("date"))) {
@@ -609,7 +609,7 @@ function fChange(oObj, postChangeFunction)  {
     sResponse=sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
     if(sResponse!='ok') { // the action was not successfully processed by the server
       fSetError(sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue);
-      return; 
+      return;
     }
 
     if(vCurrentValue!=vValue) {
@@ -635,28 +635,28 @@ function fChange(oObj, postChangeFunction)  {
 			}
     }
   }
-   
-  function fSetPostVars() {  
+
+  function fSetPostVars() {
     // create a key value array of the variables to post with the request to the server
-   
+
     var aPostVars=new Array();
-   
+
     // always pass these in the post request
     aPostVars['return']='gui/administration/xmlreturn_fieldchange';
     aPostVars['returntype']='xml';
     aPostVars[oObj.getAttribute('name')]=vValue;
-   
-    /* look at all the attributes that the DOM object has and pass all the 
+
+    /* look at all the attributes that the DOM object has and pass all the
        ones prefixed gtpb_ to the server in the post request   */
     for (var i=0;i<oObj.attributes.length;i++)
       with(oObj.attributes.item(i))
         if (nodeName.search(/^gtpb_/)>=0) {
           aPostVars[nodeName.replace(/^gtpb_/,'')]=nodeValue;
         }
-      
+
     return aPostVars;
   }
-   
+
   /* snapshot the state of the object now so that we can check if it's the same when
      the server returns.  The state we store depends on the type of form object */
   // Get value differently depending on whether the element is a div or form element
@@ -672,13 +672,13 @@ function fChange(oObj, postChangeFunction)  {
   }
   // a key value pair array of data to pass in the Post request
   var aPostVars=new Array();
-  // the form object we're operating 
+  // the form object we're operating
   var oFormObject=oObj;
-   
+
   // show the form object as busy
   fEnableDisable('disable', oObj);
   var aPostVars=fSetPostVars();
-  
-  var oReq=new fRequest('AppController.servlet', aPostVars, fReqComplete, -1); 
-  this.xml_http_request=oReq.xml_http_request;      
+
+  var oReq=new fRequest('AppController.servlet', aPostVars, fReqComplete, -1);
+  this.xml_http_request=oReq.xml_http_request;
 }

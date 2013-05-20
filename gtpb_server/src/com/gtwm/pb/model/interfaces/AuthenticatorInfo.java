@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ public interface AuthenticatorInfo {
 	 * Checks whether the logged in user has a particular general privilege,
 	 * either through directly having the privilege or being a member of a role
 	 * that has the privilege
-	 * 
+	 *
 	 * @param request
 	 *            Allows the method to find the user making the request. Should
 	 *            be the request object passed to the servlet.
@@ -61,10 +61,10 @@ public interface AuthenticatorInfo {
 	 * tables and recursively all joined reports
 	 */
 	public boolean loggedInUserAllowedToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException;
-	
+
 	/**
 	 * Returns all the tables that the logged in user needs view privileges on in order to view the report.
-	 * 
+	 *
 	 * @see Similar to #loggedInUserAllowedToViewReport
 	 */
 	public Set<TableInfo> getTablesNecessaryToViewReport(HttpServletRequest request, BaseReportInfo report) throws CodingErrorException;

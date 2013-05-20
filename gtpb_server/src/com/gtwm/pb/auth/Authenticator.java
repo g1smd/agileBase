@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -191,7 +191,7 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Add a general application functionality privilege for a role.
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If privilege type is MASTER: The MASTER privilege can only be
 	 *           assigned to users, not roles
@@ -209,7 +209,7 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Remove a general application functionality privilege from a role
-	 * 
+	 *
 	 * @return the removed privilege
 	 */
 	protected RoleGeneralPrivilegeInfo removeRolePrivilege(AppRoleInfo role,
@@ -222,7 +222,7 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Add a table privilege for a role
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *           if the privilege requested isn't compatible with a table object
 	 */
@@ -236,9 +236,9 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Remove a table privilege for a role
-	 * 
+	 *
 	 * @return the removed privilege
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *           if the privilege requested isn't compatible with a table object
 	 */
@@ -253,7 +253,7 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Adds a general application privilege for a specific user
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If privilege being assigned is MASTER but the user already has
 	 *           other privileges.
@@ -281,7 +281,7 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Adds a table privilege for a specific user
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *           if the privilege requested isn't compatible with a table object
 	 */
@@ -298,7 +298,7 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Removes a general application privilege for a specific user
-	 * 
+	 *
 	 * @return The removed privilege
 	 */
 	protected UserGeneralPrivilegeInfo removeUserPrivilege(AppUserInfo appUser,
@@ -311,9 +311,9 @@ public final class Authenticator implements AuthenticatorInfo {
 
 	/**
 	 * Removes a table privilege for a specific user
-	 * 
+	 *
 	 * @return the removed privilege
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *           if the privilege requested isn't compatible with a table object
 	 */
@@ -595,7 +595,7 @@ public final class Authenticator implements AuthenticatorInfo {
 		}
 		throw new ObjectNotFoundException("User with email address '" + email + "' not found");
 	}
-	
+
 	@Transient
 	protected AppUserInfo getUserByUserName(String userName) throws ObjectNotFoundException {
 		AppUserInfo cachedUser = this.usersCache.get(userName);
@@ -761,7 +761,7 @@ public final class Authenticator implements AuthenticatorInfo {
 	 * (and possibly an object identifier on which the privilege acts). We use a
 	 * list to maintain ordering so that if two privileges conflict, privilege
 	 * checking always returns the same result (the first match wins)
-	 * 
+	 *
 	 * Note: Don't think hibernate maintains ordering between restarts but at
 	 * least will be consistent within one running of the application
 	 */

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -605,9 +605,9 @@ function uploadFile(fileInputElement) {
 			var jqUploadInfo = jqProgressContainer.find(".upload_info");
 			var fileSizeInfo = parseInt(fileSize / 1000000);
 			if (fileSizeInfo == 0) {
-				fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" /> Uploading &frac12; MB';
+				fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" alt="" /> Uploading &frac12; MB';
 			} else {
-				fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" /> Uploading '
+				fileSizeInfo = '<img src="resources/upload_ajax-loader.gif" alt="" /> Uploading '
 						+ fileSizeInfo + " MB";
 			}
 			// upload speed is in bytes per sec.
@@ -1367,7 +1367,7 @@ function newChild(jqTab, parentInternalTableName) {
 
 /**
  * Used when clicking on a selector report in a tab, or a grandchild record
- * 
+ *
  * @param oRow
  *          The tr being clicked
  * @param internalTableName
@@ -1517,7 +1517,7 @@ function fSetupCharts() {
 								.append(
 										"<div class='chart_remover'><a href='?return=gui/reports_and_tables/pane3&remove_chart=true&summaryid="
 												+ summaryId
-												+ "'><img border='0' src='resources/icons/edit.png' /></a></div>");
+												+ "'><img border='0' src='resources/icons/edit.png' alt='' /></a></div>");
 						$(this).hover(function() {
 							$(this).find('.chart_remover').fadeIn("normal");
 						}, function() {
@@ -1666,7 +1666,7 @@ function fMap() {
 							}
 							for ( var colourValue in colourValues) {
 								$("#map_legend").append(
-										"<div><img src='" + colourIcons[colourValue] + "' />&nbsp;"
+										"<div><img src='" + colourIcons[colourValue] + "' alt='' />&nbsp;"
 												+ colourValue + "</div>");
 							}
 						});

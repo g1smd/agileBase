@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ public interface DataRowFieldInfo {
      *         the templating language Velocity doesn't like nulls
      */
     public String getKeyValue();
-    
+
     /**
      * @return A string representation of the field's display value.
      *         Always return an empty string instead of null as
@@ -37,11 +37,11 @@ public interface DataRowFieldInfo {
     public String getDisplayValue();
 
     /**
-     * 
+     *
      * @return In a report, numeric fields are coloured according to the no. std. devs. away for the column's
      *         mean value. This returns the hex representation of that colour for use in HTML
      */
     public String getStandardDevHexColour();
-    
+
     public double getNumberOfStdDevsFromMean();
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -29,25 +29,25 @@ public interface FileField extends BaseField {
 	/**
 	 * Return a set of all the files that have ever been uploaded into this
 	 * field in a particular record except the current version
-	 * 
+	 *
 	 * @param rowId
 	 *            Identify the record
-	 * 
+	 *
 	 * @param webAppRoot
 	 *            The serverside root of the application, which the method needs
 	 *            to know to examine the files. Can be found with
 	 *            ViewTools.getWebAppRoot()
-	 * 
+	 *
 	 * @param currentFileName
 	 *            The name of the current file in this field in this row ID. So
 	 *            it can be excluded from the set of previous files
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.ViewTools#getWebAppRoot()
 	 */
 	public SortedSet<FileVersion> getPreviousFileVersions(String webAppRoot, int rowId,
 			String currentFileName);
-	
+
 	public AttachmentType getAttachmentType();
-	
+
 	public void setAttachmentType(AttachmentType attachmentType);
 }

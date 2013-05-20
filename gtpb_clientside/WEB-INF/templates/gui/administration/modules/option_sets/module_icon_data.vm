@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -22,29 +22,29 @@
     border-collapse:collapsed;
     margin-top:30px;
   }
-  
-  div#moduleIconPicker table.iconPickerTable td {  
+
+  div#moduleIconPicker table.iconPickerTable td {
     border:1px solid #999999;
     cursor: pointer;
   }
-  
+
   div#moduleIconPicker table.iconPickerTable td:hover {
     background-color:#dae2ff;
   }
-  
+
   div#moduleIconPicker table.iconPickerTable td#icon_pending {
     border-color:#FFBA3B;
   }
-  
+
   div#moduleIconPicker table.iconPickerTable td#icon_selected {
     border-color:#FFBA3B;
     background-color:#ffd588;
   }
-  
+
   .options_wrapper div.options_set td {
     font-size: 10pt;
   }
-  
+
   .options_wrapper div.options_set td:first-child:first-line {
     font-size: 10pt;
     color: #666666;
@@ -252,7 +252,7 @@
 <td data-iconname='icon-hand-left'><i class='icon-large icon-hand-left'></i></td>
 <td data-iconname='icon-hand-right'><i class='icon-large icon-hand-right'></i></td>
 <td data-iconname='icon-hand-up'><i class='icon-large icon-hand-up'></i></td>
-<td data-iconname='icon-chevron-up'><i class='icon-large icon-chevron-up'></i></td>        
+<td data-iconname='icon-chevron-up'><i class='icon-large icon-chevron-up'></i></td>
         </tr>
         <tr><td colspan="16" style="border: none">&nbsp;</td></tr>
         <tr>
@@ -295,10 +295,10 @@
 </div>
 
 ## TODO: for some reason, script isn't called when in external tabs.js
-<script language="JavaScript">
+<script type="text/javascript">
   $("td[data-iconname='$currentIconPath']").attr("id","icon_selected");
   fModuleIconPicker();
-  
+
   function fModuleIconPicker() {
 	$("table.iconPickerTable td").click(function() {
 	  var selected = $(this);

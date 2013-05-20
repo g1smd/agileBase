@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ public class ModuleUsageStats implements ModuleUsageStatsInfo, Comparable<Module
 		}
 		return this.totalReportViews;
 	}
-	
+
 	public int getUserReportViewsPercentage(BaseReportInfo report, AppUserInfo user) {
 		SortedSet<UserReportViewStatsInfo> statsSet = this.reportStats.get(report);
 		if (statsSet == null) {
@@ -126,6 +126,6 @@ public class ModuleUsageStats implements ModuleUsageStatsInfo, Comparable<Module
 	private final SortedMap<BaseReportInfo, SortedSet<UserReportViewStatsInfo>> reportStats = new TreeMap<BaseReportInfo, SortedSet<UserReportViewStatsInfo>>();
 
 	private final ModuleInfo module;
-	
+
 	private int totalReportViews = 0;
 }

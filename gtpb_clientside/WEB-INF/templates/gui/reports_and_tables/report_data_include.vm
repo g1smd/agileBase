@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($Q = '"') 
+#set($Q = '"')
 
 ## copied from report_data, modified for including in wiki
 
@@ -64,16 +64,16 @@
 			         #set($wikiPageUrl = $view.getWikiPageUrl($dataRowField.getKeyValue(), false))
 			         #set($success=$row.add("<a href='$wikiPageUrl'>$dataRowField.getDisplayValue()</a>"))
 			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isURL()))
-			         #set($success=$row.add("<a href='$textValue.getFormattedURL()'>$dataRowField.getDisplayValue()</a>"))		         
+			         #set($success=$row.add("<a href='$textValue.getFormattedURL()'>$dataRowField.getDisplayValue()</a>"))
 			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isPostcode()))
-			         #set($success=$row.add("<a href='http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue'>$dataRowField.getDisplayValue()</a>"))		         
+			         #set($success=$row.add("<a href='http://maps.google.co.uk/maps?f=q&hl=en&q=$fieldValue'>$dataRowField.getDisplayValue()</a>"))
 			       #elseif(($field.getClass().getSimpleName().equals("TextFieldDefn")) && ($textValue.isEmailAddress()))
 			         #set($success=$row.add("<a href='mailto:$dataRowField.getKeyValue()'>$dataRowField.getDisplayValue()</a>"))
 				   #elseif(($field.getClass().getSimpleName().equals("FileFieldDefn")) && ($dataRowField.getKeyValue() != ""))
 					 #set($fileValue = $viewTools.getFileValueTool($dataRowField.getKeyValue()))
 					 #set($downloadUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$datarow.getRowId()/$fileValue")
 					 #if(!$fieldValueObject.isImage())
-					   #set($fileCellContents = "<img border='0' style='float:left' src=${Q}http://gtwebmarque.com/static_features/filetypes/${fileValue.getIconName()}.png${Q}><a href=${Q}${downloadUrl}${Q}>$fileValue</a>")
+					   #set($fileCellContents = "<img border='0' style='float:left' alt="" src=${Q}http://gtwebmarque.com/static_features/filetypes/${fileValue.getIconName()}.png${Q}><a href=${Q}${downloadUrl}${Q}>$fileValue</a>")
                      #end
 				     #set($success=$row.add($fileCellContents))
 			       #else

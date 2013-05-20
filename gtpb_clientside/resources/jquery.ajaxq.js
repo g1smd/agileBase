@@ -18,7 +18,7 @@ jQuery.ajaxq = function (queue, options)
 
 	// Initialize current queue if it's not initialized yet
 	if (typeof document.ajaxq.q[queue] == "undefined") document.ajaxq.q[queue] = [];
-	
+
 	if (typeof options != "undefined") // Request settings are given, enqueue the new request
 	{
 		// Copy the original options, because options.complete is going to be overridden
@@ -26,7 +26,7 @@ jQuery.ajaxq = function (queue, options)
 		var optionsCopy = {};
 		for (var o in options) optionsCopy[o] = options[o];
 		options = optionsCopy;
-		
+
 		// Override the original callback
 
 		var originalCompleteCallback = options.complete;
@@ -36,7 +36,7 @@ jQuery.ajaxq = function (queue, options)
 			// Dequeue the current request
 			document.ajaxq.q[queue].shift ();
 			document.ajaxq.r = null;
-			
+
 			// Run the original callback
 			if (originalCompleteCallback) originalCompleteCallback (request, status);
 

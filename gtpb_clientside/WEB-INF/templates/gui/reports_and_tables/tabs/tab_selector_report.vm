@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -36,4 +36,4 @@
   <table id=reportData cellspacing="0"><tbody name=reportBody id=reportBody class="selectable">
     #parse("gui/reports_and_tables/report_data.vm")
   </tbody></table>
-</div>			
+</div>

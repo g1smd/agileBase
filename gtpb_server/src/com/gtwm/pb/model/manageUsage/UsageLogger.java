@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 
 	/*
 	 * Actually do the logging to the database.
-	 * 
+	 *
 	 * Note: Thread.yield() statements are between potentially long running
 	 * operations
 	 */
@@ -272,7 +272,7 @@ public class UsageLogger implements UsageLoggerInfo, Runnable {
 	/**
 	 * Send a string to a localhost HTTP server for broadcasting with a
 	 * websocket message
-	 * 
+	 *
 	 * @param report
 	 *            The current session report for the user
 	 */

@@ -34,11 +34,11 @@
 	<![endif]-->
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
     <title>Agilebase- $company_name</title>
-   	  <script src="resources/jquery.js" language="Javascript"></script>
-      <script language=JavaScript src="resources/logger.js"></script>
-      <script language=JavaScript src="resources/display_application_amalgam.js"></script>
-      <script language=JavaScript src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>
-      <script language="JavaScript" type="text/javascript">
+   	  <script type="text/javascript" src="resources/jquery.js"></script>
+      <script type="text/javascript" src="resources/logger.js"></script>
+      <script type="text/javascript" src="resources/display_application_amalgam.js"></script>
+      <script type="text/javascript" src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>
+      <script type="text/javascript">
         $(document).ready(function() {
           window.spawnWindow=fSpawnWindow;
         });
@@ -51,7 +51,7 @@
       #parse("properties.vm") ## sets logo variable
       #if($logo)
         <div id="logo">
-          <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" /></a>
+          <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" alt="" /></a>
         </div>
       #end
       ## Show add/clone/delete buttons if user has edit privileges on at least one table
@@ -100,7 +100,7 @@
       #end
     </div>
 		<div id="logout">
-			##<img style="float:left" src="resources/toolbar/logout_left.png">
+			##<img style="float:left" src="resources/toolbar/logout_left.png" alt="">
 			<span>
         	  ##<a onclick="fHelp();" href="#" title="load help centre to view documentation or ask a question">help</a>
 			  ##<span style="color:white">|</span>

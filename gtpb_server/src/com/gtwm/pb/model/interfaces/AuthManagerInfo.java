@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ import com.gtwm.pb.util.Enumerations.InitialView;
 /**
  * Manage the application's authenticator object - add users, roles etc. and
  * handle persistence. The authenticator itself can be used to check privileges
- * 
+ *
  * Note - a HttpServletRequest parameter is passed to most of these methods -
  * this is to allow privilege checking of the current user to take place before
  * carrying out requested actions
@@ -60,7 +60,7 @@ public interface AuthManagerInfo {
 
 	/**
 	 * Add a new company
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the logged in user doesn't have MASTER privileges
 	 */
@@ -161,7 +161,7 @@ public interface AuthManagerInfo {
 			ObjectNotFoundException, CodingErrorException, CantDoThatException;
 
 	/**
-	 * 
+	 *
 	 * @param internalRoleName
 	 * @return role object
 	 */
@@ -171,10 +171,10 @@ public interface AuthManagerInfo {
 	 * Creates and stores a privilege which is an object that matches a role to a
 	 * privilege type, e.g the role 'administrator' may have the privilege
 	 * ADMINISTRATE
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If user doesn't have ADMINISTRATE privileges
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If the privilege type can't be assigned to a role because it is
 	 *           invalid for roles
@@ -187,7 +187,7 @@ public interface AuthManagerInfo {
 	 * Creates and stores a table-specific privilege which is an object that
 	 * matches a role, privilege type and table together, e.g the role
 	 * 'sales_rep', privilege type VIEW_TABLE_DATA and table 'Sales' may be linked
-	 * 
+	 *
 	 * @throws IllegalArgumentException
 	 *           If the privilegeType isn't a table-specific privilege
 	 * @throws DisallowedException
@@ -206,7 +206,7 @@ public interface AuthManagerInfo {
 
 	/**
 	 * Add a general user privilege
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If the privilege type can't be assigned to that particular user
 	 *           because it conflicts with other privileges
@@ -217,7 +217,7 @@ public interface AuthManagerInfo {
 
 	/**
 	 * Add a table-specific user privilege
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If the privilege type can't be assigned to that particular user
 	 *           because it conflicts with other privileges
@@ -236,7 +236,7 @@ public interface AuthManagerInfo {
 	/**
 	 * For use when a table is deleted, to clear all privileges there were on that
 	 * table
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
 	 *           table
@@ -271,7 +271,7 @@ public interface AuthManagerInfo {
 	/**
 	 * TODO: company.getUsers doesn't throw an exception if not administrator,
 	 * these methods should behave the same either way
-	 * 
+	 *
 	 * @return A list of users who can log in from the current company
 	 * @throws DisallowedException
 	 *           If the current user doesn't have ADMINISTRATE privileges
@@ -280,7 +280,7 @@ public interface AuthManagerInfo {
 	 */
 	public SortedSet<AppUserInfo> getUsers(HttpServletRequest request) throws DisallowedException,
 			ObjectNotFoundException;
-	
+
 	/**
 	 * @return A set of administrators for the company of the logged in user. Useful to show who can grant privileges etc. if a user requests it
 	 */
@@ -300,7 +300,7 @@ public interface AuthManagerInfo {
 	/**
 	 * Returns a list of roles that a particular user is assigned to. To return
 	 * the list of users in a role, just call role.getUsers() directly
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the current user doesn't have ADMINISTRATE privileges
 	 */
@@ -351,7 +351,7 @@ public interface AuthManagerInfo {
 	/**
 	 * Checks whether the specified user is able to view a report by having all
 	 * the relevant privileges or roles with privileges
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           if the logged in user isn't an administrator
 	 */

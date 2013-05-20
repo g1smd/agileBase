@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -33,4 +33,4 @@
     #end
   #end
 #end
-<option value="$table.getDefaultReport().getInternalReportName()" #if($reportCount == 0)selected#end>All fields and records</option>  
+<option value="$table.getDefaultReport().getInternalReportName()" #if($reportCount == 0)selected#end>All fields and records</option>

@@ -29,6 +29,6 @@
     <h1><a href="AppController.servlet?return=s/agilebase">Add most frequently used apps</a></h1>
   #else
     <h1>Just a sec...</h1>
-  #end  
+  #end
 </ul>
 </div>

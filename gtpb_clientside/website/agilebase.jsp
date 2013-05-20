@@ -37,12 +37,12 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       </div>
       <div class="row abNav">
         <div class="span2 home">
-          <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" /></a>
+          <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
           <div class="arrow"></div>
         </div>
       </div>
       <div id="content">
-        <h1 class="light"><img src="/agileBase/website/images/brandmark.png" /> : log in</h1>
+        <h1 class="light"><img src="/agileBase/website/images/brandmark.png" alt="" /> : log in</h1>
         <div class="big spaced">
           <% if(live) { %>
             <form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform" class="form-horizontal">
@@ -52,7 +52,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               <div class="control-group">
                 <label class="control-label" for="j_username">username</label>
                 <div class="controls"><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></div>
-              </div>  
+              </div>
               <div class="control-group">
                 <label class="control-label" for="j_password">password</label>
                <div class="controls"><input type="password" name="j_password" id="j_password" /></div>
@@ -88,4 +88,4 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       </div>
     </div>
 		</body>
-</html>		
+</html>

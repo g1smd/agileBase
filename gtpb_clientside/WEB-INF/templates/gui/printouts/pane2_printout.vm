@@ -93,11 +93,11 @@
       #set($module=$sessionData.getTable().getTableName())
     #end
     <title>$module - $report</title>
-	<script src="resources/jquery.js"></script>
-    <script src="resources/wait/request_setFilter.js"></script>
-    <script src="resources/modalFramework/modalFramework.js"></script>
+	<script type="text/javascript" src="resources/jquery.js"></script>
+    <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
+    <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
     <script type="text/javascript" src="resources/highcharts.js"></script>
-    <script>
+    <script type="text/javascript">
 	function loadDetail() {
 		$('#detail').text('loading...');
 		$('#detail').load('AppController.servlet?return=gui/printouts/detail');
@@ -108,7 +108,7 @@
   <body isDraft="true" style="background-color: white; overflow: visible"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft
     <h1 class="draftMarker">DRAFT ONLY</h1>
     <b style="float:right;">$module - $report</b>
-		<img src="resources/logo_small.png" style="vertical-align:middle; width:16px;" />&nbsp; agilebase.co.uk
+		<img src="resources/logo_small.png" style="vertical-align:middle; width:16px;" alt="" />&nbsp; agilebase.co.uk
 	  <br clear="all">
     <div id="wrapper"><table id=reportData cellspacing="0">
     	#set($reportStyle = $sessionReport.getReportStyle())
@@ -165,7 +165,7 @@
         <p>As the data can still be edited, it should be considered draft until the values are locked</p>
       </div>
     </div>
-    <script languange="Javascript">
+    <script type="text/javascript">
       function fMarkAsDraft(bMark) {
         if(bMark) document.body.setAttribute('isDraft','true');
         else document.body.removeAttribute('isDraft');

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ $viewTools.startTimer("gui/mobile/pane3_related")
 		#if ($tableDataRow.size() > 0)
 		 #set($viewOnly=true) ## $viewOnly used by resources/input/input.vm
 		 #set($address = $viewTools.getAddress($tableDataRow))
-		#end 
+		#end
 		## Show related data
 		#foreach($reportField in $sessionReport.getReportFields())
 		  ## don't show fields we've already shown

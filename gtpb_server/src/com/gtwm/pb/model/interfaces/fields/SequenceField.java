@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -25,13 +25,13 @@ public interface SequenceField extends BaseField {
 	/**
 	 * Sequence fields are often used for primary keys, in which case their name
 	 * will be complicated, like
-	 * 
+	 *
 	 * ID:a1) organisations
-	 * 
+	 *
 	 * Allow a simple version to be returned, e.g. 'organisations'
 	 */
 	public String getSimpleName();
-	
+
 	/**
 	 * Return true if this field is the primary key for its table
 	 */

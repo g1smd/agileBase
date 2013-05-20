@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@
 	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
 	  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
 	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
-  	  <script src="resources/jquery.js"> </script>
+  	  <script type="text/javascript" src="resources/jquery.js"></script>
     </head>
 	<body>
 	  #parse("gui/mobile/pane2_header.vm")

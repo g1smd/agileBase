@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -26,20 +26,20 @@ public interface FormTabInfo extends Comparable<FormTabInfo> {
 	 * Table which this tab will contain
 	 */
 	public TableInfo getTable();
-	
+
 	/**
 	 * If the table may have more than one record related with the parent, use this report to select one to edit.
-	 * 
+	 *
 	 * If null, then the table should only contain one 'child' record
 	 */
 	public BaseReportInfo getSelectorReport();
-	
+
 	public void setSelectorReport(BaseReportInfo report);
-	
+
 	/**
 	 * Order tabs by index
 	 */
 	public int getIndex();
-	
+
 	public void setIndex(int index);
 }

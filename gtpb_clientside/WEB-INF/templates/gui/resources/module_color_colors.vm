@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -24,4 +24,3 @@
 #set($success=$colours.add({'colourName':'purple', 'styleName':'purple'}))
 #set($success=$colours.add({'colourName':'silver', 'styleName':'silver'}))
 #set($success=$colours.add({'colourName':'yellow', 'styleName':'yellow'}))
-	  

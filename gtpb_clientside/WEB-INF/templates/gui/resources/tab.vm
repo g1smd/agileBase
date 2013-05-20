@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -18,43 +18,43 @@
 <STYLE>@import url("resources/tab/tab.css");</STYLE>
 
 <script type="text/javascript">
-  function fNothing(x,y){  
+  function fNothing(x,y){
     return;
   }
-  
-  function fTabClick(oEvent){  
-    function fTabObj(oEventObj){  
+
+  function fTabClick(oEvent){
+    function fTabObj(oEventObj){
       while ((oEventObj.parentNode)&&((oEventObj.tagName!='DIV')||(!oEventObj.className)||(oEventObj.className!='tab_content')))
-				      oEventObj=oEventObj.parentNode;				    
+				      oEventObj=oEventObj.parentNode;
       		return oEventObj.parentNode?oEventObj:null;
     }
-     
-    function fSetTabSessionVars(oTabObj){ 
+
+    function fSetTabSessionVars(oTabObj){
       function fSetSessionTabset(aPostVars){
         	aPostVars['key']='$tabset_id';
 	     		   aPostVars['value']='true'; ##note that this is a smarty variable
 	     		   var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
 	      }
-	      
+
 	      function fSetSessionTab(oTabObj,aPostVars){
 	        	aPostVars['key']="$tabset_id"+'_tabindex';
 	     		   aPostVars['value']=oTabObj.getAttribute('tabindex');
 	     		   var oReq=new fRequest('AppController.servlet',aPostVars,fNothing,-1);
 	      }
-	    
+
 	      aPostVars=new Array();
 	      aPostVars['return']='gui/administration/xmlreturn_fieldchange';
 	      aPostVars['set_custom_string']='true';
-     	 
+
      	 fSetSessionTabset(aPostVars);
-     	 fSetSessionTab(oTabObj,aPostVars);     
+     	 fSetSessionTab(oTabObj,aPostVars);
     }
-				 
+
 		    fClearSelectedTabs();
 		    var oTabObj=fTabObj(oEvent.target);
 		    if (oTabObj) {
 		      	oTabObj.blur();
-		 		     oTabObj.id='selected_tab';				 
+		 		     oTabObj.id='selected_tab';
 		 		     fSetTabSessionVars(oTabObj);
 		    }
 	  }
@@ -68,7 +68,7 @@
   	  #end
   #elseif ($foreach.count==1)
     id="selected_tab"
-  #end 
+  #end
   tabindex="$foreach.count">
   <div id="html_content" class="content">
     ##tab html content

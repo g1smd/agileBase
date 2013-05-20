@@ -11,7 +11,7 @@ public interface DashboardGridInfo {
 	/**
 	 * When given the width and height of a block to place, calculates and
 	 * returns the optimal position for that block
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             If the grid becomes too massive
 	 */

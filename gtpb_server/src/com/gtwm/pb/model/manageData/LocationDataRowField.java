@@ -9,7 +9,7 @@ public class LocationDataRowField implements LocationDataRowFieldInfo {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
-	
+
 	public String getKeyValue() {
 		return this.keyValue;
 	}
@@ -33,10 +33,10 @@ public class LocationDataRowField implements LocationDataRowFieldInfo {
 	public Double getLongitude() {
 		return this.longitude;
 	}
-	
+
 	private final String keyValue;
 
 	private final Double latitude;
-	
+
 	private final Double longitude;
 }

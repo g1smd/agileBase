@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
  * A list of privileges that can be used by the application and assigned to user roles. Each privilege is
  * either a general application-wide privilege such as 'edit users' or specific to a particular object, e.g.
  * 'access table'. If the privilege is object specific, then the class of object it applies to is stored
- * 
+ *
  * Note: The privilege ADMINISTRATE doesn't give automatic access to all data, but it does allow the user to
  * give themselves view, edit, manage etc. privileges on any item. Full access isn't automatically given so as
  * not to overwhelm the administrator with tables/reports they don't want to see
@@ -44,7 +44,7 @@ public enum PrivilegeType {
     private PrivilegeType() {
         // Don't allow no-arg constructor
     }
-    
+
     /**
      * If no class of object for the privilege is specified, construct a general application privilege
      */

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ import java.util.SortedSet;
 
 /**
  * Represents a tag/word cloud, all words lower case
- * 
+ *
  * Found the it.exprivia.cnos cloud very slow on large data sets so this was
  * written from scratch, it's an order of magnitude faster
  */
