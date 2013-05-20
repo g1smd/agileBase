@@ -155,6 +155,10 @@ body {
   min-width: 70%;
 }
 
+.tile table#reportData.single_column td .date select {
+  min-width: 0;
+}
+
 .tile table#reportData.single_column .comment_toggle {
   position: absolute;
   right: 3em;
@@ -625,6 +629,7 @@ table.reportData th {
   text-align: left;
   vertical-align: top;
   padding-left: 1em;
+  text-transform: capitalize;
 }
 
 table.reportData th#sortedColumn[sortDirn=true] {
