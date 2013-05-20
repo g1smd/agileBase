@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ import java.util.Map;
  * Stores all session specific data when a client is using the web application.
  * When data is sent from the UI to the server, parameters passed such as table
  * identifiers, row ids etc. will be stored in the session via this object.
- * 
+ *
  * In general, any user-specific data that the user interface view methods need
  * to access should be stored here.
  */
@@ -54,7 +54,7 @@ public interface SessionDataInfo {
 	 * Delete a custom session variable, or take no action if it doesn't exist.
 	 * Variables of any type are cleared, i.e. anything that's been set with
 	 * setCustomString, setCustomTable, setCustomReport etc.
-	 * 
+	 *
 	 * A comma separated list of keys can be provided to clear more than one key
 	 */
 	public void clearCustomVariable(String key);
@@ -62,11 +62,11 @@ public interface SessionDataInfo {
 	/**
 	 * Un-filter a particular field. NOTE: This is not the same as setting the
 	 * filter value to null or an empty string.
-	 * 
+	 *
 	 * Use CLEAR_REPORT_FILTER_VALUE in the HTTP request to clear a field
 	 * filter, supplying internalFieldName=<i>identifier of the field to
 	 * un-filter</i>
-	 * 
+	 *
 	 * @param field
 	 */
 	public void clearReportFilterValue(BaseField field);
@@ -75,7 +75,7 @@ public interface SessionDataInfo {
 
 	/**
 	 * Return the value associated with the given key
-	 * 
+	 *
 	 * @deprecated Use getCustomString instead
 	 */
 	public String getCustomVariable(String key);
@@ -107,25 +107,25 @@ public interface SessionDataInfo {
 	 * @return A read-only copy of the session's report filter values
 	 */
 	public Map<BaseField, String> getReportFilterValues();
-	
+
 	/**
 	 * Return the session's report filter values for fields that are in the given report
 	 */
 	public Map<BaseField, String> getReportFilterValues(BaseReportInfo report);
 
 	public String getGlobalFilterString(BaseReportInfo report);
-	
+
 	/**
 	 * For searches on any (relevant) field
 	 */
 	public void setGlobalFilterString(BaseReportInfo report, String filterString);
-	
+
 	public Map<BaseField, Boolean> getReportSorts();
 
 	public int getReportRowLimit();
-	
+
 	public TileInfo getTile();
-	
+
 	public void setTile(TileInfo tile);
 
 	/**
@@ -170,7 +170,7 @@ public interface SessionDataInfo {
 
 	/**
 	 * Allow the UI to set a custom session variable, identified by a key
-	 * 
+	 *
 	 * @deprecated Use setCustomString instead
 	 */
 	public void setCustomVariable(String key, String value);
@@ -192,13 +192,13 @@ public interface SessionDataInfo {
 	/**
 	 * Save the values that the user typed into an input form, in case the form
 	 * needs to be re-displayed.
-	 * 
+	 *
 	 * This method will extract the values relating to fields in the current
 	 * report as set by setReport().
-	 * 
+	 *
 	 * It's used internally by DataManagement.saveRecord, don't call from the
 	 * user interface
-	 * 
+	 *
 	 * @param parameterMap
 	 *            Map of field to field value.
 	 */
@@ -207,9 +207,9 @@ public interface SessionDataInfo {
 	/**
 	 * Set the report the client is currently using. Also set the current table
 	 * to the report's parent table.
-	 * 
+	 *
 	 * Use SET_REPORT=internalReportName in the HTTP request to set the report
-	 * 
+	 *
 	 * @throws SQLException
 	 *             If there was an error auto-setting the row ID
 	 */
@@ -217,11 +217,11 @@ public interface SessionDataInfo {
 
 	/**
 	 * Set a filter on a particular field.
-	 * 
+	 *
 	 * Use SET_REPORT_FILTER_VALUE in the HTTP request to set a filter,
 	 * supplying internalFieldName=<i>identifier of the
 	 * field</i>&fieldValue=<i>filter string</i>
-	 * 
+	 *
 	 * @param field
 	 * @param fieldValue
 	 *            String representation of the value to set. If null or an empty
@@ -246,13 +246,13 @@ public interface SessionDataInfo {
 	/**
 	 * Use SET_REPORT_ROW_LIMIT=<i>rowLimit</i> in the HTTP request to set the
 	 * row limit.
-	 * 
+	 *
 	 * The row limit in the session is global, not per report, so if a user
 	 * requests that they see 1000 rows, they'll see 1000 rows for all reports
 	 * they view.
-	 * 
+	 *
 	 * agileBase will interpret a value of less than 1 as no limit
-	 * 
+	 *
 	 * @param rowLimit
 	 *            The maximum no. rows of a report that should be displayed
 	 */
@@ -272,10 +272,10 @@ public interface SessionDataInfo {
 	/**
 	 * Set the record identifier for the current table. The record ID for each
 	 * table is remembered and can be different. Set to -1 to clear the row Id
-	 * 
+	 *
 	 * Use SET_ROW_ID=<the row ID> in the HTTP request to set the database
 	 * record row
-	 * 
+	 *
 	 * @param rowId
 	 *            The database row ID of the current record
 	 */
@@ -291,9 +291,9 @@ public interface SessionDataInfo {
 	 * Set the table the client is currently using. If this is the first time
 	 * that this table has been set as the current one, then also set the
 	 * current report to the default report of that table.
-	 * 
+	 *
 	 * Use SET_TABLE=internalTableName in the HTTP request to set the table.
-	 * 
+	 *
 	 * @throws SQLException
 	 *             If there was an error finding the initial row ID to set for
 	 *             the table
@@ -305,9 +305,9 @@ public interface SessionDataInfo {
 	 * SET_USER=userName in the HTTP request.
 	 */
 	public void setUser(AppUserInfo appUser);
-	
+
 	public void setAppId(String appId);
-	
+
 	public String getAppId();
 
 }

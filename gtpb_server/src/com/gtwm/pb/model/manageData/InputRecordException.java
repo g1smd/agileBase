@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ public class InputRecordException extends AgileBaseException {
         super(message);
         this.fieldCausingException = fieldCausingException;
     }
-    
+
     public InputRecordException(String message, BaseField fieldCausingException, Throwable cause) {
         super(message, cause);
         this.fieldCausingException = fieldCausingException;

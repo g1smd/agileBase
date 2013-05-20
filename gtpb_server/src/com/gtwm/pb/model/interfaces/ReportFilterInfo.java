@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * An report filter, i.e. a WHERE clause in an SQL statement. Defines a filter on a single field. Multiple
  * filters may be added to a report
- * 
+ *
  * @see com.gtwm.pb.model.interfaces.BaseReportInfo ReportInfo contains 0 or more ReportFilterInfo objects
  */
 public interface ReportFilterInfo {
@@ -36,7 +36,7 @@ public interface ReportFilterInfo {
     /**
      * If the report containing the filter field is the default report, filter on the table otherwise filter
      * on the report. See code for other conditions
-     * 
+     *
      * @return The SQL fragment needed to apply this filter when creating a view, something like
      *         "table.fieldname >= 5"
      */
@@ -44,7 +44,7 @@ public interface ReportFilterInfo {
 
     /**
      * Return a plain english description of the filter, something like "'Field' from 'Table' greater than 5"
-     * 
+     *
      * @throws CodingErrorException
      *             If the filter type isn't recognised by the method, i.e. code needs to be added to the
      *             method to handle the filter type
@@ -63,12 +63,12 @@ public interface ReportFilterInfo {
 
     /**
      * Return the report field object which is the field being filtered
-     * 
+     *
      * @throws CantDoThatException
      *             If the field being filtered is from a table, not a report
      */
     public ReportFieldInfo getFilterReportField() throws CantDoThatException;
-    
+
     /**
      * Return the report that this filter is part of
      */

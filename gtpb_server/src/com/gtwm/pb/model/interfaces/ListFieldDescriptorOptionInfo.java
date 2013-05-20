@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,21 +24,21 @@ public interface ListFieldDescriptorOptionInfo extends BaseFieldDescriptorOption
 
     /**
      * Get a list of values from which one can be chosen to submit when creating a field
-     * 
+     *
      * @return A map of internal value (the value to submit) to value description (for display to the user)
      */
     public Map<String, String> getOptionsList();
 
     /**
      * Sets the current value selected from one of the list options
-     * 
+     *
      * @param selectedItemKey
      *            Key identifying the value
      * @throws ObjectNotFoundException
      *             If the list doesn't contain the key provided
      */
     public void setSelectedItem(String selectedItemKey) throws ObjectNotFoundException;
-    
+
     /**
      * Sets the current value by adding a key value pair to the list options and using that
      */

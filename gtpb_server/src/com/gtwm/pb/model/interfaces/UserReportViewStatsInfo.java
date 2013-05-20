@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -23,13 +23,13 @@ import java.util.Date;
  * Expected to be used in a Map<BaseReportInfo, UserReportViewStatsInfo>
  */
 public interface UserReportViewStatsInfo {
-	
+
 	public AppUserInfo getUser();
-	
+
 	/**
 	 * The number of times the user returned by getUser has viewed a report
 	 */
 	public int getReportViews();
-	
+
 	public Date getLastViewed();
 }

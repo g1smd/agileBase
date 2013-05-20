@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -47,11 +47,11 @@ public interface DataRowInfo {
 	public DataRowFieldInfo getValue(BaseField field);
 
 	public DataRowFieldInfo getValue(ReportFieldInfo reportField);
-	
+
 	/**
 	 * Return the value of a particular field, identified by internal field ID
 	 * or field name
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *             if the given fieldID doesn't match any field in the report by
 	 *             ID or name
@@ -65,13 +65,13 @@ public interface DataRowInfo {
 
 	/**
 	 * Check whether rows in childTable exist that have relation fields pointing to the current row
-	 * 
+	 *
 	 * Use the specific child table only, don't look in all dependent tables as getChildDataRows does
-	 * 
+	 *
 	 * Note: if there's ever a need for it, this can be altered to return the actual rows or row IDs
 	 */
 	public boolean childDataRowsExist(Connection conn, TableInfo childTable) throws SQLException;
-	
+
 	/**
 	 * Return a list of related records for each RelationField in this row of
 	 * data. The lists are stored in a Map via the RelationField object

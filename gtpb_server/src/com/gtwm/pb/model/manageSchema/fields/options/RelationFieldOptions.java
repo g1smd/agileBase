@@ -9,7 +9,7 @@ public class RelationFieldOptions extends BasicFieldOptions {
 	public void setDefaultToNull(boolean defaultToNull) {
 		this.defaultToNull = defaultToNull;
 	}
-	
+
 	public boolean isOneToOne() {
 		return oneToOne;
 	}
@@ -19,7 +19,7 @@ public class RelationFieldOptions extends BasicFieldOptions {
 	}
 
 	private boolean defaultToNull = true;
-	
+
 	private boolean oneToOne = false;
 
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -513,7 +513,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 
 	/**
 	 * Check that field options make sense, e.g. a unique field can't use a lookup
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           if options aren't consistent with each other
 	 */

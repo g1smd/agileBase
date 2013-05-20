@@ -3,7 +3,7 @@ package com.gtwm.pb.model.manageSchema.fields.options;
 import com.gtwm.pb.util.Enumerations.TextCase;
 
 public class TextFieldOptions extends BasicFieldOptions {
-	
+
 	public String getDefaultValue() {
 		return this.defaultValue;
 	}
@@ -43,11 +43,11 @@ public class TextFieldOptions extends BasicFieldOptions {
 	public void setUsesLookup(boolean usesLookup) {
 		this.usesLookup = usesLookup;
 	}
-	
+
 	public boolean isUsesTags() {
 		return this.usesTags;
 	}
-	
+
 	public void setUsesTags(boolean usesTags) {
 		this.usesTags = usesTags;
 	}
@@ -80,21 +80,21 @@ public class TextFieldOptions extends BasicFieldOptions {
 	}
 
 	private String defaultValue = null;
-	
+
 	private boolean notApplicable = false;
-	
+
 	private String notApplicableDescription = null;
-	
+
 	private String notApplicableValue = null;
-	
+
 	private boolean usesLookup = false;
-	
+
 	private boolean usesTags = false;
-	
+
 	private boolean tieDownLookup = false;
-	
+
 	private TextCase textCase = null;
-	
+
 	private Integer textContentSize = null;
 
 }

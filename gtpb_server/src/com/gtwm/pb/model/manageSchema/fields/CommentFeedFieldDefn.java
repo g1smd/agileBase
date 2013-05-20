@@ -20,7 +20,7 @@ public class CommentFeedFieldDefn extends AbstractField implements CommentFeedFi
 
 	private CommentFeedFieldDefn() {
 	}
-	
+
 	public CommentFeedFieldDefn(TableInfo tableContainingField, String fieldName,
 			String fieldDesc) throws CodingErrorException {
 		super.setTableContainingField(tableContainingField);

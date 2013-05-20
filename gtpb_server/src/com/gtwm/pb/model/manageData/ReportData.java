@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -81,7 +81,7 @@ public class ReportData implements ReportDataInfo {
 	 * Values are cached because mean and standard deviation calculations are
 	 * expensive. When the cache gets too old, the object can be deleted to a)
 	 * force replenishment and b) save memory.
-	 * 
+	 *
 	 * @param report
 	 *          The report which this object produces data for
 	 * @param generateFieldStats
@@ -310,7 +310,7 @@ public class ReportData implements ReportDataInfo {
 
 	/**
 	 * Attempt to parse a string ('today', '23 january 2009' etc.) as a timestamp
-	 * 
+	 *
 	 * @return A JChronic Span representing the time period, or null if
 	 *         unparseable
 	 */
@@ -604,11 +604,11 @@ public class ReportData implements ReportDataInfo {
 
 	/**
 	 * Turn
-	 * 
+	 *
 	 * 'today'
-	 * 
+	 *
 	 * into
-	 * 
+	 *
 	 * '>today and <today'
 	 */
 	private static String preprocessDateFilter(String filterValue) throws CantDoThatException {
@@ -1142,7 +1142,7 @@ public class ReportData implements ReportDataInfo {
 	/**
 	 * Calling methods should always revert back to enable=true at the end of
 	 * querying
-	 * 
+	 *
 	 * @param enableNestLoop
 	 *          true = enable nested loops in queries (default), false = disable
 	 */
@@ -1159,7 +1159,7 @@ public class ReportData implements ReportDataInfo {
 	/**
 	 * Use if a particular report requires an increased worK_mem. Be sure to
 	 * revert back to default after queries
-	 * 
+	 *
 	 * @param enableOverride
 	 *          true = use the report's value for work_mem, false = revert back to
 	 *          the default

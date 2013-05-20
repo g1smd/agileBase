@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -86,7 +86,7 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 	/**
 	 * Get a list of values from which one can be chosen to submit when creating
 	 * a field
-	 * 
+	 *
 	 * @return A map of internal value (the value to submit) to value
 	 *         description (for display to the user)
 	 */
@@ -147,40 +147,40 @@ public class ListFieldDescriptorOption implements ListFieldDescriptorOptionInfo 
 
 		private boolean advancedOption = false;
 	}
-	
+
 	/**
 	 * For the TEXTCONTENTSIZE enum value
 	 */
 	public enum TextContentSizes {
 		FEW_WORDS(35, "short - a word or code"), FEW_SENTENCES(50, "med - a brief sentence"), FEW_PARAS(1000, "large - a few sentences");
-		
+
 		TextContentSizes(int numChars, String sizeDescription) {
 			this.numChars = numChars;
 			this.sizeDescription = sizeDescription;
 		}
-		
+
 		public int getNumChars() {
 			return this.numChars;
 		}
-		
+
 		public String getSizeDescription() {
 			return this.sizeDescription;
 		}
-		
+
 		private int numChars = 0;
-		
+
 		private String sizeDescription = "";
 	}
-	
+
 	public enum FieldPrintoutSetting {
 		VALUE_ONLY("Field value only"), NAME_AND_VALUE("Field name and value"), NAME_VALUE_LINEBREAK("Field name, value and linebreak"), NO_PRINTOUT("Nothing");
-		
+
 		FieldPrintoutSetting(String description) {
 			this.description = description;
 		}
-		
+
 		private String description = null;
-		
+
 		public String toString() {
 			return this.description;
 		}

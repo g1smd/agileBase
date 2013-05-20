@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -27,14 +27,14 @@ import java.util.Set;
 public interface UnionReportInfo extends BaseReportInfo {
     /**
      * Add a report into the UNION set
-     * 
+     *
      * @return Whether the report was already in the set
      */
     public boolean addNewReport(BaseReportInfo report);
 
     /**
      * Remove a report from the UNION set
-     * 
+     *
      * @return Whether this report contained the report to remove
      */
     public boolean removeReport(BaseReportInfo report);
@@ -49,7 +49,7 @@ public interface UnionReportInfo extends BaseReportInfo {
 
     // public void addLimit (int limit);
     // public void removeLimit ();
-    
+
     /**
      * Return a set of all reports having the same fields, in the same order.
      * If no report has yet been selected no matching reports will be returned.<br>

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -37,13 +37,13 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 		this.reportViews = reportViews;
 		this.lastViewed = null;
 	}
-	
+
 	public UserReportViewStats(AppUserInfo appUser, int reportViews, Date lastViewed) {
 		this.appUser = appUser;
 		this.reportViews = reportViews;
 		this.lastViewed = lastViewed;
 	}
-	
+
 	public AppUserInfo getUser() {
 		return this.appUser;
 	}
@@ -51,7 +51,7 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 	public int getReportViews() {
 		return this.reportViews;
 	}
-	
+
 	public Date getLastViewed() {
 		return this.lastViewed;
 	}
@@ -92,6 +92,6 @@ public class UserReportViewStats implements UserReportViewStatsInfo,
 	private final AppUserInfo appUser;
 
 	private final int reportViews;
-	
+
 	private final Date lastViewed;
 }

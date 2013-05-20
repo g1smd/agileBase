@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ public class DateValueDefn implements DateValue {
 			this.second = dateValue.get(Calendar.SECOND);
 		}
 	}
-	
+
 	public DateValueDefn(Calendar calendar) {
 		setDatePartsFromCalendar(calendar);
 	}
@@ -71,7 +71,7 @@ public class DateValueDefn implements DateValue {
 			this.dayOfMonth = null;
 			this.hourOfDay = null;
 			this.minute = null;
-			this.second = null;			
+			this.second = null;
 		} else {
 			Integer years = calendar.get(Calendar.YEAR);
 			// Java Calendar dates are zero indexed i.e. June=5 not 6
@@ -85,7 +85,7 @@ public class DateValueDefn implements DateValue {
 			this.setDateParts(years, months, days, hours, minutes, seconds);
 		}
 	}
-	
+
 	private void setDateParts(Integer year, Integer month, Integer dayOfMonth, Integer hourOfDay,
 			Integer minute, Integer second) {
 		this.year = year;
@@ -137,7 +137,7 @@ public class DateValueDefn implements DateValue {
 					"Unable to retrieve value for unrecognised date field constant: " + field);
 		}
 	}
-	
+
 	public void add(int field, int amount) {
 		Calendar calendar = this.getValueDate();
 		calendar.add(field, amount);

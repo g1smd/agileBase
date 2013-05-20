@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@ import java.util.Set;
  * @see WordCloudInfo
  */
 public interface WordInfo {
-	
+
 	public String getName();
-	
+
 	public int getWeight();
-	
+
 	/**
 	 * Return all version of this word, e.g. smelly, smelling, smells
 	 */

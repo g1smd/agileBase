@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,11 +33,11 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
     public String getFormInputName() {
         return this.booleanOption.getFormInputName();
     }
-    
+
     public void setOptionState(boolean optionState) {
         this.optionState = optionState;
     }
-    
+
     public boolean getOptionState() {
         return this.optionState;
     }
@@ -48,9 +48,9 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
 
     public enum PossibleBooleanOptions {
         UNIQUE("Unique", true),
-        DEFAULTTONOW("Use current time for new records", false), 
+        DEFAULTTONOW("Use current time for new records", false),
         DEFAULTTONULL("Always empty for new records", false),
-        ALLOWNOTAPPLICABLE("Allow not applicable", true), 
+        ALLOWNOTAPPLICABLE("Allow not applicable", true),
         USELOOKUP("Use dropdown", false),
         TIEDOWNLOOKUP("Use only given values", true),
         USETAGS("Use tags", false),
@@ -67,25 +67,25 @@ public class BooleanFieldDescriptorOption implements BooleanFieldDescriptorOptio
         public String getOptionDescription() {
             return this.optionDescription;
         }
-        
+
         public String getFormInputName() {
             return "fieldproperty" + this.toString().toLowerCase(Locale.UK);
         }
-        
+
         public boolean isAdvancedOption() {
             return this.advancedOption;
         }
 
         private String optionDescription;
-        
+
         private boolean advancedOption = false;
     }
-    
+
     public String toString() {
         return this.booleanOption.toString();
     }
 
     private PossibleBooleanOptions booleanOption;
-    
+
     private boolean optionState = false;
 }

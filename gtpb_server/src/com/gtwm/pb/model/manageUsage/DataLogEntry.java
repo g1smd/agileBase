@@ -23,7 +23,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 	public AppUserInfo getUser() {
 		return this.user;
 	}
-	
+
 	public BaseField getField() {
 		return this.field;
 	}
@@ -43,7 +43,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 	public String toString() {
 		return this.appAction.toString() + " log for " + this.user + ": " + this.field + "(" + this.rowId + ") = " + this.value;
 	}
-	
+
 	/**
 	 * Equality on all properties
 	 */
@@ -62,7 +62,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 		}
 		return true;
 	}
-	
+
 	public int hashCode() {
 		if (this.hashCode == 0) {
 			int hashCode = 17;
@@ -78,7 +78,7 @@ public class DataLogEntry implements DataLogEntryInfo {
 	}
 
 	private final long time;
-	
+
 	private final AppUserInfo user;
 
 	private final BaseField field;

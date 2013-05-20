@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -28,13 +28,13 @@ public class ReportQuickFilter implements ReportQuickFilterInfo {
 		this.filterValue = null;
 		this.filterType = null;
 	}
-	
+
 	public ReportQuickFilter(BaseField filterField, String filterValue, QuickFilterType filterType) {
 		this.filterField = filterField;
 		this.filterValue = filterValue;
 		this.filterType = filterType;
 	}
-	
+
 	public BaseField getFilterField() {
 		return this.filterField;
 	}
@@ -50,11 +50,11 @@ public class ReportQuickFilter implements ReportQuickFilterInfo {
 	public String toString() {
 		return this.getFilterField().toString() + " " + this.getFilterType() + " " + this.getFilterValue();
 	}
-	
+
 	private final BaseField filterField;
-	
+
 	private final String filterValue;
-	
+
 	private final QuickFilterType filterType;
 
 }

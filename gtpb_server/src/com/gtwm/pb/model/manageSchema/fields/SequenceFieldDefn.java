@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -78,12 +78,12 @@ public class SequenceFieldDefn extends AbstractField implements SequenceField {
 	public FieldCategory getFieldCategory() {
 		return FieldCategory.SEQUENCE;
 	}
-	
+
 	@Transient
 	public String getSimpleName() {
 		return Naming.getSimpleName(this.getFieldName());
 	}
-	
+
 	@Transient
 	public boolean isPrimaryKey() {
 		return this.equals(this.getTableContainingField().getPrimaryKey());

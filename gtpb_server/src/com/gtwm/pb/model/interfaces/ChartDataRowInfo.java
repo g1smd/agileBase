@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,9 +24,9 @@ import java.util.Map;
  * grouping field values and aggregate function values
  */
 public interface ChartDataRowInfo {
-    
+
     public void addGroupingValue(ChartGroupingInfo grouping, String value);
-    
+
     public void addAggregateValue(ChartAggregateInfo aggregateFunction, Number value);
 
     public String getGroupingValue(ChartGroupingInfo grouping);
@@ -37,8 +37,8 @@ public interface ChartDataRowInfo {
     public String getGroupingValue(ReportFieldInfo groupingField);
 
     public Number getAggregateValue(ChartAggregateInfo aggregateFunction);
-    
+
     public Map<ChartAggregateInfo, Number> getAggregateValues();
-    
+
     public Map<ChartGroupingInfo, String> getGroupingValues();
 }

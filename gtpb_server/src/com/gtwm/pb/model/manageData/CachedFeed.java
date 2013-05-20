@@ -8,12 +8,12 @@ public class CachedFeed implements CachedReportFeedInfo {
 		this.cacheTime = 0;
 		this.cachedFeed = null;
 	}
-	
+
 	public CachedFeed(String feed) {
 		this.cacheTime = System.currentTimeMillis();
 		this.cachedFeed = feed;
 	}
-	
+
 	public String getFeed() {
 		return this.cachedFeed;
 	}
@@ -21,13 +21,13 @@ public class CachedFeed implements CachedReportFeedInfo {
 	public long getCacheAge() {
 		return System.currentTimeMillis() - this.cacheTime;
 	}
-	
+
 	public String toString() {
 		return this.cachedFeed;
 	}
-	
+
 	private final long cacheTime;
-	
+
 	private final String cachedFeed;
 
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ public interface RelationField extends BaseField {
 
 	/**
 	 * Return a field name without table prepended and all the "a7) " gubbins
-	 * 
+	 *
 	 * @return
 	 */
 	public String getSimplifiedFieldName();
@@ -63,10 +63,10 @@ public interface RelationField extends BaseField {
 	/**
 	 * Query the database to find the display value for the given key value,
 	 * represented as a String.
-	 * 
+	 *
 	 * Useful when displaying data but don't use this in any large loop because
 	 * a db query will be done on each call
-	 * 
+	 *
 	 * @param keyValue
 	 *            : internal key value, most likely a row id. Represented as a
 	 *            string though because otherwise we'd have to have one method
@@ -90,20 +90,20 @@ public interface RelationField extends BaseField {
 	 * Use this method when you want a list of all possible internal/display
 	 * values for this field, i.e. the set of distinct values in the field it
 	 * points to
-	 * 
+	 *
 	 * Values will be sorted by display value, case insensitively
-	 * 
+	 *
 	 * Uses getDisplayValue when necessary to get proper display values even
 	 * when the relation field points to a primary key or another relation, so
 	 * this call may be slow if that's the case and there are many items
-	 * 
+	 *
 	 * @param reverseKeyValue
 	 *            If false, return a map of related field values to display
 	 *            values. If true return the reverse map, i.e. display values
 	 *            are the key, related values the value. If true, the returned
 	 *            map will be sorted by displayValue (the map key) case
 	 *            insensitively)
-	 * 
+	 *
 	 * @return a map of internal value to display value from the set of distinct
 	 *         internal values in the table
 	 */
@@ -113,9 +113,9 @@ public interface RelationField extends BaseField {
 	/**
 	 * Get a list of all internal/display values for this field, using
 	 * filterString to filter by display value.
-	 * 
+	 *
 	 * @see getItems(boolean)
-	 * 
+	 *
 	 * @param maxResults
 	 *            Return the first maxResults only, or set to -1 for all results
 	 * @param filterString
@@ -134,17 +134,17 @@ public interface RelationField extends BaseField {
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
-	 * 
+	 *
 	 * Specify the action to be carried taken when a related field is updated
 	 * (default is cascade)
-	 * 
+	 *
 	 * @param onUpdateAction
 	 */
 	public void setOnUpdateAction(ForeignKeyConstraint onUpdateAction);
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
-	 * 
+	 *
 	 * Get the action to be carried taken when a related field is updated
 	 * (default is cascade)
 	 */
@@ -152,17 +152,17 @@ public interface RelationField extends BaseField {
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
-	 * 
+	 *
 	 * Specify the action to be carried taken when a related field is deleted
 	 * (default is cascade)
-	 * 
+	 *
 	 * @param onDeleteAction
 	 */
 	public void setOnDeleteAction(ForeignKeyConstraint onDeleteAction);
 
 	/**
 	 * NOT CURRENTLY IMPLEMENTED
-	 * 
+	 *
 	 * Get the action to be carried taken when a related field is deleted
 	 * (default is cascade)
 	 */

@@ -24,7 +24,7 @@ public interface DashboardTrendOutlierInfo {
 	 * ago, months ago or years ago
 	 */
 	public Period getXAxisPeriod();
-	
+
 	/**
 	 * Return the data - one value per x-axis period from oldest to newest
 	 */

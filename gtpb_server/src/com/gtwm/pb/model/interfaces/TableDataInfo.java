@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -31,9 +31,9 @@ public interface TableDataInfo {
 	 * Return the values in one record so it can be viewed or edited. The table
 	 * is specified in the constructor. If there is no record matching the given
 	 * rowId, then return an empty map.
-	 * 
+	 *
 	 * If the rowId is negative, return an unspecified record
-	 * 
+	 *
 	 * @param rowId
 	 *            Row identifier
 	 * @param logView
@@ -52,7 +52,7 @@ public interface TableDataInfo {
 	/**
 	 * Checks whether the record identified by rowId is locked, taking into
 	 * account whether the lock has been overridden for the logged in user.
-	 * 
+	 *
 	 * If null is passed in as the sessionData, no override check is done
 	 */
 	public boolean isRecordLocked(Connection conn, SessionDataInfo sessionData, int rowId)

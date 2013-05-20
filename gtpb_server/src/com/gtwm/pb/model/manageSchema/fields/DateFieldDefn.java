@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -159,15 +159,15 @@ public class DateFieldDefn extends AbstractField implements DateField {
 		super.setDefaultDefined(false);
 		this.setDefaultToNowDirect(false);
 	}
-	
+
 	public Integer getMaxAgeYears() {
-		return this.maxAgeYears;	
+		return this.maxAgeYears;
 	}
-	
+
 	public Integer getMinAgeYears() {
 		return this.minAgeYears;
 	}
-	
+
 	public void setMaxAgeYears(Integer maxAgeYears) {
 		this.maxAgeYears = maxAgeYears;
 	}
@@ -211,9 +211,9 @@ public class DateFieldDefn extends AbstractField implements DateField {
 	private String databaseFormatString = "DD Mon YYYY HH24:MI";
 
 	private Boolean defaultToNow = false;
-	
+
 	private Integer minAgeYears = null;
-	
+
 	private Integer maxAgeYears = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(DateFieldDefn.class);

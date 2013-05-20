@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -398,20 +398,20 @@ public class TableDefn implements TableInfo {
 	public boolean getTableFormPublic() {
 		return this.tableFormPublic;
 	}
-	
+
 	public String getEmail() {
 		return this.email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	@Column(length=10000)
 	public String getEmailResponse() {
 		return this.emailResponse;
 	}
-	
+
 	public void setEmailResponse(String emailResponse) {
 		this.emailResponse = emailResponse;
 	}
@@ -419,59 +419,59 @@ public class TableDefn implements TableInfo {
 	public void setFormStyle(FormStyle formStyle) {
 		this.formStyle = formStyle;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
 	public FormStyle getFormStyle() {
 		return this.formStyle;
 	}
-	
+
 	@Transient
 	public SortedSet<FormTabInfo> getFormTabs() {
 		return Collections.unmodifiableSortedSet(new TreeSet<FormTabInfo>(this.getFormTabsDirect()));
 	}
-	
+
 	@OneToMany(mappedBy="parentTable", targetEntity = FormTab.class, cascade = CascadeType.ALL)
 	private Set<FormTabInfo> getFormTabsDirect() {
 		return this.formTabs;
 	}
-	
+
 	private void setFormTabsDirect(Set<FormTabInfo> formTabs) {
 		this.formTabs = formTabs;
 	}
-	
+
 	public void addFormTab(FormTabInfo formTab) {
 		this.getFormTabsDirect().add(formTab);
 	}
-	
+
 	public void removeFormTab(FormTabInfo formTab) {
 		this.getFormTabsDirect().remove(formTab);
 	}
-	
+
 	@ManyToOne(targetEntity = TableDefn.class)
 	public TableInfo getFormTable() {
 		return this.formTable;
 	}
-	
+
 	public void setFormTable(TableInfo formTable) {
 		this.formTable = formTable;
 	}
-	
+
 	public boolean getAllowAutoDelete() {
 		return this.allowAutoDelete;
 	}
-	
+
 	public void setAllowAutoDelete(boolean allowAutoDelete) {
 		this.allowAutoDelete = allowAutoDelete;
 	}
-	
+
 	public boolean getAllowNotifications() {
 		return this.allowNotifications;
 	}
-	
+
 	public void setAllowNotifications(boolean allowNotifications) {
 		this.allowNotifications = allowNotifications;
 	}
-	
+
 	/**
 	 * Provide a natural sort order by table name case insensitively
 	 */
@@ -530,19 +530,19 @@ public class TableDefn implements TableInfo {
 	private boolean lockable = false;
 
 	private boolean tableFormPublic = false;
-	
+
 	private String email = null;
-	
+
 	private String emailResponse = null;
-	
+
 	private FormStyle formStyle = FormStyle.SINGLE_COLUMN;
-	
+
 	private Set<FormTabInfo> formTabs = new HashSet<FormTabInfo>();
-	
+
 	private TableInfo formTable = null;
-	
+
 	private boolean allowAutoDelete = false;
-	
+
 	private boolean allowNotifications = false;
 
 	private volatile String simpleName = null;

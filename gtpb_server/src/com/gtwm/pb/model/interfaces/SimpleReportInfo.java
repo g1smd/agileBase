@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import com.gtwm.pb.util.CodingErrorException;
 
 /**
  * A representation of an SQL VIEW, with a few bells and whistles
- * 
+ *
  * A note on compareTo, equals and hashCode, which should be implemented by
  * concrete classes for TableInfo, ReportInfo and all field types: All of these
  * should compare on object name(s) case insensitively because this is how they
@@ -38,7 +38,7 @@ import com.gtwm.pb.util.CodingErrorException;
 public interface SimpleReportInfo extends BaseReportInfo {
 	/**
 	 * Adds a simple table field to the report
-	 * 
+	 *
 	 * @return The created report field
 	 */
 	public ReportFieldInfo addTableField(BaseField fieldToAdd) throws CantDoThatException,
@@ -46,7 +46,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 
 	/**
 	 * Add a field from another report into this report
-	 * 
+	 *
 	 * @return The report field added, which may be the same as
 	 *         reportFieldToAdd, or may be a new wrapper around it (if it was a
 	 *         calculation for example)
@@ -60,7 +60,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	 */
 	public void addField(ReportFieldInfo reportField)
 		throws CantDoThatException;
-	
+
 	/**
 	 * Adds a new calculation to the report
 	 */
@@ -76,7 +76,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	public void setFieldIndex(int index, ReportFieldInfo fieldToOrder);
 
 	public JoinClauseInfo getJoinByInternalName(String internalJoinName) throws ObjectNotFoundException;
-	
+
 	/**
 	 * @return A read-only copy set of the joins in the report, sorted by join
 	 *         creation time
@@ -99,7 +99,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	/**
 	 * Add a filter. A report can contain multiple filters - each filter is for
 	 * one field
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             If the filter field filterToAdd.getFilterField() is not in
 	 *             any of the tables contained in the report
@@ -120,16 +120,16 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	 */
 	public void updateSort(ReportFieldInfo sortReportField, boolean ascending)
 		throws CantDoThatException, ObjectNotFoundException;
-	
+
 	/**
 	 * Remove sort if one exists for sortReportField
 	 * @return The removed sort, or null if none was removed
 	 */
 	public ReportSortInfo removeSort(ReportFieldInfo sortReportField)
 		throws CantDoThatException, ObjectNotFoundException;
-	
+
 	public ReportFilterInfo getFilterByInternalName(String internalFilterName) throws ObjectNotFoundException;
-	
+
 	/**
 	 * @return A read-only copy set of all the filters in the report, specifying
 	 *         which fields are used as filters and what the filter values are
@@ -148,7 +148,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	 * fields defining a distinct record. i.e. if there are fields within this
 	 * set, the report should return only the first record with a given set of
 	 * values for these fields
-	 * 
+	 *
 	 * @param field -
 	 *            a field of the report
 	 */
@@ -156,7 +156,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 
 	/**
 	 * Remove a field from the set of fields defining a distinct record
-	 * 
+	 *
 	 * @param field
 	 */
 	public void removeDistinctField(BaseField field);
@@ -170,7 +170,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	/**
 	 * Return a set of all tables used in the report. Contains at least the
 	 * report's parent table.
-	 * 
+	 *
 	 * @throws CodingErrorException
 	 *             If a join object in the report is inconsistent
 	 */
@@ -179,7 +179,7 @@ public interface SimpleReportInfo extends BaseReportInfo {
 	/**
 	 * Return a set of reports used in this report. Contains at least the
 	 * current report itself.
-	 * 
+	 *
 	 * @throws CodingErrorException
 	 *             If a join object in the report is inconsistent
 	 */

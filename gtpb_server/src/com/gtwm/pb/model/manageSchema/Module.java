@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 
 	private Module() {
 	}
-	
+
 	public Module(String moduleName, String iconPath, int indexNumber) {
 		this.setInternalModuleName(RandomString.generate());
 		this.setModuleName(moduleName);
@@ -39,7 +39,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 		this.setIndexNumber(indexNumber);
 		this.setUseDefaultRelatedModules(true);
 	}
-	
+
 	public String getIconPath() {
 		return this.iconPath;
 	}
@@ -59,11 +59,11 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	public void setColour(String colour) {
 		this.colour = colour;
 	}
-	
+
 	public String getColour() {
 		return this.colour;
 	}
-	
+
 	public int getIndexNumber() {
 		return this.indexNumber;
 	}
@@ -71,7 +71,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	public void setIndexNumber(int indexNumber) {
 		this.indexNumber = indexNumber;
 	}
-	
+
 	public String getSection() {
 		return this.section;
 	}
@@ -79,25 +79,25 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	public void setSection(String section) {
 		this.section = section;
 	}
-	
+
 	public String getAppTemplate() {
 		return this.appTemplate;
 	}
-	
+
 	public void setAppTemplate(String appTemplate) {
 		this.appTemplate = appTemplate;
 	}
-	
+
 	public void addRelatedModule(ModuleInfo module) {
 		this.getRelatedModules().add(module);
 		this.setUseDefaultRelatedModules(false);
 	}
-	
+
 	public void removeRelatedModule(ModuleInfo module) {
 		this.getRelatedModules().remove(module);
 		this.setUseDefaultRelatedModules(false);
 	}
-	
+
 	// cascadeType isn't ALL because we don't want users to be deleted when a
 	// parent role is deleted
 	@ManyToMany(targetEntity = Module.class, cascade = {CascadeType.MERGE, CascadeType.PERSIST,
@@ -105,18 +105,18 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	public Set<ModuleInfo> getRelatedModules() {
 		return this.relatedModules;
 	}
-	
+
 	/**
 	 * For Hibernate
 	 */
 	private void setRelatedModules(Set<ModuleInfo> relatedModules) {
 		this.relatedModules = relatedModules;
 	}
-	
+
 	public boolean getUseDefaultRelatedModules() {
 		return this.useDefaultRelatedModules;
 	}
-	
+
 	/**
 	 * For Hibernate
 	 */
@@ -138,7 +138,7 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 	public int hashCode() {
 		return this.getInternalModuleName().hashCode();
 	}
-	
+
 	/**
 	 * Compare on index number, then name, then factors in object equality
 	 */
@@ -157,36 +157,36 @@ public class Module implements ModuleInfo, Comparable<ModuleInfo> {
 		thisComparator = thisComparator.toLowerCase();
 		return thisComparator.compareTo(otherComparator);
 	}
-	
+
 	public String toString() {
 		return this.getModuleName();
 	}
-	
+
 	@Id
 	public String getInternalModuleName() {
 		return this.internalModuleName;
 	}
-	
+
 	private void setInternalModuleName(String internalModuleName) {
 		this.internalModuleName = internalModuleName;
 	}
-	
+
 	private String internalModuleName = "";
-	
+
 	private String moduleName = "";
-	
+
 	private String iconPath = "";
-	
+
 	private String colour = "";
-	
+
 	private String section = "";
 
 	private int indexNumber = 1;
-	
+
 	private String appTemplate = "";
-	
+
 	private Set<ModuleInfo> relatedModules = new HashSet<ModuleInfo>();
-	
+
 	private boolean useDefaultRelatedModules = true;
 
 }

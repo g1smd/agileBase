@@ -323,7 +323,7 @@ public class Public extends VelocityViewServlet {
 	/**
 	 * Create an instance of ViewTools to provide the UI with the necessary
 	 * functionality, and return the requested template.
-	 * 
+	 *
 	 * @param exceptionCaught
 	 *          An exception thrown by handleRequest. Pass null if none. This will
 	 *          be saved in ViewMethods to allow the UI to find out what went

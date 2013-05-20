@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -111,11 +111,11 @@ public class DataRowField implements DataRowFieldInfo {
 		}
 		return this.getKeyValue().equals(((DataRowField) obj).getKeyValue());
 	}
-	
+
 	public int hashCode() {
 		return this.getKeyValue().hashCode();
 	}
-	
+
 	public String toString() {
 		return this.getDisplayValue();
 	}

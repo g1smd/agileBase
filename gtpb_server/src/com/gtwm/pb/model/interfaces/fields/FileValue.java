@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -26,12 +26,12 @@ public interface FileValue extends BaseValue {
 	 * Return the filename of the uploaded file
 	 */
 	public String getFilename();
-	
+
 	/**
 	 * Return file extension in lowercase
 	 */
 	public String getExtension();
-	
+
 	/**
 	 * For some images (TIFs), the preview will be a different type, e.g. JPG
 	 */
@@ -44,7 +44,7 @@ public interface FileValue extends BaseValue {
 	 * must exist in the resources/icons/filetypes folder
 	 */
 	public String getIconName();
-	
+
 	/**
 	 * Returns whether the file is an image that can be displayed in the browser, e.g. a JPEG or PNG
 	 */

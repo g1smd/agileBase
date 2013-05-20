@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -245,28 +245,28 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<TableInfo> getFormTablesDirect() {
 		return this.formTables;
 	}
-	
+
 	@OneToMany(targetEntity=AbstractTile.class, cascade = {CascadeType.ALL}, orphanRemoval=true)
 	@Sort(type = SortType.NATURAL)
 	public SortedSet<TileInfo> getTiles() {
 		return this.tiles;
 	}
-	
+
 	/* Hibernate use */
 	private void setTiles(SortedSet<TileInfo> tiles) {
 		this.tiles = tiles;
 	}
-	
+
 	public synchronized void addTile(TileInfo tile) {
 		this.getTiles().add(tile);
 	}
-	
+
 	public synchronized void removeTile(TileInfo tile) {
 		logger.debug("Removing tile " + tile);
 		this.getTiles().remove(tile);
 		HibernateUtil.currentSession().delete(tile);
 	}
-	
+
 	public void removeTilesDependentOnReport(BaseReportInfo report) {
 		Iterator<TileInfo> i = this.getTiles().iterator();
 		while(i.hasNext()) {
@@ -285,7 +285,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 			}
 		}
 	}
-	
+
 	public void removeTilesDependentOnChart(ChartInfo chart) throws CantDoThatException {
 		Iterator<TileInfo> i = this.getTiles().iterator();
 		while(i.hasNext()) {
@@ -351,11 +351,11 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	public void setUsesCustomUI(boolean usesCustomUI) {
 		this.usesCustomUI = usesCustomUI;
 	}
-	
+
 	public boolean getUsesAppLauncher() {
 		return this.usesAppLauncher;
 	}
-	
+
 	public void setUsesAppLauncher(boolean usesAppLauncher) {
 		this.usesAppLauncher = usesAppLauncher;
 	}
@@ -406,7 +406,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		this.passwordResetSent = System.currentTimeMillis();
 	}
-	
+
 	@Transient
 	private boolean getHasProfilePhoto() {
 		if (this.hasProfilePhoto != null) {
@@ -420,7 +420,7 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		return this.hasProfilePhoto;
 	}
-	
+
 	@Transient
 	public String getProfilePhoto() {
 		if (this.getHasProfilePhoto()) {
@@ -428,19 +428,19 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 		}
 		return null;
 	}
-	
+
 	public void setHasProfilePhoto(boolean hasProfilePhoto) {
 		this.hasProfilePhoto = hasProfilePhoto;
 	}
-	
+
 	public String getCustom1() {
 		return this.custom1;
 	}
-	
+
 	public void setCustom1(String custom1) {
 		this.custom1 = custom1;
 	}
-	
+
 	protected void setWebAppRoot(String webAppRoot) {
 		this.webAppRoot = webAppRoot;
 	}
@@ -496,24 +496,24 @@ public class AppUser implements AppUserInfo, Comparable<AppUserInfo> {
 	private Set<BaseReportInfo> operationalDashboardReports = new HashSet<BaseReportInfo>();
 
 	private Set<TableInfo> formTables = new HashSet<TableInfo>();
-	
+
 	private SortedSet<TileInfo> tiles = new TreeSet<TileInfo>();
 
 	private BaseReportInfo defaultReport = null;
 
 	private boolean usesCustomUI = false;
-	
+
 	private boolean usesAppLauncher = true;
 
 	/**
 	 * Epoch time at which a password reset email was sent
 	 */
 	private long passwordResetSent = 0;
-	
+
 	private String custom1 = "";
-	
+
 	private Boolean hasProfilePhoto = null;
-	
+
 	private String webAppRoot = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(AppUser.class);

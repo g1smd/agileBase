@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -78,24 +78,24 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Set the data record ID to identify a particular table record.
-	 * 
+	 *
 	 * Http request usage examples:
-	 * 
+	 *
 	 * 1) &set_row_id=50 - set the row id for the current session table
-	 * 
+	 *
 	 * 2) &set_row_id=next - set the row id to that of the next record in the
 	 * current filtered session report
-	 * 
+	 *
 	 * 3) &set_row_id=previous - set the row id to that of the previous record
 	 * in the current filtered session report
-	 * 
+	 *
 	 * 4) &set_row_id=50&rowidinternaltablename=a2a5e30cb86a5513f - set the row
 	 * id for a table identified by internal table name (constant throughout
 	 * life of table)
-	 * 
+	 *
 	 * 5) &set_row_id=50&rowidinternaltablename=Contacts - set the row id for a
 	 * table identified by name (name may change)
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *             If a record with the specified row ID isn't found in the
 	 *             table
@@ -150,7 +150,7 @@ public final class ServletSessionMethods {
 	 * Sets an override so the user will be able to edit a locked record. The
 	 * lock on the record specified by the current session table and ID is
 	 * overridden
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *             If the user doesn't have manage privileges on the session
 	 *             table
@@ -172,9 +172,9 @@ public final class ServletSessionMethods {
 	/**
 	 * Set the report the client is currently using. Also sets the current table
 	 * to the report's parent table.
-	 * 
+	 *
 	 * Http request usage:
-	 * 
+	 *
 	 * &set_report=a2a5e30cb86a5513f (internal report name)
 	 */
 	public static void setReport(HttpServletRequest request, SessionDataInfo sessionData,
@@ -210,13 +210,13 @@ public final class ServletSessionMethods {
 	 * Set the table the client is currently using. If this is the first time
 	 * that this table has been set as the current one, then also sets the
 	 * current report to the default report of that table.
-	 * 
+	 *
 	 * Http request usage examples:
-	 * 
+	 *
 	 * 1) &set_table=a2a5e30cb86a5513f - set the table by internal name
-	 * 
+	 *
 	 * 2) &set_table=Contacts - set the table by name (name may change)
-	 * 
+	 *
 	 * 3) &postset_table=a2a5e30cb86a5513f - set the table <b>after</b> doing
 	 * all other session and application actions. This can be useful if running
 	 * through a wizard for example, when you want to perform actions on the
@@ -232,12 +232,12 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Set a custom string variable in the session, identified by a supplied key
-	 * 
+	 *
 	 * Http request usage example:
-	 * 
+	 *
 	 * &set_custom_string=true&stringkey=selecteditem&customstringvalue=
 	 * phonenumber - set a 'selecteditem' value to 'phonenumber'
-	 * 
+	 *
 	 * @see SessionDataInfo#getCustomString(String) See
 	 *      SessionDataInfo.getCustomString(stringkey) to retrieve the value
 	 */
@@ -262,12 +262,12 @@ public final class ServletSessionMethods {
 	/**
 	 * Set a custom integer variable in the session, identified by a supplied
 	 * key
-	 * 
+	 *
 	 * Http request usage example:
-	 * 
+	 *
 	 * &set_custom_integer=true&integerkey=chosennumber&customintegervalue=5 -
 	 * set a 'chosennumber' value to 5
-	 * 
+	 *
 	 * @see SessionDataInfo#getCustomInteger(String) See
 	 *      SessionDataInfo.getCustomInteger(stringkey) to retrieve the value
 	 */
@@ -285,12 +285,12 @@ public final class ServletSessionMethods {
 	/**
 	 * Set a custom integer variable in the session, identified by a supplied
 	 * key
-	 * 
+	 *
 	 * Http request usage example:
-	 * 
+	 *
 	 * &set_custom_long=true&longkey=chosennumber&customlongvalue=5 - set a
 	 * 'chosennumber' value to 5
-	 * 
+	 *
 	 * @see SessionDataInfo#getCustomLong(String) See
 	 *      SessionDataInfo.getCustomLong(stringkey) to retrieve the value
 	 */
@@ -419,9 +419,9 @@ public final class ServletSessionMethods {
 	 * session for later retrieval. Do a certain amount of input processing,
 	 * e.g. '.4' for a number would become '0.4' so that it could be interpreted
 	 * properly
-	 * 
+	 *
 	 * TODO: Http usage example
-	 * 
+	 *
 	 * @param sessionData
 	 *            Current table is obtained from the session
 	 * @param request
@@ -494,7 +494,7 @@ public final class ServletSessionMethods {
 	/**
 	 * Get user input value for a field being editing or inserted as part of a
 	 * record
-	 * 
+	 *
 	 * @return An object containing the value of the specified field, as
 	 *         provided in HTTP request data, or null if there was no value for
 	 *         the field
@@ -850,7 +850,7 @@ public final class ServletSessionMethods {
 	 * Format GB phone numbers to include a space so that when they're exported
 	 * to CSV, spreadsheets recognise them as text rather than numbers. For
 	 * numbers entered with incorrect spacing, correct the spacing.
-	 * 
+	 *
 	 * Format phone number by type, based on
 	 * http://www.aa-asterisk.org.uk/index.php/Number_format and
 	 * http://www.aa-asterisk.org.uk/index.php/Regular_Expressions_for_Validating_and_Formatting_GB_Telephone_Numbers
@@ -1023,9 +1023,9 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Set the user currently being edited/viewed by an administrator
-	 * 
+	 *
 	 * TODO: Http usage example
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *             If userName doesn't map to an existing user object
 	 * @throws DisallowedException
@@ -1060,7 +1060,7 @@ public final class ServletSessionMethods {
 
 	/**
 	 * Set a 'quick filter' value
-	 * 
+	 *
 	 * TODO: Http usage example
 	 */
 	public static void setReportFilterValue(SessionDataInfo sessionData,
@@ -1169,15 +1169,15 @@ public final class ServletSessionMethods {
 	public static void clearAllReportSorts(SessionDataInfo sessionData) {
 		sessionData.clearAllReportSorts();
 	}
-	
+
 	public static void setAppId(SessionDataInfo sessionData, HttpServletRequest request, String appId) {
 		sessionData.setAppId(appId);
 	}
-	
+
 	public static void clearAppId(SessionDataInfo sessionData) {
 		sessionData.setAppId(null);
 	}
-	
+
 	public static void setTile(SessionDataInfo sessionData, DatabaseInfo databaseDefn, HttpServletRequest request, String internalTileName) throws DisallowedException, ObjectNotFoundException {
 		AppUserInfo user = databaseDefn.getAuthManager().getLoggedInUser(request);
 		if (internalTileName == null) {

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -398,15 +398,15 @@ public class RelationFieldDefn extends AbstractField implements RelationField {
 	/**
 	 * Where this relation links to another relation, get the primary key value
 	 * of the row that that relation relates to.
-	 * 
+	 *
 	 * For example, contacts links to sites links to organisations.
-	 * 
+	 *
 	 * Assume contacts contains a relation contacts_site that links to
 	 * site_organisation, where site_organisation is itself a relation field
 	 * that links to organisations_organisationname
-	 * 
+	 *
 	 * and this object is the contacts_site relation
-	 * 
+	 *
 	 * then we could run getOneLevelUpPrimaryKey passing in site_organisation to
 	 * return the row Id of the organisation
 	 */

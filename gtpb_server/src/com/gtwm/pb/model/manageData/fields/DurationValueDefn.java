@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -100,7 +100,7 @@ public class DurationValueDefn implements DurationValue {
             sqlFormatInterval.append(" hours ");
             if (this.minutes == 0 && this.seconds == 0) {
                 return sqlFormatInterval.toString();
-            }            
+            }
         }
         if (started || this.minutes > 0) {
             started = true;
@@ -108,15 +108,15 @@ public class DurationValueDefn implements DurationValue {
             sqlFormatInterval.append(" minutes ");
             if (this.seconds == 0) {
                 return sqlFormatInterval.toString();
-            }            
+            }
         }
         if (this.seconds > 0) {
             sqlFormatInterval.append(this.seconds);
-            sqlFormatInterval.append(" seconds ");            
+            sqlFormatInterval.append(" seconds ");
         }
         return sqlFormatInterval.toString();
     }
-    
+
     public String toString() {
         return getSqlFormatInterval();
     }
@@ -125,7 +125,7 @@ public class DurationValueDefn implements DurationValue {
         // The way this class works, values can't be null, they are zero by default
         return false;
     }
-    
+
     private void addSeconds(Integer seconds) {
         if (seconds != null) {
             int totalSeconds = seconds + this.seconds;
@@ -188,7 +188,7 @@ public class DurationValueDefn implements DurationValue {
 
     private void addYears(Integer years) {
         if (years != null) {
-            this.years += years;            
+            this.years += years;
         }
     }
 

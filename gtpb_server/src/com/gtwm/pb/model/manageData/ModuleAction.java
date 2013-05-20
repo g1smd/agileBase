@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@ package com.gtwm.pb.model.manageData;
 import com.gtwm.pb.model.interfaces.ModuleActionInfo;
 
 public class ModuleAction implements ModuleActionInfo {
-	
+
 	private ModuleAction() {
 		this.actionName = null;
 		this.description = null;
@@ -29,7 +29,7 @@ public class ModuleAction implements ModuleActionInfo {
 		this.buttons = null;
 		this.callbackFunction = null;
 	}
-	
+
 	public ModuleAction(String actionName, String description, String attributes, String actionTemplate, String buttons, String callbackFunction) {
 		this.actionName = actionName;
 		this.description = description;
@@ -42,7 +42,7 @@ public class ModuleAction implements ModuleActionInfo {
 	public String getActionName() {
 		return this.actionName;
 	}
-	
+
 	public String getDescription() {
 		return this.description;
 	}
@@ -62,7 +62,7 @@ public class ModuleAction implements ModuleActionInfo {
 	public String getCallbackFunction() {
 		return this.callbackFunction;
 	}
-	
+
 	public String toString() {
 		return this.getActionName();
 	}
@@ -76,20 +76,20 @@ public class ModuleAction implements ModuleActionInfo {
 		}
 		return ((ModuleAction) obj).getActionName().equals(this.getActionName());
 	}
-	
+
 	public int hashCode() {
 		return this.actionName.hashCode();
 	}
 
 	private final String actionName;
-	
+
 	private final String description;
-	
+
 	private final String attributes;
-	
+
 	private final String callbackFunction;
-	
+
 	private final String buttons;
-	
+
 	private final String actionTemplate;
 }

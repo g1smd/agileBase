@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-// Note: the setter methods in this class don't need to be synchronized because this is session data 
+// Note: the setter methods in this class don't need to be synchronized because this is session data
 // - there is one object per user so as long as one user doesn't make simultaneous requests, we're ok
 // On second thoughts, synchronize them anyway just in case
 public final class SessionData implements SessionDataInfo {
@@ -65,10 +65,10 @@ public final class SessionData implements SessionDataInfo {
 
 	/**
 	 * Construct a new session data object.
-	 * 
+	 *
 	 * Initialisation: sets the session report to the first one that the logged
 	 * in user can see
-	 * 
+	 *
 	 * @param request
 	 *            Has temporary use in the constructor for privilege checks, not
 	 *            stored for the life of SessionData
@@ -149,11 +149,11 @@ public final class SessionData implements SessionDataInfo {
 	public TileInfo getTile() {
 		return this.tile;
 	}
-	
+
 	public void setTile(TileInfo tile) {
 		this.tile = tile;
 	}
-	
+
 	public synchronized void setTable(TableInfo table) throws SQLException {
 		// clear the cached record data:
 		this.setFieldInputValues(new HashMap<BaseField, BaseValue>());
@@ -186,7 +186,7 @@ public final class SessionData implements SessionDataInfo {
 	/**
 	 * If there is no row ID for the current table, set one based on the first
 	 * record from the current report
-	 * 
+	 *
 	 * @throws SQLException
 	 */
 	private void autoSetRowId() throws SQLException {
@@ -554,11 +554,11 @@ public final class SessionData implements SessionDataInfo {
 	public void setLastAppActionRowId(int lastAppActionRowId) {
 		this.lastAppActionRowId = lastAppActionRowId;
 	}
-	
+
 	public void setAppId(String appId) {
 		this.appId = Helpers.rinseString(appId, "-");
 	}
-	
+
 	public String getAppId() {
 		return this.appId;
 	}
@@ -646,9 +646,9 @@ public final class SessionData implements SessionDataInfo {
 	private Map<String, BaseField> customFields = new HashMap<String, BaseField>();
 
 	private Map<BaseReportInfo, String> globalFilterStrings = new HashMap<BaseReportInfo, String>();
-	
+
 	private TileInfo tile = null;
-	
+
 	private String appId = null;
 
 	private TableDependencyException tdex = null;

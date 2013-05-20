@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ public interface BooleanFieldDescriptorOptionInfo extends BaseFieldDescriptorOpt
      * Set the field option to be on or off (true or false)
      */
     public void setOptionState(boolean optionState);
-    
+
     /**
      * @return  The field option state as set by setOptionState()
      */

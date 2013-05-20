@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -73,7 +73,7 @@ public class SimpleReportDefn extends BaseReportDefn implements SimpleReportInfo
 
 	/**
 	 * Create a new report with one field (if possible)
-	 * 
+	 *
 	 * @param parentTable
 	 *          The table holding the report
 	 */

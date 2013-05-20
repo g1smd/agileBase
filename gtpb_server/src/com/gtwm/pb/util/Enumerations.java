@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -34,11 +34,11 @@ public class Enumerations {
 		private String appName;
 
 		private boolean large;
-		
+
 		private boolean allowMultiple;
-		
+
 		private boolean usesFocus;
-		
+
 		private String description;
 
 		TileType(String appName, String description, boolean large, boolean allowMultiple, boolean usesFocus) {
@@ -48,11 +48,11 @@ public class Enumerations {
 			this.allowMultiple = allowMultiple;
 			this.usesFocus = usesFocus;
 		}
-		
+
 		public String getTileName() {
 			return this.appName;
 		}
-		
+
 		public String getDescription() {
 			return this.description;
 		}
@@ -60,29 +60,29 @@ public class Enumerations {
 		public boolean isLarge() {
 			return this.large;
 		}
-		
+
 		public boolean allowsMultiple() {
 			return this.allowMultiple;
 		}
-		
+
 		public boolean usesFocus() {
 			return this.usesFocus;
 		}
-		
+
 	}
 
 	/**
 	 * Contains list of all actions that the user interface can call via a HTTP
 	 * request to set session variables.
-	 * 
+	 *
 	 * The POSTSET_... methods act the same as the SET_... methods except the
 	 * action is delayed until others have completed
-	 * 
+	 *
 	 * There is one PRESET_... method, PRESET_ROW_ID. Use this if you want to set
 	 * the row ID of a table then change to a different table with SET_TABLE.
 	 * Using SET_ROW_ID and POSTSET_TABLE would have the same effect but in some
 	 * situations POSTSET_TABLE isn't desirable
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo See the documentation in
 	 *      SessionDataInfo for how to call these in a HTTP request
 	 */
@@ -117,7 +117,7 @@ public class Enumerations {
 
 	/*
 	 * Any additional actions that don't affect the server state
-	 * 
+	 *
 	 * INCLUDE_TOOLBAR_PLUGIN=pluginname:<br> Include template
 	 * gui/plugins/[pluginname]/toolbar.vm in the toolbar
 	 */
@@ -127,9 +127,9 @@ public class Enumerations {
 
 	/**
 	 * Postgresql specific reserved names
-	 * 
+	 *
 	 * TODO: upgrade to latest postgres version
-	 * 
+	 *
 	 * @see http
 	 *      ://www.postgresql.org/docs/7.4/interactive/sql-keywords-appendix.
 	 *      html#KEYWORDS-TABLE
@@ -170,7 +170,7 @@ public class Enumerations {
 
 	/**
 	 * OBSOLETE?
-	 * 
+	 *
 	 * A list of any reserved words used by the application in a HTTP request, in
 	 * addition to those in AppAction and SessionAction. We don't want to name our
 	 * fields etc. the same as one of these otherwise the application could get
@@ -282,7 +282,7 @@ public class Enumerations {
 		/**
 		 * Return the actual response type that needs to be set in the header with
 		 * HttpServletResponse.setContentType(...)
-		 * 
+		 *
 		 * @see HttpServletResponse#setContentType(String)
 		 */
 		public String getResponseType() {

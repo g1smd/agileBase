@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -71,15 +71,15 @@ public interface AppUserInfo {
 	 * to reduce clutter
 	 */
 	public Set<BaseReportInfo> getHiddenReports();
-	
+
 	public SortedSet<TileInfo> getTiles();
-	
+
 	public void addTile(TileInfo tile) throws CantDoThatException;
-	
+
 	public void removeTile(TileInfo tile) throws CantDoThatException;
-	
+
 	public void removeTilesDependentOnReport(BaseReportInfo report) throws CantDoThatException;
-	
+
 	public void removeTilesDependentOnChart(ChartInfo chart) throws CantDoThatException;
 
 	/**
@@ -117,7 +117,7 @@ public interface AppUserInfo {
 
 	/**
 	 * Wether this user is set to use the company custom UI (if one exists).
-	 * 
+	 *
 	 * If this is selected the user will be unable to use the agileBase standard
 	 * interface but will be taken to the company custom interface on login
 	 */
@@ -134,7 +134,7 @@ public interface AppUserInfo {
 
 	/**
 	 * See whether the user can be sent a link to reset their password.
-	 * 
+	 *
 	 * Note the current password is reset to a value that can be sent out by
 	 * email, so between the time the email is sent and the user actually resets
 	 * the password, the login is at risk. To help protect the account, passwords
@@ -146,25 +146,25 @@ public interface AppUserInfo {
 	/**
 	 * 1) Sets the counter going for the time period in which the password can be
 	 * reset.
-	 * 
+	 *
 	 * 2) Resets the password to a random value
-	 * 
+	 *
 	 * 3) Sends the user a password reset email
-	 * 
+	 *
 	 * @param appUrl
 	 *          is used in the email notification to the user
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           if the user doesn't have an email address
 	 */
 	public void sendPasswordReset(String appUrl) throws CantDoThatException, CodingErrorException,
 			MessagingException;
-	
+
 	/**
 	 * Returns the location of the profile image if any, or null otherwise
 	 */
 	public String getProfilePhoto();
-	
+
 	public void setHasProfilePhoto(boolean hasProfilePhoto) throws CantDoThatException;
 
 	/**

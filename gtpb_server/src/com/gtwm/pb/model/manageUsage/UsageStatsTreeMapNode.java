@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -27,13 +27,13 @@ public class UsageStatsTreeMapNode implements UsageStatsTreeMapNodeInfo {
 		this.area = 0;
 		this.colour = 0;
 	}
-	
+
 	public UsageStatsTreeMapNode(BaseReportInfo report, int area, int colour) {
 		this.report = report;
 		this.area = area;
 		this.colour = colour;
 	}
-	
+
 	public int getArea() {
 		return this.area;
 	}
@@ -62,10 +62,10 @@ public class UsageStatsTreeMapNode implements UsageStatsTreeMapNodeInfo {
 	public int hashCode() {
 		return this.getReport().hashCode();
 	}
-	
+
 	private final BaseReportInfo report;
-	
+
 	private final int colour;
-	
+
 	private final int area;
 }

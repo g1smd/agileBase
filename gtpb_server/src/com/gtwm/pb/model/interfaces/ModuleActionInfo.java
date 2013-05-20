@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,24 +24,24 @@ package com.gtwm.pb.model.interfaces;
 public interface ModuleActionInfo {
 
 	public String getActionName();
-	
+
 	public String getDescription();
-	
+
 	/**
 	 * Any attributes such as CSS definitions that should be passed to the action dialog box
 	 */
 	public String getAttributes();
-	
+
 	/**
 	 * Return the name of the function that should be called when the OK button is pressed and the action finishes
 	 */
 	public String getCallbackFunction();
-	
+
 	/**
 	 * Return the name of the Velocity template that is (the start of) this action
 	 */
 	public String getActionTemplate();
-	
+
 	/**
 	 * A list of the buttons this action uses
 	 */

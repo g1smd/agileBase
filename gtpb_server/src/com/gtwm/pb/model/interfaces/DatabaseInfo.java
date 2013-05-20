@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ import org.apache.commons.fileupload.FileUploadException;
  * repository of schema functionality. Tables in turn contain fields, and
  * reports reference the same fields. Fields and reports contain a reference
  * back to their parent table.
- * 
+ *
  * @see com.gtwm.pb.model.interfaces.TableInfo The TableInfo class that defines
  *      a stored table
  */
@@ -57,7 +57,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * Create a new table and add to the database
-	 * 
+	 *
 	 * @param request
 	 *          Allows the method to get the current user to test privileges
 	 * @param sessionData
@@ -79,7 +79,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * Change the name, description or options of an existing table
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *           If there is already a table with the new name
 	 * @throws DisallowedException
@@ -98,7 +98,7 @@ public interface DatabaseInfo {
 	/**
 	 * Remove table tableToRemove provided no dependencies exist; otherwise throw
 	 * a TableDependencyException
-	 * 
+	 *
 	 * @param sessionData
 	 * @param request
 	 * @param tableToRemove
@@ -119,7 +119,7 @@ public interface DatabaseInfo {
 	 * dependent (through RelationField) on baseTable or any table directly or
 	 * indirectly dependent upon baseTable. Access dependentTables argument as
 	 * return value.
-	 * 
+	 *
 	 * @param baseTable
 	 * @param dependentTables
 	 *          Pass in an empty set to start with, will be populated through
@@ -134,18 +134,18 @@ public interface DatabaseInfo {
 	/**
 	 * Adds TableInfo objects to dependentTables where all tables added are
 	 * directly dependent (through RelationField) on baseTable.
-	 * 
+	 *
 	 * @param direction
 	 *          : true means find dependent child tables (contacts given orgs),
 	 *          false means the opposite
-	 * 
+	 *
 	 */
 	public SortedSet<TableInfo> getDirectlyDependentTables(TableInfo baseTable,
 			HttpServletRequest request) throws ObjectNotFoundException;
 
 	/**
 	 * Create a report and add it to the database
-	 * 
+	 *
 	 * @param request
 	 *          Allows the method to get the current user to test privileges
 	 * @param sessionData
@@ -165,7 +165,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * Change the name and/or description of a report
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
 	 *           report's parent table
@@ -188,7 +188,7 @@ public interface DatabaseInfo {
 			String fileName) throws DisallowedException, ObjectNotFoundException, CantDoThatException;
 
 	/**
-	 * 
+	 *
 	 * @param sessionData
 	 *          If removing the current session report, set the session report to
 	 *          be another one
@@ -212,7 +212,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * Add a field to a table
-	 * 
+	 *
 	 * @param request
 	 *          Allows the method to get the current user to test privileges
 	 * @param table
@@ -259,7 +259,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * Add a foreign key database relation between tables
-	 * 
+	 *
 	 * @param tableToAddTo
 	 * @param relatedTable
 	 *          The table containing the related field
@@ -283,7 +283,7 @@ public interface DatabaseInfo {
 
 	/**
 	 * Remove field from memory and database
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the current user doesn't have MANAGE_TABLE privileges for
 	 *           table
@@ -370,7 +370,7 @@ public interface DatabaseInfo {
 	/**
 	 * Create a filter object, add it to the report, update the database view
 	 * representing the report
-	 * 
+	 *
 	 * @param report
 	 *          Report to add filter to
 	 * @param filterField
@@ -422,10 +422,10 @@ public interface DatabaseInfo {
 
 	/**
 	 * For a report's summary, add a grouping into the 'GROUP BY' SQL satement
-	 * 
+	 *
 	 * @param report
 	 *          The report that contains the summary report to use
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the logged in user doesn't have MANAGE_TABLE privileges on the
 	 *           report's parent table
@@ -498,7 +498,7 @@ public interface DatabaseInfo {
 	 * Returns the TableInfo object that has the required ID identifier. If no
 	 * table is found with that internal name, fall back to searching for one with
 	 * a user facing name of that ID
-	 * 
+	 *
 	 * @param internalTableName
 	 *          the identifier of the table we're looking for
 	 * @return the found table
@@ -538,7 +538,7 @@ public interface DatabaseInfo {
 	/**
 	 * Finds a report field object if you don't know its parent table or report.
 	 * An inefficient method, knowing the parent is preferable
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the user doesn't have privileges to view the report to be
 	 *           returned
@@ -550,7 +550,7 @@ public interface DatabaseInfo {
 	/**
 	 * Creates a new module and adds it to the company of the logged in user, or
 	 * the specified company
-	 * 
+	 *
 	 * @param company
 	 *          If null, add to the current company
 	 */

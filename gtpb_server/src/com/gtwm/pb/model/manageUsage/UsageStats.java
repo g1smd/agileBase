@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -864,12 +864,12 @@ public class UsageStats implements UsageStatsInfo {
 		} finally {
 			if (conn != null) {
 				conn.close();
-			}			
+			}
 		}
 		company.setCachedSparkline(logType, options, timelineCounts);
 		return timelineCounts;
 	}
-	
+
 	public String getLastLoginAge(AppUserInfo user) throws SQLException {
 		String lastLoginAge = null;
 		String SQLCode = "SELECT age(max(app_timestamp)::date) FROM dbint_log_" + LogType.LOGIN.name().toLowerCase();
@@ -899,7 +899,7 @@ public class UsageStats implements UsageStatsInfo {
 		} finally {
 			if (conn != null) {
 				conn.close();
-			}			
+			}
 		}
 		if (lastLoginAge.equals("00:00:00")) {
 			lastLoginAge = "today";
@@ -912,9 +912,9 @@ public class UsageStats implements UsageStatsInfo {
 	public String toString() {
 		return "Usage Stats object";
 	}
-	
+
 	private int monthlyTableCost = 0;
-	
+
 	private static final int maxMin = 750;
 
 	private int numTables = 0;

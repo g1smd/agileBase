@@ -23,37 +23,37 @@ public abstract class AbstractTile {
 	protected void setInternalTileName(String internalTileName) {
 		this.internalTileName = internalTileName;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
 	public TileType getTileType() {
 		return this.tileType;
 	}
-	
+
 	protected void setTileType(TileType tileType) {
 		this.tileType = tileType;
 	}
-	
+
 	@Transient
 	public String getTileName() {
 		return this.getTileType().getTileName();
 	}
-	
+
 	public String getColour() {
 		return this.colour;
 	}
-	
+
 	public void setColour(String colour) {
 		this.colour = colour;
 	}
-	
+
 	public String getIcon() {
 		return this.icon;
 	}
-	
+
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	
+
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -63,15 +63,15 @@ public abstract class AbstractTile {
 		}
 		return this.getInternalTileName().equals(((TileInfo) obj).getInternalTileName());
 	}
-	
+
 	public int hashCode() {
 		return this.getInternalTileName().hashCode();
 	}
-	
+
 	public String toString() {
 		return this.getTileName();
 	}
-	
+
 	/**
 	 * Compare first by app type (apps of the same type go together) then by report, if applicable, then consistent with equals
 	 */
@@ -88,11 +88,11 @@ public abstract class AbstractTile {
 	}
 
 	private String internalTileName = null;
-	
+
 	private TileType tileType = null;
-	
+
 	private String colour = null;
-	
+
 	private String icon = null;
 
 }

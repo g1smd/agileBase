@@ -1,5 +1,5 @@
 /*  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -249,19 +249,19 @@ public class PublicUser implements AppUserInfo {
 	public void setUsesCustomUI(boolean usesCustomUI) throws CantDoThatException {
 		throw new CantDoThatException("This public user can't have a custom ui");
 	}
-	
+
 	public String getProfilePhoto() {
 		return null;
 	}
-	
+
 	public void setHasProfilePhoto(boolean hasProfilePhoto) throws CantDoThatException {
 		throw new CantDoThatException("This public user can't have a profile photo");
 	}
-	
+
 	public String getCustom1() {
 		return "";
 	}
-	
+
 	public void setCustom1(String custom1) throws CantDoThatException {
 		throw new CantDoThatException("This public user can't store custom data");
 	}

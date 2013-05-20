@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -34,16 +34,16 @@ public interface ReportCalcFieldInfo extends ReportFieldInfo {
 
     /**
      * Return the calculation as input by the user, e.g. {table1}.{field1} * {table2}.{field2}
-     * 
+     *
      * Fields can be identified in one of the following manners:
-     * 
+     *
      * 1) {field name}, if the field is in the parent report
-     * 
+     *
      * 2) {table name}.{field name}, to pick a field from a joined table
-     * 
+     *
      * 3) {table name}.{report name}.{field name} or {report name}.{field name}, to pick a field from a joined
      * report
-     * 
+     *
      * The actual SQL for the calculation is returned by getCalculationSQL()
      */
     public String getCalculationDefinition();
@@ -51,16 +51,16 @@ public interface ReportCalcFieldInfo extends ReportFieldInfo {
     /**
      * Translate the user-input calculation into an SQL snippet and return it. Basically the user-facing names
      * for tables, reports and fields are replaced with the actual names used in the relational database
-     * 
+     *
      * e.g. internaltablename1.internalfieldname1 * internaltablename2.internalfieldname2
-     * 
+     *
      * @param includeAlisas Include an 'AS internalfieldname' after the calculation SQL
-     * 
+     *
      * @throws CodingErrorException
      *             Passed up from SimpleReportInfo.getTables() or getReports()
      */
     public String getCalculationSQL(boolean includeAlias) throws CodingErrorException, CantDoThatException;
-    
+
     /**
      * Get the underlying database type that should be used to store calculated values
      */
@@ -70,24 +70,24 @@ public interface ReportCalcFieldInfo extends ReportFieldInfo {
      * Return a set of fields used in the calculation
      */
     public Set<BaseField> getFieldsUsed() throws CodingErrorException;
-    
+
     /**
      * Format a float string passed in for display, in accordance with the properties of this calculation. Use
      * the maximum display precision of all decimal fields used in the calculation
      * @throws CantDoThatException if the calculation return type isn't floating point
      */
     public String formatFloat(double floatValue) throws CantDoThatException;
-    
+
     /**
      * Format an integer for display, e.g. turn 23523 into 23,523
      * @throws CantDoThatException	if the calculation return type isn't integer
      */
     public String formatInteger(int intValue) throws CantDoThatException;
-    
+
     /**
      * Format a date string passed in for display, in accordance with the properties of this calculation. Use
      * the maximum display resolution of all date fields used in the calculation
-     * 
+     *
      * @throws CantDoThatException
      *             If the calculation doesn't return a date/time type
      */
@@ -111,32 +111,32 @@ public interface ReportCalcFieldInfo extends ReportFieldInfo {
      *             If the calculation doesn't return a decimal value
      */
     public int getDecimalPrecision() throws CantDoThatException;
-    
+
     /**
      * Returns true if this calculation is an aggregate function such as a sum or average
      */
     public boolean isAggregateFunction();
-    
+
     public void setAggregateFunction(boolean isAggregateFunction);
-    
+
     /**
 	 * Returns true if this field is a reference to a calc from another report
 	 * rather than a direct calc definition
 	 */
 	public boolean referencesCalcFromOtherReport();
-	
+
 	/**
 	 * Returns true if this field should not be displayed in the report, unless in sysadmin context
 	 */
 	public boolean isReportHidden();
-	
+
 	public void setReportHidden(boolean isReportHidden);
-    
+
     /**
      * <b>Only to be used internally by CalculationFielDefn</b>
      */
     public String getBaseFieldName();
-    
+
     /**
      * <b>Only to be used internally by CalculationFielDefn</b>
      */

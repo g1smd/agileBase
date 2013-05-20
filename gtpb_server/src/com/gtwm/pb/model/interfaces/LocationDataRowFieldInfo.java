@@ -6,6 +6,6 @@ package com.gtwm.pb.model.interfaces;
 public interface LocationDataRowFieldInfo extends DataRowFieldInfo {
 
 	public Double getLatitude();
-	
+
 	public Double getLongitude();
 }

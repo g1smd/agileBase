@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -97,7 +97,7 @@ public final class ServletUtilMethods {
 	 * Log errors with as much information as possible: include user, URL,
 	 * recursive causes and a stack trace to the original occurence in the
 	 * application
-	 * 
+	 *
 	 * NB Doesn't throw a servletException, that has to be done as well as
 	 * calling this
 	 */
@@ -116,7 +116,7 @@ public final class ServletUtilMethods {
 	/**
 	 * Log errors in a helpful format. Use this version when no
 	 * HttpServletRequest object is available
-	 * 
+	 *
 	 * @see #logException(Exception, HttpServletRequest, String)
 	 */
 	public static void logException(Exception ex, String topLevelMessage) {
@@ -133,7 +133,7 @@ public final class ServletUtilMethods {
 	 * Return a string for logging purposes, of an exception's 'cause stack',
 	 * i.e. the original exception(s) thrown and stack trace, i.e. the methods
 	 * that the exception was thrown through.
-	 * 
+	 *
 	 * Called by logException
 	 */
 	private static String getExceptionCauses(Exception ex) {
@@ -175,7 +175,7 @@ public final class ServletUtilMethods {
 	 * Like HttpServlet#getRequestQuery(request) but works for POST as well as
 	 * GET: In the case of POST requests, constructs a query string from
 	 * parameter names & values
-	 * 
+	 *
 	 * @see HttpServletRequest#getQueryString()
 	 */
 	public static String getRequestQuery(HttpServletRequest request) {

@@ -7,24 +7,24 @@ import java.util.SortedSet;
  * Represents the dashboard for a company
  */
 public interface DashboardInfo {
-	
+
 	/**
 	 * Return list of exceptions found by looking through all reports in the company
 	 */
 	public SortedSet<DashboardOutlierInfo> getDashboardOutliers();
-	
+
 	public Set<DashboardTrendOutlierInfo> getDashboardTrendOutliers();
-	
+
 	/**
 	 * Get report summary charts that agileBase automatically selects
 	 */
 	public SortedSet<DashboardChartInfo> getSuggestedReportSummaries();
-	
+
 	/**
 	 * Return a set of headlines highlighting particular data from agileBase or the logs
 	 */
 	public Set<String> getHeadlineNotices();
-	
+
 	/**
 	 * Return a grid object that can be used to lay out charts in the dashboard
 	 * @param containerWidth

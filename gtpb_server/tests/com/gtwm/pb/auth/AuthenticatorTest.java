@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -40,8 +40,8 @@ public class AuthenticatorTest {
 	CompanyInfo company = null;
 	AppRoleInfo appRole = null;
 	Authenticator authenticator = new Authenticator();
-	
-	@Before public void setUp() throws MissingParametersException, CodingErrorException { 
+
+	@Before public void setUp() throws MissingParametersException, CodingErrorException {
 		this.company = new Company("Test Company");
 		this.appUser = new AppUser(this.company, new RandomString().toString(), "testuser", "User", "Test", "password");
 		this.appRole = new AppRole(this.company, new RandomString().toString(), "testrole");
@@ -49,7 +49,7 @@ public class AuthenticatorTest {
 		this.authenticator.addUser(appUser);
 		this.authenticator.addRole(appRole);
 	}
-	
+
 	@Test
 	public void getPrivilegesForUser() throws CantDoThatException {
  		 this.authenticator.addUserPrivilege(this.appUser, PrivilegeType.ADMINISTRATE);
@@ -60,7 +60,7 @@ public class AuthenticatorTest {
 			 assertEquals(privilege.getUser(), this.appUser);
 		 }
 	}
-	
+
 	@Test
 	public void getPrivilegesForRole() throws CantDoThatException {
 		 this.authenticator.addRolePrivilege(this.appRole, PrivilegeType.ADMINISTRATE);

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -78,7 +78,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		this.setCalculationSQL(availableDataStores);
 		this.setNonPersistentProperties();
 	}
-	
+
 	/**
 	 * Not in interface because only for use during bootup
 	 */
@@ -95,7 +95,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	 * This constructor takes a parameter calcToReference to allow you to
 	 * construct a calc that is a reference to a calc from another report,
 	 * instead of creating a new one from a calc. definition.
-	 * 
+	 *
 	 * A calc constructed this way will return a reference to the original calc
 	 * from getCalculationSQL() rather than the calc SQL itself and will return
 	 * properties of the original calc when getInternalFieldName() etc. are
@@ -750,11 +750,11 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	public void setAggregateFunction(boolean isAggregateFunction) {
 		this.isAggregateFunction = isAggregateFunction;
 	}
-	
+
 	public boolean isReportHidden() {
 		return this.isReportHidden;
 	}
-	
+
 	public void setReportHidden(boolean isReportHidden) {
 		this.isReportHidden = isReportHidden;
 	}
@@ -881,7 +881,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 	private ReportCalcFieldInfo referencedCalc = null;
 
 	private boolean isAggregateFunction = false;
-	
+
 	private boolean isReportHidden = false;
 
 	private static final SimpleLogger logger = new SimpleLogger(ReportCalcFieldDefn.class);

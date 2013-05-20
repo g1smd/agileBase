@@ -1,5 +1,5 @@
 /*
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -42,11 +42,11 @@ import org.codehaus.jackson.JsonGenerationException;
 /**
  * Methods that are used by the view component of the MVC application to pass
  * data to the user interface. The user interface's 'view on the application'.
- * 
+ *
  * An instance of this object will be created whenever control is passed to the
  * user interface. It will have access to the user's session data and the
  * application privilege checking object
- * 
+ *
  * Note: methods prefixed with 'admin' are those that are likely to be useful
  * for an administration interface rather than in screens seen by a non-admin
  * but the UI is free to use any methods from this class as it sees fit.
@@ -74,17 +74,17 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * For a given module, find any modules containing ancestor data. That means
-	 * 
+	 *
 	 * * for each of the reports in the module:
-	 * 
+	 *
 	 * * find any tables the reports' parent table is depentent on e.g. for contacts, find organisations
-	 * 
+	 *
 	 * * for all reports based on that ancestor table, add the modules to the list of modules that's returned
-	 * 
+	 *
 	 * Note: use only tables and reports the logged in user's allowed to view
 	 */
 	public Set<ModuleInfo> getDependentModules(ModuleInfo module) throws CodingErrorException, ObjectNotFoundException;
-	
+
 	/**
 	 * Returns true if the current session record is locked for editing, taking
 	 * into account any override
@@ -96,7 +96,7 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Acts on the session table
-	 * 
+	 *
 	 * @see #getUnchosenRelationFields(TableInfo)
 	 */
 	public List<RelationField> getUnchosenRelationFields() throws DisallowedException,
@@ -105,10 +105,10 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return a list of relation fields in the given table that have no rowIDs
 	 * set in the session
-	 * 
+	 *
 	 * This is to allow the interface to see if any relation fields will need
 	 * values choosing before adding a new record
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *             if the user can't view data in the given table
 	 */
@@ -118,7 +118,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return true if the current request included a toolbar name to display in
 	 * the INCLUDE_TOOLBAR_PLUGIN parameter:
-	 * 
+	 *
 	 * INCLUDE_TOOLBAR_PLUGIN=pluginname:<br>
 	 * Include template gui/plugins/[pluginname]/toolbar.vm in the toolbar
 	 */
@@ -126,7 +126,7 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Return toolbarname - see usesToolbarPlugin()
-	 * 
+	 *
 	 * @see #usesToolbarPlugin()
 	 */
 	public String getToolbarPluginName();
@@ -146,17 +146,17 @@ public interface ViewMethodsInfo {
 	 * of fields from other tables is returned, from which one can then be
 	 * picked to add to the current table to form a relation. Relations can only
 	 * be created to unique fields in other tables so only these are returned.
-	 * 
+	 *
 	 * Relations can also only be created to tables that the user has privileges
 	 * to view. This is more for convenience than security (it may not be the
 	 * admin who'se going to be viewing the report anyway) - we don't want the
 	 * admin to see masses of unnecessary tables
-	 * 
+	 *
 	 * The return data structure is a map of tables to the set of unique fields
 	 * in each table.
-	 * 
+	 *
 	 * The table to get relation candidates for is stored in the user session
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *             If the user doesn't have MANAGE_TABLE privileges on the
 	 *             current session table
@@ -184,11 +184,11 @@ public interface ViewMethodsInfo {
 			ObjectNotFoundException;
 
 	public SortedSet<AppUserInfo> getAdministrators() throws ObjectNotFoundException, CodingErrorException;
-	
+
 	/**
 	 * return any possible joins to tables from this report, not including any
 	 * that are already joined
-	 * 
+	 *
 	 * @param direction
 	 *            True = upward joins - child to parent. False = downward joins
 	 *            - parent to child
@@ -201,10 +201,10 @@ public interface ViewMethodsInfo {
 	 * RelationField in the session table. The lists are stored in a Map via the
 	 * RelationField object. If a user doesn't have VIEW_TABLE_DATA privileges
 	 * on a child table, that table's data isn't included.
-	 * 
+	 *
 	 * DataRowObjects have a method of the same name, so you can use this
 	 * recursively to get child rows of child rows
-	 * 
+	 *
 	 * @deprecated Functionality replaced by getRelatedRowIds
 	 */
 	@Deprecated
@@ -222,11 +222,11 @@ public interface ViewMethodsInfo {
 	 * Return the location of the user's profile image, or null if they have none
 	 */
 	public String getUserProfileImage(String internalUserName) throws ObjectNotFoundException;
-	
+
 	/**
 	 * Calls DatabaseInfo#getDependentTables to retrieve a Set tables dependent
 	 * upon the Session Table
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.DatabaseInfo#getDependentTables(TableInfo,
 	 *      LinkedHashSet)
 	 */
@@ -238,9 +238,9 @@ public interface ViewMethodsInfo {
 	/**
 	 * Calls DatabaseInfo#getDependentTables to retrieve a Set tables dependent
 	 * upon the Table passed as an argument to the method
-	 * 
+	 *
 	 * @param direction: true find child tables, false finds parents and ancestors
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.DatabaseInfo#getDependentTables(TableInfo,
 	 *      LinkedHashSet)
 	 */
@@ -252,7 +252,7 @@ public interface ViewMethodsInfo {
 	 * 'getMessage' can be used on the Exception object returned. It may also be
 	 * useful to check the type of the exception. Some types of exception that
 	 * can be returned are listed in the 'See Also' section below
-	 * 
+	 *
 	 * @return The exception object describing the error, or null if there was
 	 *         no exception
 	 * @see #getWhetherExceptionOccurred() Check the result of
@@ -276,7 +276,7 @@ public interface ViewMethodsInfo {
 			DisallowedException, ObjectNotFoundException, CantDoThatException;
 
 	public SortedSet<CommentInfo> getCompanyComments(int rowLimit) throws SQLException, DisallowedException, ObjectNotFoundException;
-	
+
 	/**
 	 * @return The list of field values for a particular record, so the record
 	 *         can be displayed or edited. The session will know what table and
@@ -296,7 +296,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * Get table data for a specific table, rather than the session table. The
 	 * rowid used will be the session rowid for that table
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.SessionDataInfo#setRowId(TableInfo,
 	 *      int) See sessionData.setRowId for how to set the row id for a
 	 *      specific table
@@ -321,15 +321,15 @@ public interface ViewMethodsInfo {
 	 * When passed a row ID, finds rows in the session report with the parent
 	 * table's row ID set to that ID. For each row found, if relatedTable's
 	 * primary key is in the report, return the value of it.
-	 * 
+	 *
 	 * For example, if the session report is orgs and masterRowId specifies a
 	 * particular organisation, you can find any related contacts by passing
 	 * 'contacts' as the related table.
-	 * 
+	 *
 	 * This assumes that orgs is a report from the organisations table which has
 	 * a join in it to contacts, and the contacts primary key is present in the
 	 * orgs report
-	 * 
+	 *
 	 * @param masterRowId
 	 *            Row ID used as lookup: a value of the session report parent
 	 *            table's primary key
@@ -353,7 +353,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * Use this method to get the session report rows, using the session report,
 	 * row limit and session filter values
-	 * 
+	 *
 	 * @return An ArrayList of ReportDataRow objects reflecting the rows
 	 *         (records) of the report. The session will know which report to
 	 *         show, what filtering to perform etc.
@@ -372,7 +372,7 @@ public interface ViewMethodsInfo {
 	 * Return a report data object that contains metadata about the session
 	 * report data. Note, to get actual report rows which is the more usual
 	 * case, use getReportDataRows instead
-	 * 
+	 *
 	 * @see getReportDataRows
 	 **/
 	public ReportDataInfo getReportData() throws SQLException, DisallowedException,
@@ -382,7 +382,7 @@ public interface ViewMethodsInfo {
 	 * Return a report data object that contains metadata about the report data.
 	 * Note, to get actual report rows which is the more usual case, use
 	 * getReportDataRows instead
-	 * 
+	 *
 	 * @see getReportDataRows
 	 **/
 	public ReportDataInfo getReportData(BaseReportInfo report) throws SQLException,
@@ -391,7 +391,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * Allow overriding the stats cache update, in cases where we just want the
 	 * data as quickly as possible and are not bothered about the stats
-	 * 
+	 *
 	 * @see GetReportData
 	 */
 	public ReportDataInfo getReportData(BaseReportInfo report, boolean updateCacheIfObsolete)
@@ -401,7 +401,7 @@ public interface ViewMethodsInfo {
 	 * Use this method to get rows for a specified report, using the session row
 	 * limit - at the time of writing, this defaults to 100 - and session filter
 	 * values
-	 * 
+	 *
 	 * @return An ArrayList of ReportDataRow objects reflecting the rows
 	 *         (records) of the report.
 	 * @throws DisallowedException
@@ -450,19 +450,19 @@ public interface ViewMethodsInfo {
 	 */
 	public String getReportDataRowsJSON() throws DisallowedException,
 			SQLException, ObjectNotFoundException, JsonGenerationException, CodingErrorException, CantDoThatException, XMLStreamException;
-	
+
 	/**
 	 * Get a calendar feed for a report suitable for use with
-	 * 
+	 *
 	 * http://arshaw.com/fullcalendar/
-	 * 
+	 *
 	 * The parameters 'start' and 'end' that fullcalendar provides in the HTTP
 	 * request are added to the filters taken from the session and applied to
 	 * the date field
-	 * 
+	 *
 	 * Parameters 'internaltablename' and 'internalreportname' specify the
 	 * report. If none are given, the session report is used
-	 * 
+	 *
 	 */
 	public String getReportCalendarJSON() throws CodingErrorException, CantDoThatException,
 			MissingParametersException, DisallowedException, ObjectNotFoundException, SQLException,
@@ -521,9 +521,9 @@ public interface ViewMethodsInfo {
 	 * Return a word cloud for the data in the current session report. The words
 	 * come from the most relevant text fields in the report. Session filters
 	 * are applied.
-	 * 
+	 *
 	 * Each tag is a word with a weight dependent on frequency in the report
-	 * 
+	 *
 	 * @param minWeight
 	 *            A minimum size/weight, e.g. a font size
 	 * @param maxWeight
@@ -537,7 +537,7 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Get a word cloud for specific field contents only in a specific report
-	 * 
+	 *
 	 * Also allow specific stop words to be set to blacklist unwanted terms
 	 */
 	public SortedSet<WordInfo> getReportWordCloud(BaseReportInfo report,
@@ -576,7 +576,7 @@ public interface ViewMethodsInfo {
 	 * Return a set of the most popular reports for the currently logged in user, most frequently used first
 	 */
 	public Set<BaseReportInfo> getMostPopularReports(int numReports) throws SQLException, CodingErrorException, DisallowedException, ObjectNotFoundException;
-	
+
 	/**
 	 * @param tableID
 	 *            The internal table name of the table, or it's public facing
@@ -588,7 +588,7 @@ public interface ViewMethodsInfo {
 	public TableInfo getTable(String tableID) throws ObjectNotFoundException, DisallowedException;
 
 	/**
-	 * 
+	 *
 	 * @param reportInternalName
 	 *            - unique internal identifier for the sought report
 	 * @return Parent table for sought report, (then use
@@ -612,7 +612,7 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return a user object for the currently logged in user, allowing access to
 	 * properties such as username, surname, password etc.
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *             if there's a problem and authentication fails. This shouldn't
 	 *             normally happen but could possibly if the session has expired
@@ -661,13 +661,13 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Checks whether the session user has a particular general privilege
-	 * 
+	 *
 	 * @return Whether the user in the session has the general privilege
 	 *         specified. Note: if the user is a member of a role that has a
 	 *         privilege but doesn't him/herself have the privilege, this method
 	 *         will still return false, i.e. it doesn't consider roles in the
 	 *         same way that the userAllowedTo() methods do
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *             If there is no user set in the session
 	 * @throws IllegalArgumentException
@@ -680,13 +680,13 @@ public interface ViewMethodsInfo {
 
 	/**
 	 * Checks whether the session user has a particular table-specific privilege
-	 * 
+	 *
 	 * @return Whether the user in the session has the table-specific privilege
 	 *         specified. Note: if the user is a member of a role that has a
 	 *         privilege but doesn't him/herself have the privilege, this method
 	 *         will still return false, i.e. it doesn't consider roles in the
 	 *         same way that the loggedInUserAllowedTo() methods do
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *             If there is no user set in the session
 	 * @throws IllegalArgumentException
@@ -722,7 +722,7 @@ public interface ViewMethodsInfo {
 	 * Allows the user interface to check whether the current user has a
 	 * particular general privilege. This can be used to help choose which
 	 * options to make available to the user
-	 * 
+	 *
 	 * @param privilegeTypeToCheck
 	 *            String representation of the privilege type
 	 * @return True if the user has the privilege
@@ -739,7 +739,7 @@ public interface ViewMethodsInfo {
 	 * Allows the user interface to check whether the current user has a
 	 * particular table-specific privilege. This can be used to help choose
 	 * which options to make available to the user
-	 * 
+	 *
 	 * @param privilegeTypeToCheck
 	 *            String representation of the privilege type
 	 * @return True if the user has the privilege
@@ -777,11 +777,11 @@ public interface ViewMethodsInfo {
 	/**
 	 * Return the average upload speed of files since agileBase started up, with
 	 * newer uploads given a larger weighting
-	 * 
+	 *
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
-	
+
 	public EnumSet<TileType> getTileTypes();
-	
+
 }

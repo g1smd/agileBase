@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -26,22 +26,22 @@ import java.util.Map;
 public interface ModuleUsageStatsInfo {
 
 	public ModuleInfo getModule();
-	
+
 	public void addReportViewStats(BaseReportInfo report, UserReportViewStatsInfo stats);
-	
+
 	/**
 	 * For each report, return how many times each user viewed it, highest users first
 	 */
 	public Map<BaseReportInfo, SortedSet<UserReportViewStatsInfo>> getUserReportViewStats();
-	
+
 	/**
 	 * Return the total number of report views for all reports in this module
 	 */
 	public int getTotalReportViews();
-	
+
 	/**
 	 * Return the percentage of report views carried out by a certain user
 	 */
 	public int getUserReportViewsPercentage(BaseReportInfo report, AppUserInfo user);
-	
+
 }

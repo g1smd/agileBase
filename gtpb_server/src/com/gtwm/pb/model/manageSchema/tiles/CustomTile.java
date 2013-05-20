@@ -11,14 +11,14 @@ public class CustomTile extends AbstractTile implements TileCustomInfo {
 
 	private CustomTile() {
 	}
-	
+
 	public CustomTile(String colour, String location) {
 		super.setColour(colour);
 		super.setInternalTileName(RandomString.generate());
 		super.setTileType(TileType.CUSTOM);
 		this.setLocation(location);
 	}
-	
+
 	public String getLocation() {
 		return this.location;
 	}
@@ -26,7 +26,7 @@ public class CustomTile extends AbstractTile implements TileCustomInfo {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
+
 	private String location = null;
 
 }

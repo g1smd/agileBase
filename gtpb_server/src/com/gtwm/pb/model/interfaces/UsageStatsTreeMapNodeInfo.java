@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -23,8 +23,8 @@ package com.gtwm.pb.model.interfaces;
 public interface UsageStatsTreeMapNodeInfo {
 
 	public BaseReportInfo getReport();
-	
+
 	public int getArea();
-	
+
 	public int getColour();
 }

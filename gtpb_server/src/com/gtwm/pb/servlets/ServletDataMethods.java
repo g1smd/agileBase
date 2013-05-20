@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -52,12 +52,12 @@ import org.grlea.log.SimpleLogger;
  * used by the main agileBase servlet AppController, or any other custom servlet
  * written for a particular application based on agileBase. The JavaDoc here
  * describes the HTTP requests that must be sent to use the methods.
- * 
+ *
  * Part of a set of four interfaces, ServletSchemaMethods to manage setting up
  * the database schema, ServletDataMethods to manage data editing,
  * ServletSessionMethods and ServletAuthMethods to do with users, roles and
  * privileges
- * 
+ *
  * @see ServletSchemaMethods
  * @see ServletAuthMethods
  */
@@ -70,7 +70,7 @@ public final class ServletDataMethods {
 	 * Get the value of a single parameter in a HTTP request, or null if the
 	 * parameter doesn't exist or is empty in the request. The parameter must be
 	 * integer
-	 * 
+	 *
 	 * @throws NumberFormatException
 	 *           If the parameter value isn't an integer
 	 */
@@ -129,20 +129,20 @@ public final class ServletDataMethods {
 
 	/**
 	 * Insert or update a database record. Fields passed in the request are saved.
-	 * 
+	 *
 	 * Null handling is as follows:
-	 * 
+	 *
 	 * 1) If a field is passed to the request with an empty value, e.g. a form is
 	 * submitted containing the field but no data has been entered for it, then
 	 * the application will specifically insert a NULL into that field, both when
 	 * creating new and editing existing records.
-	 * 
+	 *
 	 * 2) If a field is skipped, e.g. isn't in the form in the first place or is
 	 * disabled, it will be skipped in the SQL as well, i.e. it won't be included
 	 * in the SQL INSERT or UPDATE statement. When creating records, this will
 	 * result in a null value being inserted. When editing records, the current
 	 * value will remain unchanged.
-	 * 
+	 *
 	 * In both cases 1 and 2, if a default value property has been set for the
 	 * field, that will be used instead of inserting NULL or skipping.
 	 */
@@ -264,7 +264,7 @@ public final class ServletDataMethods {
 	 * Delete the record of 'internaltablename' (or the session table if
 	 * 'internaltablename'=="") identified by 'rowid' (or the session record if
 	 * 'rowid'="")
-	 * 
+	 *
 	 * @throws ObjectNotFoundException
 	 *           If either a) table or row id object aren't in the session, b)
 	 *           there is no record with the given rowId in the table, c) there is

@@ -1,12 +1,12 @@
 /* 	author:   	Christopher O'Neill
-	date:		Aug 2001   	
+	date:		Aug 2001
 	comments: 	The Paice/Husk Stemmer Translated from Pascal
 			adapted for algorithm demo and test program*/
 /**
- * @see http 
+ * @see http
  *      ://www.comp.lancs.ac.uk/computing/research/stemming/paice/javademo
  *      .htm
- * 
+ *
  * Updated by Oliver Kohll 2011
  */
 
@@ -25,14 +25,14 @@ public class LancasterStemmer {
 
 	/****************************************************************
 	 * Method: stripSuffixes
-	 * 
+	 *
 	 * * Returns: String
-	 * 
+	 *
 	 * * Recievs: String word - must be lower case
-	 * 
+	 *
 	 * * Purpose: strips suffix off word and returns * stem using paice stemming
 	 * algorithm *
-	 * 
+	 *
 	 * Note by Oliver: due to the local cache, this method is not thread safe
 	 ****************************************************************/
 	public String stripSuffixes(String word) {
@@ -235,11 +235,11 @@ public class LancasterStemmer {
 
 	/****************************************************************
 	 * Method: charCode
-	 * 
+	 *
 	 * * Returns: int
-	 * 
+	 *
 	 * * Receives: char ch
-	 * 
+	 *
 	 * * Purpose: returns the relevant array index for * specified char 'a' to
 	 * 'z' *
 	 ****************************************************************/
@@ -249,11 +249,11 @@ public class LancasterStemmer {
 
 	/****************************************************************
 	 * Method: FirstVowel
-	 * 
+	 *
 	 * * Returns: int
-	 * 
+	 *
 	 * * Recives: String word, int last
-	 * 
+	 *
 	 * * Purpose: checks lower-case word for position of * the first vowel *
 	 ****************************************************************/
 	private int firstVowel(String word, int last) {
@@ -274,11 +274,11 @@ public class LancasterStemmer {
 
 	/****************************************************************
 	 * Method: vowel
-	 * 
+	 *
 	 * * Returns: boolean
-	 * 
+	 *
 	 * * Recievs: char ch, char prev
-	 * 
+	 *
 	 * * Purpose: determin whether ch is a vowel or not * uses prev
 	 * determination when ch == y *
 	 ****************************************************************/
@@ -306,16 +306,16 @@ public class LancasterStemmer {
 			return false;
 		}
 	}
-	
+
 	private Map<String, String> cachedStems = new HashMap<String, String>();
-	
+
 	private int[] ruleIndex = new int[26]; // index to above
 
 	/**
 	 * Copied from
 	 * http://www.comp.lancs.ac.uk/computing/research/stemming/paice/stemrules
 	 * .txt
-	 * 
+	 *
 	 * April 2011, with spaces removed
 	 */
 	private static final List<String> ruleTable = Arrays.asList("ai*2.{-ia>-ifintact}",

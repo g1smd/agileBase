@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,18 +24,18 @@ import java.util.SortedSet;
  */
 public interface AppRoleInfo {
 	public static final String ROLENAME = "roleName";
-    
+
     public CompanyInfo getCompany();
-	
+
     public void setRoleName( String roleName );
-    
+
     public String getRoleName();
-    
+
     public String getInternalRoleName();
-    
+
     public SortedSet<AppUserInfo> getUsers();
-    
+
     public void assignUser(AppUserInfo user);
-    
+
     public void removeUser(AppUserInfo user);
 }

@@ -1565,11 +1565,11 @@ public final class ViewTools implements ViewToolsInfo {
 	public Set<TableInfo> getNewTableSet() {
 		return new TreeSet<TableInfo>();
 	}
-	
+
 	public SortedSet<CalendarRowInfo> getNewSortedCalendarRowSet() {
 		return new TreeSet<CalendarRowInfo>();
 	}
-	
+
 	public CalendarRowInfo getNewCalendarRow(BaseReportInfo report, DataRowInfo reportDataRow) throws CodingErrorException, CantDoThatException {
 		return new  CalendarRow(report, reportDataRow);
 	}
@@ -1739,7 +1739,7 @@ public final class ViewTools implements ViewToolsInfo {
 
 	/**
 	 * A map of telephone area code to city / location
-	 * 
+	 *
 	 * Don't need ConcurrentHashMap here as data will only be put into this cache
 	 * once
 	 */

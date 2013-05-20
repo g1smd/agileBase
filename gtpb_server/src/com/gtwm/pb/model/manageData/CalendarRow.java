@@ -38,11 +38,11 @@ public class CalendarRow implements CalendarRowInfo {
 	public DataRowInfo getDataRow() {
 		return this.reportDataRow;
 	}
-	
+
 	public String getTitle() {
 		return Helpers.buildEventTitle(this.getReport(), this.getDataRow(), true, false);
 	}
-	
+
 	public String toString() {
 			String dateFormat;
 			try {
@@ -56,7 +56,7 @@ public class CalendarRow implements CalendarRowInfo {
 			//SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
 			//return dateFormatter.format(this.date);
 	}
-	
+
 	/**
 	 * Newest events first, then match equals and hashCode
 	 */
@@ -85,7 +85,7 @@ public class CalendarRow implements CalendarRowInfo {
 		CalendarRowInfo otherCalendarRow = (CalendarRowInfo) obj;
 		return (this.getReport().equals(otherCalendarRow.getReport()) && (this.getDataRow().getRowId() == otherCalendarRow.getDataRow().getRowId()));
 	}
-	
+
 	public int hashCode() {
 		if (this.hashCode == 0) {
 			int hashCode = 17;
@@ -95,13 +95,13 @@ public class CalendarRow implements CalendarRowInfo {
 		}
 		return this.hashCode;
 	}
-	
+
 	private volatile int hashCode = 0;
-	
+
 	private final BaseReportInfo report;
-	
+
 	private final DataRowInfo reportDataRow;
-	
+
 	private final Calendar date;
 
 	private static final SimpleLogger logger = new SimpleLogger(CalendarRow.class);

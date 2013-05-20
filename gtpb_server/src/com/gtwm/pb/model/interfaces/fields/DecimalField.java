@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,8 +33,8 @@ public interface DecimalField extends BaseField {
 	 * Used when converting an integer to a decimal field
 	 * @param internalFieldName
 	 */
-		public void setInternalFieldName(String internalFieldName);	
-	
+		public void setInternalFieldName(String internalFieldName);
+
     /**
      * @param precision
      *            the number of decimal places to display on screen The stored value is as accurate as the
@@ -58,12 +58,12 @@ public interface DecimalField extends BaseField {
      * field object
      */
     public String formatDecimalValue(DecimalValue decimalValue);
-    
+
     /**
      * @see #formatDecimalValue(DecimalValue)
      */
     public String formatFloat(double decimalValue);
-    
+
     /**
      * Return whether the 'not applicable/not required' flag has been set for this field. If it is, then the
      * user should be able to select 'not required' as an option when entering a value
@@ -80,30 +80,30 @@ public interface DecimalField extends BaseField {
      * Return the value to be stored in the database which means 'not applicable' for this field. e.g. 0.0
      */
     public double getNotApplicableValue() throws CantDoThatException;
-    
+
     /**
      * Returns whether the field should use a combo box entry to look up previously entered values
      */
     public boolean usesLookup();
-    
+
     /**
      * Returns whether this field is used to store currency amounts
      */
     public boolean storesCurrency();
-    
+
     public void setStoresCurrency(boolean storesCurrency);
-    
+
 	/**
 	 * Returns a set of distinct values that are stored for this field in the
 	 * field's parent table. Useful for displaying a lookup / combo box of
 	 * values for entry
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             if the text field type doesn't support lookups. Currently,
 	 *             BigTextFieldDefn doesn't
 	 */
 	public SortedSet<Double> getItems() throws SQLException, CantDoThatException;
-	
+
 	/**
 	 * Similar to getItems() but instead of returning values from the field's parent table, returns them from the report passed in, filtered by the supplied filter map. An empty map can be used for no filtering.
 	 * @param filterValues A filter map in the same format as that passed to ReportDataInfo.getReportDataRows

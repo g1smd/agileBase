@@ -1,7 +1,7 @@
 package com.gtwm.pb.model.manageSchema.fields.options;
 
 public class IntegerFieldOptions extends BasicFieldOptions {
-	
+
 	public Integer getDefaultValue() {
 		return defaultValue;
 	}
@@ -53,13 +53,13 @@ public class IntegerFieldOptions extends BasicFieldOptions {
 	private Integer defaultValue = null;
 
 	private boolean notApplicable = false;
-	
+
 	private String notApplicableDescription = null;
-	
+
 	private Integer notApplicableValue = null;
-	
+
 	private boolean usesLookup  = false;
-	
+
 	private boolean storesCurrency = false;
-	
+
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -107,11 +107,11 @@ import com.gtwm.pb.model.manageSchema.tiles.VisualisationTile.VisualisationType;
  * used by the main agileBase servlet AppController, or any other custom servlet
  * written for a particular application based on agileBase. The JavaDoc here
  * describes the HTTP requests that must be sent to use the methods.
- * 
+ *
  * Part of a set of three classes, ServletSchemaMethods to manage setting up the
  * database schema, ServletDataMethods to manage data editing and
  * ServletAuthMethods to do with users, roles and privileges
- * 
+ *
  * @see ServletDataMethods
  * @see ServletAuthMethods
  */
@@ -119,11 +119,11 @@ public final class ServletSchemaMethods {
 
 	/**
 	 * Add a new company which will be able to have its own private set of tables
-	 * 
+	 *
 	 * Http usage example:
-	 * 
+	 *
 	 * &add_company=true&companyname=GTWM
-	 * 
+	 *
 	 * @throws DisallowedException
 	 *           If the currently logged in user doesn't have MASTER privileges
 	 */
@@ -1203,7 +1203,7 @@ public final class ServletSchemaMethods {
 
 	/**
 	 * Doesn't need to be public because it's only called by addField
-	 * 
+	 *
 	 * @param table
 	 *          The table to add the relation to, normally the session table
 	 */
@@ -1473,7 +1473,7 @@ public final class ServletSchemaMethods {
 	/**
 	 * Used by updateFieldOptions when restoring a field object to it's initial
 	 * state after an update error
-	 * 
+	 *
 	 * TODO: refactor to use a properties object rather than masses of parameters
 	 */
 	private static void restoreFieldOptions(BaseField field, Boolean textFieldUsesLookup,
@@ -2240,7 +2240,7 @@ public final class ServletSchemaMethods {
 
 	/**
 	 * !!!! NO PARAMETER MAY BE NULL !!!
-	 * 
+	 *
 	 * @param leftInternalTableName
 	 * @param leftInternalReportName
 	 * @param leftInternalFieldName

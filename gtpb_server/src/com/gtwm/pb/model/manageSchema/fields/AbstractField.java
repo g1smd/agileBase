@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -116,7 +116,7 @@ public abstract class AbstractField implements BaseField {
 
 	/*
 	 * Subclasses may throw CantDoThatException (non-Javadoc)
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.fields.BaseField#setUnique(boolean)
 	 */
 	public void setUnique(Boolean fieldUnique) throws CantDoThatException {
@@ -162,12 +162,12 @@ public abstract class AbstractField implements BaseField {
 	public boolean hasDefault() {
 		return this.getDefaultDefined();
 	}
-	
+
 	@Transient
 	public Boolean hasComments() {
 		return this.hasComments;
 	}
-	
+
 	public void setHasComments(boolean hasComments) {
 		this.hasComments = hasComments;
 	}
@@ -175,12 +175,12 @@ public abstract class AbstractField implements BaseField {
 	private Boolean getDefaultDefined() {
 		return this.defaultDefined;
 	}
-	
+
 	@Enumerated(EnumType.STRING)
 	public FieldPrintoutSetting getPrintoutSetting() {
 		return this.printoutSetting;
 	}
-	
+
 	public void setPrintoutSetting(FieldPrintoutSetting printoutSetting) {
 		this.printoutSetting = printoutSetting;
 	}
@@ -195,7 +195,7 @@ public abstract class AbstractField implements BaseField {
 	public String toString() {
 		return this.getFieldName();
 	}
-	
+
 	/**
 	 * Provide a natural sort order by parent table then field index then field
 	 * name + internal name
@@ -279,9 +279,9 @@ public abstract class AbstractField implements BaseField {
 	private Boolean defaultDefined = false;
 
 	private Integer fieldIndex = 0;
-	
+
 	private FieldPrintoutSetting printoutSetting = FieldPrintoutSetting.NAME_AND_VALUE;
-	
+
 	private Boolean hasComments = null;
 
 	private volatile int hashCode = 0;

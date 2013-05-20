@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 package com.gtwm.pb.model.interfaces;
 
 public interface TextFieldDescriptorOptionInfo extends BaseFieldDescriptorOptionInfo {
-    	    
+
     public String getValue();
-	    
+
     public void setValue(String value);
-    
+
     public boolean isValueNull();
 }

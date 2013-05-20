@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ public interface JoinClauseInfo extends Comparable<JoinClauseInfo> {
 
     /**
      * Use this to get the left field if the left hand side of the join is on a table
-     * 
+     *
      * @return The left hand field in the table join
      * @throws CantDoThatException
      *             If the left hand side of the join is a report rather than a table
@@ -50,7 +50,7 @@ public interface JoinClauseInfo extends Comparable<JoinClauseInfo> {
 
     /**
      * Use this to get the left field if the left hand side of the join is on a report
-     * 
+     *
      * @return ReportFieldInfo object representing the report field, which can be used to get the actual field
      *         object as well as the report it is in
      * @throws CantDoThatException
@@ -63,9 +63,9 @@ public interface JoinClauseInfo extends Comparable<JoinClauseInfo> {
      * @return Whether the join is an INNER, LEFT OUTER, RIGHT OUTER or FULL OUTER join
      */
     public JoinType getJoinType();
-    
+
     public String getInternalJoinName();
-    
+
     /**
      * Get the time the object was constructed - used for sorting joins
      */

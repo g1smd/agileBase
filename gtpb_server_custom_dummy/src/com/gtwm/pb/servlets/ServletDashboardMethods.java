@@ -12,8 +12,8 @@ public class ServletDashboardMethods {
 		logger.info("Notice: dashboard action unable to run");
 		logger.info("Dashboard components are not distributed in the agileBase open source version");
 		logger.info("Please contact GT webMarque to obtain the dashboard module");
-		logger.info("Email: support@agilebase.co.uk");		
+		logger.info("Email: support@agilebase.co.uk");
 	}
-	
+
 	private static final SimpleLogger logger = new SimpleLogger(ServletDashboardMethods.class);
 }

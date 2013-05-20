@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,11 +24,11 @@ public class CheckboxValueDefn implements CheckboxValue {
 	private CheckboxValueDefn() {
 		this.checkboxValue = null;
 	}
-	
+
     public CheckboxValueDefn(Boolean checkboxValue) {
         this.checkboxValue = checkboxValue;
     }
-    
+
     public boolean getValueBoolean() {
         return this.checkboxValue;
     }
@@ -40,7 +40,7 @@ public class CheckboxValueDefn implements CheckboxValue {
             return String.valueOf(this.checkboxValue);
         }
     }
-    
+
     public boolean isNull() {
         return (this.checkboxValue == null);
     }

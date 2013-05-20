@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 		this.weight = weight;
 		this.synonyms = null;
 	}
-	
+
 	public Word(String name, int weight, Set<String> synonyms) {
 		this.name = name;
 		this.weight = weight;
@@ -48,7 +48,7 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 	public int getWeight() {
 		return this.weight;
 	}
-	
+
 	public Set<String> getSynonyms() {
 		return this.synonyms;
 	}
@@ -95,6 +95,6 @@ public class Word implements WordInfo, Comparable<WordInfo> {
 	private final String name;
 
 	private final int weight;
-	
+
 	private final Set<String> synonyms;
 }

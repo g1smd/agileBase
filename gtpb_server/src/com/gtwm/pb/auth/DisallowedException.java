@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.util.AgileBaseException;
 
 /**
- * Should be raised when user tries to do something they haven't got privileges for. 
+ * Should be raised when user tries to do something they haven't got privileges for.
  * This should never happen in normal circumstances because the UI shouldn't allow it
  */
 public class DisallowedException extends AgileBaseException {
@@ -32,24 +32,24 @@ public class DisallowedException extends AgileBaseException {
         this.privilegeType = privilegeType;
         this.user = user;
     }
-    
+
     public DisallowedException(AppUserInfo user, PrivilegeType privilegeType, TableInfo table) {
         super("User " + user + " is not allowed to " + privilegeType.getPrivilegeDescription() + " in table '" + table.getTableName() + "'. An administrator can set up privileges so this can be allowed");
         this.privilegeType = privilegeType;
         this.table = table;
         this.user = user;
     }
-    
+
     public PrivilegeType getPrivilegeType() {
         return this.privilegeType;
     }
-    
+
     public TableInfo getTable() {
         return this.table;
     }
-    
+
     private PrivilegeType privilegeType = null;
-    
+
     private TableInfo table = null;
 
     private AppUserInfo user = null;

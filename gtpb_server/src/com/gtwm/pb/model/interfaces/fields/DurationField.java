@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ public interface DurationField extends BaseField {
     /**
      * How accurately should we record this field?<br>
      * Don't want to display unnecessary input boxes on the screen
-     * 
+     *
      * @param durationResolution
      *            Use values from the Calendar class constants
      * @see java.util.Calendar The Calendar class for the constant values to use
@@ -36,7 +36,7 @@ public interface DurationField extends BaseField {
     /**
      * What's the largest measure to display when inputing a new value? e.g. if we are recording hours &
      * minutes, showing years, months and days in an input form is unecessary
-     * 
+     *
      * @param scale
      *            Use values from the Calendar class constants
      * @see java.util.Calendar The Calendar class for the constant values to use
@@ -44,13 +44,13 @@ public interface DurationField extends BaseField {
     public void setScale(int scale);
 
     public int getResolution();
-    
+
     public int getScale();
-    
+
     public void setDefault(DurationValue defaultValue) throws CantDoThatException;
-    
+
     public DurationValue getDefault();
-    
+
     public void clearDefault();
 
 }

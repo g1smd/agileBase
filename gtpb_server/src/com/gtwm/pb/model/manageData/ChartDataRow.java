@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -60,11 +60,11 @@ public class ChartDataRow implements ChartDataRowInfo {
 	public synchronized Number getAggregateValue(ChartAggregateInfo aggregateFunction) {
 		return this.aggregateValues.get(aggregateFunction);
 	}
-	
+
 	public synchronized Map<ChartAggregateInfo, Number> getAggregateValues() {
 		return this.aggregateValues;
 	}
-	
+
 	public synchronized Map<ChartGroupingInfo, String> getGroupingValues() {
 		return this.groupingValues;
 	}

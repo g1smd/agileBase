@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ public interface DateField extends BaseField {
 	/**
 	 * How accurately should we record this field?<br>
 	 * Don't want to display unnecessary input boxes on the screen
-	 * 
+	 *
 	 * @param dateResolution
 	 *            Use values from the Calendar class constants
 	 * @see java.util.Calendar The Calendar class for the constant values to use
@@ -48,7 +48,7 @@ public interface DateField extends BaseField {
 
 	/**
 	 * @see #format(Date)
-	 * 
+	 *
 	 *      Note: format methods have different methods rather than overloading
 	 *      each other: see Bloch item 26 for why
 	 */
@@ -59,7 +59,7 @@ public interface DateField extends BaseField {
 	 * function to display dates at the resolution set by setDateResolution().
 	 * This is used when quick filtering. It should produce results the same as
 	 * when using the format() method above
-	 * 
+	 *
 	 * NB This is database specific.
 	 */
 	public String getDatabaseFormatString();
@@ -88,8 +88,8 @@ public interface DateField extends BaseField {
 	 * current year will be allowed
 	 */
 	public Integer getMinAgeYears();
-	
+
 	public void setMaxAgeYears(Integer maxAgeYears);
-	
+
 	public void setMinAgeYears(Integer minAgeYears);
 }

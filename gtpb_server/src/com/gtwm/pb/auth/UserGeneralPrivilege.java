@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ import com.gtwm.pb.model.interfaces.UserGeneralPrivilegeInfo;
 
 @Entity
 // Specify inheritance because UserObjectPrivilege extends this type
-@Inheritance(strategy = InheritanceType.JOINED) 
+@Inheritance(strategy = InheritanceType.JOINED)
 @Immutable
 public class UserGeneralPrivilege implements UserGeneralPrivilegeInfo {
 
@@ -57,11 +57,11 @@ public class UserGeneralPrivilege implements UserGeneralPrivilegeInfo {
     private long getId() {
         return this.id;
     }
-    
+
     private void setId(long id) {
         this.id = id;
     }
-    
+
     protected void setUser(AppUserInfo appUser) {
         this.appUser = appUser;
     }
@@ -103,16 +103,16 @@ public class UserGeneralPrivilege implements UserGeneralPrivilegeInfo {
     	}
     	return this.hashCode;
     }
-    
+
     public String toString() {
         return "" + this.getUser() + ", " + this.getPrivilegeType();
     }
 
     private volatile int hashCode = 0;
-    
+
     private AppUserInfo appUser;
 
     private PrivilegeType privilegeType;
-    
+
     private long id;
 }

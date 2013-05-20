@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -78,7 +78,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public String getReportDescription() {
 		return this.reportDesc;
 	}
-	
+
 	@Transient
 	public String getColour() {
 		// First check if there is a colour override in the report description
@@ -152,7 +152,7 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 		}
 		throw new ObjectNotFoundException("Report summary with ID " + summaryId + " not found in report " + this);
 	}
-	
+
 	@Transient
 	public Set<ChartInfo> getSavedCharts() {
 		return Collections.unmodifiableSet(new LinkedHashSet<ChartInfo>(this
@@ -180,32 +180,32 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public ReportMapInfo getMap() {
 		return this.getMapDirect();
 	}
-	
+
 	public void setMap(ReportMapInfo reportMap) {
 		this.setMapDirect(reportMap);
 	}
-	
+
 	@OneToOne(targetEntity = ReportMap.class, cascade = CascadeType.ALL)
 	private ReportMapInfo getMapDirect() {
 		return this.reportMap;
 	}
-	
+
 	private void setMapDirect(ReportMapInfo reportMap) {
 		this.reportMap = reportMap;
 	}
-	
+
 	public boolean getAllowExport() {
 		return this.allowExport;
 	}
-	
+
 	public void setAllowExport(boolean allowExport) {
 		this.allowExport = allowExport;
 	}
-	
+
 	public Integer getMemoryAllocation() {
 		return this.memoryAllocation;
 	}
-	
+
 	public void setMemoryAllocation(Integer memoryAllocation) {
 		this.memoryAllocation = memoryAllocation;
 	}
@@ -228,12 +228,12 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public void setRowCountEstimate(boolean rowCountIsEstimate) {
 		this.rowCountIsEstimate = rowCountIsEstimate;
 	}
-	
+
 	@Transient
 	public double getViewRank() {
 		return this.viewRank;
 	}
-	
+
 	public void setViewRank(double viewRank) {
 		this.viewRank = viewRank;
 	}
@@ -291,21 +291,21 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	public int hashCode() {
 		return this.getInternalReportName().hashCode();
 	}
-	
+
 	@Transient
 	public float getQuerySeconds() {
 		return this.querySeconds;
 	}
-	
+
 	public void setQuerySeconds(float queryTime) {
 		this.querySeconds = queryTime;
 	}
-	
+
 	@Transient
 	public QueryPlanSelection getQueryPlanSelection() {
 		return this.queryPlanSelection;
 	}
-	
+
 	public void setQueryPlanSelection(QueryPlanSelection queryPlanSelection) {
 		this.queryPlanSelection = queryPlanSelection;
 	}
@@ -321,23 +321,23 @@ public abstract class BaseReportDefn implements BaseReportInfo {
 	private String internalReportName = "";
 
 	private TableInfo parentTable;
-	
+
 	private float querySeconds = 0f;
-	
+
 	private QueryPlanSelection queryPlanSelection = QueryPlanSelection.DEFAULT;
 
 	private ChartInfo reportSummary = null;
 
-	private ReportMapInfo reportMap = null; 
+	private ReportMapInfo reportMap = null;
 
 	private int rowCount = 0;
 
 	private boolean rowCountIsEstimate = false;
-	
+
 	private double viewRank = 0d;
-	
+
 	private boolean allowExport = false;
-	
+
 	private Integer memoryAllocation = null;
 
 	private static final SimpleLogger logger = new SimpleLogger(BaseReportDefn.class);

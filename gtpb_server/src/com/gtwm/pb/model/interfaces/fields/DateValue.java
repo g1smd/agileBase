@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@ import com.gtwm.pb.util.CantDoThatException;
 public interface DateValue extends BaseValue {
 
     public void set(int field, Integer value) throws CantDoThatException;
-    
+
     /**
      * @see java.util.Calendar#add(int, int)
      */
     public void add(int field, int amount);
-    
+
     public Integer get(int field) throws CantDoThatException;
-	
+
     public Calendar getValueDate();
-    
+
     public void setDateResolution(int dateResolution) throws CantDoThatException;
-    
+
     public int getDateResolution();
 }

@@ -1,6 +1,6 @@
 /*
  *  Copyright 2012 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ import java.util.SortedSet;
  * fields. NOTE: To create a new table, use the method in DatabaseInfo rather
  * than just calling the constructor - DatabaseInfo keeps a collection of
  * tables.
- * 
+ *
  * @see com.gtwm.pb.model.interfaces.DatabaseInfo The DatabaseInfo interface
  */
 public interface TableInfo extends Comparable<TableInfo> {
@@ -45,16 +45,16 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	/**
 	 * Return the table name with any prefixes removed, e.g.
-	 * 
+	 *
 	 * "a2.1) contacts" -> "contacts"
-	 * 
+	 *
 	 * This can be useful for displaying in the end user UI
 	 */
 	public String getSimpleName();
 
 	/**
 	 * First get the simple name, then return the singular version of that.
-	 * 
+	 *
 	 * For example, given a table name 'a1) organisations', return
 	 * 'organisation'
 	 */
@@ -64,7 +64,7 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	/**
 	 * Find a field in this table
-	 * 
+	 *
 	 * @param fieldID
 	 *            Internal name of the field (preferable) or public name
 	 * @throws ObjectNotFoundException
@@ -93,7 +93,7 @@ public interface TableInfo extends Comparable<TableInfo> {
 	/**
 	 * Each table has a collection of reports which show info from the table and
 	 * related tables
-	 * 
+	 *
 	 * @param reportToAdd
 	 * @param thisIsTheDefaultReport
 	 *            Each table has one default report which is not editable by the
@@ -117,16 +117,16 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * reports a user can view as this will return all tables without regard for
 	 * the user's privileges. Use ViewMethodsInfo.getViewableReports(TableInfo
 	 * table) instead
-	 * 
+	 *
 	 * @return All reports belonging to this table, in a read-only collection
-	 * 
+	 *
 	 * @see com.gtwm.pb.model.interfaces.ViewMethodsInfo#getViewableReports(TableInfo)
 	 */
 	public SortedSet<BaseReportInfo> getReports();
 
 	/**
 	 * Get a report from this table's collection
-	 * 
+	 *
 	 * @param reportID
 	 *            The internal name of the report (it's ID) or alternatively the
 	 *            public name of the report. Note it will be interpreted as an
@@ -146,7 +146,7 @@ public interface TableInfo extends Comparable<TableInfo> {
 
 	/**
 	 * Set the primary key to the given sequence field
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             If the field doesn't belong to the table
 	 */
@@ -156,7 +156,7 @@ public interface TableInfo extends Comparable<TableInfo> {
 	 * Set the primary key to the given integer field. Note the field is
 	 * specified as a concrete class, not an interface because it specifically
 	 * must be an integer field, not something general like a number field
-	 * 
+	 *
 	 * @throws CantDoThatException
 	 *             If the field doesn't belong to the table
 	 */
