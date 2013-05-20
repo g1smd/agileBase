@@ -18,7 +18,7 @@
       <img src="website/partner/absolutelypc.png" alt="" />
 			<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			username<br />
-			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>
+			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off" /><br>
 			password<br />
 			<input type="password" name="j_password" id="j_password" /><br><br>
 			<input type="submit" value="login">

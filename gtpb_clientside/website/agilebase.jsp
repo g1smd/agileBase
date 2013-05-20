@@ -51,7 +51,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
           <% } %>
               <div class="control-group">
                 <label class="control-label" for="j_username">username</label>
-                <div class="controls"><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/></div>
+                <div class="controls"><input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off" /></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="j_password">password</label>

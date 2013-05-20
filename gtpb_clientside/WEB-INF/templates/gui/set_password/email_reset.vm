@@ -75,7 +75,7 @@
             <input type="hidden" name="return" value="gui/set_password/email_success" />
             <input type="hidden" name="update_user" value="true" />
             <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-            <input type="password" name="password" id="password"/><button type="submit" value="Set" class="btn">set</button>
+            <input type="password" name="password" id="password" /><button type="submit" value="Set" class="btn">set</button>
             <div id="strength"></div>
           </form>
       </div>

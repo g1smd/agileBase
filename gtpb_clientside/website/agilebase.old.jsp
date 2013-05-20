@@ -14,8 +14,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 <html>
 	<head>
 		<title>agileBase - a dedicated Lean Back Office platform</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon" /> <!-- favicon -->
+    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
     <% if(ssl) { %>
@@ -103,12 +103,12 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 					<% } else { %>
 					    <form method="POST" action="/agileBase/j_security_check" name="loginform" id="loginform">
 					<% } %>
-								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
+								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off" />
 								</div>
 								<div class="input">password<input type="password" name="j_password" id="j_password" />
 								</div>
 								<!-- submit element allows us to press enter to log in -->
-								<input type="submit" value="login" style="display:none"/>
+								<input type="submit" value="login" style="display:none" />
 								<a id="button_login" href="javascript:document.loginform.submit();">login</a>
 						</form>
 				</div>

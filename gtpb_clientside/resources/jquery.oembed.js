@@ -255,7 +255,7 @@
         var code, alt = oembedData.title ? oembedData.title : '';
         alt += oembedData.author_name ? ' - ' + oembedData.author_name : '';
         alt += oembedData.provider_name ? ' - ' + oembedData.provider_name : '';
-        code = '<div><a href="' + url + '" target=\'_blank\'><img src="' + oembedData.url + '" alt="' + alt + '"/></a></div>';
+        code = '<div><a href="' + url + '" target=\'_blank\'><img src="' + oembedData.url + '" alt="' + alt + '" /></a></div>';
         if (oembedData.html)
             code += "<div>" + oembedData.html + "</div>";
         return code;
