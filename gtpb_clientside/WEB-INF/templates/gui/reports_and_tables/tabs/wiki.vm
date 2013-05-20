@@ -94,7 +94,7 @@
 						  <td class="leading">&nbsp;</td>
 						  <td colspan="2" #if($wikiTitle.isNull())wikiExists="false"#else wikiExists="true"#end>
 			      #if($tabCaption=="edit")	      
-					    <script language="Javascript">
+					    <script>
 					      oWikiWindow=null;
 					      
 					      function fCheckWikiWindow() {
@@ -117,8 +117,8 @@
 						        <button name="_link_wiki_page" isWiki="true">
 						          link to an existing page
 						        </button>
-						        <script language="JavaScript" src="resources/picker.js"></script>
-						        <script language="Javascript">
+						        <script src="resources/picker.js"></script>
+						        <script>
 						          function fInitialise() {
 						            function fDoInitialise(oBox){
 						              function fButton() {
@@ -221,7 +221,7 @@
 						    </div>
 						    #end ## end if in edit tab      
 						    <div id="editWikiEntry">
-						      <script language="Javascript">
+						      <script>
 						        function fUpdateWikiSnippet() {
 						          function fUpdateSnippetContent(sText,sXML){
 						            if (!sText || sText=='') return;

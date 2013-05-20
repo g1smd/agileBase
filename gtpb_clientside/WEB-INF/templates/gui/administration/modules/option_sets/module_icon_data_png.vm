@@ -45,7 +45,7 @@
 
 <div id="moduleIconPicker"></div>
 
-<script language="Javascript">
+<script>
 
   function fIconPicker(oContainer) {
     

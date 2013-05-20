@@ -114,7 +114,7 @@
 	  #end ## end of normal (not big text) field
 	##
     #if($globalEdit)##
-      <script language="Javascript">
+      <script>
         function fUpdateGlobalText() {
           function fResponse(sResponseText, sResponseXML) {
             if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {

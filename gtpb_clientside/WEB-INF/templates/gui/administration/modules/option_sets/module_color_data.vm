@@ -65,7 +65,7 @@
 
 <div id="moduleColorPicker"></div>
 
-<script language="Javascript">
+<script>
   function fColorPicker(oContainer) {
     function fDivClick(oEvent) {        
       function fReqOK(sResponseText,sResponseXML) {

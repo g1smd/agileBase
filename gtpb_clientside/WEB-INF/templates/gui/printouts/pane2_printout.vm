@@ -165,7 +165,7 @@
         <p>As the data can still be edited, it should be considered draft until the values are locked</p>
       </div>
     </div>
-    <script languange="Javascript">
+    <script>
       function fMarkAsDraft(bMark) {
         if(bMark) document.body.setAttribute('isDraft','true');
         else document.body.removeAttribute('isDraft');

@@ -94,7 +94,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
     #end
   </select>
   $fieldOption.getOptionDescription()
-  ###<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+  ###<script src="resources/wait/interdependent_fields.js"></script>
 #elseif($fieldOption.getClass().getSimpleName()=="TextFieldDescriptorOption")
   <input name="$fieldOption.getFormInputName()" />
   <label for="$fieldOption.getFormInputName()">

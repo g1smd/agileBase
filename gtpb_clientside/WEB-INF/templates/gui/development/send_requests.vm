@@ -52,8 +52,8 @@
 			padding:7px;
 			
 	</style>
-	<script src="resources/jquery.js" language="Javascript"></script>
-	<script language="JavaScript" type="text/javascript">
+	<script src="resources/jquery.js"></script>
+	<script type="text/javascript">
     <!--	
 	  function fGo() {
         var oRequests=document.getElementById('requests');

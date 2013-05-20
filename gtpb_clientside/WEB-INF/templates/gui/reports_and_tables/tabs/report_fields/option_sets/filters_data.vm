@@ -29,7 +29,7 @@
 						 border-top:1px solid #EC00BC; }
 </STYLE>
 
-<script language=javascript>
+<script>
   	function fArrayContains(aArray, vTest)
 	  {	
 	    for (var i=0; i<aArray.length; i++)
@@ -162,7 +162,7 @@
 		</tbody>
 	</TABLE>
 </FORM>
-<SCRIPT language="JavaScript">
+<SCRIPT>
   	function fSelectFilterOption(iIndex)
   	{
   	   function fEnableDisable(oFilterOptionSet)
@@ -195,4 +195,4 @@
 	
 	  //fSelectFilterOption(0); // moved to pane_3_tab_set.vm
 </SCRIPT>
-###<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+###<script src="resources/wait/interdependent_fields.js"></script>

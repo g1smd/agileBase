@@ -27,7 +27,7 @@
     	<input type=checkbox name=$field.getInternalFieldName() #if($updateAsType) gtpb_update_record=true gtpb_internaltablename="$sessionTable.getInternalTableName()" gtpb_rowid="$sessionRowId" onclick="new fChange(this)" #end #if($fieldValue == true) checked #end>
   #end
   #if($globalEdit)
-    <script language="Javascript">
+    <script>
       function fUpdateGlobalCheckbox() {
         function fResponse(sResponseText, sResponseXML) {
           if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {

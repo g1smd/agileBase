@@ -34,7 +34,7 @@
     #end
 	#parse('gui/resources/input/input.vm')<br>
 	#if($address.lastKey().equals($field))
-		<script langauge="JavaScript">
+		<script>
 		  loadMap("$tableDataRow.get($field).toString()");
 		</script>
 		    #set($partOfAddress = false)

@@ -24,11 +24,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
     <title>Agilebase usage</title>
-    <script src="resources/jquery.js" language="JavaScript"></script>
-    <script language="JavaScript" src="resources/jit.js"></script>
-    <script language="JavaScript" src="resources/jquery.sparkline.js"></script>
-    <script language="JavaScript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
-    <script language="JavaScript" src="resources/simple/simple.js"></script>
+    <script src="resources/jquery.js"></script>
+    <script src="resources/jit.js"></script>
+    <script src="resources/jquery.sparkline.js"></script>
+    <script src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
+    <script src="resources/simple/simple.js"></script>
 </head>
 <body>
 	<div class="container">

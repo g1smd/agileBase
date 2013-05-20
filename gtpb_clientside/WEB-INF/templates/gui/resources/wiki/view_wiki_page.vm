@@ -21,7 +21,7 @@
 <title>Loading ${wikiPageName}...</title>
 </head>
 <body>
-<script language="JavaScript">
+<script>
 ##document.location="../jamwiki/$cleanCompanyName/StartingPoints";
 document.location="$view.getWikiPageUrl($wikiPageName, false)";
 </script>

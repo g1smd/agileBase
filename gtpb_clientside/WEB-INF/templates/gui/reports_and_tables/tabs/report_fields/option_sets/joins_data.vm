@@ -47,7 +47,7 @@
   ##}     
 </style>
 
-<script language=javascript>
+<script>
 	function fArrayContains(aArray, vTest)
 	{	for (var i=0;i<aArray.length;i++)
 			if (aArray[i]==vTest) return true;
@@ -231,4 +231,4 @@
 		</tbody>
 	</table>
 </form>
-###<script language=javascript src="resources/wait/interdependent_fields.js"></script>
+###<script src="resources/wait/interdependent_fields.js"></script>
