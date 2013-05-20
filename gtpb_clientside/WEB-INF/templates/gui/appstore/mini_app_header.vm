@@ -4,7 +4,7 @@
     #if($mobile_device)
       #set($databaseReturn = "gui/pane1")
     #else
-      #set($databaseReturn = "gui/display_application")     
+      #set($databaseReturn = "gui/display_application")
     #end
     <a href="?return=$databaseReturn">
       <img src="customisations/common/dashboard/panes.png" /> Database
@@ -12,7 +12,7 @@
   </div>
   #if($apps.contains("dashboard"))
     <div class="button">
-      #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")     
+      #set($databaseReturn = "gui/customisations/common/dashboard/dashboard")
       <a href="?return=$databaseReturn">
         <img src="resources/toolbar/dashboard.png" /> Dashboard
       </a>&nbsp;

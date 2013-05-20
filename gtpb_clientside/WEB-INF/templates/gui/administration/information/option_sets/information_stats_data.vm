@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -18,19 +18,19 @@
 $viewTools.startTimer("gui/administration/information/option_sets/information_stats_data.vm")
 <style>
 	@import url("styles/report.css");
-	
+
 	div#fieldOptionsSet { display:none }
 	div#fieldOptionsSet[selected] { display:block }
 	form { height:100% }
-	
+
 	tr#addNewField td { vertical-align:top;
                     	font-size:8pt;
 						border-top:1px solid #EC00BC; }
-						
+
 	optgroup { font-style:normal;
-		       margin-top:5px; 
+		       margin-top:5px;
 			   color:#333333 }
-    .chartBar { 
+    .chartBar {
 	  position:relative;
 	  height:100%;
 	  background-color:#9091f4;
@@ -38,16 +38,16 @@ $viewTools.startTimer("gui/administration/information/option_sets/information_st
 	  padding:4px;
 	  color:black;
 	}
-	
+
 	/* Override report.css */
 	table#reportData {
 	  height:auto!important;
 	}
-	
+
 	table#reportData td.leading, table#reportData td.trailing {
 	  width: 15px;
 	}
-	
+
 </style>
 #set($mathTool = $viewTools.getMathTool())
 #if(!$usageStats)
@@ -82,7 +82,7 @@ Report usage in each module, along with with the users of each report (main user
 	  <td class=leading>&nbsp;</td>
 	    <td width="200px">$report</td>
 		<td>
-		  ## Add up the views from each user to get a total 
+		  ## Add up the views from each user to get a total
 		  #set($reportViews = 0)
 		  #set($usersText = "") ## A list of users
 		  #set($usersTextRaw = "") ## A list of users

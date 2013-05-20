@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
       #set($parentInputName = 'fieldpropertylisttable')
 	  #set($parentInputId = "${parentInputName}_${fieldType}")
     #else
-	  #set($parentInputName = 'fieldpropertylistreport')    
+	  #set($parentInputName = 'fieldpropertylistreport')
 	  #set($parentInputId = "${parentInputName}_${fieldType}")
       #set($return='xmlreturn_reportfields')
     #end
@@ -90,7 +90,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
         <option value="$fieldOptionOption">
           $fieldOption.getOptionsList().get($fieldOptionOption)
 		</option>
-      #end ##foreach option in list type        
+      #end ##foreach option in list type
     #end
   </select>
   $fieldOption.getOptionDescription()
@@ -103,4 +103,4 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/field_option ($f
 #end  ##if is boolean or list or text
 <br>
 </div> <!-- end of nowrap div -->
-$viewTools.stopTimer("gui/reports_and_tables/tabs/table_fields/field_option ($fieldOption)")    		  
+$viewTools.stopTimer("gui/reports_and_tables/tabs/table_fields/field_option ($fieldOption)")

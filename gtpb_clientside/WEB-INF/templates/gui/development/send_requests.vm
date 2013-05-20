@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -21,51 +21,51 @@
 <head>
   <title>Send Requests</title>
 	<style>
-	  * { 
+	  * {
 		  /* font-family:Arial; */
 			font-size:10pt;
 			}
-	
+
 	  textarea {
 		  width:900px;
 			font-family: Courier;
 			border:1px solid silver;
 			}
-			
+
 	  select {
 		  width:400px;
 			font-family: Courier;
 			border:1px solid silver;
 			}
-			
+
 		hr {
 		  clear:left;
 			height:1px;
 			color:silver;
 			}
-			
+
 		#currentRequest {
 		  font-family: Courier;
 			border:1px solid silver;
 			width:900px;
 			overflow:hidden;
 			padding:7px;
-			
+
 	</style>
 	<script src="resources/jquery.js"></script>
 	<script type="text/javascript">
-    <!--	
+    <!--
 	  function fGo() {
         var oRequests=document.getElementById('requests');
 		var oPending=document.getElementById('pending');
 		var oCurrentRequest=document.getElementById('currentRequest');
-			
+
 		function fPopulatePending() {
   		  var sRequests=oRequests.getAttribute('value');
   		  oRequests.setAttribute('value','');
-  			
+
   		  var aRequests=sRequests.split('\n');
-  		  
+
 		  for (var i=0;i<aRequests.length;i++) {
 		    var sRequest=aRequests[i];
 			sRequest=sRequest.replace(/(\n|\r|\t)/ig,'');
@@ -76,22 +76,22 @@
   			oPending.add(oOption);
   		  }
   		}
-  		
+
     	function fHTTPRequest(sPostVars, fCallback){
 		  function fCheckRequest(oReqObj){
-  		    if (oReqObj.readyState == 4){  
-  			  if (oReqObj.status != 200){  
+  		    if (oReqObj.readyState == 4){
+  			  if (oReqObj.status != 200){
   			    alert('Warning!!\n'+oReqObj.statusText);
   				return false;
   			  }
   			return true
   	  	    }
 		  }
-		
-          function fComplete(){  
+
+          function fComplete(){
     	    if (fCheckRequest(oReq)) fCallback(oReq.responseText,oReq.responseXML);
     	  }
-    			 		
+
     	  if (window.XMLHttpRequest) var oReq = new XMLHttpRequest(); // the download object for Moz
     	  else var oReq = new ActiveXObject("Microsoft.XMLHTTP");
     	  oReq.onreadystatechange=fComplete;
@@ -103,33 +103,33 @@
     	  oReq.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
       oReq.send(sPostVars);
     	}
-			
+
 	  function fReqComplete() {
 	    var oSent=document.getElementById('sent');
 		var oOption=new Option(oCurrentRequest.getAttribute('innerHTML'));
 		oOption.setAttribute('value',oCurrentRequest.getAttribute('innerHTML'));
 		oSent.add(oOption);
 		oCurrentRequest.setAttribute('innerHTML','Dim');
-				
+
 		fSendRequest(); // this will check whether there is a new request to send
 	  }
-		
+
   	  function fSendRequest() {
   	    var oPending=document.getElementById('pending');
   		if (oPending.options.length<1) return;
-				
+
 		var sRequest=oPending.options[0].getAttribute('value');
-  			
+
   		oCurrentRequest.setAttribute('innerHTML',sRequest);
   		oPending.removeChild(oPending.options[0]);
-				
+
 		var oReq=new fHTTPRequest(sRequest,fReqComplete);
-  	  }			
-			
+  	  }
+
 	  fPopulatePending();
 	  fSendRequest();
 	}
-		
+
 	function fStop() {
       // works because it will copy all of the elements out of the pending and back into the text edit box
 	  // fSendRequest will then not have a next request
@@ -142,21 +142,21 @@
 		oPending.removeChild(aOptions[0]);
 	  }
 	}
-	
+
   //-->
   </script>
 
-	
+
 </head>
 <body>
   <textarea id="requests" rows="10" cols="100"></textarea><br>
 	<button onclick="new fGo()">Send requests</button>
 	<hr>
-	
+
 	<div style="float:left; margin-right:20px;">
 	  Pending:<br>
 		<select id="pending" size="10">
-	
+
 	  </select><br>
 		<button onclick="fStop()">stop</button>
 	</div>
@@ -164,12 +164,12 @@
 	<div>
 	  Sent:<br>
 		<select id="sent" size="10" ondblclick="alert(this.getAttribute('value'))">
-	
+
 	  </select>
-	</div>	
+	</div>
 	<hr>
 	Current request:<br>
 	<div id="currentRequest">Dim</div>
-	
+
 </body>
 </html>

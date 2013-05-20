@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -20,26 +20,26 @@
 
 <style>
 	  @import url("styles/report.css");
-	
-	  div#fieldOptionsSet { 
-	    display:none 
+
+	  div#fieldOptionsSet {
+	    display:none
 	  }
-	  div#fieldOptionsSet[selected] { 
+	  div#fieldOptionsSet[selected] {
 	    display:block ;
 	  }
-	  form { 
+	  form {
 	    height:100% ;
 	  }
-	
-	  tr#addNewField td { 
+
+	  tr#addNewField td {
 	    vertical-align:top;
 		font-size:8pt;
-		border-top:1px solid #EC00BC; 
+		border-top:1px solid #EC00BC;
 	  }
-						
-	  optgroup { 
+
+	  optgroup {
 	    font-style:normal;
-		margin-top:5px; 
+		margin-top:5px;
 		color:#333333 ;
 	  }
 </style>
@@ -119,7 +119,7 @@
 						       #set($fieldSorting = "ascending")
 							 #else
 							   #set($fieldSorting = "descending")
-							 #end	
+							 #end
 						   #end
 					    #end
     			        ## only show sorts for non-ID fields

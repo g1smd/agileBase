@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -78,14 +78,14 @@
             var sFieldName='$field';
           #end
           var sFieldValue=oField.value;
-  	        if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))         
+  	        if(confirm('Are you sure that you want to change the value of '+sFieldName+' to '+sFieldValue+'?\nThis will update '+sRowsToChange+' records'))
 			new fChange(oField);
         }
       }
-          
+
       var oField=this.field;
       var aPostVars=new Array();
-      aPostVars['returntype']='xml'; 
+      aPostVars['returntype']='xml';
       aPostVars['return']='gui/resources/sessionReportInfo';
       var oReq=new fRequest('AppController.servlet',aPostVars,fResponse,0);
     }
@@ -100,4 +100,3 @@
     oElement.parentNode.appendChild(oButton);
   </script>
 #end
-		

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -21,24 +21,24 @@
 <request>
   <nextTemplate>gui/import/goto_wizard_start_point</nextTemplate>
   <caption>Import data</caption>
-  #parse('gui/customisations/wizard_result.vm') 
+  #parse('gui/customisations/wizard_result.vm')
   <htmlContent><![CDATA[
       <style>
          table#_md_address_start_table {
            width:85%;
            margin-top:50px;
          }
-         
+
         table#_md_address_start_table td {
            text-align:center;
          }
-         
+
          table#_md_address_start_table tr.labels td {
            padding-top:30px;
          }
-         
+
       </style>
-  
+
       <form style="padding:5px">
         <h1>What type of import into $session_table would you like to do?</h1>
         <table id="_md_import_start_table" border="0" cellpadding="0" cellspacing="0" align="center">
@@ -59,7 +59,7 @@
               <input type="radio" name="wizard_start_point" id="wizard_start_point_site" value="site" gtpb_set_table="a3b09a609b4c70624" gtpb_set_custom_string="true" gtpb_stringkey="wizard_start_point" gtpb_customstringvalue="site">
               <label for="wizard_start_point_site">New site</label>
             </td>
-          </tr>          
+          </tr>
         </table>
       </form>
     ]]>

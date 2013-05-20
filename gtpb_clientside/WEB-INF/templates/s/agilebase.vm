@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -33,15 +33,15 @@
   <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
   <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" /> 
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" /> 
+  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
   <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
   ##<link href="resources/simple_amalgam.css" type="text/css" rel="stylesheet" />
   <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
   #if($hasCalendar)
-    <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />    
+    <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
   #end
-  
+
 	<title>Agilebase</title>
 	<script src="resources/jquery.js"></script>
   <script src="resources/jquery.scrollTo.js"></script>

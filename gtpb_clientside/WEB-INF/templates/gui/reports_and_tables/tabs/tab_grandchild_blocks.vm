@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@
 	<h1>$gcFormTab <a href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$sessionTable.getInternalTableName()&set_report=$formTab.getSelectorReport().getInternalReportName()&set_row_id=$sessionRowId&rowidinternaltablename=$sessionTableInternalName&save_new_record=true&internaltablename=$gcFormTabTableInternalName&set_custom_table=true&tablekey=tabTable&custominternaltablename=$gcFormTabTableInternalName&cachebust=$viewTools.getRandomString()" target="pane_2"><i class="icon-plus" style="height: 1.3em; font-size: 9pt; vertical-align: top;"></i></a></h1>
 	#if($datarows.size() > 0)
       ## Workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=549114
-	  <table style="width:100%"><tr><td style="column-break-inside: avoid;"> 
+	  <table style="width:100%"><tr><td style="column-break-inside: avoid;">
 		#parse("gui/reports_and_tables/tabs/tab_selector_report.vm")
 	  </td></tr></table>
     #end

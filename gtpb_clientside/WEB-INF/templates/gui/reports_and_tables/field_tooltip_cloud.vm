@@ -28,9 +28,9 @@
     ## There will only be one grouping - the field
     #foreach($grouping in $groupingValues.keySet())
       #if($groupingValues.get($grouping))
-        <span style="font-size: ${fontSize}pt;" class="word" title="$val items">$groupingValues.get($grouping)</span> 
+        <span style="font-size: ${fontSize}pt;" class="word" title="$val items">$groupingValues.get($grouping)</span>
       #else
-        <span style="font-size: ${fontSize}pt;" class="word" title="$val items">(empty)</span> 
+        <span style="font-size: ${fontSize}pt;" class="word" title="$val items">(empty)</span>
       #end
     #end
 #end

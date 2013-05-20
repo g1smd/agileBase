@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 #set($totalCost = $tableCost + $appCost)
 <request>
   <caption>agileBase App Store</caption>
-  #parse('gui/customisations/wizard_result.vm') 
+  #parse('gui/customisations/wizard_result.vm')
     <okTemplate>gui/help/end</okTemplate>
     <htmlContent><![CDATA[
     <style>

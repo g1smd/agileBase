@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 ##
 <div id="mobile_header">
 #set($table = $sessionData.getTable())
-#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
   #parse("gui/mobile/pane2_record_actions.vm")
 #end
 <button onclick="document.location='?return=gui/pane1'">&lArr; home</button> $sessionReport.getModule() - $sessionReport

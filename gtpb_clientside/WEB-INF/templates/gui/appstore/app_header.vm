@@ -13,14 +13,14 @@
     #if($mobile_device)
       #set($databaseReturn = "gui/pane1")
     #else
-      #set($databaseReturn = "gui/display_application")     
+      #set($databaseReturn = "gui/display_application")
     #end
     <a href="?return=$databaseReturn">
       <i class="icon-reorder"></i><br>database
     </a>
   </div>
   <div class="bare_button" style="left: ${left}px;">
-    #set($databaseReturn = "s/agilebase")     
+    #set($databaseReturn = "s/agilebase")
     <a href="?return=$databaseReturn">
       <i class="icon-th-large"></i><br>tiles
     </a>
@@ -28,7 +28,7 @@
   #if($apps.contains("dashboard"))
     #set($left = $left + 100)
     <div class="bare_button" style="left: ${left}px;">
-      #set($databaseReturn = "s/treemap")     
+      #set($databaseReturn = "s/treemap")
       <a href="?return=$databaseReturn">
         <i class="icon-dashboard"></i><br>dashboard
       </a>

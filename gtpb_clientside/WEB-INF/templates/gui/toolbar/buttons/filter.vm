@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 <script>
 function fFilters(){
 
-  function fShowFilters(oButton){  
+  function fShowFilters(oButton){
     function fWhatever(sResponseText,sResponseXML){
       // addition by Oliver - scroll to top
       var wrapperDiv = document.getElementById('oViewPane').contentWindow.pane_2.document.getElementById('wrapper');
@@ -35,11 +35,11 @@ function fFilters(){
       return;
     }
 
-    function fUnfilterComplete(sResponseText,sResponseXML){  
-      function fClearFilterBoxes(){  
+    function fUnfilterComplete(sResponseText,sResponseXML){
+      function fClearFilterBoxes(){
         var oFilterRow=oReportDoc.getElementById('fieldFilters');
         cFilterBoxes=oFilterRow.getElementsByTagName('INPUT');
-        for(var i=0;i<cFilterBoxes.length;i++){  
+        for(var i=0;i<cFilterBoxes.length;i++){
           var oFilterBox=cFilterBoxes[i];
           if(oFilterBox.getAttribute('is_filter')!='true') continue;
           oFilterBox.value="";
@@ -47,10 +47,10 @@ function fFilters(){
       }
       if(!sResponseText) return;
       if(sResponseText==null) return;
-      if(sResponseText=='') return;   
+      if(sResponseText=='') return;
 
       var oReportBody=oReportDoc.getElementById('reportBody');
-      if (!oReportBody) return;     
+      if (!oReportBody) return;
 
       fClearFilterBoxes();
 
@@ -80,12 +80,12 @@ function fFilters(){
     }
   }
 
-  function fUnFilter() {  
+  function fUnFilter() {
     var oFilter=document.getElementById('filter');
     if (oFilter.getAttribute('selected')=='true') oFilter.click();
   }
 
-  function fFilter(){  
+  function fFilter(){
     var oFilter=document.getElementById('filter');
     if (oFilter.getAttribute('selected')!='true') oFilter.click();
   }

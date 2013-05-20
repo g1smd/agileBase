@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 	  <p>$referencedData</p>
   #else
     <p style="line-height:1.5em; color: black">$referencedData</p>
-  #end  
+  #end
 #else
   #set($referencedData = false)
   #set($fieldTable = $field.getTableContainingField())
@@ -57,30 +57,30 @@
 			  #set($displayCategory = $rrd_displayValue.toLowerCase())
 			  #set($displayCategory = $displayCategory.replaceAll("[^a-z]",""))
 			  #if($displayCategory.startsWith("phone"))
-				<img src="resources/icons/applications/16x16/Dial.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Dial.png" class="mini_icon">
 			  #elseif($displayCategory.startsWith("email"))
-				<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/E-mail.png" class="mini_icon">
 			  #elseif($displayCategory.startsWith("todo"))
-				<img src="resources/icons/applications/16x16/Problem.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Problem.png" class="mini_icon">
 			  #elseif($displayCategory.startsWith("inprogress"))
-				<img src="resources/icons/applications/16x16/Hourglass.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Hourglass.png" class="mini_icon">
 			  #elseif($displayCategory.startsWith("complete") || $displayCategory.startsWith("actioncomplete") || $displayCategory == "done")
-				<img src="resources/icons/applications/16x16/Apply.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Apply.png" class="mini_icon">
 			  #elseif($displayCategory.startsWith("partner") || $displayCategory.startsWith("team") || $displayCategory.startsWith("client"))
-				<img src="resources/icons/applications/16x16/Person.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Person.png" class="mini_icon">
 			  #elseif($displayCategory == "hot")
-				<img src="resources/icons/applications/16x16/Hot.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Hot.png" class="mini_icon">
 			  #elseif($displayCategory == "warm")
-				<img src="resources/icons/applications/16x16/Warm.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Warm.png" class="mini_icon">
 			  #elseif($displayCategory.startsWith("cold") || $displayCategory.startsWith("cool"))
-				<img src="resources/icons/applications/16x16/Cold.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Cold.png" class="mini_icon">
 			  #elseif($displayCategory == "high" || ($displayCategory.contains("high") && $displayCategory.contains("priority")))
-				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
-				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
-				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
+				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
+				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
 			  #elseif(($displayCategory == "med") || ($displayCategory == "medium"))
-				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
-				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon"> 
+				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
+				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
 			  #elseif($displayCategory == "low")
 				<img src="resources/icons/applications/16x16/Star.png" class="mini_icon">
 			  #end

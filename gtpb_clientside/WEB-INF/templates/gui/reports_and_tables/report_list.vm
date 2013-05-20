@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -139,7 +139,7 @@
     	  #end ## end if there are module actions
     	  #if(!$app_launcher)
     	  <ul parent="$internalModuleName" class="inner">
-    	  #foreach($report in $visibleModuleReports) 
+    	  #foreach($report in $visibleModuleReports)
     		#set($table=$report.getParentTable())
     		<li id="$table.getInternalTableName()$report.getInternalReportName()">
     		  <div class="module-tree-item-wrap">

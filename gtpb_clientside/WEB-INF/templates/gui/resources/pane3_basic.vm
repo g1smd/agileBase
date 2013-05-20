@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## a pane 3 wrapper with no tab set to show only the data 
+## a pane 3 wrapper with no tab set to show only the data
 ## located in the velocity template $resource
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
 <html>
   <head>
     #parse('gui/display_error.vm')
-  
+
     <title>Edit $sessionData.getTable() data</title>
     <style type="text/css">
 	      * {
@@ -33,28 +33,28 @@
 			-ms-box-sizing: border-box;
 			box-sizing: border-box;
 		  }
-			
-			html, body { padding:0; 
+
+			html, body { padding:0;
 			             margin:0;
 								 	 height:100%;
-									 width:100%; 
+									 width:100%;
 									 overflow:auto }
-									 
+
 			body { padding-bottom:0;
 					 	 position:absolute;
 					 	 /* font-family:sans-serif,Arial; */
     	       font-size:10pt;
 						 }
-						 
+
 			div.wrapper { height:100%;
 										/*width:100%;*/
 										position:relative; }
-										
+
 			td.trailing input[type=button] { font-size:8pt }
-			
+
 			table#reportData tbody tr.rowa:hover td,
 			table#reportData tbody tr.rowb:hover td { background-color:transparent!important }
-			
+
     </style>
   	<script src="resources/jquery.js"> </script>
     <SCRIPT src="resources/wait/request_setFilter.js"></SCRIPT>
@@ -63,7 +63,7 @@
 	   jQuery(document.ready(function() {
     	#if($pane2_id)
 		  parent.pane_2.fSetRowSelection('$pane2_id')
-		#end 
+		#end
 		fInit();
 	   });
   	</SCRIPT>

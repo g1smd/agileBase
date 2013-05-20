@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -25,13 +25,13 @@
   <button onclick="document.location='?return=gui/pane1'">&lArr; home</button>
   <button onclick="document.location='?return=gui/mobile/pane2_selector'">&lArr; $report</button>
 </div>
-#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
   #parse("gui/mobile/pane3_record_actions.vm")
 #end
 </div>
 ## What content to display in pane 3? View, edit etc.
 ## #set($mobile_pane3_selection = $sessionData.getCustomString("mobile_pane3_selection"))
-#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
   #set($lastAppAction = $sessionData.getLastAppAction())
   #if(($lastAppAction != "SAVE_NEW_RECORD") && ($lastAppAction != "REMOVE_RECORD"))
       #parse("gui/mobile/pane3_related.vm")

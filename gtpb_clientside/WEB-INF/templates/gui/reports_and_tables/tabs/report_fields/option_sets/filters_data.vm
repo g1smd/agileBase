@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@
 
 <STYLE>
 	@import url("styles/report.css");
-	
+
 	div#filterOptionsSet { display:none }
 	div#filterOptionsSet[selected=true] { display:block }
 	form { height:100% }
-	
+
 	tr#addNewFilter td { vertical-align:top;
                     	 font-size:8pt!important;
 						 border-top:1px solid #EC00BC; }
@@ -31,12 +31,12 @@
 
 <script>
   	function fArrayContains(aArray, vTest)
-	  {	
+	  {
 	    for (var i=0; i<aArray.length; i++)
       			if (aArray[i]==vTest)
       			  return true;
     return false;
-  	}	
+  	}
 </script>
 
 <FORM action="AppController.servlet" target="pane_2" method="post" id="newfilter">
@@ -121,7 +121,7 @@
 			  <select name="internalfieldname" parent="internalreportname" parentid="internalreportname_reportfilters">
 			  </select>
 			</TD>
-			
+
 			<TD>
 				<SELECT name="filtertype" onchange="fSelectFilterOption(this.selectedIndex)">
 				    #set($filterTypeDescriptors = $viewTools.getFilterTypeDescriptors())
@@ -176,7 +176,7 @@
         				}
 			      }
 		    }
-		
+
     		for(var i=0; i<aFilterOptionsSets.length; i++)
     		{
     		  	aFilterOptionsSets[i].removeAttribute('selected');
@@ -185,14 +185,14 @@
     		aFilterOptionsSets[iIndex].setAttribute('selected','true');
 			fEnableDisable(aFilterOptionsSets[iIndex]);
   	}
-	
+
   	var aFilterOptionsSets = new Array();
-	
-  	//push all the options sets into a global array 
+
+  	//push all the options sets into a global array
   	for(var i=0;i<document.getElementById('filterOptionsSets').getElementsByTagName('DIV').length;i++)
 		    if(document.getElementById('filterOptionsSets').getElementsByTagName('DIV')[i].id=='filterOptionsSet')
-			      aFilterOptionsSets.push(document.getElementById('filterOptionsSets').getElementsByTagName('DIV')[i]);		
-	
+			      aFilterOptionsSets.push(document.getElementById('filterOptionsSets').getElementsByTagName('DIV')[i]);
+
 	  //fSelectFilterOption(0); // moved to pane_3_tab_set.vm
 </SCRIPT>
 ###<script src="resources/wait/interdependent_fields.js"></script>

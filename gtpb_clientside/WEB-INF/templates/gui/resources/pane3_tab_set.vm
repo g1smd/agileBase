@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 		<link href="resources/mobile/pane3_amalgam.css" type="text/css" rel="stylesheet" />
 	#else
 		<link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
-	#end	
+	#end
 	## Import required stylesheets
 	#foreach($style in $styles)
 	  <link href="$style" type="text/css" rel="stylesheet" />
@@ -35,11 +35,11 @@
 	  *[error] { color:red }
 	  a[error] { font-size:8pt }
 	#end
-										
-	td.trailing input[type=button] { 
-	  font-size:8pt; 
-	}	
-    </style>  
+
+	td.trailing input[type=button] {
+	  font-size:8pt;
+	}
+    </style>
 
 	#parse('gui/display_error.vm')
     <script type="text/javascript" src="resources/jquery.js"></script>
@@ -65,7 +65,7 @@
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
 		  <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
     #end
-		<script> 
+		<script>
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
   	  // as they'll be irrelevant to the field creation
@@ -84,12 +84,12 @@
     				      oObj=oObj.parentNode;
     			      return oObj;
     	    	}
-    		
+
         		function fReqComplete(sResponseText,sResponseXML){
         		  	function fDeleteColumn(iCellIndex,oTable){
         		  	  	function fDeleteColFromObj(oObj,iCellIndex,iMinRowLength){
         		  	  	  	var aRows=oObj.rows;
-    					          for (var iRow=0;iRow<aRows.length;iRow++){ 
+    					          for (var iRow=0;iRow<aRows.length;iRow++){
     					            aRows[iRow].deleteCell(iCellIndex);
     					            if(aRows[iRow].cells.length<iMinRowLength)
     					  	            document.location=document.location.href;
@@ -103,9 +103,9 @@
     				        var iMinRowLength=oTable.tFoot.rows[0].cells.length;
     			        	fDeleteColFromObj(oTable.tHead,iCellIndex,iMinRowLength);
     		        		fDeleteColFromObj(oTable.tBody,iCellIndex,iMinRowLength);
-    				
-    				        // reduce the length of the longest colspan on each row 
-    				        // in the footer to remove the cell 				        
+
+    				        // reduce the length of the longest colspan on each row
+    				        // in the footer to remove the cell
     				        var aRows=oTable.tFoot.rows;
     				        for (var iRow=0;iRow<aRows.length;iRow++){
     				          	var iMaxColspan=aRows[iRow].cells[0].colspan;
@@ -116,18 +116,18 @@
     					          }
     					          oMaxColspan.colspan=iMaxColspan-1;
     				        }
-    				
+
     				        var aRows=oTable.rows;
     				        var iMinRowLength=oTable.tFoot.rows[0].cells.length;
-    				        for (var iRow=0;iRow<aRows.length;iRow++){	    					
+    				        for (var iRow=0;iRow<aRows.length;iRow++){
     					          if(aRows[iRow].cells.length<iMinRowLength)
     					            document.location=document.location.href;
     		        				}
     			      }
-    			    		
+
     			      function fReformatTable(oContainer){
     			        var oRows=oContainer.rows;
-    	 			
+
   			            var jqContainer = $(oContainer);
     			        if(oContainer.tagName=='TBODY') {
       			          jqContainer.find('tr:even').removeClass('rowb').addClass('rowa');
@@ -136,24 +136,24 @@
         			      jqContainer.find('tr:even').removeClass('rowa').addClass('rowb');
         			      jqContainer.find('tr:odd').removeClass('rowb').addClass('rowa');
     			        }
-    			        	
+
     	        //		for (var i=0;i<oRows.length;i++)
     			//		          if((oRows[i].getAttribute('class')=='rowa')||(oRows[i].getAttribute('class')=='rowb')){
     			//		          	  if (oContainer.tagName=='TBODY') oRows[i].setAttribute('class',(i%2==0?'rowa':'rowb'));
     			//			            else oRows[i].setAttribute('class',(i%2!=0?'rowa':'rowb'));
     			//	        	  }
     	 		     }
-    		
+
     			      sResponse=sResponseXML.getElementsByTagName('response')[0].firstChild.nodeValue;
          	 if(sResponse!='ok'){ // the action was not successfully processed by the server
          	   	alert(sResponseXML.getElementsByTagName('exception')[0].firstChild.nodeValue);
          		   oObj.removeAttribute('disabled');
          		   return;
-         	 }         	
-         	
+         	 }
+
          	 // we're deleting a column
          	 //alert(oObj.getAttribute('deleteColumn'));
-         	 if(oObj.getAttribute('deleteColumn')=='true') {    
+         	 if(oObj.getAttribute('deleteColumn')=='true') {
     	 			      parent.pane_2
     						.loadIntoPane3(
     								'AppController.servlet?return=gui/reports_and_tables/pane3',
@@ -163,21 +163,21 @@
          	 else {
          		   var oRow=fParent(oObj,'TR');  // find the row so that we can delete the row by row index
          		   var oContainer=oRow.parentNode;  // this is TBODY etc if one exists, otherwise TABLE
-         		   var iRowIndex=oContainer.tagName=='TABLE'?oRow.rowIndex:oRow.sectionRowIndex;         			
+         		   var iRowIndex=oContainer.tagName=='TABLE'?oRow.rowIndex:oRow.sectionRowIndex;
          		   oContainer.deleteRow(iRowIndex);
-         		   fReformatTable(oContainer); 
-         	 }        	
+         		   fReformatTable(oContainer);
+         	 }
     		    }
-    		
+
     		    function fDoDelete(oObj) {
-    		      	function fSetPostVars(oObj){  
+    		      	function fSetPostVars(oObj){
     		      	  // create a key value array of the variables to post with the request to the server
 				            var aPostVars=new Array();
 				            // always pass these in the post request
 				            aPostVars['return']='gui/administration/xmlreturn_fieldchange';
-				            aPostVars['returntype']='xml'; 
-				    
-				            /* look at all the attributes that the DOM object has and pass all the 
+				            aPostVars['returntype']='xml';
+
+				            /* look at all the attributes that the DOM object has and pass all the
 				               ones prefixed gtpb_ to the server in the post request   */
 				            for (var i=0;i<oObj.attributes.length;i++)
 				              with(oObj.attributes.item(i))
@@ -185,14 +185,14 @@
 				                  aPostVars[nodeName.replace(/^gtpb_/,'')]=nodeValue;
 				            return aPostVars;
 				          }
-				            
+
 				          oObj.setAttribute('disabled','true');
 					          var oReq=new fRequest('AppController.servlet', fSetPostVars(oObj), fReqComplete, -1);
     		    }
-    		
+
     		    var oObj=oObj;
 				fDoDelete(oObj);
-    	  }    
+    	  }
     </script>
     #end ## end if not mobile device
 	#set($currentTab = $sessionData.getCustomString('report_tabindex'))
@@ -220,11 +220,11 @@
   #end
   </head>
   <body>
-  	<div class="wrapper tab-interface" id="gtpb_wrapper">    	
+  	<div class="wrapper tab-interface" id="gtpb_wrapper">
 	#if($mobile_device)
 		#parse('gui/mobile/pane3_selector.vm')
 	#else
-		## Create tab interface		
+		## Create tab interface
 		<ul class="tab-list">
 		#foreach($tab in $tabs)
     		#if($foreach.count == $currentTab)
@@ -235,9 +235,9 @@
 			<a href="AppController.servlet?return=$tab.get('tabSource')">$tab.get('tabName')</a></li>
 		#end
 		</ul>
-		
+
 		<div class="tab-content">
-		</div>	
+		</div>
 	#end
     </div>
   </body>

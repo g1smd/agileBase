@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #end
 ## If set to use a table different to the current one as a form
 #if($formTable && (!$mobile_device))
-  #if(!$formTable.equals($sessionTable)) 
+  #if(!$formTable.equals($sessionTable))
     #set($originalTable = $sessionTable)
     #set($sessionTable = $formTable)
     ## Find the record that is the original table records' parent
@@ -61,7 +61,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 #if( (($sessionRowId == -1) && (!$formTable)) || ($formTable && (!$mobile_device) && ($sessionData.getRowId($originalTable) == -1)) )
 	<div class="warningmessage">
 		#set($lastAppAction = $sessionData.getLastAppAction())
-		#if($lastAppAction == "REMOVE_RECORD") 
+		#if($lastAppAction == "REMOVE_RECORD")
 		  <b>Record removed</b><p>
 		  You can return to '$sessionReport' or create a new record
 		#else
@@ -137,21 +137,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
         #parse("gui/reports_and_tables/tabs/edit_content.vm")
 	  #end ## end if no unfilled mandatories
     #if($view.isWikiIntegrated() && (!$mobile_device))
-      #parse("gui/reports_and_tables/tabs/wiki.vm")  
+      #parse("gui/reports_and_tables/tabs/wiki.vm")
       <tr class="trailing">
         #if(!$edit_nav)<td>&nbsp;</td>#end
         <td colspan="2">&nbsp;</td>
         #if(!$edit_nav)<td>&nbsp;</td>#end
-      </tr> 
+      </tr>
     #elseif(($formStyle == "SINGLE_COLUMN") || $mobile_device)
       <tr class="trailing">
         #if(!$edit_nav)<td>&nbsp;</td>#end
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         #if(!$edit_nav)<td>&nbsp;</td>#end
-      </tr> 
+      </tr>
     #end
-  #end 
+  #end
   </$containerTag>
   ## See if there are any actions for this table
   #if(!$moduleActions)
@@ -187,7 +187,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
         <div id="staticMessage">
           <h1>record is locked</h1>
           <small>
-            This record has been locked and you don't have permission to edit it.  
+            This record has been locked and you don't have permission to edit it.
             If you need to change it, an administrator will be able to do it for you.
           </small>
         </div>

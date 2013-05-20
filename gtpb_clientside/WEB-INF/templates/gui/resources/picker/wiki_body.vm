@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 ##
 	#set($pageNameFilter = $sessionData.getCustomString("gtwm_wiki_page_name_filter"))
 	#set($pageContentFilter = $sessionData.getCustomString("gtwm_wiki_page_content_filter"))
-	
+
 	#set($data=[])
 	#foreach($datarow in $view.getWikiRecordDataRows($pageNameFilter, $pageContentFilter))
 		  #set($row=[])
@@ -29,5 +29,5 @@
 				#set($expando=[['keyValue',$datarow.getPageName()],['displayValue',$datarow.getPageName()]])
 		  #set($success=$data.add([$row,$click,$uniqueid,'','',$expando]))
 	#end
-	
+
 	#parse("gui/pane2/pane2_body.vm")

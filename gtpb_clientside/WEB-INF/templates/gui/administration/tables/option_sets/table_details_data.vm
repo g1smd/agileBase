@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@
     	<input type="hidden" name="add_report" value="true">
     	<input type="hidden" name="set_custom_string" value="true">
     	<input type="hidden" name="key" value="report_tabindex">
-    	<input type="hidden" name="value" value="6">		
+    	<input type="hidden" name="value" value="6">
     	<input type="submit" value="Create new report"><br>
     	<input type="checkbox" checked name="populatereport" value="true"> Populate the report with fields from this table (recommended)
       </form>
@@ -141,7 +141,7 @@
   </form>
   #set($parentPkey = $table.getPrimaryKey())
   #foreach($formTab in $formTabs)
-    #set($tabTable = $formTab.getTable())    
+    #set($tabTable = $formTab.getTable())
     <a href="?return=gui/reports_and_tables/pane3&remove_form_tab=true&tabtable=$tabTable.getInternalTableName()"><img src="resources/toolbar/delete.png" alt="delete $fileName" style="width:13px; height:13px"></a>
     <select name="tabinternalreportname" onchange="new fChange(this);" gtpb_update_form_tab=true gtpb_tabinternaltablename="$tabTable.getInternalTableName()">
       #set($tabPkey = $tabTable.getPrimaryKey())

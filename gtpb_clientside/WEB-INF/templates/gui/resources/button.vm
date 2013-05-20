@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 <button #if($noCaption) title="$caption" #elseif($tooltip) $tooltip #end class="gtpb #if(!$noCaption) captioned #end #if($classes)$classes#end"
   #if($id)id="$id"#end
   #if($params)$params#end
-  onclick="fButtonClick(this) #if($click); $click #end" 
+  onclick="fButtonClick(this) #if($click); $click #end"
   onmouseout="this.blur()">
   #if($button_img.endsWith(".png")) ## image icon
     <img src="$button_img">

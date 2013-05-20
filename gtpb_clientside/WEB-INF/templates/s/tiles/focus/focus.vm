@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@
     #if(!$reportFieldTable.equals($table))
       #set($relatedRowIds = $view.getRelatedRowIds($rowId, $reportFieldTable))
       #if($relatedRowIds.size() == 1)
-        #foreach($relatedRowId in $relatedRowIds) 
+        #foreach($relatedRowId in $relatedRowIds)
           #set($rrd_rowId = $relatedRowId)
           #set($tableDataRow=$view.getTableDataRow($reportFieldTable, $relatedRowId))
           #foreach($field in $reportFieldTable.getFields())

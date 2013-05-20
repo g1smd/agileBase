@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -16,6 +16,6 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 #foreach($row in $data)
-#foreach($field in $row)$viewTools.escapeForCSV($field),#end 
+#foreach($field in $row)$viewTools.escapeForCSV($field),#end
 
 #end

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 #foreach($field in $fields)
   #if(!($field.isPrimaryKey()) && (2 > $titleFields.size()))
     #set($category = $field.getFieldCategory())
-    #if(($category == "FILE") && ($field.getAttachmentType() != "PROFILE_PHOTO")) 
+    #if(($category == "FILE") && ($field.getAttachmentType() != "PROFILE_PHOTO"))
       #set($success = $titleFields.add($field))
     #end
     #if(($category == "TEXT") && (100 > $field.getContentSize()) && (!$field.usesLookup()))
@@ -77,9 +77,9 @@
           #set($cell = $row.getValue($field).getDisplayValue())
           #if($cell && ($cell != ""))
             #if(($category != "TEXT") || ($field.getUsesLookup()))
-              $field: 
+              $field:
             #end
-          $cell &middot; 
+          $cell &middot;
           #end
         #end
       #end

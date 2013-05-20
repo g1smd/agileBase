@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -34,25 +34,25 @@
 	  </div>
 	</li>
     <li id="administrationroles">
-	  <div class="tree-item-wrap">		
+	  <div class="tree-item-wrap">
           <a class=title href="AppController.servlet?return=gui/administration/roles/list" target="pane_2" title="Set up roles and role privileges">
             - roles
           </a>
 	  </div>
 	</li>
     <li id="administrationinformation">
-	  <div class="tree-item-wrap">		
+	  <div class="tree-item-wrap">
           <a class=title href="AppController.servlet?return=gui/administration/information/list" target="pane_2" title="Show company information and usage stats">
             - admin dashboard
-          </a>  
+          </a>
 	  </div>
 	</li>
 	#else
     <li id="administrationsetpassword">
-	  <div class="tree-item-wrap">		
+	  <div class="tree-item-wrap">
           <a class=title href="javascript:top.fSetPassword();" title="Reset your login password">
             - set password
-          </a>  
+          </a>
 	  </div>
 	</li>
 	#end

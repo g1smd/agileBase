@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -30,10 +30,10 @@
 
       			html, body { height:100% }
 
-      			body { font-family:"MS Sans Serif",arial, sans_serif; 
-             font-size:10pt; 
+      			body { font-family:"MS Sans Serif",arial, sans_serif;
+             font-size:10pt;
             						 margin:0px;
-            						 padding:0px; 
+            						 padding:0px;
             						 overflow:hidden;
            					}
 			    </style>

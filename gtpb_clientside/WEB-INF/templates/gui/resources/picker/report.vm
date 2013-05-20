@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -60,7 +60,7 @@
           #end
         </td>
 		      #end
-		      <td class="trailing">&nbsp;</td>      
+		      <td class="trailing">&nbsp;</td>
     </tr>
   </thead>
   <tbody name="reportBody" id="reportBody">

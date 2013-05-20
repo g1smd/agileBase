@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -48,15 +48,15 @@
         ###set($expanded=false)
         ###if($table.equals($sessionData.getTable()))
         ##  #set($expanded=true)
-        ###end    
-    
+        ###end
+
         <li branch="true" id="$table.getInternalTableName()$table.getDefaultReport().getInternalReportName()"
         ##use this to switch branching on or off e.g. if user had permission to add a report
         ###if($expanded)
         ##	class="expandable"
         ###else
         ##	class="expandable collapsed"
-        ###end	
+        ###end
         >
     		<div class="tree-item-wrap">
                 <a target="pane_2" name="caption" type="tablename" identifier="$table.getInternalTableName()" href="AppController.servlet?return=gui/reports_and_tables/report_data&set_table=$table.getInternalTableName()&set_report=$table.getDefaultReport().getInternalReportName()&set_report_row_limit=100&clear_all_report_sorts=true"
@@ -67,10 +67,10 @@
                 		#end
                 >$viewTools.escape($table.getTableName())</a>
         ##  oLink.updateTitle=fUpdateTitle;
-        ##  oLink.dtitle=oLinkTitle;	
+        ##  oLink.dtitle=oLinkTitle;
                 <span class="recordcount">()</span>
-            	
-            	###if($view.loggedInUserAllowedTo('MANAGE_TABLE',$table))	
+
+            	###if($view.loggedInUserAllowedTo('MANAGE_TABLE',$table))
             	##<ul>
             	##	<li option="true">
             	##		<a href="AppController.servlet?return=gui/pane1&add_report&set_table=${table.getInternalTableName()}&set_custom_string=true&key=report_tabindex&value=6">create new report</a>
@@ -84,7 +84,7 @@
 		<li option="true">
 			<a href="AppController.servlet?return=gui/pane1&add_table&set_custom_string=true&key=report_tabindex&value=6">create a new table</a>
 		</li>
-		#end	
+		#end
 	</ul>
-</li> 
+</li>
 #end

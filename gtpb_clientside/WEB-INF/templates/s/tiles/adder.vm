@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -235,7 +235,7 @@
 <i class='icon-hand-left'></i>
 <i class='icon-hand-right'></i>
 <i class='icon-hand-up'></i>
-<i class='icon-chevron-up'></i>        
+<i class='icon-chevron-up'></i>
 <i class='icon-play-circle'></i>
 <i class='icon-play'></i>
 <i class='icon-pause'></i>

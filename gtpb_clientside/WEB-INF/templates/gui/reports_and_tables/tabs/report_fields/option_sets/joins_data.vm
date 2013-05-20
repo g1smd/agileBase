@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -19,32 +19,32 @@
 #set($reportTable = $report.getParentTable())
 <style>
 	@import url("styles/report.css");
-	
+
 	div#fieldOptionsSet { display:none }
 	div#fieldOptionsSet[selected] { display:block }
 	form { height:100% }
-	
-  tr#addNewJoin { 
-    vertical-align:top;
-    font-size:8pt;
-    display: none;
-    border-top:1px solid #EC00BC;
-  }        
-  
-  ##tr#addNewJoin.show {
-  ##  display:table-row;
-  ##}     
 
-  tr#addDownwardJoin { 
+  tr#addNewJoin {
     vertical-align:top;
     font-size:8pt;
     display: none;
     border-top:1px solid #EC00BC;
   }
-            
+
+  ##tr#addNewJoin.show {
+  ##  display:table-row;
+  ##}
+
+  tr#addDownwardJoin {
+    vertical-align:top;
+    font-size:8pt;
+    display: none;
+    border-top:1px solid #EC00BC;
+  }
+
   ##tr#addDownwardJoin.show {
   ##  display:table-row;
-  ##}     
+  ##}
 </style>
 
 <script>
@@ -190,7 +190,7 @@
 			  <select name="leftinternalfieldname" parent="leftinternalreportname" parentid="leftinternalreportname_reportjoins">
 			  </select>
 			</td>
-			
+
   <td>
 		<select name="jointype">
 		    <option value="INNER">inner</option>
@@ -200,7 +200,7 @@
 		    <option value="CROSS">cross</option>
 		  </select>
 	</td>
-			
+
 			<td height=20>
 			  ##List of reports
 			  <select name="rightinternalreportname" id="rightinternalreportname_reportjoins">
@@ -223,7 +223,7 @@
 			  <select name="rightinternalfieldname" parent="rightinternalreportname" parentid="rightinternalreportname_reportjoins">
 			  </select>
 			</td>
-			
+
 				<td height=20 class=trailing>
 					<input type="submit" value="create join">
 				</td>

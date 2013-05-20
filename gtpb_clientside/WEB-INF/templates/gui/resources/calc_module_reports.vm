@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@
   #set($reportName = $report.getReportName())
   #if( (($reportName.contains("dbvcalc")) || ($reportName.contains("dbvcrit"))) && ($sessionContext != "SYSADMIN"))
     ## don't display calculation/criteria reports
-    #set($displayReport = false)  
+    #set($displayReport = false)
   #end
   ## add report to mapping if it should be displayed
   #if($displayReport)

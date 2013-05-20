@@ -22,5 +22,5 @@
   <div class="sideAction report report$reportNum" data-internalreportname="$tableReport.getInternalReportName()">
     <div class="explainer right notfocus">$tableReportName</div>
     <i class="icon-circle-blank"></i>
-  </div>  
+  </div>
 #end

@@ -1,6 +1,6 @@
 <div id="record_actions">
 #set($table = $sessionData.getTable())
-#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))	
+#if($view.loggedInUserAllowedTo("EDIT_TABLE_DATA",$table))
 
 <form method="post" action="AppController.servlet" name="recordform">
 <input type="hidden" name="return" value="gui/reports_and_tables/pane3">
@@ -8,7 +8,7 @@
 <input type="hidden" name="stringkey" value="mobile_pane3_selection">
 <input type="hidden" name="customstringvalue" value="$mobile_pane3_selection">
 <input type="hidden" name="gtpbaction" value="true">
-<button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; document.recordform.submit();" >New record</button> 
+<button title="Create a new record" id="button_new" onclick="document.recordform.gtpbaction.name='save_new_record'; document.recordform.submit();" >New record</button>
 
 #set($browser = $viewTools.getBrowser())
 #if(($browser != "Konqueror") && ($browser != "iPod/iPhone"))

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 <request>
   #parse('gui/customisations/wizard_result.vm')
   <nextTemplate>gui/calendar_export/export_chooser</nextTemplate>
-  <htmlContent><![CDATA[        
+  <htmlContent><![CDATA[
     <form style="padding:10px;">
       <h1>Please choose a calendar to export to</h1><br><br>
 		  <input type="hidden" name="set_custom_string" value="true">
@@ -33,6 +33,6 @@
       <label for="export_outlook"><img style="vertical-align: middle" src="resources/icons/outlook_calendar.png"> Outlook</label>
     </form>
     ]]>
-  </htmlContent>  
+  </htmlContent>
   <caption>Export report data to calendar</caption>
 </request>

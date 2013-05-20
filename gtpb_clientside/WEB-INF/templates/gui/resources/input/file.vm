@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@
 			#if($downloadUrl.endsWith("pdf")) #set($pdf = true) #end
       #set($previewUrl = "$downloadUrl.500.png")
 			#set($downloadUrl = "$downloadUrl?cachebust=$viewTools.getRandomString()")
-      <a href="$downloadUrl"><img border="0" class="document" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/></a> 
+      <a href="$downloadUrl"><img border="0" class="document" src="resources/icons/filetypes/${fieldValueObject.getIconName()}.png"/></a>
       <a href="$downloadUrl">$fieldValue</a>
       ## PDF preview
 			###if($pdf && !$sectionHasImage)

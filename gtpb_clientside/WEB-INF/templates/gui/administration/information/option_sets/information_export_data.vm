@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 	#information_export {
 		background-color: #E8E7E3;
 	}
-	
+
 	.dashboard_blob {
 		background-color: white;
 		margin: 2em;
@@ -28,7 +28,7 @@
 		-webkit-border-radius: 1em;
 		-moz-border-radius: 1em;
 	}
-	
+
 	.dashboard_blob td {
 		font-size: 10pt!important;
 		width:50%;
@@ -41,17 +41,17 @@ Please click a link below to download full detail for each graph.<p>
 <div class="dashboard_blob">
 <table border="0"><tr>
 <td style="border-right: 1em solid #E8E7E3">
-<span class="sparkline_logins">...</span> 
+<span class="sparkline_logins">...</span>
 <a href="?return=gui/administration/information/export/login&returntype=download&returnfilename=logins.csv">Logins</a>
 <br>
 Date, time and IP address of each user's login<p>
 
-<span class="sparkline_report_views" alt="report_views">...</span> 
+<span class="sparkline_report_views" alt="report_views">...</span>
 <a href="?return=gui/administration/information/export/report_view&returntype=download&returnfilename=report_views.csv">Report views</a>
 <br>
 Which users viewed which reports<p>
 
-<span class="sparkline_data_edits">...</span> 
+<span class="sparkline_data_edits">...</span>
 <a href="?return=gui/administration/information/export/data_change&returntype=download&returnfilename=data_changes.csv">Data changes</a>
 <br>
 Date, time, user and record identifier for each insertion, edit or record delete<p>

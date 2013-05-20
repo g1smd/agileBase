@@ -17,7 +17,7 @@
   #set($groupingValues = $chartDataRow.getGroupingValues())
   ## There will only be one agg - the count
   #foreach($aggregate in $aggregateValues.keySet())
-    <span style="color:#656766">$aggregateValues.get($aggregate).intValue() x</span> 
+    <span style="color:#656766">$aggregateValues.get($aggregate).intValue() x</span>
   #end
   ## There will only be one grouping - the field
   #foreach($grouping in $groupingValues.keySet())

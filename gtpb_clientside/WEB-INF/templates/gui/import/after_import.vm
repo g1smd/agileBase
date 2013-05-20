@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -19,11 +19,11 @@
 <head>
 <link href="styles/report.css" type="text/css" rel="stylesheet" />
 <style>
-	html, body { 
-           /* font-family: "Arial", sans-serif; */ 
-    			 color: black; 
-    			 font-size: 11pt; 
-    			 margin:0; 
+	html, body {
+           /* font-family: "Arial", sans-serif; */
+    			 color: black;
+    			 font-size: 11pt;
+    			 margin:0;
     			 padding:0;
     			 height:100% }
 </style>

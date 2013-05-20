@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -31,13 +31,13 @@
 	  #set($dataRowField = $dataRowFields.get($field))
 	  #set($success=$row.add($dataRowField.getDisplayValue()))
 	  #set($success=$colours.add($dataRowField.getStandardDevHexColour()))
-	#end 
+	#end
   #end
   #set($success=$colours.add("")) ## needs an extra one for some reason
   #set($click="f_mdp_rowclick(this)")
   #set($uniqueid=$datarow.getRowId())
   #set($success=$data.add([$row,$click,$uniqueid,$colours,$expando]))
 #end
-	
+
 #set($picker = true)
 #parse("gui/pane2/pane2_body.vm")

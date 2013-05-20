@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 	  <table cellspacing="0" cellpadding="0" border="0" id="reportData">
 		    <thead>
 			      <tr>
-			##        <th class="leading">&nbsp;</th>			
+			##        <th class="leading">&nbsp;</th>
 			        <th class="leading"><!--<img src="resources/icons/help.png" title="Globally edit a value in *all* filtered records in pane 2">-->&nbsp;</th>
 			        <th>field</th>
 			        <th>value</th>
@@ -51,21 +51,21 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 				        #end
 			      #end ## end loop through fields
 			      #if($view.isWikiIntegrated())
-			        #parse("gui/reports_and_tables/tabs/wiki.vm")  
+			        #parse("gui/reports_and_tables/tabs/wiki.vm")
 			      					  <tr class="trailing">
 			          <td>&nbsp;</td>
 			          <td colspan="2">&nbsp;</td>
 			          <td>&nbsp;</td>
-		        </tr> 
+		        </tr>
 		      #else
 		    			    <tr class="trailing">
 			          <td>&nbsp;</td>
 			          <td>&nbsp;</td>
 			          <td>&nbsp;</td>
 			          <td>&nbsp;</td>
-		        </tr> 
+		        </tr>
 					      #end
-		    #end 
+		    #end
 	  </table>
 #end ## end of if session row_id is set
 $viewTools.stopTimer("gui/reports_and_tables/tabs/global_edit")

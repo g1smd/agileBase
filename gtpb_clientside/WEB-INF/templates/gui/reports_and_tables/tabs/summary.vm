@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -153,7 +153,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     <form method="POST" action="AppController.servlet">
       <input type="hidden" name="return" value="gui/reports_and_tables/pane3" />
       <input type="hidden" name="update_map" value="true" />
-      Map by postcode field 
+      Map by postcode field
       <select name="postcodefieldinternalname" onchange="form.submit();">
         <option value="">--please select a field--</option>
         #set($reportFields = $report.getReportFields())
@@ -170,7 +170,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     <form name="wordcloud" method="post" action="AppController.servlet">
       <input type="hidden" name="set_word_cloud_field" value="true">
       <input type="hidden" name="return" value="$return_template">
-      'Word cloud' text in 
+      'Word cloud' text in
       <select name="internalfieldname" onchange="fSubmitWordCloud();">
         <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
         <option value="$primaryKey.getInternalFieldName()" #if($primaryKey.equals($wordCloudTableField)) selected #end>- All report text -</option>
@@ -186,7 +186,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   <div id="chart_adder" class="viz_control">
     <form name=addgrouping method=post action="AppController.servlet">
     #if($groupings.size() > 0)
-      Choose groupings: 
+      Choose groupings:
       #foreach($grouping in $groupings)
       <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_grouping_from_chart=true&internalfieldname=$grouping.getGroupingReportField().getInternalFieldName()">
         $grouping
@@ -236,14 +236,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
     <br>
     <form name=addaggregate method=post action="AppController.servlet">
     #if($aggregateFunctions.size() >0)
-      Choose functions: 
+      Choose functions:
       #foreach($aggregateFunction in $aggregateFunctions)
         <span class="existing_element"><a href="AppController.servlet?return=$return_template&remove_function_from_chart=true&internalaggregatename=$aggregateFunction.getInternalAggregateName()">
           $aggregateFunction
         </a></span>&nbsp;
       #end
     #else
-      Functions: 
+      Functions:
     #end
     <a href="#" onclick="fShowAddAgg();" id="addAggLink">add...</a>
     <div id="addAgg" style="display:none"><br>
@@ -254,7 +254,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
             	#foreach($function in $chart.getPossibleFunctionTypes())
               	  <option value="$function.toString()">$function.getLabel()</option>
             #end
-          </select> 
+          </select>
     	<select name="internalfieldname" id="aggregatefunctionfield" onchange="fSubmitFunction()">
     		  <option value="" selected>-- please choose a field --</option>
                 #foreach($reportField in $report.getReportFields())
@@ -280,7 +280,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
         #end
       #end
       #if($dateReportFields.size() > 0)
-        Date range: 
+        Date range:
       <form name="setfilterfield" method="post" action="AppController.servlet">
         <input type="hidden" name="return" value="$return_template" />
         <input type="hidden" name="set_chart_filter_field" value="1" />
@@ -290,7 +290,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
           <option value="$dateReportField.getInternalFieldName()" #if($dateReportField.equals($currentFilterReportField)) selected #end>$dateReportField</option>
       	#end
         </select>
-      </form> 
+      </form>
       <form name="setfilter" method="post" action="AppController.servlet">
         <input type="hidden" name="return" value="$return_template" />
         <input type="hidden" name="set_chart_filter" value="1" />
@@ -308,14 +308,14 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
         #set($rangePercent = $defaultChart.getRangePercent())
         <input type="hidden" name="return" value="$return_template" />
         <input type="hidden" name="set_chart_range" value="1" />
-        Show 
-        <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest 
-        <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest 
+        Show
+        <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest
+        <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest
         <input type="number" name="rangepercent" value="$rangePercent"> % of results
         <input type="submit" name="submit" value="Set limit">
       </form><br>
       <form name="savechart" id="savechart">
-      	Choose a title: 
+      	Choose a title:
       	#set($title = $defaultChart.getTitle())
       	<input type="text" name="summarytitle" #if($title && $title != "") value="$title" #end />
       	<input type="hidden" name="return" value="$return_template" />

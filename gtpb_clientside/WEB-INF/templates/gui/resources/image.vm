@@ -58,4 +58,3 @@ $(document).keypress(function(event) {
   <img id="image" src="$imgSrc" />
 </body>
 </html>
-    

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@
 		#elseif($view.userHasPrivilege($user, "EDIT_TABLE_DATA", $table))
           #set($highestTablePrivilege = "EDIT_TABLE_DATA")
 		#elseif($view.userHasPrivilege($user, "VIEW_TABLE_DATA", $table))
-          #set($highestTablePrivilege = "VIEW_TABLE_DATA")  
+          #set($highestTablePrivilege = "VIEW_TABLE_DATA")
 		#end
 
         <tr>

@@ -1,6 +1,6 @@
 ##
 ##  Copyright 2013 GT webMarque Ltd
-## 
+##
 ##  This file is part of agileBase.
 ##
 ##  agileBase is free software: you can redistribute it and/or modify
@@ -23,4 +23,4 @@
 ##if($view.loggedInUserAllowedTo('ADMINISTRATE'))
 ##	#parse('gui/administration/reports/buttons/users.vm')<br>
 ##	#parse('gui/administration/reports/buttons/roles.vm')
-###end	
+###end
