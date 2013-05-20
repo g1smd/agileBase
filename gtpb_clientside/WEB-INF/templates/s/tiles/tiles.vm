@@ -23,7 +23,7 @@
 ## User profile editing
 <div class="profile_edit notfocus">
   <div class="controls">
-    <a href="AppController.servlet?return=blank&logout=true">log out</a>
+    <a href="AppController.servlet?return=blank&amp;logout=true">log out</a>
   </div>
   #set($internalUserName = $user.getInternalUserName())
   <b>My details</b><p>
