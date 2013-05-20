@@ -362,15 +362,15 @@ EditAreaLoader.prototype ={
 		if(!t.iframe_script){
 			t.iframe_script="";
 			for(i=0; i<t.sub_scripts_to_load.length; i++)
-				t.iframe_script+='<script language="javascript" type="text/javascript" src="'+ t.baseURL + t.sub_scripts_to_load[i] +'.js"></script>';
+				t.iframe_script+='<script type="text/javascript" src="'+ t.baseURL + t.sub_scripts_to_load[i] +'.js"></script>';
 		}
 
 		// add plugins scripts if not already loaded by the compressor (but need to load language in all the case)
 		for(i=0; i<area["settings"]["plugins"].length; i++){
 			//if(typeof(area["settings"]["plugins"][i])=="function") continue;
 			if(!t.all_plugins_loaded)
-				t.iframe_script+='<script language="javascript" type="text/javascript" src="'+ t.baseURL + 'plugins/' + area["settings"]["plugins"][i] + '/' + area["settings"]["plugins"][i] +'.js"></script>';
-			t.iframe_script+='<script language="javascript" type="text/javascript" src="'+ t.baseURL + 'plugins/' + area["settings"]["plugins"][i] + '/langs/' + area["settings"]["language"] +'.js"></script>';
+				t.iframe_script+='<script type="text/javascript" src="'+ t.baseURL + 'plugins/' + area["settings"]["plugins"][i] + '/' + area["settings"]["plugins"][i] +'.js"></script>';
+			t.iframe_script+='<script type="text/javascript" src="'+ t.baseURL + 'plugins/' + area["settings"]["plugins"][i] + '/langs/' + area["settings"]["language"] +'.js"></script>';
 		}
 
 
@@ -729,7 +729,7 @@ EditAreaLoader.prototype ={
 			script.charset= "UTF-8";
 			d.getElementsByTagName("head")[0].appendChild(script);
 		}catch(e){
-			d.write('<sc'+'ript language="javascript" type="text/javascript" src="' + url + '" charset="UTF-8"></sc'+'ript>');
+			d.write('<sc'+'ript type="text/javascript" src="' + url + '" charset="UTF-8"></sc'+'ript>');
 		}
 
 		t.loadedFiles[url] = true;

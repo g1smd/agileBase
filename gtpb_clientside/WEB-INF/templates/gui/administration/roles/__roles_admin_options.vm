@@ -72,7 +72,7 @@
 
 
   </STYLE>
-  <SCRIPT language=javascript>
+  <SCRIPT type="text/javascript">
     parent.pane_2.fSetRowSelection('$sessionData.getRole()');
 
     function fInit()

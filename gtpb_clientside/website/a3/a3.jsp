@@ -15,7 +15,7 @@ if (requestURL.contains("appserver.")) {
 
 		<script type="text/javascript" src="website/scripts/jquery.js"></script>
 
-    <script language="javascript">
+    <script type="text/javascript">
       $(document).ready(function() {
 
         $('.container:first-child').addClass('first');
