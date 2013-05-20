@@ -60,7 +60,7 @@
 <body>
   <div class="header row transition">
     <div class="span4 spaced">
-      <a href="AppController.servlet?return=gui/display_application&clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
+      <a href="AppController.servlet?return=gui/display_application&amp;clear_tile=true"><img id="nav_home" src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
     </div>
     <div class="span8 spaced profile transition">
       #set($profileImage = false)
