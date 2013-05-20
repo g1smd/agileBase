@@ -10,7 +10,7 @@ private static Logger logger = Logger.getLogger(MyClass.class.getName())
 Output will then be written in {Servlet container root}/logs/ into file agilebase.xxx.log
 
 *) Exceptions: For exceptions caused by user input, particularly SQLExceptions, catch them as soon as possible
-and generate a user friendly message to pass to the user interface for display in the appropriate way. 
+and generate a user friendly message to pass to the user interface for display in the appropriate way.
 For any other exception, either let ManageController catch it and throw a ServletException with the original exception
 as the root cause or do whatever looks best for the situation
 
