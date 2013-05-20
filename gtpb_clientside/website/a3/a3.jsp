@@ -54,7 +54,7 @@ if (requestURL.contains("appserver.")) {
         <div id="scroller">
             <div id="wrapper">
 				<ul id="menu">
-  		            <img style="position:absolute; left:40px; top:30px" src="website/a3/images/logo_a3reports.png" />
+  		            <img style="position:absolute; left:40px; top:30px" src="website/a3/images/logo_a3reports.png" alt="" />
 				</ul>
 
 				<div id="content">

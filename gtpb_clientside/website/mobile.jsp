@@ -29,7 +29,7 @@ if (requestURL.contains("appserver.")) {
     </head>
     <body>
 		<div id="mobileLogin">
-			<img src="/agileBase/website/images/logo-agilebase.png"><br><br>
+			<img src="/agileBase/website/images/logo-agilebase.png" alt=""><br><br>
 			<% if(live) { %>
 				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } else { %>
