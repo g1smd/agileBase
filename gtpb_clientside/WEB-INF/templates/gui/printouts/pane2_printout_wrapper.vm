@@ -89,7 +89,7 @@
   </head>
   <body> ## oncontextmenu="return false" disables right click
     <script src="resources/jquery.js"> </script>
-    <script>
+    <script type="text/javascript">
       function fMarkAsDraft(bMark) {
         oIframe.contentWindow.markAsDraft(bMark);
         bIsDraft=bMark;

@@ -22,7 +22,7 @@
   <title>AgileBase - export $report</title>
   <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
   <script src="resources/jquery.js"></script>
-  <script>
+  <script type="text/javascript">
     $(document).ready(function() {
       document.location = "ReportDownloader.servlet";
     });

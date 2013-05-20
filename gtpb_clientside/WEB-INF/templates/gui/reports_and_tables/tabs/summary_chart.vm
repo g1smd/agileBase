@@ -225,7 +225,7 @@
   #set($subtitle = "")
   #set($export_filename = $viewTools.cleanString($title))
   #set($export_filename = "agilebase_$export_filename")
-  <script>
+  <script type="text/javascript">
 	Highcharts.setOptions({
 	  chart: {
 	    style: {

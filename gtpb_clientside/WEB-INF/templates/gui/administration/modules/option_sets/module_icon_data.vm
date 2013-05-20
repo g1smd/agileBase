@@ -295,7 +295,7 @@
 </div>
 
 ## TODO: for some reason, script isn't called when in external tabs.js
-<script>
+<script type="text/javascript">
   $("td[data-iconname='$currentIconPath']").attr("id","icon_selected");
   fModuleIconPicker();
 

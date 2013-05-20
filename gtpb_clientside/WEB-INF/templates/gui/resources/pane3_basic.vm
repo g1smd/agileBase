@@ -59,7 +59,7 @@
   	<script src="resources/jquery.js"> </script>
     <SCRIPT src="resources/wait/request_setFilter.js"></SCRIPT>
   	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
-  	<SCRIPT>
+  	<SCRIPT type="text/javascript">
 	   jQuery(document.ready(function() {
     	#if($pane2_id)
 		  parent.pane_2.fSetRowSelection('$pane2_id')

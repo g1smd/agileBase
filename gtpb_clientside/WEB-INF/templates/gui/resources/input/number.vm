@@ -67,7 +67,7 @@
   	#end##
 #end##
 #if($globalEdit)
-  <script>
+  <script type="text/javascript">
     function fUpdateGlobalNumber() {
       function fResponse(sResponseText, sResponseXML) {
         if(sResponseXML.getElementsByTagName('rowsTotal')[0]) {

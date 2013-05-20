@@ -14,7 +14,7 @@ JSON is<br>
 $treemapJSON<p>
 
 #if($treeMapJSON.startsWith("{")) ##if valid JSON
-<script>
+<script type="text/javascript">
 
 var tipCache = [];
 

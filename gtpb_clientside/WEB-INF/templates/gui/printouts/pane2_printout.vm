@@ -97,7 +97,7 @@
     <script src="resources/wait/request_setFilter.js"></script>
     <script src="resources/modalFramework/modalFramework.js"></script>
     <script type="text/javascript" src="resources/highcharts.js"></script>
-    <script>
+    <script type="text/javascript">
 	function loadDetail() {
 		$('#detail').text('loading...');
 		$('#detail').load('AppController.servlet?return=gui/printouts/detail');
@@ -165,7 +165,7 @@
         <p>As the data can still be edited, it should be considered draft until the values are locked</p>
       </div>
     </div>
-    <script>
+    <script type="text/javascript">
       function fMarkAsDraft(bMark) {
         if(bMark) document.body.setAttribute('isDraft','true');
         else document.body.removeAttribute('isDraft');

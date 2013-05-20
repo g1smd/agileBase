@@ -35,7 +35,7 @@
 #set($sessionTable = $sessionData.getTable())
 #set($sessionReport = $sessionData.getReport())
 #if($sessionReport && $return)
-<script>
+<script type="text/javascript">
 	  function loadPane3() {
 		  var url = 'AppController.servlet?return=$return';
 		  #set($rowId = $sessionData.getRowId())

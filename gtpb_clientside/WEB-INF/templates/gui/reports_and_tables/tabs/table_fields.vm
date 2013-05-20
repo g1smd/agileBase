@@ -43,7 +43,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 
 </STYLE>
 
-<script>
+<script type="text/javascript">
   function fArrayContains(aArray, vTest) {
     for (var i=0;i<aArray.length;i++)
 	      if (aArray[i]==vTest) return true;
@@ -193,7 +193,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 
 ## This script is ripe for replacing with jQuery but does work. Also though, it relies on
 ## multiple elements with the same ID, perhaps classes could be used instead
-<SCRIPT>
+<SCRIPT type="text/javascript">
   function fSelectFieldOption(iIndex){
     function fEnableDisable(oFieldOptionSet){
 	      function fDoIt(oSet,bEnable) {
@@ -234,7 +234,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 
   fSelectFieldOption(0);
 </SCRIPT>
-<script>
+<script type="text/javascript">
 $('.draggable').tableDnD({
   scrollAmount: 5,
   onDragClass: "draggingRow",

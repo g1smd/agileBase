@@ -65,7 +65,7 @@
 		  <script type="text/javascript" src="resources/edit_area/edit_area_full.js"></script>
 		  <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
     #end
-		<script>
+		<script type="text/javascript">
   	  // When submitting the newfield form to create a table field
   	  // disable all input elements not in the addNewField row of the reportData table
   	  // as they'll be irrelevant to the field creation
@@ -204,7 +204,7 @@
       #end
 	#end
     #if(($pane2_id) && (!$mobile_device))
-      <script>
+      <script type="text/javascript">
         if (typeof(parent.pane_2.fSetRowSelection) == "function") {
           var rowFound = parent.pane_2.fSetRowSelection('$pane2_id');
         }

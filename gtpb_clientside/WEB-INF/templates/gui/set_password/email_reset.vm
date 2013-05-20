@@ -42,7 +42,7 @@
     <script src="resources/jquery.js"></script>
     <script src="resources/jquery.complexify.js"></script>
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
-    <script>
+    <script type="text/javascript">
       $(document).ready(function() {
         $("#password").complexify({strengthScaleFactor: 0.8}, function(valid, complexity) {
           if (valid) {

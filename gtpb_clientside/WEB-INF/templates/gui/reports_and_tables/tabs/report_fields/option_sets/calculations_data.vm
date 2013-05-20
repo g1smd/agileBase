@@ -34,7 +34,7 @@
 	  }
 </style>
 
-<script>
+<script type="text/javascript">
 	  function fArrayContains(aArray, vTest){
 	    	for (var i=0;i<aArray.length;i++)
 			    if (aArray[i]==vTest) return true;
