@@ -17,7 +17,7 @@
 			managed[name] = new $.manageAjax._manager(name, opts);
 			return managed[name];
 		}
-		
+
 		function destroy(name){
 			if(managed[name]){
 				managed[name].clear(true);
@@ -25,27 +25,27 @@
 			}
 		}
 
-		
+
 		var publicFns = {
 			create: create,
 			destroy: destroy
 		};
-		
+
 		return publicFns;
 	})();
-	
+
 	$.manageAjax._manager = function(name, opts){
 		this.requests = {};
 		this.inProgress = 0;
 		this.name = name;
 		this.qName = name;
-		
+
 		this.opts = $.extend({}, $.manageAjax.defaults, opts);
 		if(opts && opts.queue && opts.queue !== true && typeof opts.queue === 'string' && opts.queue !== 'clear'){
 			this.qName = opts.queue;
 		}
 	};
-	
+
 	$.manageAjax._manager.prototype = {
 		add: function(url, o){
 			if(typeof url == 'object'){
@@ -54,7 +54,7 @@
 				o = $.extend(o || {}, {url: url});
 			}
 			o = $.extend({}, this.opts, o);
-			
+
 			var origCom		= o.complete || $.noop,
 				origSuc		= o.success || $.noop,
 				beforeSend	= o.beforeSend || $.noop,
@@ -77,7 +77,7 @@
 			}
 			ajaxFn.xhrID = xhrID;
 			o.xhrID = xhrID;
-			
+
 			o.beforeSend = function(xhr, opts){
 				var ret = beforeSend.call(this, xhr, opts);
 				if(ret === false){
@@ -90,12 +90,12 @@
 				that._complete.call(that, this, origCom, xhr, status, xhrID, o);
 				xhr = null;
 			};
-			
+
 			o.success = function(data, status, xhr){
 				that._success.call(that, this, origSuc, data, status, xhr, o);
 				xhr = null;
 			};
-						
+
 			//always add some error callback
 			o.error =  function(ahr, status, errorStr){
 				var httpStatus 	= '',
@@ -114,11 +114,11 @@
 				}
 				ahr = null;
 			};
-			
+
 			if(o.queue === 'clear'){
 				$(document).clearQueue(this.qName);
 			}
-			
+
 			if(o.queue || (o.queueDuplicateRequests && this.requests[xhrID])){
 				$.queue(document, this.qName, ajaxFn);
 				if(this.inProgress < o.maxRequests && (!this.requests[xhrID] || !o.queueDuplicateRequests)){
@@ -146,7 +146,7 @@
                     } else {
 						 delete cache[id];
 					}
-				} 
+				}
 				if(!o.cacheResponse || !cache[id]) {
 					if (o.async) {
 						that.requests[id] = $.ajax(o);
@@ -182,16 +182,16 @@
 				o.abort.call(context, xhr, status, o);
 			}
 			origFn.call(context, xhr, status, o);
-			
+
 			$.event.trigger(this.name +'AjaxComplete', [xhr, status, o]);
-			
+
 			if(o.domCompleteTrigger){
 				$(o.domCompleteTrigger)
 					.trigger(this.name +'DOMComplete', [xhr, status, o])
 					.trigger('DOMComplete', [xhr, status, o])
 				;
 			}
-			
+
 			this._removeXHR(xhrID);
 			if(!this.inProgress){
 				$.event.trigger(this.name +'AjaxStop');
@@ -222,7 +222,7 @@
 					responseText: xhr.responseText,
 					responseXML: xhr.responseXML,
 					_successData: data,
-					cacheTTL: o.cacheTTL, 
+					cacheTTL: o.cacheTTL,
 					timestamp: new Date().getTime()
 				};
 				if('getAllResponseHeaders' in xhr){
@@ -275,7 +275,7 @@
 			var xhr;
 			if(id){
 				xhr = this.getData(id);
-				
+
 				if(xhr && xhr.abort){
 					this.lastAbort = id;
 					xhr.abort();
@@ -290,7 +290,7 @@
 				xhr = null;
 				return;
 			}
-			
+
 			var that 	= this,
 				ids 	= []
 			;
@@ -302,7 +302,7 @@
 			});
 		},
 		clear: function(shouldAbort){
-			$(document).clearQueue(this.qName); 
+			$(document).clearQueue(this.qName);
 			if(shouldAbort){
 				this.abort();
 			}
@@ -323,7 +323,7 @@
 		cacheTTL: -1,
 		queue: false // true, false, clear
 	};
-	
+
 	$.each($.manageAjax._manager.prototype, function(n, fn){
 		if(n.indexOf('_') === 0 || !$.isFunction(fn)){return;}
 		$.manageAjax[n] =  function(name, o){
@@ -338,5 +338,5 @@
 			managed[name][n].apply(managed[name], args);
 		};
 	});
-	
+
 })(jQuery);

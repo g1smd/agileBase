@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 
+/*
  * JS for view tab is separated out because the mobile version of agileBase
  * only needs these functions, not those for the edit, manage etc. tabs
  */
@@ -33,7 +33,7 @@ function loadMap(postcode) {
 				if (!point) {
 				  alert("Postcode " + postcode + " not found");
 				} else {
-					var mapUrl = 'https://maps.google.com/staticmap?center=' + 
+					var mapUrl = 'https://maps.google.com/staticmap?center=' +
 					  point.toUrlValue() + '&zoom=11&size=100x100&maptype=terrain&key=ABQIAAAAAmhDcBizb6sHKLYdSFLnLBSsFD5D7A41QFa4vWfOgDnykADPDxRmS3oyj7HLtk0xVDNhc4xnV0s6sg&sensor=false';
 					$('#map').html('<a href="http://maps.google.co.uk/maps?f=q&hl=en&q='
 					  + postcode

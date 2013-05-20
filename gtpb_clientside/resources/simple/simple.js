@@ -31,7 +31,7 @@ function tileEvents() {
 
 function tileSuggestions() {
 	var tileCount = 0;
-	var suggestions = $("#tile_suggestions span"); 
+	var suggestions = $("#tile_suggestions span");
 	suggestions.each(function() {
 		var tileType = "data_link"; // The default tile type
 		if ((tileCount == 0) && (suggestions.size() > 1)) {
@@ -358,7 +358,7 @@ function addRemoveCalendar(checkboxElement) {
 	var eventColour = jqCheckbox.siblings("span").css('background-color');
 	var textColour = jqCheckbox.siblings("span").css('color');
   //Can't use just border-color with jQuery: http://stackoverflow.com/questions/9915966/jquery-cssborder-color-does-not-return-anything
-	var borderColour = jqCheckbox.siblings("span").css('border-top-color'); 
+	var borderColour = jqCheckbox.siblings("span").css('border-top-color');
 	if( borderColour == "rgb(0, 0, 0)") {
 		borderColour = eventColour;
 	}
@@ -703,7 +703,7 @@ function reportRowClicks() {
 					$(".ab_field_title").hoverIntent(hoverIntentConfig);
 					reportRowClicks();
 					checkboxesSetup();
-				});	
+				});
 		return false;
 	});
 }

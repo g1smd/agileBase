@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -16,13 +16,13 @@
  *  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
  */
 ;
-function fButtonClick(oButton) {  
+function fButtonClick(oButton) {
   //if(oButton.tagName!='BUTTON') return;
-   
+
   if (fToggleButtonState(oButton)) return;
   if (fGroupButtonClick(oButton)) return;
-   
-  function fToggleButtonState(oButton) {  
+
+  function fToggleButtonState(oButton) {
 	  var jqButton = $(oButton);
 	  if (! jqButton.hasClass('toggleButton')) {return false;}
 	  if (jqButton.hasClass('selected')) {
@@ -30,23 +30,23 @@ function fButtonClick(oButton) {
 	  } else {
 		  jqButton.addClass('selected');
 	  }
-    //with (oButton) {	
+    //with (oButton) {
     //  if (getAttribute('toggleButton')!='true') return false;
     //  if (getAttribute('selected')=='true') removeAttribute('selected');
     //  else setAttribute('selected','true');
     //}
   }
 
-  function fGroupButtonClick(oButton) {  
+  function fGroupButtonClick(oButton) {
     if (!oButton.parentNode) return false;
-    if (oButton.parentNode.className!='buttonRadioGroup') return false;  
-      
+    if (oButton.parentNode.className!='buttonRadioGroup') return false;
+
     fClearGroup(oButton);
     $(oButton).addClass('selected');
-    //oButton.setAttribute('selected','true'); 
+    //oButton.setAttribute('selected','true');
     return true;
-      
-    function fClearGroup(oButton) {  
+
+    function fClearGroup(oButton) {
       $(oButton).siblings('button').removeClass('selected');
       //var oButtonsInGroup=oButton.parentNode.getElementsByTagName(oButton.tagName);
       //for (var i=0;i<oButtonsInGroup.length;i++)
@@ -78,9 +78,9 @@ function fTogglePane1(oButton) {
 	fAnimatePane1(0.1, currentWidth, targetWidth);
 }
 
-function fSummaryPaneReady() {				 
+function fSummaryPaneReady() {
   // return the status of the summary pane by examining its readystate
-  with (oViewPane){  
+  with (oViewPane){
 		if (document.readyState != 'complete') return false;
 		if (detail_pane.document.readyState != 'complete') return false;
   }
@@ -97,19 +97,19 @@ function hidePane3() {
 	$("#oViewPane")[0].contentWindow.pane_2.hidePane3();
 }
 
-function fNew() {  
+function fNew() {
 	$("#oViewPane")[0].contentWindow.pane_2.fNew();
-} 
+}
 
-function fClone() 	{  
+function fClone() 	{
 	$("#oViewPane")[0].contentWindow.pane_2.fClone();
-} 
+}
 
-function fDelete() 	{  
+function fDelete() 	{
 	$("#oViewPane")[0].contentWindow.pane_2.fDelete();
 }
 
-function fImport() {  
+function fImport() {
 	$("#oViewPane")[0].contentWindow.pane_2.fImport();
 }
 
@@ -117,7 +117,7 @@ function fHelp() {
 	$("#oViewPane")[0].contentWindow.pane_2.fHelp();
 }
 
-function fExport() {  
+function fExport() {
 	$("#oViewPane")[0].contentWindow.pane_2.fExport();
 }
 
@@ -125,7 +125,7 @@ function fSetPassword() {
 	$("#oViewPane")[0].contentWindow.pane_2.fSetPassword();
 }
 
-function fLinks() {  
+function fLinks() {
 	$("#oViewPane")[0].contentWindow.pane_2.fLinks();
 }
 
@@ -135,24 +135,24 @@ function fLoadFromPreview(oBlock, event) {
 
 function fPrint() {
   if (typeof window.spawnWindow =="function") {
-	  var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+	  var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')
   } else {
-	  var oPrintWin=window.open('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+	  var oPrintWin=window.open('AppController.servlet?return=gui/printouts/pane2_printout_wrapper','print_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')
   }
 }
 
 function fInfo() {
-    var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/dashboard','info_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')	
+    var oPrintWin=window.spawnWindow('AppController.servlet?return=gui/dashboard','info_window','toolbar=no,location=no,directories=no,status=no,copyhistory=no,menubar=no,resizable=yes,dialog=yes')
 }
 
 function fDashboard() {
   document.location = 'AppController.servlet?return=s/treemap';
 }
-  
+
 function fForms() {
   document.location = 'AppController.servlet?return=gui/edit_nav/edit_nav';
 }
-  
+
 function fCalendar() {
   document.location = 'AppController.servlet?return=gui/calendar/calendar';
 }
@@ -189,30 +189,30 @@ function fSpawnWindow(sURL,sName,sParams) {
   function fDestroyWin() {
     oNewWin.close();
   }
-  
+
   function fDisableApp() {
     var oDiv=document.createElement('div');
     oDiv.setAttribute('id','_md_blank');
     $(oDiv).addClass('window_disable');
-    
+
     oH1=document.createElement('h1');
 		oH1.appendChild(document.createTextNode('another window is open...'));
 		oDiv.appendChild(oH1);
-  
+
     document.body.appendChild(oDiv);
-    return oDiv;	
+    return oDiv;
   }
-	   
+
   function fEnableApp() {
   	// the unload event seems to trigger immediately.  Check that the window's closed so that this is called correctly
   	if(!oNewWin.closed) return;
   	clearInterval(sInterval);
-    oBlank.parentNode.removeChild(oBlank);	
+    oBlank.parentNode.removeChild(oBlank);
   }
-  
+
   var oNewWin=window.open(sURL,sName,sParams);
   oNewWin.focus();
-  var oBlank=fDisableApp();        	  
+  var oBlank=fDisableApp();
   $(window).unload(fDestroyWin);
   $(oNewWin).unload(fEnableApp);
 

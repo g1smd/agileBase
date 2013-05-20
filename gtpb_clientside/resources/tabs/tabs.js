@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -1367,7 +1367,7 @@ function newChild(jqTab, parentInternalTableName) {
 
 /**
  * Used when clicking on a selector report in a tab, or a grandchild record
- * 
+ *
  * @param oRow
  *          The tr being clicked
  * @param internalTableName

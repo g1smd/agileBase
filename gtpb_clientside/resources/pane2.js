@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 $(document).ready(function() {
   fSetupAppPreview();
-  var hoverIntentConfig = {    
+  var hoverIntentConfig = {
        over: showTooltip,
        out: hideTooltip,
        interval: 400
@@ -123,11 +123,11 @@ function fSetRowSelection(sName) {
 }
 
 function fDeleteObj(sAction, sRowIdentifier) {
-	
+
 	//Oliver: Disable delete temporarily
 	//return;
-	
-	
+
+
 	function fControlCheckboxes(bDisable) {
 		var aCheckedRows = new Array();
 
@@ -257,7 +257,7 @@ function fDeleteObj(sAction, sRowIdentifier) {
 		oReq = new fRequest('AppController.servlet', aPostVars, fReqComplete, 1);
 		return true;
 	}
-	
+
 	function fDeleteFirstItem() {
 		var tiles = ($("#tiles").size() > 0);
 		if (tiles) {

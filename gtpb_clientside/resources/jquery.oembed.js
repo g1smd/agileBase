@@ -3,10 +3,10 @@
  *
  * Copyright (c) 2009 Richard Chamorro
  * Licensed under the MIT license
- * 
- * Author: Richard Chamorro 
+ *
+ * Author: Richard Chamorro
  */
- 
+
 (function ($) {
     $.fn.oembed = function (url, options, embedAction) {
 
@@ -53,11 +53,11 @@
     $.fn.oembed.defaults = {
         maxWidth: null,
         maxHeight: null,
-        embedMethod: "replace",  	// "auto", "append", "fill"		
+        embedMethod: "replace",  	// "auto", "append", "fill"
         defaultOEmbedProvider: "oohembed", 	// "oohembed", "embed.ly", "none"
         allowedProviders: null,
         disallowedProviders: null,
-        customProviders: null, // [ new $.fn.oembed.OEmbedProvider("customprovider", null, ["customprovider\\.com/watch.+v=[\\w-]+&?"]) ]	
+        customProviders: null, // [ new $.fn.oembed.OEmbedProvider("customprovider", null, ["customprovider\\.com/watch.+v=[\\w-]+&?"]) ]
         defaultProvider: null,
         greedy: true,
         onProviderNotFound: function () { },
@@ -103,7 +103,7 @@
 
     function embedCode(container, externalUrl, embedProvider) {
 
-        var requestUrl = getRequestUrl(embedProvider, externalUrl), 		
+        var requestUrl = getRequestUrl(embedProvider, externalUrl),
 			ajaxopts = $.extend({
 				url: requestUrl,
 				type: 'get',
@@ -131,8 +131,8 @@
 				},
 				error: settings.onError.call(container, externalUrl, embedProvider)
 			}, settings.ajaxOptions || { } );
-		
-		$.ajax( ajaxopts );        
+
+		$.ajax( ajaxopts );
     };
 
     function initializeProviders() {
@@ -340,12 +340,12 @@
 		new $.fn.oembed.OEmbedProvider("hulu", "video", ["hulu\\.com/watch/.*"], "http://www.hulu.com/api/oembed.json"),
 		new $.fn.oembed.OEmbedProvider("vimeo", "video", ["http:\/\/www\.vimeo\.com\/groups\/.*\/videos\/.*", "http:\/\/www\.vimeo\.com\/.*", "http:\/\/vimeo\.com\/groups\/.*\/videos\/.*", "http:\/\/vimeo\.com\/.*"], "http://vimeo.com/api/oembed.json"),
 		new $.fn.oembed.OEmbedProvider("dailymotion", "video", ["dailymotion\\.com/.+"]), // "http://www.dailymotion.com/api/oembed/" (callback parameter does not return jsonp)
-		new $.fn.oembed.OEmbedProvider("scribd", "rich", ["scribd\\.com/.+"]), // ", "http://www.scribd.com/services/oembed"" (no jsonp)		
+		new $.fn.oembed.OEmbedProvider("scribd", "rich", ["scribd\\.com/.+"]), // ", "http://www.scribd.com/services/oembed"" (no jsonp)
 		new $.fn.oembed.OEmbedProvider("slideshare", "rich", ["slideshare\.net"], "http://www.slideshare.net/api/oembed/1"),
 		new $.fn.oembed.OEmbedProvider("photobucket", "photo", ["photobucket\\.com/(albums|groups)/.*"], "http://photobucket.com/oembed/")
 		// new $.fn.oembed.OEmbedProvider("vids.myspace.com", "video", ["vids\.myspace\.com"]), // "http://vids.myspace.com/index.cfm?fuseaction=oembed" (not working)
-		// new $.fn.oembed.OEmbedProvider("screenr", "rich", ["screenr\.com"], "http://screenr.com/api/oembed.json") (error)		
-		// new $.fn.oembed.OEmbedProvider("qik", "video", ["qik\\.com/\\w+"], "http://qik.com/api/oembed.json"),		
+		// new $.fn.oembed.OEmbedProvider("screenr", "rich", ["screenr\.com"], "http://screenr.com/api/oembed.json") (error)
+		// new $.fn.oembed.OEmbedProvider("qik", "video", ["qik\\.com/\\w+"], "http://qik.com/api/oembed.json"),
 		// new $.fn.oembed.OEmbedProvider("revision3", "video", ["revision3\.com"], "http://revision3.com/api/oembed/")
 	];
 })(jQuery);

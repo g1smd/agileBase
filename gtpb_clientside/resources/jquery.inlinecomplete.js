@@ -7,17 +7,17 @@
 * Licensed under the MIT license:
 *
 * Copyright (c) 2011 Patrick Burke
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in
 * all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -99,7 +99,7 @@
             }
 
             if(searchTerm != '') {
-                
+
                 for(var i = 0; i < termList.length; i++) {
                     currentTerm = termList[i];
 
@@ -111,7 +111,7 @@
                         // True if the current letter equals the next letter
                         // in matched term, the event is keydown and if there
                         // is selected text.
-                        
+
                         if(termList[i].substr(curPos, 1) == letter
                             && event.type == 'keydown'
                             && $this.selection('start') != $this.selection('end')

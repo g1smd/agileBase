@@ -14,8 +14,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 <html>
 	<head>
 		<title>agileBase - a dedicated Lean Back Office platform</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
-    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/> 
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
     <% if(ssl) { %>
@@ -61,10 +61,10 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		  </div> <!-- end of header -->
           <div id="popupPricingContent" class="popup">
             <h1>Setup</h1>
-            We typically spend the first day with a client prototyping a system in real time. 
-            By the end of the day, clients have firstly, a useful working basic system and secondly a good idea of how long further development is likely to take (and cost) based on their ambitions. 
+            We typically spend the first day with a client prototyping a system in real time.
+            By the end of the day, clients have firstly, a useful working basic system and secondly a good idea of how long further development is likely to take (and cost) based on their ambitions.
             <h1>Training</h1>
-            Alternatively, a popular method is to provide a fixed cost for training existing staff to allow them to develop systems completely on their own. 
+            Alternatively, a popular method is to provide a fixed cost for training existing staff to allow them to develop systems completely on their own.
             Following this, users are empowered to develop the system based on their demand, at their own pace.
             <h1>Hosting, licensing* and support</h1>
             Hosted pricing is simply &pound;10/month/table.
@@ -95,7 +95,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
             Skype okohll<br>
             <a href="http://www.gtwm.co.uk">More contacts</a> at GT webMarque
           </div>
-			<div id="intro" class="wrapper">      
+			<div id="intro" class="wrapper">
 				<div class="content">
 					<div id="login">
 					<% if(live) { %>
@@ -104,7 +104,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 					    <form method="POST" action="/agileBase/j_security_check" name="loginform" id="loginform">
 					<% } %>
 								<div class="input">username<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/>
-								</div>  
+								</div>
 								<div class="input">password<input type="password" name="j_password" id="j_password" />
 								</div>
 								<!-- submit element allows us to press enter to log in -->
@@ -123,7 +123,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				</div>   <!-- end content -->
 			</div> <!-- end wrapper -->
 				<div class="wrapper">
-					<div class="content"> 
+					<div class="content">
 					  <div id="detail_right">
 						</div>
 
@@ -134,8 +134,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 					<div class="content" id="footer">
 						&copy; 2012 GT webMarque Ltd. Company number 03851934. Contact: Bristol office +44(0)845 456 1810, oliver@gtwm.co.uk. Swansea office cliff@gtwm.co.uk
 					</div>
-				</div>	<!-- end of wrapper -->				
+				</div>	<!-- end of wrapper -->
 			</div>  <!-- end of tl_wrapper -->
 		</div>  <!-- end of scroller -->
 	</body>
-</html>		
+</html>

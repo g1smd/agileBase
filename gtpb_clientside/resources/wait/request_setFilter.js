@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -176,7 +176,7 @@ function fLoadReport(sResponseText, oElement, fCallback) {
 	 * calls itself again using a setTimeout. This pause allows the application to
 	 * update the screen and respond to other input at the expense of the loading
 	 * taking even longer.
-	 * 
+	 *
 	 * However, because the user can see the data loading and still use the
 	 * application, the delay becomes far more acceptable.
 	 */
@@ -279,12 +279,12 @@ function fSetFilter(e, oObj, fReqCompleteOverride) {
 	/*
 	 * object to handle changing a filter element and update the db immediately
 	 * over XMLHTTP.
-	 * 
+	 *
 	 * The object stores the form object that it's working on, marks it as being
 	 * updated, fires the request, collects the response and handles it.
-	 * 
+	 *
 	 * The object contains compatibility for text, checkbox and radio input.
-	 * 
+	 *
 	 * Any expando property of the form object prefixed with 'gtpb_' will be sent
 	 * as a key value pair in the post parameters of the request. In addition the
 	 * name and calculated value of the object are sent by default

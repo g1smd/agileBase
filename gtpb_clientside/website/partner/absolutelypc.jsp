@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>agileBase - Absolutely PC</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon --> 
+		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-59206-20']);

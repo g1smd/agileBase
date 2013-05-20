@@ -315,7 +315,7 @@
    *
    * @api public
    */
-  
+
   util.merge = function merge (target, additional, deep, lastseen) {
     var seen = lastseen || []
       , depth = typeof deep == 'undefined' ? 2 : deep
@@ -340,7 +340,7 @@
    *
    * @api public
    */
-  
+
   util.mixin = function (ctor, ctor2) {
     util.merge(ctor.prototype, ctor2.prototype);
   };
@@ -398,8 +398,8 @@
    */
 
   util.indexOf = function (arr, o, i) {
-    
-    for (var j = arr.length, i = i < 0 ? i + j < 0 ? 0 : i + j : i || 0; 
+
+    for (var j = arr.length, i = i < 0 ? i + j < 0 ? 0 : i + j : i || 0;
          i < j && arr[i] !== o; i++) {}
 
     return j <= i ? -1 : i;
@@ -1265,8 +1265,8 @@
 
   Transport.prototype.onData = function (data) {
     this.clearCloseTimeout();
-    
-    // If the connection in currently open (or in a reopening state) reset the close 
+
+    // If the connection in currently open (or in a reopening state) reset the close
     // timeout since we have just received data. This check is necessary so
     // that we don't reset the timeout on an explicitly disconnected connection.
     if (this.socket.connected || this.socket.connecting || this.socket.reconnecting) {
@@ -1318,7 +1318,7 @@
    *
    * @api private
    */
-  
+
   Transport.prototype.setCloseTimeout = function () {
     if (!this.closeTimeout) {
       var self = this;
@@ -1402,7 +1402,7 @@
   Transport.prototype.onHeartbeat = function (heartbeat) {
     this.packet({ type: 'heartbeat' });
   };
- 
+
   /**
    * Called when the transport opens.
    *
@@ -1829,7 +1829,7 @@
     var port = global.location.port ||
       ('https:' == global.location.protocol ? 443 : 80);
 
-    return this.options.host !== global.location.hostname 
+    return this.options.host !== global.location.hostname
       || this.options.port != port;
   };
 
@@ -2109,7 +2109,7 @@
    *
    * @api public
    */
-  
+
   SocketNamespace.prototype.emit = function (name) {
     var args = Array.prototype.slice.call(arguments, 1)
       , lastArg = args[args.length - 1]
@@ -2668,7 +2668,7 @@
 
   /**
    * The HTMLFile transport creates a `forever iframe` based transport
-   * for Internet Explorer. Regular forever iframe implementations will 
+   * for Internet Explorer. Regular forever iframe implementations will
    * continuously trigger the browsers buzy indicators. If the forever iframe
    * is created inside a `htmlfile` these indicators will not be trigged.
    *
@@ -2870,7 +2870,7 @@
 
   XHRPolling.prototype.name = 'xhr-polling';
 
-  /** 
+  /**
    * Establish a connection, for iPhone and Android this will be done once the page
    * is loaded.
    *
@@ -3133,7 +3133,7 @@
 
     this.socket.setBuffer(true);
   };
-  
+
   /**
    * Creates a new JSONP poll that can be used to listen
    * for messages from the Socket.IO server.

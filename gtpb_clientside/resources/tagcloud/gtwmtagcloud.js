@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -20,14 +20,14 @@ function fTagCloud(jTagCloud) {
 	  $(this).removeClass('loading');
       fLoadResults();
     }
-	  
+
 	function fLoadResults() {
 	  function fResultsLoaded() {
 	    jResults.removeClass('loading');
 	    // noresults is an id passed printed out of the no results template
 	    if($('#noresults').length>0) fPopup(sBaseURL+'?'+jTagCloud.attr('disambiguationtemplate'), null, null, 'Results disambiguation', fPopupCallback, 'onload');
 	  }
-	  
+
 	  function fPopupCallback(bSuccess,oPopup, sType) {
 	     if(sType=='onload') {
 	    	 $(oPopup).filter('a.disambiguation').click(function() {  // this would be better using oPopup
@@ -37,7 +37,7 @@ function fTagCloud(jTagCloud) {
 	    	 });
 	     }
 	  }
-	  
+
 	  // jResults is set as the tag cloud is initialised
 	  jResults.empty();
 	  jResults.addClass('loading');
@@ -45,38 +45,38 @@ function fTagCloud(jTagCloud) {
 	  if(oFilter.filterValue) var sFilterValue=oFilter.filterValue;
 	  else var sFilterValue='';
 	  sQueryString+='&'+jTagCloud.attr('filterparams')+'='+escape(sFilterValue);
-	  
+
 	  jResults.load(sBaseURL+sQueryString,{
 	  	abCache: new Date().getTime()
 	  },fResultsLoaded);
 	}
-	
+
     //var jTagCloud=$('#tagCloud');  // this is now set in the function call
-	
+
     // could do some detection around this and check that it's found properly
     // could also allow this to be passed in programatically
     // and/or expose so that it can be found by external functions
     // this functionality isn't needed right now, however
     var jResults=$(jTagCloud.attr('resultslocation'));
     var sBaseURL=jTagCloud.attr('baseurl'); // again, could do some testing and fail-safeing here
-      
+
     var oSearchWrapper=document.createElement('div');
     oSearchWrapper.setAttribute('id','searchWrapper');
     $(oSearchWrapper).appendTo(jTagCloud.parent());
-      
+
     var oFilter=document.createElement('div');
     oFilter.setAttribute('id','filter');
-    
+
     oFilter.showDefaultText=function() {
       with ($(this)) {
         empty();
         append('<h1>filter is empty</h1>');
         append('<p>click some words in the tag cloud to start searching</p>');
       }
-    }    
+    }
     oFilter.showDefaultText();
-    
-    oFilter.run=function () {	        
+
+    oFilter.run=function () {
       var sFilterValue='';
       if($(this).find('a').length==0) this.showDefaultText();
       $(this).find('a').each(function() { // this is oFilter
@@ -85,24 +85,24 @@ function fTagCloud(jTagCloud) {
         if(!bLast) sFilterValue+=' AND ';
       });
       sFilterValue=sFilterValue.replace(/&nbsp;/ig,'');
-      
+
 	  this.filterValue=sFilterValue;
-        
+
       jTagCloud.empty();
       jTagCloud.addClass('loading');
       var sQueryString='?'+jTagCloud.attr('filterparams')+'='+escape(sFilterValue)+'&'+jTagCloud.attr('tagcloudtemplate');
-	  jTagCloud.load(sBaseURL+sQueryString,{abCache: new Date().getTime()},fTagCloudLoaded);	        
+	  jTagCloud.load(sBaseURL+sQueryString,{abCache: new Date().getTime()},fTagCloudLoaded);
 	}
-	
+
 	oFilter.add=function(vFilterObj) {
 	  if($(this).find('a').length==0) $(this).empty(); // clear the default text if there are no links
 	  try {
 	      var aSearchWords=vFilterObj.split(' ');  // split the search term by space
 	      jQuery.each(aSearchWords,function() {  // add the separate words individually
 	        $(oFilter).append($('<a href="#">&nbsp;'+this+'&nbsp;</a>'));
-	      });		
+	      });
 	  } catch(e) {
-		  try {			  
+		  try {
 			  $(vFilterObj).appendTo($(this));
 		  } catch(e) {
 			  alert("can't add filter");
@@ -111,16 +111,16 @@ function fTagCloud(jTagCloud) {
 		  oFilter.run();
 	  }
 	};
-    
+
     $(oFilter).appendTo($(oSearchWrapper));
-      
+
     var oSearch=document.createElement('div');
     oSearch.setAttribute('id','search');
     $(oSearch).appendTo($(oSearchWrapper));
-      
+
     var oInput=document.createElement('input');
     $(oInput).appendTo($(oSearch));
-      
+
     var oButton=document.createElement('button');
     $(oButton).append(document.createTextNode('search'));
     $(oButton).appendTo($(oSearch));
@@ -129,19 +129,19 @@ function fTagCloud(jTagCloud) {
       oFilter.add(oInput.value);
       oInput.value='';
     });
-    
+
     jTagCloud[0].load=function(sExtraParams) {
-	  jTagCloud.load(sBaseURL+'?'+jTagCloud.attr('tagcloudtemplate')+(sExtraParams?sExtraParams:''),{abCache: new Date().getTime()},fTagCloudLoaded);     
-	}; 
+	  jTagCloud.load(sBaseURL+'?'+jTagCloud.attr('tagcloudtemplate')+(sExtraParams?sExtraParams:''),{abCache: new Date().getTime()},fTagCloudLoaded);
+	};
     jTagCloud[0].load();
-    
+
     // if any filter are set in the session, load them in as text (e.g. if the page has been refreshed)
     $(oFilter).load(sBaseURL+'?'+jTagCloud.attr('filterstemplate'),{
     	abCache: new Date().getTime()
     },function() {
       if($(this).find('a').length==0) this.showDefaultText();
     });
-    
+
     /* control an action for a click event on the tags in the cloud (note that using the live function means
        that this action is applied to any tag in the cloud - even new ones added after this is called)
      */
@@ -149,14 +149,14 @@ function fTagCloud(jTagCloud) {
       $(this).fadeOut('slow',function() {
     	oFilter.add(this);
         $(this).toggleClass('clicked');
-        $(this).fadeIn('slow');	          
+        $(this).fadeIn('slow');
 	    //oFilter.run();
 	  });
 	  $(this).toggleClass('clicked');
 	  this.scrollintoview();
-      return false; 
+      return false;
     });
-      
+
     /* control an action for any terms in the filter box
      */
     $('#filter a').live('click',function() {  // this would be better if we used oFilter rather than #filter
@@ -168,9 +168,9 @@ function fTagCloud(jTagCloud) {
       $(this).toggleClass('clicked');
       return false;
     });
-}  	
+}
 
-$(document).ready(function(){	    
+$(document).ready(function(){
 	    $('.tagCloud').each(function(){
 	    	fTagCloud($(this));
 	    });

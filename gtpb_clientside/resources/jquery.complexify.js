@@ -133,11 +133,11 @@
 				$(this).keyup(function () {
 					var password = $(this).val();
 					var complexity = 0, valid = false;
-				
+
 					for (var i = CHARSETS.length - 1; i >= 0; i--) {
 						complexity += additionalComplexityForCharset(password, CHARSETS[i]);
 					}
-					
+
 					// Use natural log to produce linear scale
 					complexity = Math.log(Math.pow(complexity, password.length)) * (1/options.strengthScaleFactor);
 
@@ -150,7 +150,7 @@
 					callback.call(this, valid, complexity);
 				});
 			});
-			
+
 		}
 	});
 

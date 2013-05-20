@@ -1,6 +1,6 @@
 /*
  *  Copyright 2013 GT webMarque Ltd
- * 
+ *
  *  This file is part of agileBase.
  *
  *  agileBase is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ function fPicker(){
         append(sText);
       }
     }
-    
+
     var aPostVars=new Array();
     if (!oElements.picker.reportsList) {
       aPostVars['return']='gui/resources/picker/wiki';
     } else {
     	if (oCaller.formEl.displayValueAllFields) {
-        aPostVars['return']='gui/resources/picker/report_allfields';    		
+        aPostVars['return']='gui/resources/picker/report_allfields';
     	} else {
         aPostVars['return']='gui/resources/picker/report';
     	}
@@ -47,7 +47,7 @@ function fPicker(){
     }
     var oReq=new fRequest('AppController.servlet',aPostVars,fDisplayContent,0);
   }
-  
+
   function fLoadReports() {
     function fDisplayReports(sText,sXML) {
       // would be better to parse over a list of XML elements and add them through the DOM
@@ -64,7 +64,7 @@ function fPicker(){
       }
       fLoadContent();
     }
-  
+
     var aPostVars=new Array();
     if (oCaller.getAttribute('isWiki')) {
       // aPostVars['return']='gui/resources/picker/reports_list';
@@ -75,15 +75,15 @@ function fPicker(){
       aPostVars['custominternaltablename']=oCaller.formEl.getAttribute('internalTableName');
       aPostVars['custominternalfieldname']=oCaller.formEl.getAttribute('internalFieldName');
       var oReq=new fRequest('AppController.servlet',aPostVars,fDisplayReports,0);
-	}        
+	}
   }
-       
+
   function fDestroy() {
     oElements.picker.parentNode.removeChild(oElements.picker);
     // hack for iPod/iPhone compatibility - see fSetOverFlowHack in relation.vm
     $("#gtpb_wrapper").css("overflow","visible");
   }
- 
+
   function fHTMLElements() {
     var oPicker=document.createElement('DIV');
     $(oPicker).addClass('relation_picker');
@@ -91,14 +91,14 @@ function fPicker(){
 
     var oToolbar=document.createElement('DIV');
     oToolbar.setAttribute('id','toolbar');
- 
+
     var oCloser=document.createElement('A');
     oCloser.innerHTML='cancel';
     $(oCloser).addClass('closer');
     oCloser.setAttribute('href','#');
     $(oCloser).click(fDestroy);
     oToolbar.appendChild(oCloser);
-  
+
     if (!oCaller.getAttribute('isWiki')) {
       var oReportsList=document.createElement('SELECT');
       oReportsList.setAttribute('disabled','true');
@@ -106,10 +106,10 @@ function fPicker(){
       $(oReportsList).change(fLoadContent);
       oToolbar.appendChild(oReportsList);
       oPicker.reportsList=oReportsList;
-    }      
+    }
 
     oPicker.appendChild(oToolbar);
-  
+
     var oContent=document.createElement('DIV');
     oContent.setAttribute('id','content');
     //oContent.innerHTML=oCaller.formEl.getAttribute('internalFieldName')+' > loading (wait)...';
@@ -119,12 +119,12 @@ function fPicker(){
     this.picker=oPicker;
     oPicker.content=oContent;
   }
-  
+
   // note that 'this' refers to the link as the function was attached with addEventListener
   // see http://developer.mozilla.org/en/docs/DOM:element.addEventListener
   // updated to use jQuery click() method for x-browser compatibility
   var oCaller=this;
-  
+
   var oElements=new fHTMLElements();
   if (oElements.picker.reportsList) { // no reports list if the field is a Wiki field
     fLoadReports();
@@ -146,7 +146,7 @@ function fPicker(){
 }
 
 function fPickItem(oRow) {
-  /* this is called from the table inside the picker, not the div itself so 
+  /* this is called from the table inside the picker, not the div itself so
      it's outside of the main object */
   function fFindPicker() {
     var oPicker=oRow.parentNode;
@@ -154,7 +154,7 @@ function fPickItem(oRow) {
       oPicker=oPicker.parentNode;
     return oPicker;
   }
-  
+
   function fShowFieldCaption(sResponseText,sResponseXML) {
     with(oPicker) {
       $(inputElement).siblings(".autocomplete").val(sResponseText);
@@ -162,7 +162,7 @@ function fPickItem(oRow) {
       destroy();
     }
   }
-  
+
   var oPicker=fFindPicker();
   with (oPicker) {
     with(inputElement) {
@@ -175,7 +175,7 @@ function fPickItem(oRow) {
         aPostVars['set_custom_string']='true';
         aPostVars['stringkey']='picker_value';
         aPostVars['customstringvalue']=oRow.getAttribute('displayValue'); // note that display_value will be the row_id of the related record
-        var oReq=new fRequest('AppController.servlet',aPostVars,fShowFieldCaption,1); // run the request and show a wait window 
+        var oReq=new fRequest('AppController.servlet',aPostVars,fShowFieldCaption,1); // run the request and show a wait window
       //} else {
       //	alert('Error: label not found');
       //}
@@ -183,4 +183,4 @@ function fPickItem(oRow) {
       //setAttribute('gtpb_set_row_id',oRow.getAttribute('name'));
     }
   }
-} 
+}
