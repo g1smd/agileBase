@@ -83,12 +83,12 @@
 		<![endif]-->
 
 	<title>$module - $report</title>
-	<script src="resources/jquery.js"></script>
-    <script src="resources/wait/request_setFilter.js"></script>
-    <script src="resources/modalFramework/modalFramework.js"></script>
+	<script type="text/javascript" src="resources/jquery.js"></script>
+    <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
+    <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
   </head>
   <body> ## oncontextmenu="return false" disables right click
-    <script src="resources/jquery.js"> </script>
+    <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript">
       function fMarkAsDraft(bMark) {
         oIframe.contentWindow.markAsDraft(bMark);

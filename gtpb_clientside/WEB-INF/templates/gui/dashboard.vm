@@ -4,9 +4,9 @@
 	<link href="resources/display_application.css" type="text/css" rel="stylesheet" />
 	<link href="styles/main.css" type="text/css" rel="stylesheet" />
 	<title>Utilisation information</title>
-	<script src="resources/jquery.js"></script>
-	<script src="resources/jit.js"></script>
-	<script src="simple/simple.js"></script>
+	<script type="text/javascript" src="resources/jquery.js"></script>
+	<script type="text/javascript" src="resources/jit.js"></script>
+	<script type="text/javascript" src="simple/simple.js"></script>
 </head>
 <body>
 #set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())

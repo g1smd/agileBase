@@ -39,8 +39,8 @@
       }
     ]]#
     </style>
-    <script src="resources/jquery.js"></script>
-    <script src="resources/jquery.complexify.js"></script>
+    <script type="text/javascript" src="resources/jquery.js"></script>
+    <script type="text/javascript" src="resources/jquery.complexify.js"></script>
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
     <script type="text/javascript">
       $(document).ready(function() {

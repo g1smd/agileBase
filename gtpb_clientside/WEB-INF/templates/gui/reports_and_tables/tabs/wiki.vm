@@ -117,7 +117,7 @@
 						        <button name="_link_wiki_page" isWiki="true">
 						          link to an existing page
 						        </button>
-						        <script src="resources/picker.js"></script>
+						        <script type="text/javascript" src="resources/picker.js"></script>
 						        <script type="text/javascript">
 						          function fInitialise() {
 						            function fDoInitialise(oBox){

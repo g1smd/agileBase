@@ -22,8 +22,8 @@
 <html>
 <head>
   <title>Anonymise data in an entire company</title>
-  <script src="resources/jquery.js"></script>
-  <script src="resources/development/anonymise_company.js"></script>
+  <script type="text/javascript" src="resources/jquery.js"></script>
+  <script type="text/javascript" src="resources/development/anonymise_company.js"></script>
 </head>
 <body>
 Running on $viewTools.getAppUrl()<p>

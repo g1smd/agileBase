@@ -27,8 +27,8 @@
     			 height:100% }
 </style>
 <title>agilebase error report</title>
-  	<script src="resources/jquery.js"> </script>
-	<script src="resources/pane2.js"> </script>
+  	<script type="text/javascript" src="resources/jquery.js"></script>
+	<script type="text/javascript" src="resources/pane2.js"></script>
 </head>
 <body>
 #parse("gui/error.vm")

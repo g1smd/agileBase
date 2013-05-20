@@ -117,9 +117,9 @@
 	  background-color: #ddefe0;
 	}
   </STYLE>
-  <script src="resources/jquery.js"></script>
-  <script src="resources/jquery.sparkline.js"></script>
-  <SCRIPT src="resources/wait/request_setFilter.js"></SCRIPT>
+  <script type="text/javascript" src="resources/jquery.js"></script>
+  <script type="text/javascript" src="resources/jquery.sparkline.js"></script>
+  <SCRIPT type="text/javascript" src="resources/wait/request_setFilter.js"></SCRIPT>
   <script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
   <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
   <SCRIPT type="text/javascript">

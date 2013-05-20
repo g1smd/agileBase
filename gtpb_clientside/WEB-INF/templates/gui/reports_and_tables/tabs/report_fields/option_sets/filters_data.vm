@@ -195,4 +195,4 @@
 
 	  //fSelectFilterOption(0); // moved to pane_3_tab_set.vm
 </SCRIPT>
-###<script src="resources/wait/interdependent_fields.js"></script>
+###<script type="text/javascript" src="resources/wait/interdependent_fields.js"></script>

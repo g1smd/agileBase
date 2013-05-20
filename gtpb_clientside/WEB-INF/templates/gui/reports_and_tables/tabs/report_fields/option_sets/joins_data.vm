@@ -231,4 +231,4 @@
 		</tbody>
 	</table>
 </form>
-###<script src="resources/wait/interdependent_fields.js"></script>
+###<script type="text/javascript" src="resources/wait/interdependent_fields.js"></script>

@@ -56,8 +56,8 @@
 			table#reportData tbody tr.rowb:hover td { background-color:transparent!important }
 
     </style>
-  	<script src="resources/jquery.js"> </script>
-    <SCRIPT src="resources/wait/request_setFilter.js"></SCRIPT>
+  	<script type="text/javascript" src="resources/jquery.js"></script>
+    <SCRIPT type="text/javascript" src="resources/wait/request_setFilter.js"></SCRIPT>
   	<script type="text/javascript" src="resources/wait/editBuffer_editData.js"></script>
   	<SCRIPT type="text/javascript">
 	   jQuery(document.ready(function() {
