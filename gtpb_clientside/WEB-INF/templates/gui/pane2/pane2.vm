@@ -97,7 +97,7 @@
     <title>$sessionReport.getModule() - $sessionReport</title>
 	#if($mobile_device)
 	  <meta name = "viewport" content = "initial-scale = 1.0"> <!-- stop iPad automatically zooming out of large reports -->
-	  <script type="text/javascript" src="resources/mobile/pane2_amalgam.js" type="text/javascript"></script>
+	  <script type="text/javascript" src="resources/mobile/pane2_amalgam.js"></script>
 	  <script type="text/javascript">
 	  $(document).ready(function() {
 	    assignButtonModuleActions();
@@ -150,7 +150,7 @@
       </script>
 	  #end
     <script type="text/javascript" src="resources/$resource_folder/new_delete.js"></script>
-	<script type="text/javascript" src="resources/pane2_amalgam.js" type="text/javascript"></script>
+	<script type="text/javascript" src="resources/pane2_amalgam.js"></script>
     <script type="text/javascript">
       #set($numRows = $data.size())
       #if(!$tile)
