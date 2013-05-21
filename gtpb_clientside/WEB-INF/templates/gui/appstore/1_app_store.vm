@@ -47,38 +47,38 @@
       &pound;25/month each supports unlimited use - just tick to enable<p>
       <ul class="app_list">
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("dashboard")) checked #end gtpb_app="dashboard" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/dashboard.png" alt=""><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("dashboard")) checked #end gtpb_app="dashboard" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/dashboard.png" alt="" /><b>Executive dashboard</b> To help helps executives "see" their organisation in full, using charts, usage and automated exception reporting
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("calendar")) checked #end gtpb_app="calendar" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/calendar.png" alt=""><b>Calendar</b> An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("calendar")) checked #end gtpb_app="calendar" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/calendar.png" alt="" /><b>Calendar</b> An operational calendar fully integrated with agileBase data to aid shared scheduling and visual management
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("wiki")) checked #end gtpb_app="wiki" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/wiki.png" alt=""><b>Wiki</b> A company wiki aids knowledge capture and collaboration on 'un-structured' data
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("wiki")) checked #end gtpb_app="wiki" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/wiki.png" alt="" /><b>Wiki</b> A company wiki aids knowledge capture and collaboration on 'un-structured' data
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("a3")) checked #end gtpb_app="a3" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/a3.png" alt=""><b>A3 Reports</b> A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("a3")) checked #end gtpb_app="a3" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/a3.png" alt="" /><b>A3 Reports</b> A3 reports promote improved problem solving and decision making - see www.a3reports.co.uk
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("tagcloud")) checked #end gtpb_app="tagcloud" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/tagcloud.png" alt=""><b>Word clouds</b> For retrospective sense-making of data, reducing manual categorisation processes
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("tagcloud")) checked #end gtpb_app="tagcloud" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/tagcloud.png" alt="" /><b>Word clouds</b> For retrospective sense-making of data, reducing manual categorisation processes
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("forms")) checked #end gtpb_app="forms" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/forms.png" alt=""><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("forms")) checked #end gtpb_app="forms" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/forms.png" alt="" /><b>Public forms</b> Embed agileBase forms into public websites - allows data gathering from your customers/partners
         </li>
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("public")) checked #end gtpb_app="public" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/public.png" alt=""><b>Public access</b> Access your data anywhere. Output agileBase data to RSS feeds, online calendars, public websites and other third party applications
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("public")) checked #end gtpb_app="public" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/public.png" alt="" /><b>Public access</b> Access your data anywhere. Output agileBase data to RSS feeds, online calendars, public websites and other third party applications
         </li>
       </ul>
       <h1>Beta Apps</h1>
       These apps are currently in development or limited access testing - if you're interested in trying any, please <a href="mailto:oliver@agilebase.co.uk">let us know</a>
       <ul class="app_list">
         <li>
-          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("mkis")) checked #end gtpb_app="mkis" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/mkis.png" alt=""><b>Marketing information system</b> Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
+          <input type="checkbox" name="enable" value="true" #if($enabledApps.contains("mkis")) checked #end gtpb_app="mkis" gtpb_enable_disable_app="true" onclick="new fChange(this)"> <img src="resources/toolbar/mkis.png" alt="" /><b>Marketing information system</b> Integrate with 3rd party analytics from various sources to show a timeline-based overview of all marketing activity and it's effect
         </li>
         <li>
-          <input type="checkbox" disabled name="enable" value="true" #if($enabledApps.contains("search")) checked #end gtpb_app="search" gtpb_enable_disable_app="true" onclick="new fChange(this)"><img src="resources/toolbar/search.png" alt=""><b>Global search</b> For large installations, a global search can help quickly find data, even searching within documents
+          <input type="checkbox" disabled name="enable" value="true" #if($enabledApps.contains("search")) checked #end gtpb_app="search" gtpb_enable_disable_app="true" onclick="new fChange(this)"><img src="resources/toolbar/search.png" alt="" /><b>Global search</b> For large installations, a global search can help quickly find data, even searching within documents
         </li>
         <li>
-          <input type="checkbox" disabled name="enable" value="true" #if($enabledApps.contains("treemap")) checked #end gtpb_app="treemap" gtpb_enable_disable_app="true" onclick="new fChange(this)"><img src="resources/toolbar/treemap.png" alt=""><b>Treemap</b> Provides a graphical analysis for easy visual comparison of data, particularly hierarchical data
+          <input type="checkbox" disabled name="enable" value="true" #if($enabledApps.contains("treemap")) checked #end gtpb_app="treemap" gtpb_enable_disable_app="true" onclick="new fChange(this)"><img src="resources/toolbar/treemap.png" alt="" /><b>Treemap</b> Provides a graphical analysis for easy visual comparison of data, particularly hierarchical data
         </li>
       </ul>
       <h1>Licensing calculation</h1>

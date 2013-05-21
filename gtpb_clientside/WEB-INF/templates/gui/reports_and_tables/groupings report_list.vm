@@ -75,7 +75,7 @@
   <li name="$grouping" branch="true" #if(($sessionReportGrouping==$grouping) || ($grouping=="{ungrouped}" && $sessionReportGrouping==""))expanded="true"#end>
     #set($icon = $app_icons.get($grouping))
     #if($icon && ($icon!=""))
-		      <span><img class="appIcon" src="resources/icons/applications/$icon" alt="">$grouping</span>
+		      <span><img class="appIcon" src="resources/icons/applications/$icon" alt="" />$grouping</span>
 		    #else
 		      $grouping
 		    #end

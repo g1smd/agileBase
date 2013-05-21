@@ -42,7 +42,7 @@
       ## PDF preview
 			###if($pdf && !$sectionHasImage)
 			##	<br clear="left" />
-			##  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl" alt=""></a>
+			##  <a href="$downloadUrl"><img class="edit_image file_preview" src="$previewUrl" alt="" /></a>
 			###end
   	  #if(!$userCanEdit)
   	    #set($previousFileVersions = $field.getPreviousFileVersions($viewTools.getWebAppRoot(), $sessionRowId, $fieldValue))

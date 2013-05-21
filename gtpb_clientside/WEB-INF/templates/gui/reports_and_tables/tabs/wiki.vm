@@ -83,7 +83,7 @@
 			      #if($tabCaption=="edit")
 			      <button name="_edit_wiki_page">
 			        edit
-			        <img src="resources/reports/edit.png" align="absmiddle" alt="">
+			        <img src="resources/reports/edit.png" align="absmiddle" alt="" />
 			      </button>
 			      #end
 			    </td>
