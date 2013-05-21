@@ -27,7 +27,7 @@
   #if($button_img.endsWith(".png")) ## image icon
     <img src="$button_img" alt="" />
   #else
-    <i class="$button_img" alt=""></i> ## font icon
+    <i class="$button_img"></i> ## font icon
   #end
   #if(!$noCaption)<br>$caption#end
 </button>
