@@ -208,7 +208,7 @@ public class TextFieldDefn extends AbstractField implements TextField {
 	public synchronized String getDefault() {
 		String defaultText = this.getDefaultDirect();
 		if ((defaultText == null) || this.usesTags()) {
-			return defaultText;
+			return null;
 		}
 		TextCase textCase = this.getTextCase();
 		if (textCase != null) {
