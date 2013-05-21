@@ -168,8 +168,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
   #end
   <div id="wordcloud_controls" class="viz_control">
     <form name="wordcloud" method="post" action="AppController.servlet">
-      <input type="hidden" name="set_word_cloud_field" value="true">
-      <input type="hidden" name="return" value="$return_template">
+      <input type="hidden" name="set_word_cloud_field" value="true" />
+      <input type="hidden" name="return" value="$return_template" />
       'Word cloud' text in
       <select name="internalfieldname" onchange="fSubmitWordCloud();">
         <option value="" #if(!$wordCloudField) selected #end>--please select a field--</option>
@@ -230,7 +230,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
         #end
       #end
       </select>
-    <!-- <input type="submit" value="add group"> -->
+    <!-- <input type="submit" value="add group" /> -->
     </div>
     </form>
     <br>
@@ -266,7 +266,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
                   #end
                 #end
             </select>
-    	<!-- <input type="submit" value="add calculation"> -->
+    	<!-- <input type="submit" value="add calculation" /> -->
     </div>
     </form><br>
     #set($currentFilterReportField = $defaultChart.getFilterReportField())
@@ -309,10 +309,10 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/summary")
         <input type="hidden" name="return" value="$return_template" />
         <input type="hidden" name="set_chart_range" value="1" />
         Show
-        <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end> highest
-        <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end> lowest
-        <input type="number" name="rangepercent" value="$rangePercent"> % of results
-        <input type="submit" name="submit" value="Set limit">
+        <input type="radio" name="rangedirection" value="true" #if($rangeDirection) checked #end /> highest
+        <input type="radio" name="rangedirection" value="false" #if(!$rangeDirection) checked #end /> lowest
+        <input type="number" name="rangepercent" value="$rangePercent" /> % of results
+        <input type="submit" name="submit" value="Set limit" />
       </form><br>
       <form name="savechart" id="savechart">
       	Choose a title:

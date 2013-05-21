@@ -107,10 +107,10 @@
 			<ul>
 					<div id="logout">
 						<form method="get" action="AppController.servlet" style="float:right">
-							<input type="hidden" name="return" value="gui/display_application">
-							<input type="hidden" name="logout" value="true">
-							<input type="hidden" name="cachebust" value="$viewTools.getRandomString()">
-							<input type="submit" value="logout">
+							<input type="hidden" name="return" value="gui/display_application" />
+							<input type="hidden" name="logout" value="true" />
+							<input type="hidden" name="cachebust" value="$viewTools.getRandomString()" />
+							<input type="submit" value="logout" />
 						</form>
 					</div>
 			</ul>

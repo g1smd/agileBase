@@ -49,11 +49,11 @@
           </tr>
           <tr class="labels">
             <td>
-              <input type="radio" name="import_type" id="insert" value="insert" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="insert" checked>
+              <input type="radio" name="import_type" id="insert" value="insert" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="insert" checked />
               <label for="insert">Insert all new records</label>
             </td>
             <td>
-              <input type="radio" name="import_type" id="update" value="update" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="update" >
+              <input type="radio" name="import_type" id="update" value="update" gtpb_set_custom_string="true" gtpb_stringkey="import_type" gtpb_customstringvalue="update" />
               <label for="update">Update existing records</label>
             </td>
           </tr>

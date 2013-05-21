@@ -42,7 +42,7 @@
 <table id="reportData">
 <tr class="rowa">
   <td>File to import</td>
-  <td><input type="file" name="importfile"></td>
+  <td><input type="file" name="importfile" /></td>
 </tr>
 #if(!$sessionData.hasTable())
 <tr class="rowa">
@@ -56,7 +56,7 @@
 #end
 <tr class="rowb">
   <td>Header lines</td>
-  <td>Skip the first <input size="3" name="num_header_lines" value="1"> lines of the import file</td>
+  <td>Skip the first <input size="3" name="num_header_lines" value="1" /> lines of the import file</td>
 </tr>
 <tr class="rowb">
   <td>Field separator</td>
@@ -71,11 +71,11 @@
 </tr>
 <tr class="rowb">
   <td>Generate row IDs</td>
-  <td><input type="checkbox" name="generate_row_ids" value="true" checked> If checked, generate IDs for each record, otherwise use the first column in the import file as an ID</td>
+  <td><input type="checkbox" name="generate_row_ids" value="true" checked /> If checked, generate IDs for each record, otherwise use the first column in the import file as an ID</td>
 </tr>
 <tr class="rowb">
   <td>Import file contains relation display values</td>
-  <td><input type="checkbox" name="use_relation_display_values" value="true" checked> Check if the import file contains display values for relation fields, uncheck if it contains internal values</td>
+  <td><input type="checkbox" name="use_relation_display_values" value="true" checked /> Check if the import file contains display values for relation fields, uncheck if it contains internal values</td>
 </tr>
 #foreach($field in $sessionTable.getFields())
   #if(($field.getClass().getSimpleName() == "SequenceFieldDefn") && (! $field.equals($sessionTable.getPrimaryKey())))
@@ -85,7 +85,7 @@
 #if($importSequenceFields)
 <tr class="rowa">
   <td>Import values for sequence fields</td>
-  <td><input type="checkbox" name="import_sequence_values" value="true">Check if the import file contains values for sequence fields, uncheck if you want these values to be automatically generated</td>
+  <td><input type="checkbox" name="import_sequence_values" value="true" />Check if the import file contains values for sequence fields, uncheck if you want these values to be automatically generated</td>
 </tr>
 <tr class="rowb">
 #else

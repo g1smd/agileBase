@@ -129,7 +129,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/edit")
 		  <$rowTag #if($rowCount%2!=0) class="rowb" #else class="rowa" #end>
 			#if(!$edit_nav)<$cellTag class=leading>&nbsp;</$cellTag>#end
 			<$cellTag>&nbsp;</$cellTag>
-			<$cellTag><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';"></$cellTag>
+			<$cellTag><input type="button" value="Complete" alt="Complete the rest of the record" onclick="parent.pane_2.document.location='AppController.servlet?return=gui/reports_and_tables/report_data';" /></$cellTag>
 			#if(!$edit_nav)<$cellTag class="trailing">&nbsp;</$cellTag>#end
 		  </$rowTag>
 		</div>

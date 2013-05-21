@@ -36,9 +36,9 @@ Please correct the error below and try entering the data again
 </div>
 #end
 <form class="agilebase" name="agilebase_form" method="post" action="$viewTools.getAppUrl()">
-  <input type="hidden" name="save_new_record" value="true">
-  <input type="hidden" name="t" value="$table.getInternalTableName()">
-  <input type="hidden" name="c" value="$company.getInternalCompanyName()">
+  <input type="hidden" name="save_new_record" value="true" />
+  <input type="hidden" name="t" value="$table.getInternalTableName()" />
+  <input type="hidden" name="c" value="$company.getInternalCompanyName()" />
   #if($formType == "table")
     <table cellspacing="0" cellpadding="0" border="0" id="agilebase_form_table">
   #else

@@ -105,9 +105,9 @@
         <tr>
           <td>$user.getForename() $user.getSurname() ($user.getUserName())</td>
           #if($roleMembers.contains($user))
-            <td><input type=checkbox name="$user.getInternalUserName()" checked></td>
+            <td><input type=checkbox name="$user.getInternalUserName()" checked /></td>
           #else
-            <td><input type=checkbox name="$user.getInternalUserName()"></td>
+            <td><input type=checkbox name="$user.getInternalUserName()" /></td>
           #end
         </tr>
       #end
@@ -130,10 +130,10 @@
         #end
         <tr>
           <td>$table.getTableName()<br>$table.getTableDescription()</td>
-          <td><input type=radio name="$table.getInternalTableName()" value="none" #if($highestTablePrivilege.equals("")) checked #end><br>none</td>
-          <td><input type=radio name="$table.getInternalTableName()" value="read" #if($highestTablePrivilege.equals("VIEW_TABLE_DATA")) checked #end><br>read</td>
-          <td><input type=radio name="$table.getInternalTableName()" value="edit" #if($highestTablePrivilege.equals("EDIT_TABLE_DATA")) checked #end><br>edit</td>
-          <td><input type=radio name="$table.getInternalTableName()" value="manage" #if($highestTablePrivilege.equals("MANAGE_TABLE")) checked #end><br>manage</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="none" #if($highestTablePrivilege.equals("")) checked #end /><br>none</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="read" #if($highestTablePrivilege.equals("VIEW_TABLE_DATA")) checked #end /><br>read</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="edit" #if($highestTablePrivilege.equals("EDIT_TABLE_DATA")) checked #end /><br>edit</td>
+          <td><input type=radio name="$table.getInternalTableName()" value="manage" #if($highestTablePrivilege.equals("MANAGE_TABLE")) checked #end /><br>manage</td>
         </tr>
       #end
       </table>

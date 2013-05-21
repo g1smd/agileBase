@@ -52,14 +52,14 @@
 		    </tr>
             <tr>
 	              <td>
-	                <input type="radio" name="recordlock" id="recordlock_no" value="no" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="no" checked>
+	                <input type="radio" name="recordlock" id="recordlock_no" value="no" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="no" checked />
               </td>
               <td style="padding-right:60px">
                 <label for="recordlock_no">No -<br />
                   <small>print the report as a draft</label>
               </td>
               <td>
-	                <input type="radio" name="recordlock" id="recordlock_yes" value="yes" gtpb_lock_records="true" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="yes">
+	                <input type="radio" name="recordlock" id="recordlock_yes" value="yes" gtpb_lock_records="true" gtpb_set_custom_string="true" gtpb_stringkey="record_lock_attempted" gtpb_customstringvalue="yes" />
               </td>
               <td style="padding-right:60px">
                 <label for="recordlock_yes">

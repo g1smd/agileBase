@@ -78,7 +78,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               <p>Also, answer this maths question:
               <div class="spaced">
                 <p>
-                11 - 2 = <input type="text" name="iamnotanumber" size="4">
+                11 - 2 = <input type="text" name="iamnotanumber" size="4" />
                 <p>
                 <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" placeholder="email" />
                 <button type="submit" class="btn">request password</button>
