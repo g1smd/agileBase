@@ -206,30 +206,32 @@
         oToolbar.appendChild(document.createTextNode(" $templateName.replace('_',' ') "));
       #end
 
-      ## Pane 3 printout
-		  var oRadio = document.createElement('input');
-		  oRadio.setAttribute('type','radio');
-		  oRadio.setAttribute('name','printout_selector');
-		  oRadio.setAttribute('value','individual_record');
-			#set($reportStyle = $report.getReportStyle())
-      #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION") && ($customTemplates.size() == 0))
-		    oRadio.setAttribute('checked','true');
-      #end
-      $(oRadio).click(fClick);
-		  oToolbar.appendChild(oRadio);
-		  oToolbar.appendChild(document.createTextNode(' individual record '));
-
-      ## Pane 2 printout
-      oRadio = document.createElement('input');
-      oRadio.setAttribute('type','radio');
-      oRadio.setAttribute('name','printout_selector');
-      oRadio.setAttribute('value','report_rows');
-      #if((($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION")) && ($customTemplates.size() == 0))
-        oRadio.setAttribute('checked','true');
-      #end
-      $(oRadio).click(fClick);
-      oToolbar.appendChild(oRadio);
-      oToolbar.appendChild(document.createTextNode(' all report rows '));
+      #if($customTemplates.size() == 0)
+        ## Pane 3 printout
+  		  var oRadio = document.createElement('input');
+  		  oRadio.setAttribute('type','radio');
+  		  oRadio.setAttribute('name','printout_selector');
+  		  oRadio.setAttribute('value','individual_record');
+  			#set($reportStyle = $report.getReportStyle())
+        #if(($reportStyle != "SECTIONED") && ($reportStyle != "ONE_SECTION") && ($customTemplates.size() == 0))
+  		    oRadio.setAttribute('checked','true');
+        #end
+        $(oRadio).click(fClick);
+  		  oToolbar.appendChild(oRadio);
+  		  oToolbar.appendChild(document.createTextNode(' individual record '));
+  
+        ## Pane 2 printout
+        oRadio = document.createElement('input');
+        oRadio.setAttribute('type','radio');
+        oRadio.setAttribute('name','printout_selector');
+        oRadio.setAttribute('value','report_rows');
+        #if((($reportStyle == "SECTIONED") || ($reportStyle == "ONE_SECTION")) && ($customTemplates.size() == 0))
+          oRadio.setAttribute('checked','true');
+        #end
+        $(oRadio).click(fClick);
+        oToolbar.appendChild(oRadio);
+        oToolbar.appendChild(document.createTextNode(' all report rows '));
+      #end ## end if no custom templates
 		}
 
         var oToolbar=document.createElement('div');
