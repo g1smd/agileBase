@@ -32,8 +32,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	</head>
 	<body>
     <div class="container">
-      <div class="hidden-desktop alert alert-info big">
-        On a mobile or tablet? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
+      <div class="visible-phone alert alert-info big">
+        On a phone? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
       </div>
       <div class="row abNav">
         <div class="span2 home">
@@ -87,5 +87,8 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
           </div>
       </div>
     </div>
+    <script>
+     // Test that we've not timed out
+    </script>
 		</body>
 </html>
