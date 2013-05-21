@@ -808,6 +808,8 @@ public final class ViewTools implements ViewToolsInfo {
 			this.areaCodes.put("55", "Corporate Numbering");
 			this.areaCodes.put("56", "Voice over IP");
 			this.areaCodes.put("70", "Personal Numbering (Premium Rate)");
+			this.areaCodes.put("71", "Mobile");
+			this.areaCodes.put("72", "Mobile");
 			this.areaCodes.put("73", "Mobile");
 			this.areaCodes.put("74", "Mobile");
 			this.areaCodes.put("75", "Mobile");
