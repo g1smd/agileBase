@@ -519,9 +519,13 @@ function sideExplainers(colour) {
 	$(".sideAction").mouseleave(function() {
 		$(".explainer").addClass("notfocus");
 	});
+	/* For iPad - remove explainer tooltips on click */
 	$(".sideAction").click(function() {
 		$(".explainer").addClass("notfocus");
 	});
+	$(".explainer").click(function() {
+		$(this).addClass("notfocus");
+	})
 }
 
 /**
