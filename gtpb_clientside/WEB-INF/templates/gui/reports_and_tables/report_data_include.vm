@@ -73,7 +73,7 @@
 					 #set($fileValue = $viewTools.getFileValueTool($dataRowField.getKeyValue()))
 					 #set($downloadUrl = "/agileBase/uploads/$field.getTableContainingField().getInternalTableName()/$field.getInternalFieldName()/$datarow.getRowId()/$fileValue")
 					 #if(!$fieldValueObject.isImage())
-					   #set($fileCellContents = "<img border='0' style='float:left' alt="" src=${Q}http://gtwebmarque.com/static_features/filetypes/${fileValue.getIconName()}.png${Q}><a href=${Q}${downloadUrl}${Q}>$fileValue</a>")
+					   #set($fileCellContents = "<img border='0' style='float:left' alt='' src=${Q}http://gtwebmarque.com/static_features/filetypes/${fileValue.getIconName()}.png${Q}><a href=${Q}${downloadUrl}${Q}>$fileValue</a>")
                      #end
 				     #set($success=$row.add($fileCellContents))
 			       #else
