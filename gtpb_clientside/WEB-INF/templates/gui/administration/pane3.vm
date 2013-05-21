@@ -22,7 +22,7 @@
   <link href="resources/button/button.css" type="text/css" rel="stylesheet" />
   <link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
   <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
-  <STYLE>
+  <STYLE type="text/css">
 
       html, body { padding:0;
     	             margin:0;

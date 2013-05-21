@@ -11,8 +11,8 @@ if (requestURL.contains("appserver.")) {
 		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
-	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
-	    <style>
+	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
+	    <style type="text/css">
 	    	@import url("/agileBase/website/styles/styles.css");
 		</style>
 <script type="text/javascript">
@@ -29,14 +29,14 @@ if (requestURL.contains("appserver.")) {
     </head>
     <body>
 		<div id="mobileLogin">
-			<img src="/agileBase/website/images/logo-agilebase.png" alt=""><br><br>
+			<img src="/agileBase/website/images/logo-agilebase.png" alt="" /><br><br>
 			<% if(live) { %>
 				<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } else { %>
 				<form method="POST" action="http://backup.agilebase.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 			<% } %>
 			username<br />
-			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off"/><br>
+			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off" /><br>
 			password<br />
 			<input type="password" name="j_password" id="j_password" /><br><br>
 			<input type="submit" value="login">

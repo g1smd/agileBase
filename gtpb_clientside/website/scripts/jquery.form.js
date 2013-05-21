@@ -512,7 +512,7 @@ $.fn.fieldSerialize = function(successful) {
  *	  <input name="A" type="text" />
  *	  <input name="A" type="text" />
  *	  <input name="B" type="checkbox" value="B1" />
- *	  <input name="B" type="checkbox" value="B2"/>
+ *	  <input name="B" type="checkbox" value="B2" />
  *	  <input name="C" type="radio" value="C1" />
  *	  <input name="C" type="radio" value="C2" />
  *  </fieldset></form>

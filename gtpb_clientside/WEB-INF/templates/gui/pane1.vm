@@ -24,7 +24,7 @@
 	#if($mobile_device)
 	<meta name = "viewport" content = "width = device-width">
 	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
-	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png"/>
+	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 	#end
 	<title>Agilebase - $company</title>
 	## CSS
@@ -71,7 +71,7 @@
     <div id="header">
 	  #set($browser = $viewTools.getBrowser())
 	  #if($browser != "iPod/iPhone")
-      <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png" alt=""></a>
+      <a id="home" href="#" alt="agileBase"><img src="/agileBase/website/images/logo-agilebase.png" alt="" /></a>
       #end
 	  <div id="links" style="left:0px">
 		#if($browser == "iPod/iPhone")

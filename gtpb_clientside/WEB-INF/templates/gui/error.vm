@@ -15,7 +15,7 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-<style>
+<style type="text/css">
   @import url("website/bootstrap/css/bootstrap.css");
   @import url("website/styles.css");
   @import url("styles/main.css");

@@ -17,7 +17,7 @@
 ##
 #set($module = $sessionData.getModule())
 #set($currentIconPath = $module.getIconPath())
-<style>
+<style type="text/css">
   div#moduleIconPicker table.iconPickerTable {
     border-collapse:collapsed;
     margin-top:30px;

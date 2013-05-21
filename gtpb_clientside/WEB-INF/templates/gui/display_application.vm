@@ -25,7 +25,7 @@
 	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
 	<link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
  	<!--[if IE 7]>
-    <style>
+    <style type="text/css">
 		@import url('resources/display_application-ie.css');
 		html {
 		  overflow:auto;
@@ -76,7 +76,7 @@
         #parse('gui/toolbar/buttons/export.vm')
       </div>
       <div class="buttonGroup">
-		<input type="search" class="searchbox" id="searchbox" placeholder="quick search"/>&nbsp;<button id="doneSearch">done</button>
+		<input type="search" class="searchbox" id="searchbox" placeholder="quick search" />&nbsp;<button id="doneSearch">done</button>
       </div>
       <div class="buttonGroup" style="float:right; margin-left:0; margin-right: 90px"> ## external applications, built in and customised
         ## #parse('gui/toolbar/buttons/wiki.vm')
@@ -100,7 +100,7 @@
       #end
     </div>
 		<div id="logout">
-			##<img style="float:left" src="resources/toolbar/logout_left.png" alt="">
+			##<img style="float:left" src="resources/toolbar/logout_left.png" alt="" />
 			<span>
         	  ##<a onclick="fHelp();" href="#" title="load help centre to view documentation or ask a question">help</a>
 			  ##<span style="color:white">|</span>

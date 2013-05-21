@@ -17,7 +17,7 @@
 ##
 ## Obsolete template
 
-<style>
+<style type="text/css">
   div#moduleColorPicker table.colorPickerTable {
     border-collapse:collapsed;
     margin-top:30px;

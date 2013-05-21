@@ -32,7 +32,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/global_edit")
 		    <thead>
 			      <tr>
 			##        <th class="leading">&nbsp;</th>
-			        <th class="leading"><!--<img src="resources/icons/help.png" title="Globally edit a value in *all* filtered records in pane 2" alt="">-->&nbsp;</th>
+			        <th class="leading"><!--<img src="resources/icons/help.png" title="Globally edit a value in *all* filtered records in pane 2" alt="" />-->&nbsp;</th>
 			        <th>field</th>
 			        <th>value</th>
 			        <th class="trailing">&nbsp;</th>

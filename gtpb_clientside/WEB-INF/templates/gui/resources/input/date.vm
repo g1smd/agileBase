@@ -59,7 +59,7 @@
 #if($globalEdit) #set($non_xml_update=true) #end
 
 #if($userCanEdit)##
-  <style>
+  <style type="text/css">
     div.date {
       display:inline;
     }

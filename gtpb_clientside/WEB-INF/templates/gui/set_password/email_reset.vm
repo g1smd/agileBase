@@ -23,7 +23,7 @@
     <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
     <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
-    <style>
+    <style type="text/css">
     #[[
       .good {
         background-color: #8DC63F;
@@ -75,7 +75,7 @@
             <input type="hidden" name="return" value="gui/set_password/email_success" />
             <input type="hidden" name="update_user" value="true" />
             <input type="hidden" name="internalusername" value="$user.getInternalUserName()" />
-            <input type="password" name="password" id="password"/><button type="submit" value="Set" class="btn">set</button>
+            <input type="password" name="password" id="password" /><button type="submit" value="Set" class="btn">set</button>
             <div id="strength"></div>
           </form>
       </div>

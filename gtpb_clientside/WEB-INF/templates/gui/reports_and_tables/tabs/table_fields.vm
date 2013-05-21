@@ -20,7 +20,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 #if($sessionData.getTable().getDefaultReport().equals($sessionData.getReport()))
 
 #set($tabCaption='fields')
-<STYLE>
+<STYLE type="text/css">
   @import url("styles/report.css");
 
   div#fieldOptionsSet {

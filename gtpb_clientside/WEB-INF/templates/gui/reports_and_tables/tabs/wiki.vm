@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 ## Link record to a wiki page
-<style>
+<style type="text/css">
   thead[wikiExists=false] div.wikiControl,
   thead[wikiExists=false] tr.wikiTitle,
   td[wikiExists=false] div#editWikiEntry,
@@ -83,7 +83,7 @@
 			      #if($tabCaption=="edit")
 			      <button name="_edit_wiki_page">
 			        edit
-			        <img src="resources/reports/edit.png" align="absmiddle" alt="">
+			        <img src="resources/reports/edit.png" align="absmiddle" alt="" />
 			      </button>
 			      #end
 			    </td>

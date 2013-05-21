@@ -17,7 +17,7 @@
 ##
 ## Buttons to select different pane 3 functions
 
-<style>
+<style type="text/css">
 #mobile_footer {
   position: relative;
   height: 40px;

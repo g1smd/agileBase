@@ -25,7 +25,7 @@
     <title>
       Agilebase translation
     </title>
-    <style>
+    <style type="text/css">
       * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 
       			html, body { height:100% }

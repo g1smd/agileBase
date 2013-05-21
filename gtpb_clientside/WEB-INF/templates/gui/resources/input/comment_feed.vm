@@ -17,7 +17,7 @@
 ##
 <div class="comment_feed input-append">
 #if(!$viewOnly)
-  <input type="text" class="comment_input" placeholder="Add $field" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()"/><input type="button" value="add" />
+  <input type="text" class="comment_input" placeholder="Add $field" rowid="$sessionRowId" internalfieldname="$field.getInternalFieldName()" internaltablename="$sessionTable.getInternalTableName()" /><input type="button" value="add" />
 #end
 </div>
 ## called by input.vm anyway

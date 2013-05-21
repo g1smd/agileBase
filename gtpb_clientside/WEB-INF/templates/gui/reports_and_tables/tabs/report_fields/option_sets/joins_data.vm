@@ -17,7 +17,7 @@
 ##
 ## edit the joins in a report
 #set($reportTable = $report.getParentTable())
-<style>
+<style type="text/css">
 	@import url("styles/report.css");
 
 	div#fieldOptionsSet { display:none }

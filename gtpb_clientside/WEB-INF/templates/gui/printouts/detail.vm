@@ -17,7 +17,7 @@
 ##
 ## We're printing multiple records, so make the columns are equal width, lining them up
 ## TODO: This doesn't work, they still come out different widths on different pages
-<style>
+<style type="text/css">
 .printoutfieldnamecolumn {
 	width: 30%;
 }

@@ -19,7 +19,7 @@
 
 <html>
   <head>
-    <style>
+    <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
 			-webkit-box-sizing: border-box;
@@ -29,7 +29,7 @@
     </style>
 
 	<!--[if IE 7]>
-    	<style>
+    	<style type="text/css">
       		#colsWrapper {
       			margin-top: 69px;
       		}

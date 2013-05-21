@@ -23,7 +23,7 @@
   <caption>Import data</caption>
   #parse('gui/customisations/wizard_result.vm')
   <htmlContent><![CDATA[
-      <style>
+      <style type="text/css">
          table#_md_address_start_table {
            width:85%;
            margin-top:50px;

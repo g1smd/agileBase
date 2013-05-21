@@ -22,7 +22,7 @@
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
   <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
-  <style>
+  <style type="text/css">
   .infomessage {
 	border-radius: 1em;
 	background: #E7F5F9;

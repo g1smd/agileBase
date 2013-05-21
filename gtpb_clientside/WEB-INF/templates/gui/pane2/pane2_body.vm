@@ -142,7 +142,7 @@ $viewTools.startTimer("gui/pane2/pane2_body")
           #if($attachmentType == "PROFILE_PHOTO")
             #set($image = true)
             #set($srcUrl = "/agileBase/resources/icons/file_placeholders/$placeholderIcon")
-            #set($cell = "<img src='$srcUrl' alt="" />")
+            #set($cell = "<img src='$srcUrl' alt='' />")
           #end
         #end
       #else

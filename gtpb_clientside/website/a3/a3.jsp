@@ -8,7 +8,7 @@ if (requestURL.contains("appserver.")) {
 <html>
 	<head>
 		<title>A3 reports</title>
-		<style>
+		<style type="text/css">
 		  @import url('website/a3/styles.css');
 		  @import url('website/a3/styles-thickbox.css');
 		</style>
@@ -69,7 +69,7 @@ if (requestURL.contains("appserver.")) {
 							  <input type="hidden" name="templ_email" value="email_signup.txt" />
 							  <input type="text" id="email_input" name="email" value="your email address" title="your email address" />
 							  <br /><br />
-							  <input type="submit" value="Go"/>
+							  <input type="submit" value="Go" />
 							  </form>
 				        	</div>
 				        	<h1>Login</h1>
@@ -79,8 +79,8 @@ if (requestURL.contains("appserver.")) {
 							    <form method="POST" action="http://gtwmbackup.dh.bytemark.co.uk:8080/agileBase/j_security_check" name="loginform" id="loginform">
 							<% } %>
 							<table class="formtable">
-							    <tr><td>username</td><td> <input type="text" name="j_username" title="username"/></td></tr>
-								<tr><td>password</td><td> <input type="password" name="j_password" title="password"/></td></tr>
+							    <tr><td>username</td><td> <input type="text" name="j_username" title="username" /></td></tr>
+								<tr><td>password</td><td> <input type="password" name="j_password" title="password" /></td></tr>
 							    <tr><td>&nbsp;</td><td> <input type="submit" value="Go" /></td></tr>
 							</table>
 							</form>
