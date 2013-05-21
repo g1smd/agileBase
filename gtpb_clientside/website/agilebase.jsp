@@ -89,6 +89,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
     </div>
     <script>
      // Test that we've not timed out
+     if ($("#tiles").size() > 0) {
+       document.location = "AppController.servlet?return=boot";
+     }
     </script>
-		</body>
+  </body>
 </html>
