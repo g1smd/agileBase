@@ -519,6 +519,9 @@ function sideExplainers(colour) {
 	$(".sideAction").mouseleave(function() {
 		$(".explainer").addClass("notfocus");
 	});
+	$(".sideAction").click(function() {
+		$(".explainer").addClass("notfocus");
+	});
 }
 
 /**
