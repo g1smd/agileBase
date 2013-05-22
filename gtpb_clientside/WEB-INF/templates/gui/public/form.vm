@@ -21,7 +21,7 @@
 #set($table = $gtpbPublicTable) ## Set in Public servlet
 #set($company = $gtpbCompany)
 #if($gtpbCss)
-  <link rel="stylesheet" type="text/css" href="$gtpbCss" />
+  <link type="text/css" rel="stylesheet" href="$gtpbCss" />
 #end
 ## Test for an exception caused by a previous save attempt
 #if($exceptionCaught)

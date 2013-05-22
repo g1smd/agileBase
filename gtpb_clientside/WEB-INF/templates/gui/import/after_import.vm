@@ -17,7 +17,7 @@
 ##
 <html>
 <head>
-<link href="styles/report.css" type="text/css" rel="stylesheet" />
+<link type="text/css" rel="stylesheet" href="styles/report.css" />
 <style type="text/css">
 	html, body {
            /* font-family: "Arial", sans-serif; */

@@ -20,9 +20,9 @@
 <html>
 <head>
   <title>$user.getCompany() :: agilebase - set password</title>
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="http://agilebase.co.uk/styles.css" />
     <style type="text/css">
     #[[
       .good {
@@ -41,7 +41,7 @@
     </style>
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.complexify.js"></script>
-    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
+    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico" />
     <script type="text/javascript">
       $(document).ready(function() {
         $("#password").complexify({strengthScaleFactor: 0.8}, function(valid, complexity) {

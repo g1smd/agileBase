@@ -20,7 +20,7 @@
 <html>
 <head>
   <title>AgileBase - export $report</title>
-  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {

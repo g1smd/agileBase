@@ -22,11 +22,11 @@ Thread.sleep(3000);
 %>
 <html>
   <head>
-  	<title>Login error</title>
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="/agileBase/website/styles.css" rel="stylesheet">
+    <title>Login error</title>
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
   </head>
 <body>

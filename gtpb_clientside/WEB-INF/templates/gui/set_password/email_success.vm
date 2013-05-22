@@ -20,9 +20,9 @@
 <html>
 <head>
   <title>$user.getCompany() :: agilebase - password set</title>
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="http://agilebase.co.uk/styles.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="http://agilebase.co.uk/styles.css" />
     <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 </head>
 <body><div class="container">

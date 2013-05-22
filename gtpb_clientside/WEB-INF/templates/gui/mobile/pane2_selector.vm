@@ -27,8 +27,8 @@
   <html>
 	<head><title>$report charts</title>
 	  <meta name = "viewport" content = "width = device-width">
-	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
-	  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="styles/report.css" />
+	  <link type="text/css" rel="stylesheet" href="resources/tabs/tabs.css" />
 	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
   	  <script type="text/javascript" src="resources/jquery.js"></script>
     </head>

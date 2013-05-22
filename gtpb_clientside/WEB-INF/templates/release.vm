@@ -4,8 +4,8 @@
 <html>
 <head>
   <title>Agilebase release version</title>
-  <link href="resources/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
-  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
+  <link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
 </head>
 <body style="padding: 1em">
 	<div class="container">

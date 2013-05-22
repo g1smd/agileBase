@@ -22,7 +22,7 @@
     <title>
       Calculation Update
     </title>
-    <link rel="stylesheet" type="text/css" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <link type="text/css" rel="stylesheet" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
     #parse("gui/display_error.vm")
   </head>
 

@@ -29,9 +29,9 @@
 	<title>Agilebase - $company</title>
 	## CSS
 	#if($mobile_device)
-	  <link href="resources/mobile/pane1_amalgam.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="resources/mobile/pane1_amalgam.css" />
 	#else
-	  <link href="resources/pane1_amalgam.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="resources/pane1_amalgam.css" />
 	#end
 	## JS
 	<script type="text/javascript" src="resources/jquery.js"></script>

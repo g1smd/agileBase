@@ -18,11 +18,11 @@
 <html>
 <head>
     <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="resources/simple/simple.css" />
     <title>Agilebase usage</title>
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jit.js"></script>

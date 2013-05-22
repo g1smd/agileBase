@@ -15,11 +15,11 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 	<head>
     <meta charset="UTF-8">
 		<title>agilebase : log in</title>
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/agileBase/website/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="/agileBase/website/styles.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap-responsive.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
 		<link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
     <script type="text/javascript" src="/agileBase/website/scripts/agilebase.js"></script>

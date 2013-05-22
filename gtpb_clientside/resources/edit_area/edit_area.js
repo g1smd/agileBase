@@ -491,7 +491,7 @@
 			head = document.getElementsByTagName("head");
 			head[0].appendChild(link);
 		}catch(e){
-			document.write("<link href='"+ url +"' rel='stylesheet' type='text/css' />");
+			document.write("<link type='text/css' rel='stylesheet' href='"+ url +"' />");
 		}
 	};
 

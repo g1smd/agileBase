@@ -21,9 +21,9 @@
 	#set($appUser = $view.getLoggedInUser())
     #set($company = $appUser.getCompany())
     #set($company_name=$company.getCompanyName())
-	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
-	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
-	<link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
+	<link type="text/css" rel="stylesheet" href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" />
+	<link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
  	<!--[if IE 7]>
     <style type="text/css">
 		@import url('resources/display_application-ie.css');

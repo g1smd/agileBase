@@ -20,9 +20,9 @@
 <html>
   <head>
 	#if($mobile_device)
-	  <link href="resources/mobile/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="resources/mobile/pane2_amalgam.css" />
 	#else
-	  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="resources/pane2_amalgam.css" />
 	#end
     <style type="text/css">
 	      * {

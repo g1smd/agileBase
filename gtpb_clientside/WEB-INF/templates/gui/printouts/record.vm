@@ -20,9 +20,9 @@
 <html>
   <head>
     <title>Record Details Printout</title>
-  <link href="styles/report.css" type="text/css" rel="stylesheet" />
-  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
-	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="styles/report.css" />
+  <link type="text/css" rel="stylesheet" href="resources/tabs/tabs.css" />
+	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
     <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;

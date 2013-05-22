@@ -19,9 +19,9 @@
 
 <HTML>
 <HEAD>
-  <link href="resources/button/button.css" type="text/css" rel="stylesheet" />
-  <link href="resources/module-colours.css" type="text/css" rel="stylesheet" />
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="resources/button/button.css" />
+  <link type="text/css" rel="stylesheet" href="resources/module-colours.css" />
+  <link type="text/css" rel="stylesheet" href="resources/pane3_amalgam.css" />
   <STYLE type="text/css">
 
       html, body { padding:0;

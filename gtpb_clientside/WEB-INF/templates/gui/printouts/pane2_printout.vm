@@ -19,10 +19,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<link href="styles/report.css" type="text/css" rel="stylesheet" />
-  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
-	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
-	<link href="resources/button/button.css" type="text/css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="styles/report.css" />
+  <link type="text/css" rel="stylesheet" href="resources/tabs/tabs.css" />
+	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
+	<link type="text/css" rel="stylesheet" href="resources/button/button.css" />
     <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
