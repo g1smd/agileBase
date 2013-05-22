@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>image.vm</title>
 <script type="text/javascript" src="resources/jquery.js"></script>
 <script type="text/javascript">
 var zoomPercent = 100;

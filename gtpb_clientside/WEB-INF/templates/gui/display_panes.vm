@@ -19,6 +19,7 @@
 
 <html>
   <head>
+    <title>display panes</title>
     <style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
