@@ -36,7 +36,7 @@
 	<body>
 	  #parse("gui/mobile/pane2_header.vm")
     #parse("gui/reports_and_tables/tabs/summary.vm")
-	</body></head>
+	</body>
   </html>
 #else
   #set($mobile_pane2_selection = "report")
