@@ -247,6 +247,10 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// This is specially created not to throw divide by zero errors
 		// but rather return null;
 		calculationSQL = calculationSQL.replaceAll("\\/", "//");
+		// Replace long dashes (created by e.g. MS Word) with normal ones
+		logger.debug("Pre-replace: " + calculationSQL);
+		calculationSQL = calculationSQL.replace("â\u0080\u0093","-");
+		logger.debug("Post-replace: " + calculationSQL);
 		// Replace
 		// {table.field} => internaltablename.internalfieldname
 		for (TableInfo table : availableDataStores.keySet()) {
