@@ -54,7 +54,7 @@
       #parse("properties.vm") ## sets logo variable
       #if($logo)
         <div id="logo">
-          <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" alt="" /></a>
+          <a href="http://www.agilebase.co.uk/" target="_blank"><img src="$logo" border="0" alt="" /></a>
         </div>
       #end
       ## Show add/clone/delete buttons if user has edit privileges on at least one table

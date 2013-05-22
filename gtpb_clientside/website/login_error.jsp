@@ -34,7 +34,7 @@ Thread.sleep(3000);
   <div class="container big">
     <div class="row abNav">
       <div class="span2 home">
-        <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
+        <a href="http://www.agilebase.co.uk/"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
         <div class="arrow"></div>
       </div>
     </div>
