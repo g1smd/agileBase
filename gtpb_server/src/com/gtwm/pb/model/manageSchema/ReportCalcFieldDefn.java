@@ -249,7 +249,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		calculationSQL = calculationSQL.replaceAll("\\/", "//");
 		// Replace long dashes (created by e.g. MS Word) with normal ones
 		logger.debug("Pre-replace: " + calculationSQL);
-		calculationSQL = calculationSQL.replace("–","-");
+		calculationSQL = calculationSQL.replaceAll("[\u2013\u2014\u2015]","-");
 		logger.debug("Post-replace: " + calculationSQL);
 		// Replace
 		// {table.field} => internaltablename.internalfieldname
