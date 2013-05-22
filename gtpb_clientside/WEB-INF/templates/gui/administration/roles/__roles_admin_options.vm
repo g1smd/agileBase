@@ -88,6 +88,7 @@
 
   </SCRIPT>
 </HEAD>
+
 <BODY onload="fInit()">
   ## session role will be used often
   #set($sessionRole = $sessionData.getRole())

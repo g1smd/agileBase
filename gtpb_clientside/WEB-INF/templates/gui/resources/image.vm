@@ -49,6 +49,7 @@ $(document).keypress(function(event) {
 }
 </style>
 </head>
+
 <body>
   <div id="zoom">
     <img src="resources/preview/zoom_in_48.png" alt="" onclick="zoom(true);"><br/>
