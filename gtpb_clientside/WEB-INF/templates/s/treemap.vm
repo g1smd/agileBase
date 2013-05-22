@@ -16,7 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <html>
-<head>
+  <head>
     <title>Agilebase usage</title>
     <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />
@@ -29,7 +29,7 @@
     <script type="text/javascript" src="resources/jquery.sparkline.js"></script>
     <script type="text/javascript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
     <script type="text/javascript" src="resources/simple/simple.js"></script>
-</head>
+  </head>
 
 <body>
 	<div class="container">

@@ -19,11 +19,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    #parse('gui/display_error.vm')
+    #set($report = $sessionData.getReport())
+    #if($report.getModule())
+      #set($module=$report.getModule())
+    #else
+      #set($module=$sessionData.getTable().getTableName())
+    #end
+	<title>$module - $report</title>
 	<link type="text/css" rel="stylesheet" href="styles/report.css" />
-  <link type="text/css" rel="stylesheet" href="resources/tabs/tabs.css" />
+	<link type="text/css" rel="stylesheet" href="resources/tabs/tabs.css" />
 	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
 	<link type="text/css" rel="stylesheet" href="resources/button/button.css" />
-    <style type="text/css">
+	<style type="text/css">
 	      * {
 		    -moz-box-sizing: border-box;
 			-webkit-box-sizing: border-box;
@@ -83,27 +91,18 @@
 	      #map {
 	        display: none;
 	      }
-
 	    </style>
-    #parse('gui/display_error.vm')
-    #set($report = $sessionData.getReport())
-    #if($report.getModule())
-      #set($module=$report.getModule())
-    #else
-      #set($module=$sessionData.getTable().getTableName())
-    #end
-    <title>$module - $report</title>
 	<script type="text/javascript" src="resources/jquery.js"></script>
-    <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
-    <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
-    <script type="text/javascript" src="resources/highcharts.js"></script>
-    <script type="text/javascript">
+	<script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
+	<script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>
+	<script type="text/javascript" src="resources/highcharts.js"></script>
+	<script type="text/javascript">
 	function loadDetail() {
 		$('#detail').text('loading...');
 		$('#detail').load('AppController.servlet?return=gui/printouts/detail');
 		$('#detail').removeAttr('id');
 	}
-    </script>
+	</script>
   </head>
 
   <body isDraft="true" style="background-color: white; overflow: visible"> ## err on the side of caution and mark as a draft by default.  This will be changed when the doc loads if it's not a draft

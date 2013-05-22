@@ -18,7 +18,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-	#set($appUser = $view.getLoggedInUser())
+    #set($appUser = $view.getLoggedInUser())
     #set($company = $appUser.getCompany())
     #set($company_name=$company.getCompanyName())
 

@@ -24,6 +24,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>$module - $report</title>
 	##<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
     ##<link type="text/css" rel="stylesheet" href="resources/button/button.css" />
     <link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
@@ -82,7 +83,6 @@
 		    </style>
 		<![endif]-->
 
-	<title>$module - $report</title>
 	<script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
     <script type="text/javascript" src="resources/modalFramework/modalFramework.js"></script>

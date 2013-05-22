@@ -21,17 +21,18 @@
 <html>
 <head>
     #parse('gui/display_error.vm')
-	#if($mobile_device)
-	<meta name = "viewport" content = "width = device-width">
-	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
-	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
-	#end
 	<title>Agilebase - $company</title>
 	## CSS
 	#if($mobile_device)
 	  <link type="text/css" rel="stylesheet" href="resources/mobile/pane1_amalgam.css" />
 	#else
 	  <link type="text/css" rel="stylesheet" href="resources/pane1_amalgam.css" />
+	#end
+	## viewport and icon
+	#if($mobile_device)
+	<meta name = "viewport" content = "width = device-width">
+	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 	#end
 	## JS
 	<script type="text/javascript" src="resources/jquery.js"></script>
