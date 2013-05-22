@@ -857,7 +857,7 @@ table.reportData td {
 .sideAction .explainer {
   position: absolute;
   z-indez: 2;
-  width: 8em;
+  /* width: 8em; */
   height: 1.5em;
   left: 1em;
   padding: 0.5em;
@@ -876,9 +876,11 @@ table.reportData td {
   text-align: right;
 }
 
+/*
 .sideAction.report .explainer {
   width: 15em;
 }
+*/
 
 .bold {
   font-weight: bold;

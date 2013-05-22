@@ -103,15 +103,15 @@
 ##  <i class="icon-ok-sign"></i>
 ##</div>
 <div class="sideAction newRecord">
-  <div class="explainer notfocus">new item</div>
+  <div class="explainer notfocus">new&nbsp;item</div>
   <i class="icon-plus-sign"></i>
 </div>
 <div class="sideAction cloneRecord">
-  <div class="explainer notfocus">copy item</div>
+  <div class="explainer notfocus">copy&nbsp;item</div>
   <i class="icon-copy"></i>
 </div>
 <div class="sideAction removeRecord">
-  <div class="explainer notfocus">delete item</div>
+  <div class="explainer notfocus">delete&nbsp;item</div>
   <i class="icon-minus-sign"></i>
 </div>
 <div id="reportSideActions">

@@ -13,14 +13,14 @@
   #end
 #end
 <div class="sideAction report report1" data-internalreportname="$report.getInternalReportName()">
-  <div class="explainer right notfocus">$report</div>
+  <div class="explainer right notfocus">$report.getReportName().replace(" ","&nbsp;")</div>
   <i class="icon-ok-circle"></i>
 </div>
 #foreach($tableReport in $alternativeReports)
   #set($tableReportName = $tableReport.getReportName())
   #set($reportNum = $reportNum + 1)
   <div class="sideAction report report$reportNum" data-internalreportname="$tableReport.getInternalReportName()">
-    <div class="explainer right notfocus">$tableReportName</div>
+    <div class="explainer right notfocus">$tableReportName.replace(" ","&nbsp;")</div>
     <i class="icon-circle-blank"></i>
   </div>
 #end
