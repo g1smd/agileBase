@@ -1,4 +1,5 @@
-<!doctype HTML>
+<!DOCTYPE html>
+
 #set($commitUrl = $viewTools.getCommitUrl())
 #set($commitMessage = $viewTools.getCommitMessage())
 <html>

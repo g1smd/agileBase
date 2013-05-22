@@ -19,6 +19,7 @@
 
 ## Only allow anonymisation to be run on the test/backup server
 <!DOCTYPE html>
+
 <html>
   <head>
     <title>Anonymise data in an entire company</title>

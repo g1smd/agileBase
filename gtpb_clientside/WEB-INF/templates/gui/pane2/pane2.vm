@@ -17,6 +17,7 @@
 ##
 #set($browser = $viewTools.getBrowser())
 <!DOCTYPE html>
+
 <html>
   <head>
 	#set($sessionReport = $sessionData.getReport())

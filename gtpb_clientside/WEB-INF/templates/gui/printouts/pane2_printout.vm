@@ -17,6 +17,7 @@
 ##
 #set($unlockedRecords=false)
 <!DOCTYPE html>
+
 <html>
   <head>
     #parse('gui/display_error.vm')

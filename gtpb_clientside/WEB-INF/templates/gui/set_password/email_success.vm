@@ -17,6 +17,7 @@
 ##
 #set($user = $view.getLoggedInUser())
 <!DOCTYPE html>
+
 <html>
 <head>
   <title>$user.getCompany() :: agilebase - password set</title>

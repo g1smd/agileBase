@@ -18,6 +18,7 @@
 #set($user = $view.getLoggedInUser())
 #set($tiles = $user.getTiles())
 <!DOCTYPE html>
+
 <html>
 <head>
   #set($hasCalendar = false)

@@ -22,6 +22,7 @@
   #set($module=$sessionData.getTable().getTableName())
 #end
 <!DOCTYPE html>
+
 <html>
   <head>
     <title>$module - $report</title>

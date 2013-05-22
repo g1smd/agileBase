@@ -20,6 +20,7 @@
 #set($externalText = $view.toExternalNames($sourceText))
 ###set($outputText = $view.toExternalNames($sourceText))
 <!DOCTYPE html>
+
 <html>
   <head>
     <title>Agilebase translation</title>
