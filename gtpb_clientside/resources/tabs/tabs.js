@@ -1291,6 +1291,12 @@ function fTabs() {
 															"delete this " + singularName);
 													$("#tab_deleter").fadeIn();
 												}
+												if ($("#tiles").size() > 0) {
+												  tabContainer.find(".selectorReport").find("tr").click(function() {
+												  	var rowId = $(this).attr("name");
+												  	loadIntoTabTable(this, tabInternalTableName, rowId);
+												  });
+												}
 											});
 										} // end of load existing content (if any)
 									} else {
