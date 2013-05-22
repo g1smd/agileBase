@@ -20,6 +20,7 @@
 <head>
 <title>Loading ${wikiPageName}...</title>
 </head>
+
 <body>
 <script type="text/javascript">
 ##document.location="../jamwiki/$cleanCompanyName/StartingPoints";

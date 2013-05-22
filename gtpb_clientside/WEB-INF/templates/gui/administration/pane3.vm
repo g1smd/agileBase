@@ -19,6 +19,7 @@
 
 <HTML>
 <HEAD>
+  <title>pane 3</title>
   <link type="text/css" rel="stylesheet" href="resources/button/button.css" />
   <link type="text/css" rel="stylesheet" href="resources/module-colours.css" />
   <link type="text/css" rel="stylesheet" href="resources/pane3_amalgam.css" />
