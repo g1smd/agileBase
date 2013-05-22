@@ -10,9 +10,9 @@ if (requestURL.contains("appserver.")) {
 		<title>agileBase</title>
 		<style type="text/css">@import url("/agileBase/website/styles/styles.css");</style>
 		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
+		<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 		<meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
-		<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-59206-20']);

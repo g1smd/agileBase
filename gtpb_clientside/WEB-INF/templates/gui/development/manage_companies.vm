@@ -17,9 +17,10 @@
 ##
 <html>
 <head>
-<title>Manage Companies</title>
+  <title>Manage Companies</title>
     #parse('gui/display_error.vm')
 </head>
+
 <body>
 <h1>Manage companies</h1>
 <form method="post" action="AppController.servlet?return=gui/development/manage_companies">

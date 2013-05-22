@@ -23,6 +23,7 @@
     top.document.location = "AppController.servlet?return=boot";
   </script>
 </head>
+
 <body>
 Logging out...
 </body>

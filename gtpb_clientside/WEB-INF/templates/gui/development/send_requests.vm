@@ -145,9 +145,8 @@
 
   //-->
   </script>
-
-
 </head>
+
 <body>
   <textarea id="requests" rows="10" cols="100"></textarea><br>
 	<button onclick="new fGo()">Send requests</button>

@@ -3,6 +3,7 @@
 <%@ page isErrorPage = "true"%>
 <html>
 <head><title>Ah, erm</title></head>
+
 <body>
 Something appears to have gone wrong.<p>
 <%=exception.getMessage()%><p>

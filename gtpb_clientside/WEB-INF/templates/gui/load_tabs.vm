@@ -26,6 +26,7 @@
   <head>
   <title>Loading intranet tabs...</title>
   </head>
+
   <body>
     <script type="text/javascript">
 	   document.location='AppController.servlet?$app_params';

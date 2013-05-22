@@ -67,8 +67,8 @@
 		fInit();
 	   });
   	</SCRIPT>
+  </head>
 
-	  </head>
   <body>
 	    #parse($resource)
   </body>

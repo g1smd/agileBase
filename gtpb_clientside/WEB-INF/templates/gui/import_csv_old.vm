@@ -16,9 +16,12 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <html>
-<head>
-<style type="text/css">
-@import url("styles/report.css");
+  <head>
+    <title>agileBase data import</title>
+    #parse("gui/display_error.vm")
+
+    <style type="text/css">
+    @import url("styles/report.css");
 
 		html, body {
     /* font-family: "Arial", sans-serif;  */
@@ -27,10 +30,9 @@
     			 margin:0;
     			 padding:0;
     			 height:100% }
-</style>
-<title>agileBase data import</title>
-#parse("gui/display_error.vm")
-</head>
+    </style>
+  </head>
+
 <body>
 #if($sessionData.hasTable())
 #set($sessionTable = $sessionData.getTable())

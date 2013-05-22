@@ -25,6 +25,5 @@
 ##document.location="../jamwiki/$cleanCompanyName/StartingPoints";
 document.location="$view.getWikiPageUrl($wikiPageName, false)";
 </script>
-</script>
 </body>
 </html>
