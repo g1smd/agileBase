@@ -18,11 +18,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
-    <title>
-      Calculation Update
-    </title>
+    <title>Calculation Update</title>
     <link type="text/css" rel="stylesheet" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
     #parse("gui/display_error.vm")
   </head>
 

@@ -27,7 +27,7 @@
       #break
     #end
   #end
-	<link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+  <title>Agilebase</title>
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap-responsive.css" />
   <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />
@@ -42,8 +42,8 @@
     <link type="text/css" rel="stylesheet" href="resources/fullcalendar/fullcalendar.css" />
   #end
 
-	<title>Agilebase</title>
-	<script type="text/javascript" src="resources/jquery.js"></script>
+  <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+  <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/jquery.scrollTo.js"></script>
   <script type="text/javascript" src="resources/simple/simple.js"></script>
   <script type="text/javascript" src="resources/pane2_amalgam.js"></script>

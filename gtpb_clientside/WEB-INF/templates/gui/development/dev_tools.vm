@@ -19,11 +19,9 @@
 <html>
 #set($table = $sessionData.getTable())
   <head>
-    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
-    <title>
-      agileBase Development Tools
-    </title>
+    <title>agileBase Development Tools</title>
     <link type="text/css" rel="stylesheet" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
   </head>
 
   <body class="mediawiki ns-0 ltr page-Main_Page">

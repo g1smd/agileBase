@@ -1,9 +1,9 @@
 <html>
 <head>
-    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+	<title>Utilisation information</title>
 	<link type="text/css" rel="stylesheet" href="resources/display_application.css" />
 	<link type="text/css" rel="stylesheet" href="styles/main.css" />
-	<title>Utilisation information</title>
+	<link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
 	<script type="text/javascript" src="resources/jquery.js"></script>
 	<script type="text/javascript" src="resources/jit.js"></script>
 	<script type="text/javascript" src="simple/simple.js"></script>

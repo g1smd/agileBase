@@ -18,8 +18,8 @@
 #set($user = $view.getLoggedInUser())
 <!DOCTYPE html>
 <html>
-<head>
-  <title>$user.getCompany() :: agilebase - set password</title>
+  <head>
+    <title>$user.getCompany() :: agilebase - set password</title>
     <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
     <link type="text/css" rel="stylesheet" href="http://agilebase.co.uk/styles.css" />
@@ -39,9 +39,9 @@
       }
     ]]#
     </style>
+    <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.complexify.js"></script>
-    <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
     <script type="text/javascript">
       $(document).ready(function() {
         $("#password").complexify({strengthScaleFactor: 0.8}, function(valid, complexity) {

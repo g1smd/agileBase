@@ -17,13 +17,13 @@
 ##
 <html>
 <head>
-    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+    <title>Agilebase usage</title>
     <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
     <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />
     <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
     <link type="text/css" rel="stylesheet" href="resources/simple/simple.css" />
-    <title>Agilebase usage</title>
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jit.js"></script>
     <script type="text/javascript" src="resources/jquery.sparkline.js"></script>

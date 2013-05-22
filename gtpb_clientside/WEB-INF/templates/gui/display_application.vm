@@ -21,6 +21,8 @@
 	#set($appUser = $view.getLoggedInUser())
     #set($company = $appUser.getCompany())
     #set($company_name=$company.getCompanyName())
+
+    <title>Agilebase- $company_name</title>
 	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
 	<link type="text/css" rel="stylesheet" href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" />
 	<link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
@@ -32,9 +34,8 @@
 		}
     </style>
 	<![endif]-->
-    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
-    <title>Agilebase- $company_name</title>
-   	  <script type="text/javascript" src="resources/jquery.js"></script>
+      <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+      <script type="text/javascript" src="resources/jquery.js"></script>
       <script type="text/javascript" src="resources/logger.js"></script>
       <script type="text/javascript" src="resources/display_application_amalgam.js"></script>
       <script type="text/javascript" src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>

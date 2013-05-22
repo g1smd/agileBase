@@ -20,14 +20,12 @@
 #set($company=$user.getCompany())
 <html>
 <head>
-  <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
-  <title>
-    $company forms
-  </title>
+  <title>$company forms</title>
   <link type="text/css" rel="stylesheet" href="resources/pane1_amalgam.css" />
   <link type="text/css" rel="stylesheet" href="resources/pane3_amalgam.css" />
   <link type="text/css" rel="stylesheet" href="resources/edit_nav/edit_nav.css" />
   <link type="text/css" rel="stylesheet" href="resources/edit_nav/slides.css" />
+  <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/pane1_amalgam.js"></script>
   <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
