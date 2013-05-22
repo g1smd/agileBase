@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%
 String googleKey = "https://www.google.com/jsapi?key=AIzaSyD87nNNZYrfRNIAOSC0ayCB4yj6KkJ9JlI";
 String requestURL = request.getRequestURL().toString();
@@ -11,6 +13,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
   live = true;
 }
 %>
+
 <html>
   <head>
     <meta charset="UTF-8">

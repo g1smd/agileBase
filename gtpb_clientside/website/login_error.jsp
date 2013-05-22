@@ -15,8 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
- -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
+ --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
+
 <%
 Thread.sleep(3000);
 %>

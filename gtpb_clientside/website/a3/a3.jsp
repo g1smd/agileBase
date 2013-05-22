@@ -5,6 +5,8 @@ if (requestURL.contains("appserver.")) {
   live = true;
 }
 %>
+<!DOCTYPE html>
+
 <html>
 	<head>
 		<title>A3 reports</title>

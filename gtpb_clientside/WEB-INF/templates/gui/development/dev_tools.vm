@@ -17,8 +17,8 @@
 ##
 <!DOCTYPE html>
 
-<html>
 #set($table = $sessionData.getTable())
+<html>
   <head>
     <title>agileBase Development Tools</title>
     <link type="text/css" rel="stylesheet" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />

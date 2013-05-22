@@ -15,14 +15,14 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 #set($report = $sessionData.getReport())
 #if($report.getModule())
   #set($module=$report.getModule())
 #else
   #set($module=$sessionData.getTable().getTableName())
 #end
-<!DOCTYPE html>
-
 <html>
   <head>
     <title>$module - $report</title>
