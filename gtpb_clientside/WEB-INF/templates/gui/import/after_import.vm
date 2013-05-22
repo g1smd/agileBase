@@ -29,6 +29,7 @@
 </style>
 <title>agileBase data import</title>
 </head>
+
 <body>
 #if($view.getWhetherExceptionOccurred())
   #parse("gui/error.vm")

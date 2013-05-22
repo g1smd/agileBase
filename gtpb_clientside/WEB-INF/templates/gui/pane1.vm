@@ -66,6 +66,7 @@
     </script>
 	#end
 </head>
+
 <body>
 	#if($mobile_device)
     <div id="header">

@@ -7,6 +7,7 @@
   <link type="text/css" rel="stylesheet" href="resources/pane3_amalgam.css" />
   <link type="text/css" rel="stylesheet" href="resources/preview/argument.css" />
 </head>
+
 <body style="overflow:visible">
   #parse("gui/preview/argument_presenter.vm")
 </body>

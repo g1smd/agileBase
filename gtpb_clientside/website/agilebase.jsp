@@ -30,6 +30,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       <meta name="robots" content="noindex">
     <% } %>
 	</head>
+
 	<body>
     <div class="container">
       <div class="hidden-desktop alert alert-info big">

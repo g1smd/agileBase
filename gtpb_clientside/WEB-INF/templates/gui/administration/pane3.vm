@@ -202,6 +202,7 @@ function sendPasswordReset(oButton) {
 </SCRIPT>
 
 </HEAD>
+
 <BODY>
   #parse('gui/resources/option_set_wrapper.vm')
 </BODY>

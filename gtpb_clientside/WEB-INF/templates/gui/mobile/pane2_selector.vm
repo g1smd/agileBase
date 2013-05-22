@@ -32,6 +32,7 @@
 	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
   	  <script type="text/javascript" src="resources/jquery.js"></script>
     </head>
+
 	<body>
 	  #parse("gui/mobile/pane2_header.vm")
     #parse("gui/reports_and_tables/tabs/summary.vm")

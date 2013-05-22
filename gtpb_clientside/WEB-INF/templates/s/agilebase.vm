@@ -57,6 +57,7 @@
     <script type="text/javascript" src="resources/fullcalendar/fullcalendar.js"></script>
   #end
 </head>
+
 <body>
   <div class="header row transition">
     <div class="span4 spaced">

@@ -30,6 +30,7 @@
     <script type="text/javascript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
     <script type="text/javascript" src="resources/simple/simple.js"></script>
 </head>
+
 <body>
 	<div class="container">
 	  <div class="row spaced">

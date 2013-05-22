@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="resources/jit.js"></script>
 	<script type="text/javascript" src="simple/simple.js"></script>
 </head>
+
 <body>
 #set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())
 JSON is<br>

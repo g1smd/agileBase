@@ -27,6 +27,7 @@ if (requestURL.contains("appserver.")) {
 	  });
 	</script>
 </head>
+
 <body>
 	Please wait a moment...
 	<% if(live) { %>

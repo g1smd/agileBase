@@ -27,6 +27,7 @@ if (requestURL.contains("appserver.")) {
   })();
 </script>
     </head>
+
     <body>
 		<div id="mobileLogin">
 			<img src="/agileBase/website/images/logo-agilebase.png" alt="" /><br><br>

@@ -39,6 +39,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       <meta name="robots" content="noindex">
     <% } %>
 	</head>
+
 	<body>
 	<div id="scroller">
 		<div id="tl_wrapper">

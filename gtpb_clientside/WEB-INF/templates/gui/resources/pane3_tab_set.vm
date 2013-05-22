@@ -219,6 +219,7 @@
     #end
   #end
   </head>
+
   <body>
   	<div class="wrapper tab-interface" id="gtpb_wrapper">
 	#if($mobile_device)

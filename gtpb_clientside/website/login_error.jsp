@@ -29,6 +29,7 @@ Thread.sleep(3000);
     <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
     <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
   </head>
+
 <body>
   <div class="container big">
     <div class="row abNav">
