@@ -907,31 +907,38 @@ table.reportData td {
 /* Colours */
 .blue {
   background-color: #009FE3;
+  border-color: #009FE3;
 }
 
 .pink {
   background-color: #EC00BC;
+  border-color: #EC00BC;
 }
 
 .green {
   background-color: #8DC63F;
+  border-color: #8DC63F;
 }
 
 .yellow {
   background-color: #f5bd26;
+  border-color: #f5bd26;
 }
 
 .purple {
   background-color: #5c2969;
+  border-color:  #5c2969;
 }
 
 .turquoise {
   background-color: #009d90;
+  border-color: #009d90;
 }
 
 .white {
   background-color: white;
   color: #656766;
+  border-color: #009FE3;
 }
 
 .blue_fg {
