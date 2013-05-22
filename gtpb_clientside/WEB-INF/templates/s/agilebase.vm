@@ -31,7 +31,7 @@
   #end
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap-responsive.css" />
-  <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />
+  <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
   <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
   <link type="text/css" rel="stylesheet" href="resources/pane2_amalgam.css" />
