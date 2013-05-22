@@ -20,7 +20,7 @@
 #set($report = $sessionData.getReport())
 <html>
 <head>
-  <title>AgileBase - export $report</title>
+  <title>agilebase - export $report</title>
   <link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript">

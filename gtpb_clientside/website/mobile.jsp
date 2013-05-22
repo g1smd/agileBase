@@ -9,7 +9,7 @@ if (requestURL.contains("appserver.")) {
 %>
 <html>
 	<head>
-		<title>agileBase</title>
+		<title>agilebase</title>
 		<style type="text/css">@import url("/agileBase/website/styles/styles.css");</style>
 		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
 		<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />

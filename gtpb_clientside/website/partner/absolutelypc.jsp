@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>agileBase - Absolutely PC</title>
+		<title>agilebase - Absolutely PC</title>
 		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
 <script type="text/javascript">
   var _gaq = _gaq || [];

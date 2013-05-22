@@ -19,7 +19,7 @@
 
 <html>
   <head>
-    <title>agileBase data import</title>
+    <title>agilebase data import</title>
     #parse("gui/display_error.vm")
 
     <style type="text/css">

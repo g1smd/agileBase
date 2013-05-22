@@ -47,7 +47,7 @@
 	  #end
     #end
   #end
-  <title>Agilebase - $company - $module - $moduleAction</title>
+  <title>agilebase - $company - $module - $moduleAction</title>
   <link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
   <link type="text/css" rel="stylesheet" href="resources/mobile/wizard_override.css" />
   <script type="text/javascript" src="resources/jquery.js"></script>

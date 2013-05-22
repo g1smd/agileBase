@@ -22,7 +22,7 @@
 <html>
 <head>
     #parse('gui/display_error.vm')
-	<title>Agilebase - $company</title>
+	<title>agilebase - $company</title>
 	## CSS
 	#if($mobile_device)
 	  <link type="text/css" rel="stylesheet" href="resources/mobile/pane1_amalgam.css" />

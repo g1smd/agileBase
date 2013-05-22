@@ -21,7 +21,7 @@
 #set($tiles = $user.getTiles())
 <html>
 <head>
-  <title>Agilebase</title>
+  <title>agilebase</title>
   #set($hasCalendar = false)
   #foreach($tile in $tiles)
     #if($tile.getTileType() == "CALENDAR")

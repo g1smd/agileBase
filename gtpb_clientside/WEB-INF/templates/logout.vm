@@ -21,7 +21,7 @@
 
 <html>
 <head>
-  <title>agileBase</title>
+  <title>agilebase</title>
   <script type="text/javascript">
     top.document.location = "AppController.servlet?return=boot";
   </script>

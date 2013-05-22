@@ -9,7 +9,7 @@ if (requestURL.contains("appserver.")) {
 %>
 <html>
 <head>
-	<title>agileBase</title>
+	<title>agilebase</title>
 	<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
 	<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 	<script type="text/javascript">

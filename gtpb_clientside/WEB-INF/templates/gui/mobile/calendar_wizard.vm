@@ -25,7 +25,7 @@
   <meta name = "viewport" content = "width = device-width">
   #set($company = $view.getLoggedInUser().getCompany())
   #set($companyName = $viewTools.cleanString($company.getCompanyName()))
-  <title>Agilebase - Calendar Edit</title>
+  <title>agilebase - Calendar Edit</title>
   <link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
   <link type="text/css" rel="stylesheet" href="resources/jquery.autocomplete.css" />
   <link type="text/css" rel="stylesheet" href="resources/datePicker.css" />

@@ -4,7 +4,7 @@
 #set($commitMessage = $viewTools.getCommitMessage())
 <html>
 <head>
-  <title>Agilebase release version</title>
+  <title>agilebase release version</title>
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
   <link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
 </head>

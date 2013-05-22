@@ -23,7 +23,7 @@
     #set($company = $appUser.getCompany())
     #set($company_name=$company.getCompanyName())
 
-    <title>Agilebase- $company_name</title>
+    <title>agilebase - $company_name</title>
 	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
 	<link type="text/css" rel="stylesheet" href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" />
 	<link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
