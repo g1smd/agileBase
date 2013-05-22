@@ -21,7 +21,7 @@
   <head>
     <title>Agilebase usage</title>
     <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
     <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
     <link type="text/css" rel="stylesheet" href="resources/simple/simple.css" />
