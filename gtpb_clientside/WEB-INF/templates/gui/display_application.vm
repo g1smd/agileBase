@@ -32,7 +32,7 @@
 		}
     </style>
 	<![endif]-->
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
     <title>Agilebase- $company_name</title>
    	  <script type="text/javascript" src="resources/jquery.js"></script>
       <script type="text/javascript" src="resources/logger.js"></script>

@@ -27,7 +27,7 @@
       #break
     #end
   #end
-	<link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon /"> <!-- favicon -->
+	<link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
   <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap-responsive.css" />
   <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" type="text/css" />

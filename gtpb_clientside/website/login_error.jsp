@@ -27,7 +27,7 @@ Thread.sleep(3000);
     <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
     <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
     <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
-    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
+    <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
   </head>
 <body>
   <div class="container big">

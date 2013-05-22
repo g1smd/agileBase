@@ -14,7 +14,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 <html>
 	<head>
 		<title>agileBase - a dedicated Lean Back Office platform</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon" /> <!-- favicon -->
+		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
     <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>

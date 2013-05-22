@@ -41,7 +41,7 @@
     </style>
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jquery.complexify.js"></script>
-    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
     <script type="text/javascript">
       $(document).ready(function() {
         $("#password").complexify({strengthScaleFactor: 0.8}, function(valid, complexity) {
