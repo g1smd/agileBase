@@ -246,15 +246,15 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// Replace division signs with our own custom division operator.
 		// This is specially created not to throw divide by zero errors
 		// but rather return null;
-		String testCalculationSQL = calculationSQL.replaceAll("\\/", "//");
+		calculationSQL = calculationSQL.replaceAll("\\/", "//");
 		// Replace long dashes (created by e.g. MS Word) with normal ones
-		StringBuffer calcBuffer = new StringBuffer(testCalculationSQL.length());
-		for (int i = 0; i < testCalculationSQL.length(); i++) {
-			if (Character.getType(Character.codePointAt(testCalculationSQL, i)) == Character.DASH_PUNCTUATION) {
+		StringBuffer calcBuffer = new StringBuffer(calculationSQL.length());
+		for (int i = 0; i < calculationSQL.length(); i++) {
+			if (Character.getType(Character.codePointAt(calculationSQL, i)) == Character.DASH_PUNCTUATION) {
 				calcBuffer.append("-");
 				logger.debug("dash found");
 			} else {
-				calcBuffer.append(testCalculationSQL.charAt(i));
+				calcBuffer.append(calculationSQL.charAt(i));
 			}
 		}
 		calculationSQL = calcBuffer.toString();
