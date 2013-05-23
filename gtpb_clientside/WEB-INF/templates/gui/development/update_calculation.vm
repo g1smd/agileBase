@@ -39,7 +39,8 @@
         #if(!$reportField.referencesCalcFromOtherReport())
         <h2>Update $reportField.getFieldName()</h2><br />
         <FORM action="AppController.servlet" method="post" id="newcalculation" accept-charset="UTF-8">
-          		<input type=hidden name=return value="gui/development/update_calculation" />
+              <input name="utf8" type="hidden" value="&#x2713;" />
+              <input type=hidden name=return value="gui/development/update_calculation" />
           		<input type=hidden name=update_calculation_in_report value=true>
           		<input type=hidden name=internalcalculationname value="$reportField.getInternalFieldName()">
           <table>
