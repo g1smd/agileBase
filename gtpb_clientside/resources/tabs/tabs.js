@@ -974,6 +974,7 @@ function fShowReportUsage() {
 
 /* Calculation editor */
 function fEnableCalcSyntaxHighlight() {
+	return;
 	if ($("#calculationdefn").length > 0) {
 		editAreaLoader.init({
 			id : "calculationdefn" // textarea id
