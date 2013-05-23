@@ -247,7 +247,6 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// This is specially created not to throw divide by zero errors
 		// but rather return null;
 		calculationSQL = calculationSQL.replaceAll("\\/", "//");
-		calculationSQL = "1 – 2";
 		// Replace long dashes (created by e.g. MS Word) with normal ones
 		StringBuffer calcBuffer = new StringBuffer(calculationSQL.length());
 		for (int i = 0; i < calculationSQL.length(); i++) {
