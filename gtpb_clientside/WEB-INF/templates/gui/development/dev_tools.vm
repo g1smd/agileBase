@@ -16,14 +16,13 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
-<html>
+
 #set($table = $sessionData.getTable())
+<html>
   <head>
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <title>
-      agileBase Development Tools
-    </title>
-    <link rel="stylesheet" type="text/css" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <title>agilebase Development Tools</title>
+    <link type="text/css" rel="stylesheet" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
   </head>
 
   <body class="mediawiki ns-0 ltr page-Main_Page">

@@ -34,10 +34,10 @@
   #set($email = "")
   #if($user.getEmail()) #set($email = $user.getEmail()) #end
   <form>
-    <input type="text" name="forename" placeholder="forename" value="$forename" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">&nbsp;
-    <input type="text" name="surname" placeholder="surname" value="$surname" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
+    <input type="text" name="forename" placeholder="forename" value="$forename" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName" />&nbsp;
+    <input type="text" name="surname" placeholder="surname" value="$surname" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName" />
     <p>
-    <input type="text" name="email" placeholder="email address" value="$email" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName">
+    <input type="text" name="email" placeholder="email address" value="$email" onkeyup="top.oBuffer.writeBuffer(this);" gtpb_update_user="true" gtpb_internalusername="$internalUserName" />
   </form>
 </div>
 ## App tiles
@@ -66,7 +66,7 @@
     #set($template = $viewTools.cleanString($tileType.toString()))
     #if($template == "data_stream")
       #set($filter = $sessionData.getGlobalFilterString($tile.getReport()))
-      <input type="search" class="condensed" placeholder="$tile search" #if($filter) value="$filter" #end/>
+      <input type="search" class="condensed" placeholder="$tile search" #if($filter) value="$filter" #end />
       <div class="add condensed" title="add $table.getSingularName()"><i class="icon-plus-sign"></i></div>
       <div class="foot_fade condensed"></div>
     #elseif($template == "comment_stream")

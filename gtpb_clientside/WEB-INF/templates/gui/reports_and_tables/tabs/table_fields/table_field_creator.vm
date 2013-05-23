@@ -22,8 +22,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_crea
 	  ##nodrag and nodrop classes used by jquery.tableDnD plugin
 	  <tr id="addNewField" class="nodrag nodrop">
 	    <td class="leading" height="20">&nbsp;</td>
-		    <td height="20"><input type="text" name="fieldname"></td>
-		    <td height="20"><input type="text" name="fielddesc"></td>
+		    <td height="20"><input type="text" name="fieldname" /></td>
+		    <td height="20"><input type="text" name="fielddesc" /></td>
 		    <td height="20">
 		      <select name="fieldtype" onchange="fSelectFieldOption(this.selectedIndex)">
 				<optgroup label="Data input fields">
@@ -60,7 +60,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields/table_field_crea
 		      #end  ##foreach field type
 	    </td>
 	    <td height="20" class="trailing">
-	      <input type="submit" value="create field">
+	      <input type="submit" value="create field" />
 	    </td>
 	  </tr>
 $viewTools.stopTimer("gui/reports_and_tables/tabs/table_fields/table_field_creator")

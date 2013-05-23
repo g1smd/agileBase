@@ -110,7 +110,7 @@
 			<td class=trailing>
 			## #if($foreach.count == $joins.size())
 			#if(!($view.isJoinUsed($report, $join)))
-				<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_join_from_report=true gtpb_internaljoinname="$join.getInternalJoinName()">
+				<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_join_from_report=true gtpb_internaljoinname="$join.getInternalJoinName()" />
 			 #else &nbsp;
 			 #end
 			</td>
@@ -225,7 +225,7 @@
 			</td>
 
 				<td height=20 class=trailing>
-					<input type="submit" value="create join">
+					<input type="submit" value="create join" />
 				</td>
 			</tr>
 		</tbody>

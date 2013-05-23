@@ -16,11 +16,10 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 <html>
   <head>
-    <title>
-      Agilebase translator
-    </title>
+    <title>agilebase translator</title>
     <style type="text/css">
       * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; }
 
@@ -33,8 +32,9 @@
             						 overflow:hidden;
            					}
 			    </style>
-			  </head>
-			  <body>
+  </head>
+
+  <body>
 			  <table width="100%" height="100%">
 			  <tr>
 			  <td align="center">

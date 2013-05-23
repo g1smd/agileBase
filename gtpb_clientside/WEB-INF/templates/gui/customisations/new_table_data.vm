@@ -29,7 +29,7 @@
 </style>
 
 <form name="data_form" method="post" action="AppController.servlet" onsubmit="return false">
-  <input type="hidden" name="save_new_record" value="true">
+  <input type="hidden" name="save_new_record" value="true" />
   #if($view.getWhetherExceptionOccurred())
     #parse('report_error.vm')
   #end

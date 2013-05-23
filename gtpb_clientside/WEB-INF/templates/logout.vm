@@ -15,14 +15,18 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 ## Should be called with logout=true in the parameters
+
 <html>
 <head>
-  <title>agileBase</title>
+  <title>agilebase</title>
   <script type="text/javascript">
     top.document.location = "AppController.servlet?return=boot";
   </script>
 </head>
+
 <body>
 Logging out...
 </body>

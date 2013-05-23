@@ -1,7 +1,9 @@
+<!DOCTYPE html>
+
 <html>
 	<head>
-		<title>agileBase - Absolutely PC</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+		<title>agilebase - Absolutely PC</title>
+		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-59206-20']);
@@ -14,6 +16,7 @@
   })();
 </script>
     </head>
+
     <body style="text-align: center">
       <img src="website/partner/absolutelypc.png" alt="" />
 			<form method="POST" action="https://appserver.gtportalbase.com/agileBase/j_security_check" name="loginform" id="loginform">
@@ -21,7 +24,7 @@
 			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off" /><br>
 			password<br />
 			<input type="password" name="j_password" id="j_password" /><br><br>
-			<input type="submit" value="login">
+			<input type="submit" value="login" />
 			</form>
     </body>
 </html>

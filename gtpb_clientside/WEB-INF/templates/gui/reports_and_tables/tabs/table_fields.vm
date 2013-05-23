@@ -53,8 +53,8 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 </script>
 ## Moved from table_field_creator.vm - can't have a form inside a tr
 <form action="AppController.servlet" target="pane_2" method="post" id="newfield" onSubmit="disableUneccessaryElements();">
-<input type="hidden" name="return" value="gui/reports_and_tables/report_data">
-<input type="hidden" name="add_field" value="true">
+<input type="hidden" name="return" value="gui/reports_and_tables/report_data" />
+<input type="hidden" name="add_field" value="true" />
 
 <table id=reportData cellspacing="0" class="draggable">
 	  <thead>
@@ -88,12 +88,12 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
     	      <td class="capitalised">
 				#if($field.isPrimaryKey()) $field #else
     	        <div class="fieldinfo #if($category == 'Separator') separator #end" id="fieldname_$internalFieldName" onClick="makeFieldEditable(this)">$field</div>
-				<input class="input_fieldinfo" id="input_fieldname_$internalFieldName" type="text" gtpb_internalfieldname="$internalFieldName" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
+				<input class="input_fieldinfo" id="input_fieldname_$internalFieldName" type="text" gtpb_internalfieldname="$internalFieldName" gtpb_update_field="true" name="fieldname" value="$field.getFieldName()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)" />
     	        #end
 			  </td>
     	      <td>
 				<div class="fieldinfo #if($category == 'Separator') separator #end" id="fielddescription_$internalFieldName" onClick="makeFieldEditable(this)">$field.getFieldDescription()</div>
-				<input class="input_fieldinfo" id="input_fielddescription_$internalFieldName" type="text" gtpb_internalfieldname="$internalFieldName" gtpb_update_field="true" name="fielddesc" value="$field.getFieldDescription()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)">
+				<input class="input_fieldinfo" id="input_fielddescription_$internalFieldName" type="text" gtpb_internalfieldname="$internalFieldName" gtpb_update_field="true" name="fielddesc" value="$field.getFieldDescription()" onkeyup="top.oBuffer.writeBuffer(this); updateFieldnameDiv(this)" />
 			  </td>
     	      <td>
 				#if(($category == "Number") && ($field.getDbType() == "INTEGER"))
@@ -172,7 +172,7 @@ $viewTools.startTimer("gui/reports_and_tables/tabs/table_fields")
 		          </td>
     	      <td class="trailing">
 		            #if(!$field.isPrimaryKey())
-		              <input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field=true gtpb_internalfieldname="$internalFieldName">
+		              <input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_field=true gtpb_internalfieldname="$internalFieldName" />
 		            #end
 		          </td>
 		        </tr>

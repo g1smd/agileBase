@@ -96,5 +96,5 @@
 	#if($mobile_device && $updateAsType)
 		onblur="top.oBuffer.writeBuffer(this)"
 	#end
-  >
+  />
 #end

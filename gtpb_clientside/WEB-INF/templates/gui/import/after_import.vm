@@ -15,10 +15,13 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 <html>
-<head>
-<link href="styles/report.css" type="text/css" rel="stylesheet" />
-<style type="text/css">
+  <head>
+    <title>agilebase data import</title>
+    <link type="text/css" rel="stylesheet" href="styles/report.css" />
+    <style type="text/css">
 	html, body {
            /* font-family: "Arial", sans-serif; */
     			 color: black;
@@ -26,9 +29,9 @@
     			 margin:0;
     			 padding:0;
     			 height:100% }
-</style>
-<title>agileBase data import</title>
-</head>
+    </style>
+  </head>
+
 <body>
 #if($view.getWhetherExceptionOccurred())
   #parse("gui/error.vm")

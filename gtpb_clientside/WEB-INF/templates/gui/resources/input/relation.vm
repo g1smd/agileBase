@@ -101,14 +101,14 @@
         gtpb_refresh_after="true"
       #end
 	#end ##
-	id="$inputId">##
+	id="$inputId" />##
 	#set($wholeDisplayValue = $viewTools.escape($fieldDisplayValue))
 	#if($useSecondaryDisplayValue == true)
 	  #set($wholeDisplayValue = "$wholeDisplayValue {" + $viewTools.escape("$secondaryDisplayValue") + "}")
     #end
 	<input type="text" internalTableName="$internalTableName" internalFieldName="$internalFieldName" ##
 	  class="autocomplete" ##
-	  value="$wholeDisplayValue">
+	  value="$wholeDisplayValue" />
 	#if($userCanEdit && (!$ab_calendar_display))
 	  #if($fieldValue && ($fieldValue != ""))
 	    #set($text = "change...")

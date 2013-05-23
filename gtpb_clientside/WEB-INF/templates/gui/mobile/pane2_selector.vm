@@ -15,6 +15,8 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 ## What content to display in pane 2? Report, summary etc.
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 #set($report = $sessionData.getReport())
@@ -24,18 +26,21 @@
 #if($mobile_pane2_selection == "report")
   #parse("gui/reports_and_tables/report_data.vm")
 #elseif($mobile_pane2_selection == "summary")
+
   <html>
-	<head><title>$report charts</title>
+    <head>
+	  <title>$report charts</title>
 	  <meta name = "viewport" content = "width = device-width">
-	  <link href="styles/report.css" type="text/css" rel="stylesheet" />
-	  <link href="resources/tabs/tabs.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="styles/report.css" />
+	  <link type="text/css" rel="stylesheet" href="resources/tabs/tabs.css" />
 	  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> broken -->
   	  <script type="text/javascript" src="resources/jquery.js"></script>
     </head>
+
 	<body>
 	  #parse("gui/mobile/pane2_header.vm")
     #parse("gui/reports_and_tables/tabs/summary.vm")
-	</body></head>
+	</body>
   </html>
 #else
   #set($mobile_pane2_selection = "report")

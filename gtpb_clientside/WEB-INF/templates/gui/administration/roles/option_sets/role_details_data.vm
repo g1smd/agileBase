@@ -19,7 +19,7 @@
   <tr>
     <td>Name:</td>
     <td>
-      <input type=text name=rolename gtpb_update_role value="$sessionRole.getRoleName()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6">
+      <input type=text name=rolename gtpb_update_role value="$sessionRole.getRoleName()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" />
     </td>
   </tr>
 </table>

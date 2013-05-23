@@ -84,7 +84,7 @@
   #end
   #if($userCanEdit && (!$mobile_device))
   	#if($ab_calendar_display)
-  	  <input type="file" name="$field.getInternalFieldName()" >
+  	  <input type="file" name="$field.getInternalFieldName()" />
   	#else
       <form method="post" enctype="multipart/form-data" action="AppController.servlet" class="fileUploader">
         #set($showFieldName = false)

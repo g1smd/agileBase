@@ -15,14 +15,20 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
-#set($browser = $viewTools.getBrowser())
 <!DOCTYPE html>
+
+#set($browser = $viewTools.getBrowser())
 <html>
   <head>
+	#set($sessionReport = $sessionData.getReport())
+	#set($sessionTable = $sessionData.getTable())
+	#set($filtersShouldBeShown = true)
+    <title>$sessionReport.getModule() - $sessionReport</title>
+
 	#if($mobile_device)
-	  <link href="resources/mobile/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="resources/mobile/pane2_amalgam.css" />
 	#else
-	  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
+	  <link type="text/css" rel="stylesheet" href="resources/pane2_amalgam.css" />
 	#end
     <style type="text/css">
 	      * {
@@ -91,10 +97,7 @@
 	#end
 	</style>
   	<script type="text/javascript" src="resources/jquery.js"></script>
-	#set($sessionReport = $sessionData.getReport())
-	#set($sessionTable = $sessionData.getTable())
-	#set($filtersShouldBeShown = true)
-    <title>$sessionReport.getModule() - $sessionReport</title>
+
 	#if($mobile_device)
 	  <meta name = "viewport" content = "initial-scale = 1.0"> <!-- stop iPad automatically zooming out of large reports -->
 	  <script type="text/javascript" src="resources/mobile/pane2_amalgam.js"></script>

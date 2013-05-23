@@ -28,7 +28,7 @@
        #if($userRoles.contains($role))checked#end
        gtpb_internalrolename="$role.getInternalRoleName()"
        gtpb_internalusername="$sessionUser.getInternalUserName()"
-       onclick="fSetPBfn(this);new fChange(this)">
+       onclick="fSetPBfn(this);new fChange(this)" />
     </td>
   </tr>
   #end ##end of foreach

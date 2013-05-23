@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 #set($SQ = "'")
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <html>
@@ -46,9 +47,9 @@
 	  #end
     #end
   #end
-  <title>Agilebase - $company - $module - $moduleAction</title>
-  <link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
-  <link href="resources/mobile/wizard_override.css" type="text/css" rel="stylesheet" />
+  <title>agilebase - $company - $module - $moduleAction</title>
+  <link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
+  <link type="text/css" rel="stylesheet" href="resources/mobile/wizard_override.css" />
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/wait/jquery.ajaxmanager.js"></script>
   <script type="text/javascript" src="resources/wait/request_setFilter.js"></script>
@@ -62,6 +63,7 @@
   });
   </script>
 </head>
+
 <body>
 
   #if($moduleAction)

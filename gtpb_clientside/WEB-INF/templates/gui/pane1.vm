@@ -16,22 +16,24 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 #set($company = $view.getLoggedInUser().getCompany())
 #set($mobile_device = $sessionData.getCustomBoolean("mobile_device"))
 <html>
 <head>
     #parse('gui/display_error.vm')
+	<title>agilebase - $company</title>
+	## CSS
+	#if($mobile_device)
+	  <link type="text/css" rel="stylesheet" href="resources/mobile/pane1_amalgam.css" />
+	#else
+	  <link type="text/css" rel="stylesheet" href="resources/pane1_amalgam.css" />
+	#end
+	## viewport and icon
 	#if($mobile_device)
 	<meta name = "viewport" content = "width = device-width">
 	<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
 	<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
-	#end
-	<title>Agilebase - $company</title>
-	## CSS
-	#if($mobile_device)
-	  <link href="resources/mobile/pane1_amalgam.css" type="text/css" rel="stylesheet" />
-	#else
-	  <link href="resources/pane1_amalgam.css" type="text/css" rel="stylesheet" />
 	#end
 	## JS
 	<script type="text/javascript" src="resources/jquery.js"></script>
@@ -66,6 +68,7 @@
     </script>
 	#end
 </head>
+
 <body>
 	#if($mobile_device)
     <div id="header">
@@ -107,10 +110,10 @@
 			<ul>
 					<div id="logout">
 						<form method="get" action="AppController.servlet" style="float:right">
-							<input type="hidden" name="return" value="gui/display_application">
-							<input type="hidden" name="logout" value="true">
-							<input type="hidden" name="cachebust" value="$viewTools.getRandomString()">
-							<input type="submit" value="logout">
+							<input type="hidden" name="return" value="gui/display_application" />
+							<input type="hidden" name="logout" value="true" />
+							<input type="hidden" name="cachebust" value="$viewTools.getRandomString()" />
+							<input type="submit" value="logout" />
 						</form>
 					</div>
 			</ul>

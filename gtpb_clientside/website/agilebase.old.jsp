@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%
 String googleKey = "https://www.google.com/jsapi?key=AIzaSyD87nNNZYrfRNIAOSC0ayCB4yj6KkJ9JlI";
 String requestURL = request.getRequestURL().toString();
@@ -11,11 +13,12 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
   live = true;
 }
 %>
+
 <html>
 	<head>
-		<title>agileBase - a dedicated Lean Back Office platform</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon" /> <!-- favicon -->
-    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
+		<title>agilebase - a dedicated Lean Back Office platform</title>
+		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
+		<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 		<script type="text/javascript" src="<%= googleKey %>"></script>
     <% if(ssl) { %>
@@ -33,12 +36,14 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 		@import url("/agileBase/website/styles/styles.css");
 		@import url("/agileBase/website/styles/fonts.css");
 		</style>
+
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
     <% if(!live) { %>
       <!-- don't index the test server -->
       <meta name="robots" content="noindex">
     <% } %>
 	</head>
+
 	<body>
 	<div id="scroller">
 		<div id="tl_wrapper">
@@ -91,9 +96,9 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
           </div>
           <div id="popupContactContent" class="popup">
             Email <a href="mailto:oliver@agilebase.co.uk">oliver@agilebase.co.uk</a><br>
-            Phone +44(0)845 4561810<br>
+            Phone 0845 456 1810 <!-- 2p/min Service Charge within UK. Not always accessible from outside UK. --><br>
             Skype okohll<br>
-            <a href="http://www.gtwm.co.uk">More contacts</a> at GT webMarque
+            <a href="http://www.gtwm.co.uk/">More contacts</a> at GT webMarque
           </div>
 			<div id="intro" class="wrapper">
 				<div class="content">
@@ -132,7 +137,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
 				</div>   <!-- end of wrapper -->
 				<div class="wrapper">
 					<div class="content" id="footer">
-						&copy; 2012 GT webMarque Ltd. Company number 03851934. Contact: Bristol office +44(0)845 456 1810, oliver@gtwm.co.uk. Swansea office cliff@gtwm.co.uk
+						&copy; 2012 GT webMarque Ltd. Company number 03851934. Contact: Bristol office 0845 456 1810, oliver@gtwm.co.uk. Swansea office cliff@gtwm.co.uk
 					</div>
 				</div>	<!-- end of wrapper -->
 			</div>  <!-- end of tl_wrapper -->

@@ -29,7 +29,7 @@ Suggested modules are highlighted<p>
   #if(!$currentModule.equals($module))
     #set($internalModuleName = $module.getInternalModuleName())
     <div #if($dependentModules.contains($module)) class="suggested" #end>
-      <input type="checkbox" identifier="$internalModuleName" id="$internalModuleName" gtpb_relatedmodule="$internalModuleName" name="update_module" #if($relatedModules.contains($module)) checked #end onchange="new fChange(this);">
+      <input type="checkbox" identifier="$internalModuleName" id="$internalModuleName" gtpb_relatedmodule="$internalModuleName" name="update_module" #if($relatedModules.contains($module)) checked #end onchange="new fChange(this);" />
       <label for="$internalModuleName">$module</label>
     </div>
   #end

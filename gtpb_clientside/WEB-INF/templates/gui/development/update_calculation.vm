@@ -16,13 +16,12 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 <html>
   <head>
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <title>
-      Calculation Update
-    </title>
-    <link rel="stylesheet" type="text/css" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <title>Calculation Update</title>
+    <link type="text/css" rel="stylesheet" href="http://www.gtwebmarque.com/wikis/gtwm/skins/gtwm/main.css" />
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
     #parse("gui/display_error.vm")
   </head>
 
@@ -38,11 +37,18 @@
       #if($reportFieldClass.equals("ReportCalcFieldDefn"))
         #if(!$reportField.referencesCalcFromOtherReport())
         <h2>Update $reportField.getFieldName()</h2><br />
+<<<<<<< HEAD
         <FORM action="AppController.servlet" method="post" id="newcalculation" accept-charset="UTF-8">
               <input name="utf8" type="hidden" value="&#x2713;" />
               <input type=hidden name=return value="gui/development/update_calculation" />
           		<input type=hidden name=update_calculation_in_report value=true>
           		<input type=hidden name=internalcalculationname value="$reportField.getInternalFieldName()">
+=======
+        <FORM action="AppController.servlet" method=post id=newcalculation>
+          		<input type=hidden name=return value="gui/development/update_calculation" />
+          		<input type=hidden name=update_calculation_in_report value=true />
+          		<input type=hidden name=internalcalculationname value="$reportField.getInternalFieldName()" />
+>>>>>>> be59a3791dee1fcbecde5d25dcf9092f3493cdeb
           <table>
             <tr>
               <td>Calculation name</td>

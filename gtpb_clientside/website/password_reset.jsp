@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%
 String requestURL = request.getRequestURL().toString();
 boolean live = false;
@@ -7,8 +9,8 @@ if (requestURL.contains("appserver.")) {
 %>
 <html>
 <head>
-	<title>agileBase</title>
-	<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+	<title>agilebase</title>
+	<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
 	<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
@@ -27,6 +29,7 @@ if (requestURL.contains("appserver.")) {
 	  });
 	</script>
 </head>
+
 <body>
 	Please wait a moment...
 	<% if(live) { %>
