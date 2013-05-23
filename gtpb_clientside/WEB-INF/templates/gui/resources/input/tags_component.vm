@@ -23,7 +23,6 @@
     #set($fieldValue = $fieldValue.trim())
     #set($tags = $fieldValueObject.toTags())
     #set($case = $field.getTextCase())
-    $field text case is $case<p>
     <div class="saved_tags" #if($case == "UPPER") style="text-transform: uppercase" #elseif($case == "LOWER") style="text-transform: lowercase" #end>
       #foreach($tag in $tags)
         <span class="tag">$tag <span class="remove"><i class="icon-remove"></i></span></span>
