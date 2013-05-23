@@ -46,6 +46,9 @@ import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+
 @Entity
 public class ReportCalcFieldDefn extends AbstractReportField implements ReportCalcFieldInfo {
 
@@ -240,6 +243,10 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		}
 		String calculationSQL = this.getCalculationDefinition().toLowerCase(Locale.UK);
 		Helpers.checkForSQLInjection(calculationSQL);
+		CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
+		if (!asciiEncoder.canEncode(calculationSQL)) {
+			throw new CantDoThatException("Calculation contains invalid characters - perhaps pasted from an external application?");
+		}
 		String identifierToReplace = null;
 		String identifierToMatch = null;
 		String replacement = null;

@@ -630,7 +630,8 @@ public final class AppController extends VelocityViewServlet {
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
 		logger.debug("Request: " + ServletUtilMethods.getRequestQuery(request));
 		ResponseReturnType returnType = setReturnType(request, response, multipartItems);
-		response.setCharacterEncoding("ISO-8859-1");
+		//response.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		SessionDataInfo sessionData = (SessionDataInfo) session
 				.getAttribute("com.gtwm.pb.servlets.sessionData");

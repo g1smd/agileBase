@@ -77,7 +77,8 @@ public class Public extends VelocityViewServlet {
 			Context context) {
 		ResponseReturnType responseReturnType = ResponseReturnType.HTML;
 		response.setContentType(responseReturnType.getResponseType());
-		response.setCharacterEncoding("ISO-8859-1");
+		//response.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("UTF-8");
 		EnumSet<PublicAction> publicActions = EnumSet.allOf(PublicAction.class);
 		List<FileItem> multipartItems = ServletUtilMethods.getMultipartItems(request);
 		// For company specific customisations

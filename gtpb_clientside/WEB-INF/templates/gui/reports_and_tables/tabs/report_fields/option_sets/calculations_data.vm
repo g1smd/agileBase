@@ -43,10 +43,11 @@
 	</script>
 <a href="javascript:showEditCalc('new');">create a new calculation</a><br />
 <div class="calculation_form" id="editcalc_new">
-<form action="AppController.servlet" target="pane_2" method="post" id="newcalculation" onsubmit="editAreaLoader.delete_instance('calculationdefn');">
+<form action="AppController.servlet" target="pane_2" method="post" id="newcalculation" onsubmit="editAreaLoader.delete_instance('calculationdefn');" accept-charset="UTF-8">
+  <input name="utf8" type="hidden" value="&#x2713;" />
   <input type=hidden name=return value="gui/reports_and_tables/report_data" />
-		  <input type=hidden name=add_calculation_to_report value=true />
-    <table>
+  <input type=hidden name=add_calculation_to_report value=true />
+  <table>
       <tr>
         <td style="vertical-align:top">Field name</td>
         <td>
@@ -122,4 +123,3 @@
     #end
   #end
 #end
-
