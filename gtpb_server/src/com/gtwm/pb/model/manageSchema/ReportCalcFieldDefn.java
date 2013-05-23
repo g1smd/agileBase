@@ -46,6 +46,9 @@ import com.gtwm.pb.util.Helpers;
 import com.gtwm.pb.util.RandomString;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+
 @Entity
 public class ReportCalcFieldDefn extends AbstractReportField implements ReportCalcFieldInfo {
 
@@ -240,6 +243,10 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		}
 		String calculationSQL = this.getCalculationDefinition().toLowerCase(Locale.UK);
 		Helpers.checkForSQLInjection(calculationSQL);
+		CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
+		if (!asciiEncoder.canEncode(calculationSQL)) {
+			throw new CantDoThatException("Calculation contains invalid characters - perhaps pasted from an external application?");
+		}
 		String identifierToReplace = null;
 		String identifierToMatch = null;
 		String replacement = null;
@@ -247,19 +254,6 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		// This is specially created not to throw divide by zero errors
 		// but rather return null;
 		calculationSQL = calculationSQL.replaceAll("\\/", "//");
-		// Replace long dashes (created by e.g. MS Word) with normal ones
-		StringBuffer calcBuffer = new StringBuffer(calculationSQL.length());
-		for (int i = 0; i < calculationSQL.length(); i++) {
-			logger.debug("" + i + ": " + calculationSQL.charAt(i) + ": " + Character.codePointAt(calculationSQL, i) + ": " + Character.getType(Character.codePointAt(calculationSQL, i)));
-			if (Character.getType(Character.codePointAt(calculationSQL, i)) == Character.DASH_PUNCTUATION) {
-				calcBuffer.append("-");
-				logger.debug("dash found");
-			} else {
-				calcBuffer.append(calculationSQL.charAt(i));
-			}
-		}
-		calculationSQL = calcBuffer.toString();
-		logger.debug("Post-replace: " + calculationSQL);
 		// Replace
 		// {table.field} => internaltablename.internalfieldname
 		for (TableInfo table : availableDataStores.keySet()) {
