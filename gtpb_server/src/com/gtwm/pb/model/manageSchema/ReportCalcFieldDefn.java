@@ -245,6 +245,7 @@ public class ReportCalcFieldDefn extends AbstractReportField implements ReportCa
 		Helpers.checkForSQLInjection(calculationSQL);
 		CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
 		if (!asciiEncoder.canEncode(calculationSQL)) {
+			// People sometimes enter calcs. pasted from word which contain long dashes instead of minus signs etc.
 			throw new CantDoThatException("Calculation contains invalid characters - perhaps pasted from an external application?");
 		}
 		String identifierToReplace = null;
