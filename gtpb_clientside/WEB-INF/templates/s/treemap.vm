@@ -15,21 +15,24 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 <html>
-<head>
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
-    <title>Agilebase usage</title>
+  <head>
+    <title>agilebase usage</title>
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="resources/simple/simple.css" />
+    <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
     <script type="text/javascript" src="resources/jquery.js"></script>
     <script type="text/javascript" src="resources/jit.js"></script>
     <script type="text/javascript" src="resources/jquery.sparkline.js"></script>
     <script type="text/javascript" src="customisations/common/dashboard/dashboard.js"></script> ## TODO: prune leaving only sparklines or move sparklines somewhere else
     <script type="text/javascript" src="resources/simple/simple.js"></script>
-</head>
+  </head>
+
 <body>
 	<div class="container">
 	  <div class="row spaced">

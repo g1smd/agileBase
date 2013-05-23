@@ -15,15 +15,18 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 #set($table = $sessionData.getTable())
 <html>
-<head>
-<title>Anonymise $table data</title>
-</head>
+  <head>
+    <title>Anonymise $table data</title>
+  </head>
+
 <body>
 <form method="POST" action="AppController.servlet">
-<input type="hidden" name="return" value="gui/development/dev_tools">
-<input type="hidden" name="anonymise" value="true">
+<input type="hidden" name="return" value="gui/development/dev_tools" />
+<input type="hidden" name="anonymise" value="true" />
 Please select appropriate content types for each field, or leave data for that field the same<p>
 <table border="0">
 #set($fields = $table.getFields())
@@ -44,7 +47,7 @@ Please select appropriate content types for each field, or leave data for that f
 </tr>
 #end
 </table>
-<input type="Submit" value="Submit">
+<input type="Submit" value="Submit" />
 </form>
 </body>
 </html>

@@ -15,10 +15,10 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 ## a pane 3 wrapper with no tab set to show only the data
 ## located in the velocity template $resource
-
-<!DOCTYPE html>
 
 #set($pane2_id=$sessionData.getRowId())
 <html>
@@ -67,8 +67,8 @@
 		fInit();
 	   });
   	</SCRIPT>
+  </head>
 
-	  </head>
   <body>
 	    #parse($resource)
   </body>

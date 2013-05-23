@@ -5,6 +5,8 @@ if (requestURL.contains("appserver.")) {
   live = true;
 }
 %>
+<!DOCTYPE html>
+
 <html>
 	<head>
 		<title>A3 reports</title>
@@ -98,7 +100,7 @@ if (requestURL.contains("appserver.")) {
 								</td>
 								<td style="padding-right:100px">
 									<h1><span>{</span> phone <span>}</span></h1>
-									+44 (0) 845 456 1810
+									0845 456 1810 (2p/min Service Charge) <!-- NGC Unbundled Tariff SC Notification -->
 								</td>
 								<td>
 									<h1><span>{</span> visit <span>}</span></h1>

@@ -19,10 +19,10 @@
 <div id="mobile_footer">
 #set($report = $sessionData.getReport())
 <form method="post" action="AppController.servlet" name="footerform">
-<input type="hidden" name="return" value="gui/mobile/pane2_selector">
-<input type="hidden" name="set_custom_string" value="1">
-<input type="hidden" name="stringkey" value="mobile_pane2_selection">
-<input type="hidden" name="customstringvalue" value="$mobile_pane2_selection">
+<input type="hidden" name="return" value="gui/mobile/pane2_selector" />
+<input type="hidden" name="set_custom_string" value="1" />
+<input type="hidden" name="stringkey" value="mobile_pane2_selection" />
+<input type="hidden" name="customstringvalue" value="$mobile_pane2_selection" />
 
 ## Report
 <button #if($mobile_pane2_selection == "report") disabled #end onclick="document.footerform.customstringvalue.value='report'; submit();">report</button>

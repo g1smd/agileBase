@@ -78,7 +78,7 @@
 					#end
 				</td>
     			<td class=trailing>
-					<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_filter_from_report=true gtpb_internalfiltername="$filter.getInternalName()">
+					<input type=button value=delete onclick="new fDeleteTabularItem(this)" gtpb_remove_filter_from_report=true gtpb_internalfiltername="$filter.getInternalName()" />
 				</td>
 			</tr>
 		#end
@@ -94,8 +94,8 @@
 ##set($joinReferencedTables = $report.getJoinReferencedTables())
 ##set($joinedTables = $report.getJoinedTables())
 ##set($joinedReports = $report.getJoinedReports())
-    	<input type=hidden name=return value="gui/reports_and_tables/report_data">
-    		<input type=hidden name=add_filter_to_report value=true>
+    	<input type=hidden name=return value="gui/reports_and_tables/report_data" />
+    		<input type=hidden name=add_filter_to_report value=true />
 		<TR id=addNewFilter>
 			<td class=leading height=20>&nbsp;</td>
 			<TD height=20>
@@ -138,7 +138,7 @@
 					<DIV id=filterOptionsSet desc="$filterType.getFilterType().getDescription()"> ##  #if($foreach.count==1)selected="true"#end
 						#foreach($filterOption in $filterType.getOptions())
 							#if($filterOption.getClass().getSimpleName()=="BooleanFieldDescriptorOption")
-								<INPUT type=checkbox name="$filterOption.getFormInputName()" value="1" id="$filterOption.getFormInputName()1">
+								<INPUT type=checkbox name="$filterOption.getFormInputName()" value="1" id="$filterOption.getFormInputName()1" />
     						#elseif($filterOption.getClass().getSimpleName()=="ListFieldDescriptorOption")
 								<SELECT name="$filterOption.getFormInputName()">
 									#foreach($filterOptionOption in $filterOption.getOptionsList().keySet())
@@ -148,7 +148,7 @@
 									#end ##foreach option in list type
 								</SELECT>
 							#elseif($filterOption.getClass().getSimpleName()=="TextFieldDescriptorOption")
-      							<INPUT name="$filterOption.getFormInputName()">
+      							<INPUT name="$filterOption.getFormInputName()" />
 							#end  ##if is boolean or list or text
     						<BR>
   						#end  ##foreach field option
@@ -156,7 +156,7 @@
 				#end  ##foreach field type
 			</TD>
 				<TD height=20 class=trailing>
-				  <INPUT type="submit" value="create filter">
+				  <INPUT type="submit" value="create filter" />
 				</TD>
 			</TR>
 		</tbody>

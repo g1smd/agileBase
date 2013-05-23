@@ -15,8 +15,12 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 <html>
 <head>
+<title>agilebase error report</title>
+
 <style type="text/css">
 	html, body {
   /* font-family: "Arial", sans-serif;  */
@@ -26,10 +30,10 @@
     			 padding:0;
     			 height:100% }
 </style>
-<title>agilebase error report</title>
-  	<script type="text/javascript" src="resources/jquery.js"></script>
+	<script type="text/javascript" src="resources/jquery.js"></script>
 	<script type="text/javascript" src="resources/pane2.js"></script>
 </head>
+
 <body>
 #parse("gui/error.vm")
 #set($sessionTable = $sessionData.getTable())

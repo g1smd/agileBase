@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%
 String requestURL = request.getRequestURL().toString();
 boolean live = false;
@@ -7,14 +9,12 @@ if (requestURL.contains("appserver.")) {
 %>
 <html>
 	<head>
-		<title>agileBase</title>
-		<link rel="icon" href="/agileBase/website/gtpb.ico" type="image/x-icon"> <!-- favicon -->
+		<title>agilebase</title>
+		<style type="text/css">@import url("/agileBase/website/styles/styles.css");</style>
+		<link type="image/x-icon" rel="icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
+		<link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
 		<!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
-	    <meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
-	    <link rel="apple-touch-icon" href="resources/icons/apple-touch-icon.png" />
-	    <style type="text/css">
-	    	@import url("/agileBase/website/styles/styles.css");
-		</style>
+		<meta name="viewport" content="width = device-width, initial-scale = 1.0, user-scalable=yes" />
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-59206-20']);
@@ -27,6 +27,7 @@ if (requestURL.contains("appserver.")) {
   })();
 </script>
     </head>
+
     <body>
 		<div id="mobileLogin">
 			<img src="/agileBase/website/images/logo-agilebase.png" alt="" /><br><br>
@@ -39,7 +40,7 @@ if (requestURL.contains("appserver.")) {
 			<input type="text" name="j_username" id="j_username" autocorrect="off" autocapitalize="off" /><br>
 			password<br />
 			<input type="password" name="j_password" id="j_password" /><br><br>
-			<input type="submit" value="login">
+			<input type="submit" value="login" />
 			</form>
 		</div>
     </body>

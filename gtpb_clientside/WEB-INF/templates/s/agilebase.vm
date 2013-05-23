@@ -15,11 +15,13 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 #set($user = $view.getLoggedInUser())
 #set($tiles = $user.getTiles())
-<!DOCTYPE html>
 <html>
 <head>
+  <title>agilebase</title>
   #set($hasCalendar = false)
   #foreach($tile in $tiles)
     #if($tile.getTileType() == "CALENDAR")
@@ -27,23 +29,22 @@
       #break
     #end
   #end
-	<link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-  <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet">
-  <link href="resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-  <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
-  <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-  <link href="resources/pane2_amalgam.css" type="text/css" rel="stylesheet" />
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
-  <link href="resources/simple/simple.css" type="text/css" rel="stylesheet" />
-  ##<link href="resources/simple_amalgam.css" type="text/css" rel="stylesheet" />
-  <link href="/agileBase/website/styles.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
+  <link type="text/css" rel="stylesheet" href="resources/bootstrap/css/bootstrap-responsive.css" />
+  <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
+  <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+  <link type="text/css" rel="stylesheet" href="resources/pane2_amalgam.css" />
+  <link type="text/css" rel="stylesheet" href="resources/pane3_amalgam.css" />
+  <link type="text/css" rel="stylesheet" href="resources/simple/simple.css" />
+  ##<link type="text/css" rel="stylesheet" href="resources/simple_amalgam.css" />
+  <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
   #if($hasCalendar)
-    <link href="resources/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="resources/fullcalendar/fullcalendar.css" />
   #end
 
-	<title>Agilebase</title>
-	<script type="text/javascript" src="resources/jquery.js"></script>
+  <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+  <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript" src="resources/jquery.scrollTo.js"></script>
   <script type="text/javascript" src="resources/simple/simple.js"></script>
   <script type="text/javascript" src="resources/pane2_amalgam.js"></script>
@@ -57,6 +58,7 @@
     <script type="text/javascript" src="resources/fullcalendar/fullcalendar.js"></script>
   #end
 </head>
+
 <body>
   <div class="header row transition">
     <div class="span4 spaced">

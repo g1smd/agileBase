@@ -76,11 +76,11 @@
         #parse("gui/resources/input/tags_component.vm")##
 	    #else##
 	      #if($globalEdit)##
-        	<input type="text" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" gtpbBasicTextField="true">##
+        	<input type="text" gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" name="$field.getInternalFieldName()" value="$fieldValue" gtpbBasicTextField="true" />##
 	      #else##
 	        <input type="text" #if($field.getNotNull()) required #end name="$field.getInternalFieldName()" value="$fieldValue"
 	            #if($isPhoneNumber) title="$phoneArea" #end
-				#if($updateAsType) maxKeyCount="6" gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" gtpbBasicTextField="true"#end #if($mobile_device && $updateAsType) onblur="top.oBuffer.writeBuffer(this);" #end>##
+				#if($updateAsType) maxKeyCount="6" gtpb_update_record gtpb_rowid="$sessionRowId" gtpb_internaltablename="$sessionTable.getInternalTableName()" onkeyup="top.oBuffer.writeBuffer(this, event)" onpaste="top.oBuffer.writeBuffer(this)" gtpbBasicTextField="true"#end #if($mobile_device && $updateAsType) onblur="top.oBuffer.writeBuffer(this);" #end />##
       #end##
     #end##
 		##
@@ -109,7 +109,7 @@
     #end##
 		##
     #if($field.allowNotApplicable())##
-		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()">$field.getNotApplicableDescription()##
+		      <br><input type="checkbox" name="$field.getInternalFieldName()" value="$field.getNotApplicableValue()" />$field.getNotApplicableDescription()##
 		    #end##
 	  #end ## end of normal (not big text) field
 	##

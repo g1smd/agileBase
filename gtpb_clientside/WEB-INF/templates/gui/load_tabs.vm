@@ -16,6 +16,7 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 ## Deal with any toolbar plugin
 #set($app_params = 'return=gui/display_application')
 ##TODO: remove, obsolete
@@ -26,6 +27,7 @@
   <head>
   <title>Loading intranet tabs...</title>
   </head>
+
   <body>
     <script type="text/javascript">
 	   document.location='AppController.servlet?$app_params';

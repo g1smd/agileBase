@@ -16,14 +16,17 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 <html>
   <head>
-	#set($appUser = $view.getLoggedInUser())
+    #set($appUser = $view.getLoggedInUser())
     #set($company = $appUser.getCompany())
     #set($company_name=$company.getCompanyName())
-	<link href="resources/modalFramework/modalFramework.css" type="text/css" rel="stylesheet" />
-	<link href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" type="text/css" rel="stylesheet" />
-	<link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
+
+    <title>agilebase - $company_name</title>
+	<link type="text/css" rel="stylesheet" href="resources/modalFramework/modalFramework.css" />
+	<link type="text/css" rel="stylesheet" href="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.css" />
+	<link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
  	<!--[if IE 7]>
     <style type="text/css">
 		@import url('resources/display_application-ie.css');
@@ -32,9 +35,8 @@
 		}
     </style>
 	<![endif]-->
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-    <title>Agilebase- $company_name</title>
-   	  <script type="text/javascript" src="resources/jquery.js"></script>
+      <link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
+      <script type="text/javascript" src="resources/jquery.js"></script>
       <script type="text/javascript" src="resources/logger.js"></script>
       <script type="text/javascript" src="resources/display_application_amalgam.js"></script>
       <script type="text/javascript" src="customisations/$viewTools.cleanString($company_name)/modalFrameworkCustomisations.js"></script>
@@ -44,6 +46,7 @@
         });
       </script>
     </head>
+
 	<body> ##if($viewTools.getAppUrl().contains("backup")) class="localhost" #end
     <div id="preview"></div>
     #set($noCaption = true)
@@ -51,7 +54,7 @@
       #parse("properties.vm") ## sets logo variable
       #if($logo)
         <div id="logo">
-          <a href="http://www.agilebase.co.uk" target="_blank"><img src="$logo" border="0" alt="" /></a>
+          <a href="http://www.agilebase.co.uk/" target="_blank"><img src="$logo" border="0" alt="" /></a>
         </div>
       #end
       ## Show add/clone/delete buttons if user has edit privileges on at least one table

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+
 <%
 String googleKey = "https://www.google.com/jsapi?key=AIzaSyD87nNNZYrfRNIAOSC0ayCB4yj6KkJ9JlI";
 String requestURL = request.getRequestURL().toString();
@@ -11,17 +13,18 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
   live = true;
 }
 %>
+
 <html>
-	<head>
+  <head>
     <meta charset="UTF-8">
-		<title>agilebase : log in</title>
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/agileBase/website/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="/agileBase/website/styles.css" rel="stylesheet">
-		<link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
-		<script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
+    <title>agilebase : log in</title>
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap-responsive.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
+    <script type="text/javascript" src="/agileBase/website/scripts/jquery.js"></script>
     <script type="text/javascript" src="/agileBase/website/scripts/agilebase.js"></script>
     <meta name="google-site-verification" content="f-uEpO4sFJ0ePStIn6Svsj_wumUtsr153X4VYBA96K8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,15 +32,16 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
       <!-- don't index the test server -->
       <meta name="robots" content="noindex">
     <% } %>
-	</head>
-	<body>
+  </head>
+
+  <body>
     <div class="container">
       <div class="visible-phone alert alert-info big">
         On a phone? Log in at <a href="http://m.agilebase.co.uk">m.agilebase.co.uk</a>
       </div>
       <div class="row abNav">
         <div class="span2 home">
-          <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
+          <a href="http://www.agilebase.co.uk/"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
           <div class="arrow"></div>
         </div>
       </div>
@@ -78,7 +82,7 @@ if (requestURL.startsWith("http://appserver.gtportalbase.com")) {
               <p>Also, answer this maths question:
               <div class="spaced">
                 <p>
-                11 - 2 = <input type="text" name="iamnotanumber" size="4">
+                11 - 2 = <input type="text" name="iamnotanumber" size="4" />
                 <p>
                 <input type="text" name="username" id="username" autocorrect="off" autocapitalize="off" placeholder="email" />
                 <button type="submit" class="btn">request password</button>

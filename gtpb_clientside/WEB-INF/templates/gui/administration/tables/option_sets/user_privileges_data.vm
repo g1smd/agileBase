@@ -28,7 +28,7 @@
 	 $pbfn
      onclick="new fChange(this)"
      #if($highestTablePrivilege.equals($privilege)) checked #end
-    >
+    />
     <br>$caption
   </label>
 #end

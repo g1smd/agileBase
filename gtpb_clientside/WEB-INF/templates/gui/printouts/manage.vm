@@ -16,12 +16,11 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 <html>
 <head>
   <title>Manage templates</title>
-  <script type="text/javascript" src="resources/jquery.js"></script>
-  <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
-  <link href="resources/pane3_amalgam.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" rel="stylesheet" href="resources/pane3_amalgam.css" />
   <style type="text/css">
   .infomessage {
 	border-radius: 1em;
@@ -33,7 +32,10 @@
 	clear: left;
   }
   </style>
+  <script type="text/javascript" src="resources/jquery.js"></script>
+  <script type="text/javascript" src="resources/pane3_amalgam.js"></script>
 </head>
+
 <body>
   <div style="display: none">
   #if($view.getWhetherExceptionOccurred())

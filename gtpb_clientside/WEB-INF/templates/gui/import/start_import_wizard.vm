@@ -52,11 +52,11 @@
           </tr>
           <tr class="labels">
             <td>
-              <input type="radio" name="wizard_start_point" id="wizard_start_point_organisation" value="organisation" gtpb_set_table="a3b09a609b4c70624" gtpb_set_custom_string="true" gtpb_stringkey="wizard_start_point" gtpb_customstringvalue="organisation" checked>
+              <input type="radio" name="wizard_start_point" id="wizard_start_point_organisation" value="organisation" gtpb_set_table="a3b09a609b4c70624" gtpb_set_custom_string="true" gtpb_stringkey="wizard_start_point" gtpb_customstringvalue="organisation" checked />
               <label for="wizard_start_point_organisation">New organisation</label>
             </td>
             <td>
-              <input type="radio" name="wizard_start_point" id="wizard_start_point_site" value="site" gtpb_set_table="a3b09a609b4c70624" gtpb_set_custom_string="true" gtpb_stringkey="wizard_start_point" gtpb_customstringvalue="site">
+              <input type="radio" name="wizard_start_point" id="wizard_start_point_site" value="site" gtpb_set_table="a3b09a609b4c70624" gtpb_set_custom_string="true" gtpb_stringkey="wizard_start_point" gtpb_customstringvalue="site" />
               <label for="wizard_start_point_site">New site</label>
             </td>
           </tr>

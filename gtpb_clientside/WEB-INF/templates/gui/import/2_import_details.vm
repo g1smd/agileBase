@@ -55,7 +55,7 @@
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Header lines</td>
-  <td>Skip the first <input size="3" name="num_header_lines" value="1"> lines of the import file</td>
+  <td>Skip the first <input size="3" name="num_header_lines" value="1" /> lines of the import file</td>
 </tr>
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
@@ -86,13 +86,13 @@
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Merge data</td>
-  <td><input type="checkbox" name="merge" value="true" checked> Merge the spreadsheet and database by overwriting the database only when a spreadsheet value is non-empty</td>
+  <td><input type="checkbox" name="merge" value="true" checked /> Merge the spreadsheet and database by overwriting the database only when a spreadsheet value is non-empty</td>
 </tr>
 #end ##end if update
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Import file contains relation display values</td>
-  <td><input type="checkbox" name="use_relation_display_values" value="true" checked> Check if the import file contains display values for relation fields, uncheck if it contains internal values</td>
+  <td><input type="checkbox" name="use_relation_display_values" value="true" checked /> Check if the import file contains display values for relation fields, uncheck if it contains internal values</td>
 </tr>
 #foreach($field in $sessionTable.getFields())
   #set($sequenceFieldNames = "")
@@ -105,7 +105,7 @@
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Import values for sequence fields</td>
-  <td><input type="checkbox" name="import_sequence_values" value="true">Check if the import file contains values for sequence field(s) $sequenceFieldNames, uncheck if you want these values to be automatically generated</td>
+  <td><input type="checkbox" name="import_sequence_values" value="true" />Check if the import file contains values for sequence field(s) $sequenceFieldNames, uncheck if you want these values to be automatically generated</td>
 </tr>
 #end
 #foreach($field in $sessionTable.getFields())
@@ -117,13 +117,13 @@
   #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
   <tr class="$rowClass">
     <td>Best guess relations</td>
-    <td><input type="checkbox" name="best_guess_relations" value="true">It's normally required that import values for relation fields match those the database exactly. This option causes agileBase to look for a close match</td>
+    <td><input type="checkbox" name="best_guess_relations" value="true" />It's normally required that import values for relation fields match those the database exactly. This option causes agileBase to look for a close match</td>
   </tr>
 #end
 #if($rowClass == "rowa") #set($rowClass = "rowb") #else #set($rowClass = "rowa") #end
 <tr class="$rowClass">
   <td>Trim</td>
-  <td><input type="checkbox" name="trim" value="true" checked>Trim any leading and trailing spaces from import values in the spreadsheet</td>
+  <td><input type="checkbox" name="trim" value="true" checked />Trim any leading and trailing spaces from import values in the spreadsheet</td>
 </tr>
 
 </table>

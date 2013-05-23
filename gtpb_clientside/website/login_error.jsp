@@ -15,25 +15,26 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
- -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
+ --><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN>
+
 <%
 Thread.sleep(3000);
 %>
 <html>
   <head>
-  	<title>Login error</title>
-    <link href="/agileBase/website/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="/agileBase/website/fontawesome/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="/agileBase/website/styles.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/agileBase/website/gtpb.ico">
+    <title>Login error</title>
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/bootstrap/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/fontawesome/css/font-awesome.css" />
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+    <link type="text/css" rel="stylesheet" href="/agileBase/website/styles.css" />
+    <link type="image/x-icon" rel="shortcut icon" href="/agileBase/website/gtpb.ico" /> <!-- favicon -->
   </head>
+
 <body>
   <div class="container big">
     <div class="row abNav">
       <div class="span2 home">
-        <a href="http://www.agilebase.co.uk"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
+        <a href="http://www.agilebase.co.uk/"><img id="nav_home" src="/agileBase/website/images/agilebase.png" alt="" /></a>
         <div class="arrow"></div>
       </div>
     </div>

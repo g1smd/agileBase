@@ -1,13 +1,16 @@
+<!DOCTYPE html>
+
 <html>
 <head>
-    <link rel="icon" href="resources/icons/gtpb.ico" type="image/x-icon"> <!-- favicon -->
-	<link href="resources/display_application.css" type="text/css" rel="stylesheet" />
-	<link href="styles/main.css" type="text/css" rel="stylesheet" />
 	<title>Utilisation information</title>
+	<link type="text/css" rel="stylesheet" href="resources/display_application.css" />
+	<link type="text/css" rel="stylesheet" href="styles/main.css" />
+	<link type="image/x-icon" rel="icon" href="resources/icons/gtpb.ico" /> <!-- favicon -->
 	<script type="text/javascript" src="resources/jquery.js"></script>
 	<script type="text/javascript" src="resources/jit.js"></script>
 	<script type="text/javascript" src="simple/simple.js"></script>
 </head>
+
 <body>
 #set($treeMapJSON = $view.getUsageStats().getTreeMapJSON())
 JSON is<br>

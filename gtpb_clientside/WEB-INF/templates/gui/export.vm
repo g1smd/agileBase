@@ -16,11 +16,12 @@
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
 <!DOCTYPE html>
+
 #set($report = $sessionData.getReport())
 <html>
 <head>
-  <title>AgileBase - export $report</title>
-  <link href="resources/display_application_amalgam.css" type="text/css" rel="stylesheet" />
+  <title>agilebase - export $report</title>
+  <link type="text/css" rel="stylesheet" href="resources/display_application_amalgam.css" />
   <script type="text/javascript" src="resources/jquery.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
@@ -28,6 +29,7 @@
     });
   </script>
 </head>
+
 <body style="padding: 1em">
   <h1>Generating export</h1>
   <p>Your export of '$report' is being generated.

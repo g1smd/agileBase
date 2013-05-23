@@ -128,7 +128,7 @@
   <tr>
     <td>&nbsp;</td>
     <td>
-      <input type=button value="Delete Report" onclick="parent.pane_1.document.location='AppController.servlet?return=gui/pane1&remove_report=true&internalreportname=$internalReportName'">
+      <input type=button value="Delete Report" onclick="parent.pane_1.document.location='AppController.servlet?return=gui/pane1&remove_report=true&internalreportname=$internalReportName'" />
     </td>
   </tr>
 </table>

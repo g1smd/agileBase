@@ -20,7 +20,7 @@
 #set($calendarField = $report.getCalendarStartField())
 This option will allow data from this report to be accessed by the public without any username, password or other authentication.<p>
 Please be aware of any security considerations<p>
-<input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end> Allow public access<p>
+<input type="checkbox" name="set_calendar_syncable" value="true" onclick="new fChange(this)" #if($calendarSyncable)checked #end /> Allow public access<p>
 If public access is allowed, you can use one of these options to export data:
 <ul>
 #if($calendarField)

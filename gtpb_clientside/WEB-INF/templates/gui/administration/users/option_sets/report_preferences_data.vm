@@ -50,7 +50,7 @@
        #if(!$hiddenReports.contains($report))checked#end
        gtpb_internalreportname="$report.getInternalReportName()"
        gtpb_internalusername="$sessionUser.getInternalUserName()"
-       onclick="fSetPBfn(this);new fChange(this)">
+       onclick="fSetPBfn(this);new fChange(this)" />
     </td>
     </tr>
   #end

@@ -21,19 +21,19 @@
   <tr>
     <td>Name:</td>
     <td>
-      <input type="text" name="modulename" gtpb_update_module value="$module" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$module.getInternalModuleName()">
+      <input type="text" name="modulename" gtpb_update_module value="$module" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$module.getInternalModuleName()" />
     </td>
   </tr>
   <tr>
     <td>Section:</td>
     <td>
-      <input type="text" name="section" gtpb_update_module value="$module.getSection()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$module.getInternalModuleName()">
+      <input type="text" name="section" gtpb_update_module value="$module.getSection()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$module.getInternalModuleName()" />
     </td>
   </tr>
   <tr>
     <td>Index:<br><i>Modules with lower index numbers will appear before those with higher</i></td>
     <td>
-      <input type="text" name="indexnumber" gtpb_update_module value="$module.getIndexNumber()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$module.getInternalModuleName()">
+      <input type="text" name="indexnumber" gtpb_update_module value="$module.getIndexNumber()" onkeyup="top.oBuffer.writeBuffer(this);" maxKeyCount="6" identifier="$module.getInternalModuleName()" />
     </td>
   </tr>
   <tr>
