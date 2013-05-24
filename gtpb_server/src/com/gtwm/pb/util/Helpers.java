@@ -513,7 +513,6 @@ public final class Helpers {
 	 * @param size max. image width and height
 	 */
 	public static void createThumbnail(FileField field, FileValue fileValue, String filePath, int size) throws FileUploadException {
-		logger.debug("Creating thumbnail for " + field + ", value " + fileValue + ", path " + filePath);
 		int filenameNumber = size;
 		if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
 			// For profile photos, size is 250 but filename is .500 for backwards compatibility reasons
@@ -536,7 +535,6 @@ public final class Helpers {
 				BufferedImage originalImage = ImageIO.read(selectedFile);
 				int height = originalImage.getHeight();
 				int width = originalImage.getWidth();
-				logger.debug("Height " + height + ", width " + width);
 				if ((height > size) || (width > size)) {
 					needResize = true;
 				}
@@ -546,7 +544,6 @@ public final class Helpers {
 				// NullPointerException
 				// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
 				// http://code.google.com/p/thumbnailator/issues/detail?id=40
-				logger.error("Error reading image dimensions: " + ex);
 				if (selectedFile.length() > 1000000) {
 					needResize = true;
 				}
