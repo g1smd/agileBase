@@ -497,6 +497,10 @@ function dateFilterControls(event, inputObj) {
 	var firstCallback = true;
 	var firstRangeCallback = true;
 	var inputLeft = $(inputObj).position().left;
+	if (inputLeft > 1000) {
+		left = inputLeft - 980;
+		$("#fieldFilterControls").css("left", left + "px");
+	}
 	if (inputLeft > 900) {
 		var left = inputLeft - 880;
 		$("#fieldFilterControls").css("left", left + "px");

@@ -370,6 +370,7 @@ h2 {
   width: 100%;
   height: 550px;
   cursor: auto;
+  overflow: visible; /* to show date filter if it goes outside the tile */
 }
 
 /* override .tile.adder */
