@@ -15,12 +15,16 @@
 ##  You should have received a copy of the GNU General Public License
 ##  along with agileBase.  If not, see <http://www.gnu.org/licenses/>.
 ##
+<!DOCTYPE html>
+
 ## Should be called with logout=true in the parameters
+
 <html>
 <head>
-  <title>Agilebase</title>
+  <title>agilebase</title>
 </head>
+
 <body>
-  <img src="http://www.agilebase.co.uk/
+  <img src="http://www.agilebase.co.uk/images/some-image.jpg" alt="logout" />
 </body>
 </html>
