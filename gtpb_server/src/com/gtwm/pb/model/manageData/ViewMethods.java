@@ -30,6 +30,7 @@ import java.util.SortedMap;
 import java.util.HashMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
+import java.io.File;
 import java.sql.SQLException;
 import com.gtwm.pb.auth.PrivilegeType;
 import com.gtwm.pb.auth.DisallowedException;
@@ -56,6 +57,8 @@ import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.interfaces.fields.FileField;
+import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.ModuleInfo;
@@ -67,6 +70,7 @@ import com.gtwm.pb.model.manageSchema.FieldTypeDescriptor.FieldCategory;
 import com.gtwm.pb.model.manageUsage.UsageStats;
 import com.gtwm.pb.model.manageUsage.UsageLogger;
 import com.gtwm.pb.model.manageData.ModuleAction;
+import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.servlets.ServletUtilMethods;
 import com.gtwm.pb.util.Enumerations.AggregateFunction;
 import com.gtwm.pb.util.MissingParametersException;
@@ -80,6 +84,8 @@ import com.gtwm.pb.util.Enumerations.TileType;
 import com.gtwm.pb.util.Helpers;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
+
+import org.apache.commons.fileupload.FileUploadException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.grlea.log.SimpleLogger;
 import java.util.TreeSet;
@@ -1020,6 +1026,27 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return candidateJoins;
 	}
+	
+	public String iPadThumbnail(String imageSrc) throws ObjectNotFoundException, DisallowedException, FileUploadException {
+		String iPadSrc = imageSrc.replace("%20",  " ");
+		String absoluteFilename = this.request.getSession().getServletContext()
+				.getRealPath(this.databaseDefn.getDataManagement().getWebAppRoot() + "/" + iPadSrc);
+		File iPadFile = new File(absoluteFilename);
+	  FileValue fileValue = new FileValueDefn(iPadSrc);
+		if (!iPadFile.exists()) {
+			String part = iPadSrc.replaceAll("^uploads\\/", "");
+			String internalTableName = part.replaceAll("\\/.*", "");
+			part = part.replaceAll("^" + internalTableName + "\\/", "");
+			String internalFieldName = part.replaceAll("\\/.*", "");
+			//part = part.replaceAll("^" + internalFieldName + "\\/", "");
+		  TableInfo table = this.databaseDefn.getTable(this.request, internalTableName);
+		  FileField field = (FileField) table.getField(internalFieldName);
+		  Helpers.createThumbnail(field, fileValue, absoluteFilename, 1500);
+		}
+		return iPadSrc.replace(" ", "%20").replace(".png",".1500.png").replace(".jpg",".1500.jpg");
+	}
+
+
 
 	public boolean getWhetherExceptionOccurred() {
 		return this.whetherExceptionOccurred;

@@ -1728,9 +1728,8 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				if (extension.equals("pdf") || fileValue.isImage()) {
 					int midSize = 500;
-					Helpers.createThumbnail(field, fileValue, filePath, selectedFile, extension, midSize);
-					// Allow files that are up to 60 px tall as long as the
-					// width less than 40 px
+					Helpers.createThumbnail(field, fileValue, filePath, midSize);
+					// Allow files that are up to 60 px tall as long as the width less than 40 px.
 					// We will always need to create a small thumbnail this size, just call createThumnailWork directly
 					Helpers.createThumbnailWork(40, 60, filePath);
 				}

@@ -512,13 +512,18 @@ public final class Helpers {
 	 * Checks if the original image is larger than the specified thumbnail size. If so, create a thumbnail, if just copy the original image
 	 * @param size max. image width and height
 	 */
-	public static void createThumbnail(FileField field, FileValue fileValue, String filePath,
-			File selectedFile, String extension, int size) throws FileUploadException {
+	public static void createThumbnail(FileField field, FileValue fileValue, String filePath, int size) throws FileUploadException {
 		int filenameNumber = size;
 		if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
+			// For profile photos, size is 250 but filename is .500 for backwards compatibility reasons
 			size = 250;
 		}
 		boolean needResize = false;
+		String extension = "";
+		if (filePath.contains(".")) {
+			extension = filePath.replaceAll("^.*\\.", "").toLowerCase();
+		}
+		File selectedFile = new File(filePath);
 		if ((extension.equals("pdf"))
 				|| (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
 			needResize = true;
@@ -547,13 +552,13 @@ public final class Helpers {
 			Helpers.createThumbnailWork(size, size, filePath);
 		} else {
 			String thumbPath = filePath + "." + filenameNumber + "." + extension;
-			File thumb500File = new File(thumbPath);
+			File thumbFile = new File(thumbPath);
 			try {
-				Files.copy(selectedFile.toPath(), thumb500File.toPath(),
+				Files.copy(selectedFile.toPath(), thumbFile.toPath(),
 						StandardCopyOption.REPLACE_EXISTING);
 			} catch (IOException ioex) {
 				throw new FileUploadException(
-						"Error copying " + selectedFile + " to " + thumb500File, ioex);
+						"Error copying " + selectedFile + " to " + thumbFile, ioex);
 			}
 		}
 	}

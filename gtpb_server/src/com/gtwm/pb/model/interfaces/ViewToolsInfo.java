@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.util.CodingErrorException;
@@ -410,7 +411,7 @@ public interface ViewToolsInfo {
 	 * Return an MD5 digest of the input
 	 */
 	public String md5(String input);
-
+	
 	/**
 	 * Causes an exception to be thrown for test purposes - intended for testing
 	 * of error handling

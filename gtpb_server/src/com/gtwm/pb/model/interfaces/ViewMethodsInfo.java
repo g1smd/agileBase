@@ -25,6 +25,8 @@ import java.util.EnumSet;
 import com.gtwm.pb.auth.DisallowedException;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.interfaces.fields.FileField;
+import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.model.interfaces.fields.RelationField;
 import com.gtwm.pb.model.manageData.DataRow;
 import com.gtwm.pb.util.Enumerations.TileType;
@@ -37,6 +39,8 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.stream.XMLStreamException;
+
+import org.apache.commons.fileupload.FileUploadException;
 import org.codehaus.jackson.JsonGenerationException;
 
 /**
@@ -781,6 +785,13 @@ public interface ViewMethodsInfo {
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
+	
+	/**
+	 * Create an image that's small enough to be displayed on an iPad. Excessively large images can't be shown due to memory and size constraints.
+	 * 
+	 * Return the relative URL of the image, that can be used in an img tag
+	 */
+	public String iPadThumbnail(String imageSrc) throws ObjectNotFoundException, DisallowedException, FileUploadException;
 
 	public EnumSet<TileType> getTileTypes();
 

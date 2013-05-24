@@ -66,6 +66,7 @@ import com.gtwm.pb.util.ObjectNotFoundException;
 import com.gtwm.pb.model.interfaces.FieldTypeDescriptorInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.BaseValue;
+import com.gtwm.pb.model.interfaces.fields.FileField;
 import com.gtwm.pb.model.interfaces.fields.TextField;
 import com.gtwm.pb.model.interfaces.fields.TextValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
@@ -1654,7 +1655,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		return files;
 	}
-
+	
 	public String getOfqualUnitPage(String qualificationNumber) throws ClientProtocolException,
 			IOException {
 		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");
