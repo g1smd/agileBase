@@ -101,7 +101,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	/**
 	 * Create and initialise the viewMethods object that'll be used by templates
 	 * to display the application
-	 *
+	 * 
 	 * @param request
 	 *          Allows methods to get session data, also used when we need to know
 	 *          the current user
@@ -384,7 +384,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 		return unchosenRelationFields;
 	}
 
-	public SortedSet<CommentInfo> getCompanyComments(int rowLimit) throws SQLException, DisallowedException, ObjectNotFoundException {
+	public SortedSet<CommentInfo> getCompanyComments(int rowLimit) throws SQLException,
+			DisallowedException, ObjectNotFoundException {
 		AppUserInfo user = this.getLoggedInUser();
 		return this.databaseDefn.getDataManagement().getCompanyComments(this.request, user, rowLimit);
 	}
@@ -1026,25 +1027,26 @@ public final class ViewMethods implements ViewMethodsInfo {
 		}
 		return candidateJoins;
 	}
-	
-	public String iPadThumbnail(String imageSrc) throws ObjectNotFoundException, DisallowedException, FileUploadException {
-		String iPadSrc = imageSrc.replace("%20",  " ");
-		File iPadFile = new File(iPadSrc.replace(".png",".1500.png").replace(".jpg",".1500.jpg"));
-	  FileValue fileValue = new FileValueDefn(iPadSrc);
+
+	public String iPadThumbnail(String imageSrc) throws ObjectNotFoundException, DisallowedException,
+			FileUploadException {
+		String iPadSrc = imageSrc.replace("%20", " ");
+		String absoluteFilename = this.request.getSession().getServletContext().getRealPath(iPadSrc);
+		File iPadFile = new File(absoluteFilename.replace(".png", ".1500.png").replace(".jpg",
+				".1500.jpg"));
+		FileValue fileValue = new FileValueDefn(iPadSrc);
 		if (!iPadFile.exists()) {
 			String part = iPadSrc.replaceAll("^uploads\\/", "");
 			String internalTableName = part.replaceAll("\\/.*", "");
 			part = part.replaceAll("^" + internalTableName + "\\/", "");
 			String internalFieldName = part.replaceAll("\\/.*", "");
-			//part = part.replaceAll("^" + internalFieldName + "\\/", "");
-		  TableInfo table = this.databaseDefn.getTable(this.request, internalTableName);
-		  FileField field = (FileField) table.getField(internalFieldName);
-		  Helpers.createThumbnail(field, fileValue, iPadSrc, 1500);
+			// part = part.replaceAll("^" + internalFieldName + "\\/", "");
+			TableInfo table = this.databaseDefn.getTable(this.request, internalTableName);
+			FileField field = (FileField) table.getField(internalFieldName);
+			Helpers.createThumbnail(field, fileValue, absoluteFilename, 1500);
 		}
-		return iPadSrc.replace(" ", "%20").replace(".png",".1500.png").replace(".jpg",".1500.jpg");
+		return iPadSrc.replace(" ", "%20").replace(".png", ".1500.png").replace(".jpg", ".1500.jpg");
 	}
-
-
 
 	public boolean getWhetherExceptionOccurred() {
 		return this.whetherExceptionOccurred;
