@@ -43,7 +43,6 @@ import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.DatabaseInfo;
 import com.gtwm.pb.model.interfaces.UserTablePrivilegeInfo;
 import com.gtwm.pb.model.interfaces.RoleTablePrivilegeInfo;
-import com.gtwm.pb.model.manageData.DataManagement;
 import com.gtwm.pb.util.CantDoThatException;
 import com.gtwm.pb.util.CodingErrorException;
 import com.gtwm.pb.util.Helpers;
@@ -269,7 +268,7 @@ public final class ServletAuthMethods {
 					// library throws a raw exception. Not very good
 					throw new FileUploadException("Error writing file: " + ex.getMessage());
 				}
-				DataManagement.createThumbnail(40, 60, filePath);
+				Helpers.createThumbnailWork(40, 60, filePath);
 			}
 		}
 	}

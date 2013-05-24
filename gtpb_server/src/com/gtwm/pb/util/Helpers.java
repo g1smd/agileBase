@@ -27,12 +27,18 @@ import java.util.Set;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Calendar;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.Writer;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import javax.imageio.ImageIO;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -42,8 +48,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.grlea.log.SimpleLogger;
+import org.im4java.core.ConvertCmd;
+import org.im4java.core.IM4JavaException;
+import org.im4java.core.IMOperation;
+
 import com.gtwm.pb.model.interfaces.BaseReportInfo;
 import com.gtwm.pb.model.interfaces.DataRowFieldInfo;
 import com.gtwm.pb.model.interfaces.DataRowInfo;
@@ -52,6 +63,8 @@ import com.gtwm.pb.model.interfaces.SimpleReportInfo;
 import com.gtwm.pb.model.interfaces.TableInfo;
 import com.gtwm.pb.model.interfaces.fields.BaseField;
 import com.gtwm.pb.model.interfaces.fields.FileField;
+import com.gtwm.pb.model.interfaces.fields.FileValue;
+import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.util.Enumerations.AttachmentType;
 import com.gtwm.pb.util.Enumerations.DatabaseFieldType;
 
@@ -494,5 +507,93 @@ public final class Helpers {
 	}
 
 	private static final SimpleLogger logger = new SimpleLogger(Helpers.class);
+
+	/**
+	 * Checks if the original image is larger than the specified thumbnail size. If so, create a thumbnail, if just copy the original image
+	 * @param size max. image width and height
+	 */
+	public static void createThumbnail(FileField field, FileValue fileValue, String filePath,
+			File selectedFile, String extension, int size) throws FileUploadException {
+		int filenameNumber = size;
+		if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
+			size = 250;
+		}
+		boolean needResize = false;
+		if ((extension.equals("pdf"))
+				|| (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
+			needResize = true;
+		} else {
+			try {
+				BufferedImage originalImage = ImageIO.read(selectedFile);
+				int height = originalImage.getHeight();
+				int width = originalImage.getWidth();
+				if ((height > size) || (width > size)) {
+					needResize = true;
+				}
+			} catch (IOException ex) {
+				// Certain images can sometimes fail to be read
+				// e.g. CMYK JPGs fail with IOex
+				// NullPointerException
+				// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
+				// http://code.google.com/p/thumbnailator/issues/detail?id=40
+				logger.error("Error reading image dimensions: " + ex);
+				if (selectedFile.length() > 1000000) {
+					needResize = true;
+				}
+			}
+		}
+		// Conditional resize
+		if (needResize) {
+			Helpers.createThumbnailWork(size, size, filePath);
+		} else {
+			String thumbPath = filePath + "." + filenameNumber + "." + extension;
+			File thumb500File = new File(thumbPath);
+			try {
+				Files.copy(selectedFile.toPath(), thumb500File.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException ioex) {
+				throw new FileUploadException(
+						"Error copying " + selectedFile + " to " + thumb500File, ioex);
+			}
+		}
+	}
+
+	/**
+	 * Does the actual work of creating a thumbnail or smaller image
+	 */
+	public static void createThumbnailWork(int width, int height, String inputFilePath)
+			throws FileUploadException {
+		ConvertCmd convert = new ConvertCmd();
+		IMOperation op = new IMOperation();
+		op.addImage(); // Placeholder for input PDF
+		op.resize(width, height);
+		op.addImage(); // Placeholder for output PNG
+		String newExtension = (new FileValueDefn(inputFilePath)).getPreviewExtension();
+		int filenameSize = width;
+		if (filenameSize == 250) {
+			// Profile photos are saves as 250x250 but for backwards compatibility
+			// should still be named 500
+			filenameSize = 500;
+		}
+		try {
+			String convertPath = inputFilePath;
+			if (inputFilePath.endsWith("pdf")) {
+				// [0] means convert only first page if a PDF
+				convertPath += "[0]";
+				newExtension = "png";
+			}
+			convert.run(op, new Object[] { convertPath,
+					inputFilePath + "." + filenameSize + "." + newExtension });
+		} catch (IOException ioex) {
+			throw new FileUploadException("IO error while converting " + inputFilePath + " to "
+					+ newExtension + ": " + ioex);
+		} catch (InterruptedException iex) {
+			throw new FileUploadException("Interrupted while converting " + inputFilePath + " to "
+					+ newExtension + ": " + iex);
+		} catch (IM4JavaException im4jex) {
+			throw new FileUploadException("Problem converting " + inputFilePath + " to " + newExtension
+					+ ": " + im4jex);
+		}
+	}
 
 }

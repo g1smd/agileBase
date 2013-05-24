@@ -109,7 +109,6 @@ import com.gtwm.pb.model.interfaces.fields.DateValue;
 import com.gtwm.pb.model.interfaces.fields.FileValue;
 import com.gtwm.pb.model.manageData.fields.DateValueDefn;
 import com.gtwm.pb.model.manageData.fields.DecimalValueDefn;
-import com.gtwm.pb.model.manageData.fields.FileValueDefn;
 import com.gtwm.pb.model.manageData.fields.TextValueDefn;
 import com.gtwm.pb.model.manageData.fields.IntegerValueDefn;
 import com.gtwm.pb.model.manageData.fields.CheckboxValueDefn;
@@ -158,9 +157,6 @@ import org.codehaus.jackson.JsonGenerator;
 import org.grlea.log.SimpleLogger;
 import org.glowacki.CalendarParser;
 import org.glowacki.CalendarParserException;
-import org.im4java.core.ConvertCmd;
-import org.im4java.core.IM4JavaException;
-import org.im4java.core.IMOperation;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Instant;
 
@@ -1732,89 +1728,13 @@ public final class DataManagement implements DataManagementInfo {
 				}
 				if (extension.equals("pdf") || fileValue.isImage()) {
 					int midSize = 500;
-					if (field.getAttachmentType().equals(AttachmentType.PROFILE_PHOTO)) {
-						midSize = 250;
-					}
-					boolean needResize = false;
-					if ((extension.equals("pdf"))
-							|| (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
-						needResize = true;
-					} else {
-						try {
-							BufferedImage originalImage = ImageIO.read(selectedFile);
-							int height = originalImage.getHeight();
-							int width = originalImage.getWidth();
-							if ((height > midSize) || (width > midSize)) {
-								needResize = true;
-							}
-						} catch (IOException ex) {
-							// Certain images can sometimes fail to be read
-							// e.g. CMYK JPGs fail with IOex
-							// NullPointerException
-							// http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=5100094
-							// http://code.google.com/p/thumbnailator/issues/detail?id=40
-							logger.error("Error reading image dimensions: " + ex);
-							if (selectedFile.length() > 1000000) {
-								needResize = true;
-							}
-						}
-					}
-					// Conditional resize
-					if (needResize) {
-						createThumbnail(midSize, midSize, filePath);
-					} else {
-						String thumb500Path = filePath + "." + 500 + "." + extension;
-						File thumb500File = new File(thumb500Path);
-						try {
-							Files.copy(selectedFile.toPath(), thumb500File.toPath(),
-									StandardCopyOption.REPLACE_EXISTING);
-						} catch (IOException ioex) {
-							throw new FileUploadException(
-									"Error copying " + selectedFile + " to " + thumb500File, ioex);
-						}
-					}
+					Helpers.createThumbnail(field, fileValue, filePath, selectedFile, extension, midSize);
 					// Allow files that are up to 60 px tall as long as the
 					// width less than 40 px
-					createThumbnail(40, 60, filePath);
+					// We will always need to create a small thumbnail this size, just call createThumnailWork directly
+					Helpers.createThumbnailWork(40, 60, filePath);
 				}
 			}
-		}
-	}
-
-	// TODO: move out of DataManagement to perhaps ServletDataMethods,
-	// ServletUtilMethods or Helper
-	public static void createThumbnail(int width, int height, String inputFilePath)
-			throws FileUploadException {
-		ConvertCmd convert = new ConvertCmd();
-		IMOperation op = new IMOperation();
-		op.addImage(); // Placeholder for input PDF
-		op.resize(width, height);
-		op.addImage(); // Placeholder for output PNG
-		String newExtension = (new FileValueDefn(inputFilePath)).getPreviewExtension();
-		int filenameSize = width;
-		if (filenameSize == 250) {
-			// Profile photos are saves as 250x250 but for backwards compatibility
-			// should still be named 500
-			filenameSize = 500;
-		}
-		try {
-			String convertPath = inputFilePath;
-			if (inputFilePath.endsWith("pdf")) {
-				// [0] means convert only first page if a PDF
-				convertPath += "[0]";
-				newExtension = "png";
-			}
-			convert.run(op, new Object[] { convertPath,
-					inputFilePath + "." + filenameSize + "." + newExtension });
-		} catch (IOException ioex) {
-			throw new FileUploadException("IO error while converting " + inputFilePath + " to "
-					+ newExtension + ": " + ioex);
-		} catch (InterruptedException iex) {
-			throw new FileUploadException("Interrupted while converting " + inputFilePath + " to "
-					+ newExtension + ": " + iex);
-		} catch (IM4JavaException im4jex) {
-			throw new FileUploadException("Problem converting " + inputFilePath + " to " + newExtension
-					+ ": " + im4jex);
 		}
 	}
 
