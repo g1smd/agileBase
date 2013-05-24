@@ -1045,7 +1045,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			FileField field = (FileField) table.getField(internalFieldName);
 			Helpers.createThumbnail(field, fileValue, absoluteFilename, 1500);
 		}
-		return iPadSrc.replace(" ", "%20").replace(".png", ".1500.png").replace(".jpg", ".1500.jpg");
+		return iPadSrc.replace(" ", "%20").replace(".png", ".png.1500.png").replace(".jpg", ".jpg.1500.jpg");
 	}
 
 	public boolean getWhetherExceptionOccurred() {
