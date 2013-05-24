@@ -60,6 +60,7 @@ $(document).keypress(function(event) {
   </div>
   #set($imgSrc = $viewTools.escapeForURL($sessionData.getCustomString("img_src")))
   #if($viewTools.getBrowser().isMobile())
+    Input image: $imgSrc<p>
     #set($imgSrc = $view.iPadThumbnail($imgSrc))
   #end
   <img id="image" src="$imgSrc" alt="" />

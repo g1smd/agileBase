@@ -524,6 +524,9 @@ public final class Helpers {
 			extension = filePath.replaceAll("^.*\\.", "").toLowerCase();
 		}
 		File selectedFile = new File(filePath);
+		if (!selectedFile.exists()) {
+			throw new FileUploadException("File "+ filePath + " not found");
+		}
 		if ((extension.equals("pdf"))
 				|| (!fileValue.getExtension().equals(fileValue.getPreviewExtension()))) {
 			needResize = true;
