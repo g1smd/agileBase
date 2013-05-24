@@ -1032,8 +1032,8 @@ public final class ViewMethods implements ViewMethodsInfo {
 			FileUploadException {
 		String iPadSrc = imageSrc.replace("%20", " ");
 		String absoluteFilename = this.request.getSession().getServletContext().getRealPath(iPadSrc);
-		File iPadFile = new File(absoluteFilename.replace(".png", ".1500.png").replace(".jpg",
-				".1500.jpg"));
+		File iPadFile = new File(absoluteFilename.replace(".png", ".png.1500.png").replace(".jpg",
+				".jpg.1500.jpg"));
 		FileValue fileValue = new FileValueDefn(iPadSrc);
 		if (!iPadFile.exists()) {
 			String part = iPadSrc.replaceAll("^uploads\\/", "");
