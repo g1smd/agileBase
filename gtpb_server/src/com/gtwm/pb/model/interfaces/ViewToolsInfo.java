@@ -411,7 +411,7 @@ public interface ViewToolsInfo {
 	 * Return an MD5 digest of the input
 	 */
 	public String md5(String input);
-	
+
 	/**
 	 * Causes an exception to be thrown for test purposes - intended for testing
 	 * of error handling

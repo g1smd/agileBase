@@ -101,7 +101,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	/**
 	 * Create and initialise the viewMethods object that'll be used by templates
 	 * to display the application
-	 * 
+	 *
 	 * @param request
 	 *          Allows methods to get session data, also used when we need to know
 	 *          the current user

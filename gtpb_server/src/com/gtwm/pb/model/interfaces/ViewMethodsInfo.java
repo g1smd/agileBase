@@ -785,10 +785,10 @@ public interface ViewMethodsInfo {
 	 * @return Bytes per second
 	 */
 	public int getUploadSpeed();
-	
+
 	/**
 	 * Create an image that's small enough to be displayed on an iPad. Excessively large images can't be shown due to memory and size constraints.
-	 * 
+	 *
 	 * Return the relative URL of the image, that can be used in an img tag
 	 */
 	public String iPadThumbnail(String imageSrc) throws ObjectNotFoundException, DisallowedException, FileUploadException;

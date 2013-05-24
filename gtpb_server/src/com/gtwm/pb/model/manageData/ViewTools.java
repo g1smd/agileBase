@@ -1655,7 +1655,7 @@ public final class ViewTools implements ViewToolsInfo {
 		}
 		return files;
 	}
-	
+
 	public String getOfqualUnitPage(String qualificationNumber) throws ClientProtocolException,
 			IOException {
 		qualificationNumber = qualificationNumber.replace("/", "_").replaceAll("[^\\w_]", "");
