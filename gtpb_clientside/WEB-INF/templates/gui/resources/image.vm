@@ -59,7 +59,6 @@ $(document).keypress(function(event) {
     <img src="resources/preview/zoom_out_48.png" alt="" onclick="zoom(false);">
   </div>
   #set($imgSrc = $viewTools.escapeForURL($sessionData.getCustomString("img_src")))
-    Input image: $imgSrc<p>
   #if($viewTools.getBrowser().isMobile())
     #set($imgSrc = $view.iPadThumbnail($imgSrc))
   #end
