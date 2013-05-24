@@ -4,7 +4,7 @@
 
 @import url("../button/button.css");
 
-html .tab-interface .tab-list a, html .tab-interface .tab-list strong { 
+html .tab-interface .tab-list a, html .tab-interface .tab-list strong {
 	min-width: 100px;
 }
 
@@ -33,29 +33,29 @@ thead{
 	#tree li{
 		margin-bottom: -5px;
 	}
-	
+
 		#tree li img{
 			margin: 0 5px 0 -20px;
 			vertical-align: middle;
 		}
-		
+
 		#tree li ul{
 			//display: block;
 			padding-bottom: 5px solid #FFF;
 		}
-		
+
 		#tree li ul.expanded{
 			display: block;
 		}
-		
+
 		#tree li ul.collapsed{
 			display: none;
 		}
-		
+
 			#tree li ul li{
 				margin: -5px 0 5px 0;
 			}
-			
+
 
 
 */

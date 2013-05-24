@@ -69,7 +69,7 @@ a.dp-choose-date {
 	display: block;
 	text-indent: -2000px;
 	overflow: hidden;
-	background: url('calendar.png') no-repeat; 
+	background: url('calendar.png') no-repeat;
 }
 
 .two_cols a.dp-choose-date {

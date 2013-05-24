@@ -1,4 +1,4 @@
-* { 
+* {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -ms-box-sizing: border-box;
@@ -40,9 +40,9 @@ div#_md_blank div#_md_dialog div#_md_title {
   top:0;
   left:0;
   overflow:hidden;
-  
+
   background-color:#A09F9A;
-  
+
   color:white;
   font-weight:bold;
   text-transform:uppercase;
@@ -125,7 +125,7 @@ div#_md_blank div#_md_dialog div#_md_content h1 {
 div#_md_blank div#_md_dialog div#_md_content table#reportData {
   width:100%;
   height:100%;
-  border-collapse:collapse;    
+  border-collapse:collapse;
 }
 
 div#_md_blank div#_md_dialog div#_md_content table#reportData td {
@@ -142,40 +142,40 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData td.delete {
 div#_md_blank div#_md_dialog div#_md_content table#reportData td.delete img {
   cursor:pointer;
 }
-  
+
 div#_md_blank div#_md_dialog div#_md_content table#reportData tr.first td {
   font-size:0px;
   height:15px;
 }
-  
+
 div#_md_blank div#_md_dialog div#_md_content table#reportData td.rowa,
-div#_md_blank div#_md_dialog div#_md_content table#reportData td.rowb { 
+div#_md_blank div#_md_dialog div#_md_content table#reportData td.rowb {
   height:25px;
 }
-  
+
 div#_md_blank div#_md_dialog div#_md_content table#reportData .trailing {
   border-right:0 none;
 }
-  
+
 div#_md_blank div#_md_dialog div#_md_content table#reportData tr#errorRow,
 div#_md_blank div#_md_dialog div#_md_content table#reportData tr#errorRow:hover td {
   background-color:#ffd588!important;
-}  
-  
+}
+
 /*
 div#_md_blank div#_md_dialog div#_md_content table#reportData tr.rowb {
   background-color:#E8E7E3;
 }
 */
 
-div#_md_blank div#_md_dialog div#_md_content table#reportData th { 
-  background-color:#E8E7E3; 
-  font-size:10pt; 
+div#_md_blank div#_md_dialog div#_md_content table#reportData th {
+  background-color:#E8E7E3;
+  font-size:10pt;
   color:black;
   font-weight:bold;
   padding:7px;
   text-align:left;
-  height:30px; 
+  height:30px;
   text-transform: capitalize;
   cursor:default;
   background-repeat:no-repeat;
@@ -188,33 +188,33 @@ div#_md_blank div#_md_dialog div#_md_content table#reportData th div {
   white-space:nowrap;
 }
 
-div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters { 
-  background-color:white; 
+div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters {
+  background-color:white;
 }
 
-div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters input { 
+div#_md_blank div#_md_dialog div#_md_content table#reportData thead tr#fieldFilters input {
   width:100%;
   border-radius: 0.5em;
   border: 1px solid #e8e7e3;
 }
-					  
-div#_md_blank div#_md_dialog div#_md_content table#reportData thead td { 
-  border-bottom:1px solid#e8e7e3 
-}					  
 
-div#_md_blank div#_md_dialog div#_md_content table#reportData tbody td { 
-  vertical-align:top 
+div#_md_blank div#_md_dialog div#_md_content table#reportData thead td {
+  border-bottom:1px solid#e8e7e3
 }
-					  
-div#_md_blank div#_md_dialog div#_md_content table#reportData tbody tr.rowa:hover td,
-div#_md_blank div#_md_dialog div#_md_content table#reportData tbody tr.rowb:hover td { 
-  background-color:#dae2ff;
-}			
 
-div#_md_blank div#_md_dialog div#_md_content table#reportData tr.trailing td { 
-  height:auto 
-}		  
-		
+div#_md_blank div#_md_dialog div#_md_content table#reportData tbody td {
+  vertical-align:top
+}
+
+div#_md_blank div#_md_dialog div#_md_content table#reportData tbody tr.rowa:hover td,
+div#_md_blank div#_md_dialog div#_md_content table#reportData tbody tr.rowb:hover td {
+  background-color:#dae2ff;
+}
+
+div#_md_blank div#_md_dialog div#_md_content table#reportData tr.trailing td {
+  height:auto
+}
+
 
 div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker {
   width:100%;
@@ -246,6 +246,6 @@ div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker div#_mdp_co
   height:100%;
 }
 
-div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker div#_mdp_content table#reportData tr#_mfp_current_row td { 
+div#_md_blank div#_md_dialog div#_md_content div#_mdp_relationPicker div#_mdp_content table#reportData tr#_mfp_current_row td {
   background-color:#ffd588;
 }

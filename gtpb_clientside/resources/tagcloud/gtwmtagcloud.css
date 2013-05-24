@@ -1,7 +1,7 @@
 .tagCloud {
 	border:2px solid #656766;
 	width:500px;
-    height:350px;	
+    height:350px;
     float:left;
     margin-right:30px;
     text-align:center;
@@ -14,7 +14,7 @@
     padding:10px;
 }
 
-.tagCloud a {	
+.tagCloud a {
 }
 
 .tagCloud a,
@@ -56,7 +56,7 @@
 	font-size:18pt;
 	font-weight:normal;
 	margin-top:0;
-	margin-bottom:15px;	
+	margin-bottom:15px;
 }
 
 #filter a {
@@ -69,7 +69,7 @@
 }
 
 #filter a:hover {
-	color:black!important; 
+	color:black!important;
 	background-position:right -80px;
 }
 
@@ -84,7 +84,7 @@
 }
 
 #search input {
-	font-size:14pt;	
+	font-size:14pt;
 	width:200px;
 	float:left;
 }
@@ -93,5 +93,5 @@
 	font-size:14pt;
 	float:right;
 	position:relative;
-	top:-1px;	
+	top:-1px;
 }

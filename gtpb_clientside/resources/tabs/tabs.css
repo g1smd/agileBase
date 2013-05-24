@@ -16,8 +16,8 @@
   background: none;
 }
 
-body { 
-  background-color:#E8E7E3; 
+body {
+  background-color:#E8E7E3;
   font-family: Verdana,Geneva,sans-serif;
   font-size:9pt;
   margin: 0;
@@ -32,8 +32,8 @@ a:visited {
   color: #009FE3;
 }
 
-td.trailing input[type=button] { 
-  font-size:8pt; 
+td.trailing input[type=button] {
+  font-size:8pt;
 }
 
 :invalid {
@@ -53,7 +53,7 @@ td.trailing input[type=button] {
 	margin: 0;
 	padding: 0 0 0 10px;
 	background: #E8E7E3;
-  border-top:1px solid #e8e7e3;	
+  border-top:1px solid #e8e7e3;
 }
 
 .tab-interface .tab-list li {
@@ -62,22 +62,22 @@ td.trailing input[type=button] {
 	height: 100%;
 }
 
-.tab-interface .tab-content { 
+.tab-interface .tab-content {
   background-color:white;
   position: absolute;
-	top: 0; 
-	bottom: 2em;  
+	top: 0;
+	bottom: 2em;
 	right: 0;
 	left: 0;
 	/*
 	overflow: scroll;
 	*/
-	
+
 	overflow: auto;
-	
+
  }
-														  
-.tab-interface .tab-list a, .tab-interface .tab-list strong { 
+
+.tab-interface .tab-list a, .tab-interface .tab-list strong {
   padding: 3px 20px;
   margin: 0;
   min-width: 100px;
@@ -89,21 +89,21 @@ td.trailing input[type=button] {
   display: block;
   text-decoration: none;
 }
-															
-.tab-interface .tab-list a:hover { 
+
+.tab-interface .tab-list a:hover {
   border-bottom-color:#EC008C;
   color:black;
   padding-bottom: 6px;
 
-}													
-																
-.tab-interface .tab-list strong { 
+}
+
+.tab-interface .tab-list strong {
   font-weight:bold;
   background-color:white;
   padding-bottom: 6px;
   margin-top: -1px;
   color:black;
-}	
+}
 /*
 .tab-interface .tab-content .tab-item {
 	overflow:auto;
@@ -116,13 +116,13 @@ td.trailing input[type=button] {
   height: 100%;
 }
 
-.tab-interface .tab-content div.content { 
+.tab-interface .tab-content div.content {
   width:100%;
   height:100%;
-  overflow:auto; 
+  overflow:auto;
 }
-															
-div.tab_content th { 
+
+div.tab_content th {
   text-transform:uppercase;
   border-bottom:1px solid #333333;
   color:#333333;
@@ -131,35 +131,35 @@ div.tab_content th {
   font-size:8pt;
 }
 
-div.tab_content tr.caption:hover { 
+div.tab_content tr.caption:hover {
   background:transparent;
-}  
-                                          
-div.tab_content td { 
+}
+
+div.tab_content td {
   padding:10px;
   font-size:8pt;
   color:#656766;
-  padding-left:10px; 
-}		
-                     
-label:hover { 
-  color:black; 
-}                                       
-                                          
-div.tab_content td:first-child:first-line { 
+  padding-left:10px;
+}
+
+label:hover {
+  color:black;
+}
+
+div.tab_content td:first-child:first-line {
   font-size:10pt;
   color:black;
   vertical-align:top;
-  padding-top:13px; 
-} 
-                                            
+  padding-top:13px;
+}
+
 div.tab_content table#reportData tbody tr.rowa:hover td,
-div.tab_content table#reportData tbody tr.rowb:hover td { 
+div.tab_content table#reportData tbody tr.rowb:hover td {
   background-color:transparent!important;
-} 
+}
 
 div.tab_content table#reportData tbody tr.rowa[forcehighlight=true]:hover td,
-div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td { 
+div.tab_content table#reportData tbody tr.rowb[forcehighlight=true]:hover td {
   background-color:#dae2ff!important;
 }
 
@@ -184,7 +184,7 @@ table#reportData td input[type='file'] {
 }
 
 table#reportData td select {
-  min-width: 296px;  
+  min-width: 296px;
   border-radius: 0.5em;
   border: 1px solid #656766;
   padding: 0.3em;
@@ -322,7 +322,7 @@ a[error] { font-size:8pt; }
   float: right;
   width: 50%;
   background-color: #E8E7E3;
-}	
+}
 
 .reportDataView #rightcol .related {
   margin-left: 0;
@@ -581,16 +581,16 @@ div.relation_field {
     div.relation_field input {
       /* margin-right:10px; */
     }
-  
+
   div.relation_field span {
     padding-right:10px;
   }
-    
+
     div.relation_field a {
       font-size:8pt;
       margin-right:15px;
     }
-     
+
     div.relation_picker {
       display:inline;
       background-color:white;
@@ -602,7 +602,7 @@ div.relation_field {
       padding-top:30px;
       box-shadow: 0.5em 0.5em 2em #656766;
     }
-    
+
     div.relation_picker div#toolbar {
       border-bottom:1px solid black;
       background-color:#E8E7E3;
@@ -615,28 +615,28 @@ div.relation_field {
       padding:3px 10px;
       z-index:999;
     }
-    
+
     div.relation_picker div#toolbar select {
       margin:0;
     }
-    
+
     div.relation_picker div#toolbar a {
       float:right;
       color:black;
       text-decoration:none;
       margin-top:5px;
     }
-    
+
     div.relation_picker div#toolbar a:hover {
       text-decoration:underline;
     }
-    
+
     div.relation_picker div#content {
       position:relative;
       height:100%;
       overflow:scroll;
     }
-   
+
 .comment_toggle {
   opacity: 0;
   cursor: pointer;
@@ -706,7 +706,7 @@ img.comment_author_picture {
   border-radius: 0.5em;
   margin-bottom: 0.5em;
 }
-	
+
 /* Note: this is an example of how to make a character hang */
 .currency_symbol {
 	/*
@@ -898,7 +898,7 @@ div#reportData {
   width: auto!important;
   float: none!important;
 }
-	
+
 .block input.ac_input {
   width:50%;
 }
@@ -1084,52 +1084,52 @@ div#reportData {
   margin: 2em;
   border-radius: 1em;
 }
-	
+
 /* 3) Summary tab css */
 
 
-	  div#fieldOptionsSet { 
+	  div#fieldOptionsSet {
 	    display:none;
 	  }
-	  
-	  div#fieldOptionsSet[selected] { 
+
+	  div#fieldOptionsSet[selected] {
 	    display:block;
 	  }
-/* This causes the image disconnect problem where images appear 'beneath' form fields below them	  
-	  form { 
+/* This causes the image disconnect problem where images appear 'beneath' form fields below them
+	  form {
 	    height:100%;
 	  }
-*/	
-	  tr#addNewField td { 
+*/
+	  tr#addNewField td {
 	    vertical-align:top;
     	font-size:8pt;
 		border-top:1px solid #EC008C;
 	  }
-						
-	  optgroup { 
+
+	  optgroup {
 	    font-style:normal;
-		margin-top:5px; 
+		margin-top:5px;
 		color:#333333;
 	  }
-  
+
   .tagCloud {
     color:#8D8D8D;
     position:absolute;
     width:100%;
     background-color:#ffffff;
   }
-  
+
   .chart_controls {
   	width:100%;
   	background-color: #E8E7E3;
   	padding: 0.5em;
   	font-size: 9pt;
   }
-  
+
   .chart_controls td {
     vertical-align: top;
   }
-  
+
   .chart_controls .existing_element a {
     color: black;
   	background-color: #E7F5F9;
@@ -1150,17 +1150,17 @@ div#reportData {
     border: #656766 solid 1px;
     background-image: url('remove-dark.png');
   }
-  
+
   .summary_chart {
     /* width: 100%; */
     position: relative; /* to allow the chart_remover to be placed inside */
   }
-  
+
   .default_chart {
     background-color: #E8E7E3;
     width: 100%;
   }
-  
+
   .chart_remover {
     position: absolute;
     display: none;
@@ -1168,7 +1168,7 @@ div#reportData {
     top: 1em;
     z-index: 100; /* on top of the chart */
   }
-  
+
   form#savechart {
     text-align: center;
     font-weight: bold;
@@ -1179,7 +1179,7 @@ div#reportData {
     position: relative;
     width: 100%;
   }
-  
+
   #map_control {
     position: absolute;
     width: 200px;
@@ -1190,15 +1190,15 @@ div#reportData {
     background-color: rgba(255,255,255,0.8);
     border-radius: 1em;
   }
-  
+
   #map_legend img {
     vertical-align: middle;
   }
-  
+
   .advanced {
     display: none;
   }
-  
+
 .errormessage {
 	border-radius: 1em;
 	text-align: center;
@@ -1227,5 +1227,5 @@ table#reportData td .editoptions select {
 /* manage tab */
 #module_related .suggested {
   background-color: white;
-  border-radius: 0.5em;  
+  border-radius: 0.5em;
 }

@@ -33,7 +33,7 @@ button.gtpb.captioned {
 button.gtpb.captioned i {
   font-size: 18pt;
 }
-	 
+
 button.gtpb img { border:0; padding-top: 3px; }
 
 .buttonGroup.joined button.gtpb {
@@ -58,7 +58,7 @@ button.gtpb img { border:0; padding-top: 3px; }
 button.gtpb:hover {
 	cursor: pointer;
   background-color: white;
-}		 
+}
 button.gtpb:active { background-color: #009FE3; color: white; }
 button.gtpb.selected {
   background-color: #E8E7E3;

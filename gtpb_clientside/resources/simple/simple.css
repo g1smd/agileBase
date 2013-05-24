@@ -103,7 +103,7 @@ body {
 }
 
 .tile div#reportData {
-  background-color: rgba(255,255,255,0.75);  
+  background-color: rgba(255,255,255,0.75);
   padding-top: 0.5em;
   padding-right: 0.5em;
 }
@@ -419,7 +419,7 @@ h2 {
 
 .notfocus {
   opacity: 0;
-  width: 0!important; 
+  width: 0!important;
   height: 0!important;
   margin-right: 0;
   padding: 0;
@@ -589,7 +589,7 @@ span.comment_text {
 }
 
 .comment_text:before {
-  content: '\201C'; 
+  content: '\201C';
   color: #EC00BC;
   font-size: 200%;
   float: left;
@@ -684,8 +684,8 @@ table.reportData td {
 /* override fullcalendar */
 
 #calendar {
-  background-color: rgba(255,255,255, 0.5); 
-  border-radius: 1em; 
+  background-color: rgba(255,255,255, 0.5);
+  border-radius: 1em;
 }
 
 #calendar .fc-state-default, #calendar .fc-state-default .fc-button-inner {
@@ -761,7 +761,7 @@ table.reportData td {
 .report_selection h2 span img {
   vertical-align: middle;
 }
-  
+
 .report_selection_header {
   cursor: pointer;
   padding: 0.3em;
@@ -902,9 +902,9 @@ table.reportData td {
   color: #656766;
 }
 
-#infovis div {  
-    position:absolute;  
-    overflow:hidden;  
+#infovis div {
+    position:absolute;
+    overflow:hidden;
 }
 
 /* Colours */

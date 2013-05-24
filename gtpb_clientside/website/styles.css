@@ -22,10 +22,10 @@
 }
 
 .arrow {
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-left: 70px solid transparent;
-	border-right: 69px solid transparent;	
+	border-right: 69px solid transparent;
 	border-top: 35px solid rgb(230,231,224);
 	opacity:0;
 }

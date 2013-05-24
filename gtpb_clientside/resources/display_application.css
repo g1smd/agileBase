@@ -119,64 +119,64 @@ div#_md_blank.window_disable h1 {
 
 /* for infoVis treemap */
 
-#infovis {  
-    position:relative;  
-    width:1000px;  
-    height:700px;  
+#infovis {
+    position:relative;
+    width:1000px;
+    height:700px;
     /* margin:auto;   */
     background-color:#1D1D20;
 	font-size:8pt;
 	font-family: Verdana,Geneva,sans-serif;
-}  
-  
-#infovis div {  
-    position:absolute;  
-    overflow:hidden;  
-}  
-  
-#infovis .content {  
-    background-color:#cccccc; /* 333 */  
-    border:0px solid #111;  
-}  
-  
-#infovis .head {  
-    height:12px;  
-    color:black;  
-    background-color:#E8E7E3;  
-}  
-  
-#infovis .head.in-path {  
+}
+
+#infovis div {
+    position:absolute;
+    overflow:hidden;
+}
+
+#infovis .content {
+    background-color:#cccccc; /* 333 */
+    border:0px solid #111;
+}
+
+#infovis .head {
+    height:12px;
+    color:black;
+    background-color:#E8E7E3;
+}
+
+#infovis .head.in-path {
     /* background-color:#655; */
 	background-color: #ff8040;
-    color:black; 
-}  
-  
-#infovis .body {  
+    color:black;
+}
+
+#infovis .body {
     background-color:white; /* black */
-}  
-  
-#infovis .leaf {  
-    color:white;  
-    background-color:#111;  
-    display:table-cell;  
+}
+
+#infovis .leaf {
+    color:white;
+    background-color:#111;
+    display:table-cell;
     vertical-align:middle;
 	font-size: 7pt;
 	/* font-family: times; */
 	color: #e0e0e0;
-}  
-  
-#infovis .over-leaf {  
+}
+
+#infovis .over-leaf {
     opacity: 0.8;
 	cursor: pointer;
 	color: white;
-}  
-  
-#infovis .over-content {  
+}
+
+#infovis .over-content {
     /* background-color: #9FD4FF;  */
 	background-color:#feb56e;
-}  
-  
-#infovis .over-head { /* ...boy i'm funny */  
+}
+
+#infovis .over-head { /* ...boy i'm funny */
     /* background-color:#A4D9FF;  */
 	background-color:#feb56e;
     color:black;
@@ -188,13 +188,13 @@ div#_md_blank.window_disable h1 {
   background-color: white!important;
   color: gray;
 }
-  
-/* tooltips style */  
-.tip {  
-    color: black;  
-    z-index: 13000;  
-    background-color: white;  
-    padding:5px;  
+
+/* tooltips style */
+.tip {
+    color: black;
+    z-index: 13000;
+    background-color: white;
+    padding:5px;
     position:absolute;
 	font-family: Verdana,Geneva,sans-serif;
 	opacity: 0.9;

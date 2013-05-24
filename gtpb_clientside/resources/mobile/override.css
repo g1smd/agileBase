@@ -44,7 +44,7 @@ html, body {
   /* base metrics used to ensure a minumum size and specify a max size that can be used to trim the contents */
   min-width: 40px;
   max-width: 160px;
-  height: 23px; 
+  height: 23px;
   /* enfore trimming if the label is too long */
   white-space : nowrap;
   overflow : hidden;
@@ -92,13 +92,13 @@ div.relation_field a {
   font-size: 12pt!important;
 }
 
-table#reportData thead tr#fieldFilters input { 
+table#reportData thead tr#fieldFilters input {
   font-size: 12pt;
   border-radius: 0.5em;
   border: 1px solid #e8e7e3;
 }
 
-table#reportData tr.rowb  { 
+table#reportData tr.rowb  {
   background-image: url('/agileBase/styles/rowb_mobile.png');
 }
 

@@ -1,4 +1,4 @@
-/* 
+/*
  * Project Evolution (PE) Analog Clock Icon font
  * 2012 Jason Hogue @pe1999
  *
@@ -6,22 +6,22 @@
  *
  * Version 1, August 28 2012
  *
- * We base64 encode the font to make it a quicker download (fewer HTTP requests). 
- * SVG first, because it looks best in browsers that support it, then Truetype, then WOFF. 
- * If you would like to use the font files instead, use the Fontspring @font-face declaration as you normally would (see below). 
+ * We base64 encode the font to make it a quicker download (fewer HTTP requests).
+ * SVG first, because it looks best in browsers that support it, then Truetype, then WOFF.
+ * If you would like to use the font files instead, use the Fontspring @font-face declaration as you normally would (see below).
 
 @font-face {
     font-family: "pe-analogtime";
     src: url("fonts/pe-analogclock.eot");
     src: local('☺'),
-       url("fonts/pe-analogclock.eot?#iefix") format('embedded-opentype'), 
-       url('fonts/pe-analogclock.svg?#SommetSlabLight') format('svg'), 
+       url("fonts/pe-analogclock.eot?#iefix") format('embedded-opentype'),
+       url('fonts/pe-analogclock.svg?#SommetSlabLight') format('svg'),
        url('fonts/pe-analogclock.ttf') format('truetype'),
        url('fonts/pe-analogclock.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
- 
+
  */
 @font-face {
 	font-family: 'pe-analogclock';
@@ -39,9 +39,9 @@
 
 /* Explicitly set the classes that get the font rather than use a CSS an advanced selector like [class^="minute-"]:before */
 /* [class^="minute-"]:before, [class^="hour-"]:before */
-.minute-00:before, .minute-01:before, .minute-02:before, 
-.minute-03:before, .minute-04:before, .minute-05:before, 
-.minute-06:before, .minute-07:before, .minute-08:before, 
+.minute-00:before, .minute-01:before, .minute-02:before,
+.minute-03:before, .minute-04:before, .minute-05:before,
+.minute-06:before, .minute-07:before, .minute-08:before,
 .minute-09:before, .minute-10:before, .minute-11:before,
 .minute-12:before, .minute-13:before, .minute-14:before,
 .minute-15:before, .minute-16:before, .minute-17:before,
@@ -49,27 +49,27 @@
 .minute-21:before, .minute-22:before, .minute-23:before,
 .minute-24:before, .minute-25:before, .minute-26:before,
 .minute-27:before, .minute-28:before, .minute-29:before,
-.minute-30:before, .minute-31:before, .minute-32:before, 
-.minute-33:before, .minute-34:before, .minute-35:before, 
-.minute-36:before, .minute-37:before, .minute-38:before, 
-.minute-39:before, .minute-40:before, .minute-41:before, 
-.minute-42:before, .minute-43:before, .minute-44:before, 
-.minute-45:before, .minute-46:before, .minute-47:before, 
-.minute-48:before, .minute-49:before, .minute-50:before, 
-.minute-51:before, .minute-52:before, .minute-53:before, 
-.minute-54:before, .minute-55:before, .minute-56:before, 
-.minute-57:before, .minute-58:before, .minute-59:before, .minute-60:before, 
-.hour-00:before, .hour-0:before, .hour-12:before, .hour-24:before, 
-.hour-01:before, .hour-1:before, .hour-13:before, 
-.hour-02:before, .hour-2:before, .hour-14:before, 
-.hour-03:before, .hour-3:before, .hour-15:before, 
-.hour-04:before, .hour-4:before, .hour-16:before, 
-.hour-05:before, .hour-5:before, .hour-17:before, 
-.hour-06:before, .hour-6:before, .hour-18:before, 
-.hour-07:before, .hour-7:before, .hour-19:before, 
-.hour-08:before, .hour-8:before, .hour-20:before, 
-.hour-09:before, .hour-9:before, .hour-21:before, 
-.hour-10:before, .hour-22:before, 
+.minute-30:before, .minute-31:before, .minute-32:before,
+.minute-33:before, .minute-34:before, .minute-35:before,
+.minute-36:before, .minute-37:before, .minute-38:before,
+.minute-39:before, .minute-40:before, .minute-41:before,
+.minute-42:before, .minute-43:before, .minute-44:before,
+.minute-45:before, .minute-46:before, .minute-47:before,
+.minute-48:before, .minute-49:before, .minute-50:before,
+.minute-51:before, .minute-52:before, .minute-53:before,
+.minute-54:before, .minute-55:before, .minute-56:before,
+.minute-57:before, .minute-58:before, .minute-59:before, .minute-60:before,
+.hour-00:before, .hour-0:before, .hour-12:before, .hour-24:before,
+.hour-01:before, .hour-1:before, .hour-13:before,
+.hour-02:before, .hour-2:before, .hour-14:before,
+.hour-03:before, .hour-3:before, .hour-15:before,
+.hour-04:before, .hour-4:before, .hour-16:before,
+.hour-05:before, .hour-5:before, .hour-17:before,
+.hour-06:before, .hour-6:before, .hour-18:before,
+.hour-07:before, .hour-7:before, .hour-19:before,
+.hour-08:before, .hour-8:before, .hour-20:before,
+.hour-09:before, .hour-9:before, .hour-21:before,
+.hour-10:before, .hour-22:before,
 .hour-11:before, .hour-23:before {
 	font-family: 'pe-analogclock';
 	speak: none;
@@ -171,14 +171,14 @@
 	content: "\40";
 }
 .hour-00, .hour-01, .hour-1, .hour-02, .hour-2, .hour-03, .hour-3, .hour-04, .hour-4, .hour-05, .hour-5, .hour-06, .hour-6, .hour-07, .hour-7, .hour-08, .hour-8, .hour-09, .hour-9, .hour-10, .hour-11, .hour-12, .hour-13, .hour-14, .hour-15, .hour-16, .hour-17, .hour-18, .hour-19, .hour-20, .hour-21, .hour-22, .hour-23, .hour-24 {
-    position: relative; 
-    width: 1em; 
-    height: 1em; 
-    line-height: .95em; 
+    position: relative;
+    width: 1em;
+    height: 1em;
+    line-height: .95em;
 }
-.minute-00, .minute-01, .minute-02, 
-.minute-03, .minute-04, .minute-05, 
-.minute-06, .minute-07, .minute-08, 
+.minute-00, .minute-01, .minute-02,
+.minute-03, .minute-04, .minute-05,
+.minute-06, .minute-07, .minute-08,
 .minute-09, .minute-10, .minute-11,
 .minute-12, .minute-13, .minute-14,
 .minute-15, .minute-16, .minute-17,
@@ -186,23 +186,23 @@
 .minute-21, .minute-22, .minute-23,
 .minute-24, .minute-25, .minute-26,
 .minute-27, .minute-28, .minute-29,
-.minute-30, .minute-31, .minute-32, 
-.minute-33, .minute-34, .minute-35, 
-.minute-36, .minute-37, .minute-38, 
-.minute-39, .minute-40, .minute-41, 
-.minute-42, .minute-43, .minute-44, 
-.minute-45, .minute-46, .minute-47, 
-.minute-48, .minute-49, .minute-50, 
-.minute-51, .minute-52, .minute-53, 
-.minute-54, .minute-55, .minute-56, 
+.minute-30, .minute-31, .minute-32,
+.minute-33, .minute-34, .minute-35,
+.minute-36, .minute-37, .minute-38,
+.minute-39, .minute-40, .minute-41,
+.minute-42, .minute-43, .minute-44,
+.minute-45, .minute-46, .minute-47,
+.minute-48, .minute-49, .minute-50,
+.minute-51, .minute-52, .minute-53,
+.minute-54, .minute-55, .minute-56,
 .minute-57, .minute-58, .minute-59, .minute-60 {
-    position: absolute; 
-    top: 0; left: 0; 
+    position: absolute;
+    top: 0; left: 0;
 }
 
-/* 
- * Use progressive enhancement to give users more detail. 
- * Browsers that support transform: rotate() will see every minute, whereas other browsers will only see every three minutes. 
+/*
+ * Use progressive enhancement to give users more detail.
+ * Browsers that support transform: rotate() will see every minute, whereas other browsers will only see every three minutes.
  */
 
 /* Minutes that use forward rotation */
