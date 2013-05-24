@@ -1029,9 +1029,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 	
 	public String iPadThumbnail(String imageSrc) throws ObjectNotFoundException, DisallowedException, FileUploadException {
 		String iPadSrc = imageSrc.replace("%20",  " ");
-		String absoluteFilename = this.request.getSession().getServletContext()
-				.getRealPath(this.databaseDefn.getDataManagement().getWebAppRoot() + "/" + iPadSrc);
-		File iPadFile = new File(absoluteFilename.replace(".png",".1500.png").replace(".jpg",".1500.jpg"));
+		File iPadFile = new File(iPadSrc.replace(".png",".1500.png").replace(".jpg",".1500.jpg"));
 	  FileValue fileValue = new FileValueDefn(iPadSrc);
 		if (!iPadFile.exists()) {
 			String part = iPadSrc.replaceAll("^uploads\\/", "");
@@ -1041,7 +1039,7 @@ public final class ViewMethods implements ViewMethodsInfo {
 			//part = part.replaceAll("^" + internalFieldName + "\\/", "");
 		  TableInfo table = this.databaseDefn.getTable(this.request, internalTableName);
 		  FileField field = (FileField) table.getField(internalFieldName);
-		  Helpers.createThumbnail(field, fileValue, absoluteFilename, 1500);
+		  Helpers.createThumbnail(field, fileValue, iPadSrc, 1500);
 		}
 		return iPadSrc.replace(" ", "%20").replace(".png",".1500.png").replace(".jpg",".1500.jpg");
 	}
